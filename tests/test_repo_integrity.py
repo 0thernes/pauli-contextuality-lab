@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import unittest
 from pathlib import Path
@@ -56,11 +57,13 @@ def path_exists_case_exact(root: Path, target: Path) -> bool:
     """Return True iff target exists and every path component under root matches exact disk casing."""
     if not target.exists():
         return False
+    norm_target = Path(os.path.normpath(str(target)))
+    norm_root = Path(os.path.normpath(str(root)))
     try:
-        rel_parts = target.resolve().relative_to(root.resolve()).parts
+        rel_parts = norm_target.relative_to(norm_root).parts
     except ValueError:
         return True
-    cur = root.resolve()
+    cur = norm_root
     for part in rel_parts:
         names = {entry.name for entry in cur.iterdir()}
         if part not in names:
@@ -109,7 +112,7 @@ class RepoIntegrityTests(unittest.TestCase):
                 target = m.group(1)
                 if target.startswith(("http://", "https://", "mailto:", "data:", "javascript:")):
                     continue
-                cand = (md.parent / target).resolve()
+                cand = md.parent / target
                 if not path_exists_case_exact(ROOT, cand):
                     broken.append((md.relative_to(ROOT).as_posix(), target))
         self.assertEqual(broken, [], f"Broken or wrong-case local Markdown links: {broken}")

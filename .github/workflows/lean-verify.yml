@@ -23,11 +23,11 @@ jobs:
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Install bubblewrap for sandboxed lake comparator
         run: sudo apt-get update && sudo apt-get install -y bubblewrap
-      - name: Fetch pinned Mathlib cache & build all 3 libraries + CarrierFamily
+      - name: Fetch pinned Mathlib cache & build all 3 libraries + VerifyAll
         working-directory: lean
         run: |
           lake exe cache get
-          lake build HoggarBound HoggarBound.CarrierFamily ContextualityTensor Evidence Solution
+          lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll
       - name: Forbidden-token scan (comment- and string-aware nested lexer)
         run: |
           python3 - <<'PY'

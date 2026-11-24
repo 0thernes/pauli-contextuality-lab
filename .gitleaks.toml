@@ -5,7 +5,7 @@ title = "pauli-contextuality-lab gitleaks config"
 [extend]
 useDefault = true
 
-[[allowlists]]
+[allowlist]
 description = "Lean 4 local hypothesis names (`have key := ...`) are mathematical proof terms, not API keys."
 regexTarget = "line"
 paths = ['''^lean/.*\.lean$''']

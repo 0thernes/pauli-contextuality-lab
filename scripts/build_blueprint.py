@@ -92,6 +92,42 @@ def parse_blueprint(tex: str) -> list[dict[str, Any]]:
     return nodes
 
 
+
+def plain_svg_text(text: str) -> str:
+    """Convert short LaTeX title strings into clean Unicode for SVG node labels."""
+    s = text.replace(r"\&", "&").replace(r"\_", "_").replace("--", "–")
+    repl = [
+        (r"$\vert\Psi_{3m}\rangle$", "|Ψ₃ₘ⟩"),
+        (r"\vert\Psi_{3m}\rangle", "|Ψ₃ₘ⟩"),
+        (r"\Psi_{3m}", "Ψ₃ₘ"),
+        (r"\ge", "≥"),
+        (r"\le", "≤"),
+        (r"\mathbb{F}_2^{2N}", "𝔽₂²ᴺ"),
+        (r"\mathbb{F}_2", "𝔽₂"),
+        (r"Q^+(9,2)", "Q⁺(9,2)"),
+        (r"Q^-(7,2)", "Q⁻(7,2)"),
+        (r"\times", "×"),
+        (r"\pm", "±"),
+    ]
+    for old, new in repl:
+        s = s.replace(old, new)
+    s = s.replace("$", "").replace("{", "").replace("}", "")
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def clean_html_math(text: str) -> str:
+    """Escape HTML while cleaning text-mode LaTeX escapes outside $...$ for MathJax rendering."""
+    parts = text.split("$")
+    out: list[str] = []
+    for idx, part in enumerate(parts):
+        if idx % 2 == 0:
+            cleaned = part.replace(r"\&", "&").replace(r"\_", "_").replace("--", "–")
+            out.append(html.escape(cleaned))
+        else:
+            out.append("$" + html.escape(part) + "$")
+    return "".join(out)
+
+
 def render_svg_dag(nodes: list[dict[str, Any]]) -> str:
     by_id: dict[str, dict[str, Any]] = {n["id"]: n for n in nodes}
     depth_cache: dict[str, int] = {}
@@ -156,7 +192,7 @@ def render_svg_dag(nodes: list[dict[str, Any]]) -> str:
     for n in nodes:
         x, y = coords[n["id"]]
         fill, stroke = track_colors.get(n["track"], ("#1e293b", "#94a3b8"))
-        short_title = n["title"]
+        short_title = plain_svg_text(n["title"])
         if len(short_title) > 27:
             short_title = short_title[:25].rstrip() + "…"
         sub = f'{n["kind"]} · {len(n["lean"])} Lean decls'
@@ -198,14 +234,16 @@ def render_html(nodes: list[dict[str, Any]]) -> str:
         rows.append(
             f'<article class="card" id="{html.escape(n["id"])}" data-track="{html.escape(n["track"])}">'
             f'<div class="hdr"><span class="kind">{html.escape(n["kind"].upper())}</span>'
-            f'<h3>{html.escape(n["title"])}</h3>{badge}</div>'
-            f'<p class="sum">{html.escape(n["summary"])}</p>'
+            f'<h3>{clean_html_math(n["title"])}</h3>{badge}</div>'
+            f'<p class="sum">{clean_html_math(n["summary"])}</p>'
             f'<div class="meta"><b>Lean ({len(n["lean"])}):</b> {decls}<br/><b>Uses:</b> {deps}</div>'
             f"</article>"
         )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Pauli Contextuality Lab · Lean 4 Dependency Blueprint</title>
+<script>window.MathJax={{tex:{{inlineMath:[["$","$"],["\\(","\\)"]]}}}};</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
 <style>
 body{{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1020;color:#e2e8f0;margin:0;padding:1.75rem;line-height:1.5}}
 main{{max-width:1240px;margin:0 auto}}
