@@ -48,19 +48,27 @@ static void apply_pauli(int N, uint32_t a, uint32_t c, const ComplexDouble *psi,
 static int run(int N, const ComplexDouble *psi_in, int only_real, double F_anti, const char *witness, const char *label) {
     uint32_t D = 1u << N, n = 1u << (2 * N);
     ComplexDouble *psi = malloc(sizeof(ComplexDouble) * D), *tmp = malloc(sizeof(ComplexDouble) * D);
+    uint32_t *dir = malloc(sizeof(uint32_t) * n), P = 0;
+    ComplexDouble *deriv = NULL;
+    double *g = NULL, *F = NULL;
+    diffgeo_engine_t *eng = NULL;
+    int8_t *f = NULL;
+    if (!psi || !tmp || !dir) goto fail;
     double nrm = 0;
     for (uint32_t x = 0; x < D; x++) nrm += psi_in[x].real * psi_in[x].real + psi_in[x].imag * psi_in[x].imag;
     nrm = sqrt(nrm);
     for (uint32_t x = 0; x < D; x++) { psi[x].real = psi_in[x].real / nrm; psi[x].imag = psi_in[x].imag / nrm; }
 
     /* directions: all non-identity Paulis, or only the real (even number of Y) ones */
-    uint32_t *dir = malloc(sizeof(uint32_t) * n), P = 0;
     for (uint32_t v = 1; v < n; v++) {
         uint32_t a = v & (D - 1), c = v >> N;
         if (only_real && (pc(a & c) & 1)) continue;
         dir[P++] = v;
     }
-    ComplexDouble *deriv = malloc(sizeof(ComplexDouble) * (size_t)P * D);
+    deriv = malloc(sizeof(ComplexDouble) * (size_t)P * D);
+    g = malloc(sizeof(double) * (size_t)P * P);
+    F = malloc(sizeof(double) * (size_t)P * P);
+    if (!deriv || !g || !F) goto fail;
     for (uint32_t i = 0; i < P; i++) {
         uint32_t a = dir[i] & (D - 1), c = dir[i] >> N;
         apply_pauli(N, a, c, psi, tmp);
@@ -69,19 +77,14 @@ static int run(int N, const ComplexDouble *psi_in, int only_real, double F_anti,
             deriv[(size_t)i * D + x].imag = -0.5 * tmp[x].real;
         }
     }
-    double *g = malloc(sizeof(double) * (size_t)P * P), *F = malloc(sizeof(double) * (size_t)P * P);
-    diffgeo_engine_t *eng = diffgeo_engine_create();
-    if (!eng) { fprintf(stderr, "engine create failed\n"); return 2; }
-    if (!diffgeo_compute_fubini_study(eng, psi, D, deriv, P, g)) { fprintf(stderr, "fubini_study failed\n"); return 2; }
-    if (!diffgeo_compute_berry_curvature(eng, psi, D, deriv, P, F)) { fprintf(stderr, "berry_curvature failed\n"); return 2; }
+    eng = diffgeo_engine_create();
+    if (!eng) { fprintf(stderr, "engine create failed\n"); goto fail; }
+    if (!diffgeo_compute_fubini_study(eng, psi, D, deriv, P, g)) { fprintf(stderr, "fubini_study failed\n"); goto fail; }
+    if (!diffgeo_compute_berry_curvature(eng, psi, D, deriv, P, F)) { fprintf(stderr, "berry_curvature failed\n"); goto fail; }
 
     /* assignment from the witness file (bit v set <=> f(v) = -1) */
-    int8_t *f = malloc(n);
-    if (!f || !witness_read(witness, N, only_real ? 'h' : 'f', f)) {
-        diffgeo_engine_destroy(eng);
-        free(f); free(g); free(F); free(deriv); free(dir); free(psi); free(tmp);
-        return 2;
-    }
+    f = malloc(n);
+    if (!f || !witness_read(witness, N, only_real ? 'h' : 'f', f)) goto fail;
 
     /* classify */
     double dev_diag = 0, dev_anti = 0, dev_sat = 0, dev_viol = 0, dev_F_anti = 0, dev_F_comm = 0;
@@ -124,12 +127,22 @@ static int run(int N, const ComplexDouble *psi_in, int only_real, double F_anti,
     diffgeo_engine_destroy(eng);
     free(f); free(g); free(F); free(deriv); free(dir); free(psi); free(tmp);
     return ok ? 0 : 1;
+fail:
+    if (eng) diffgeo_engine_destroy(eng);
+    free(f); free(g); free(F); free(deriv); free(dir); free(psi); free(tmp);
+    return 2;
+}
+
+static const char *resolve_witness(const char *rel, const char *fallback) {
+    FILE *fp = fopen(rel, "r");
+    if (fp) { fclose(fp); return rel; }
+    return fallback;
 }
 
 int main(int argc, char **argv) {
     if (argc > 3) { fprintf(stderr, "usage: qgt_hoggar [three-qubit-witness [four-qubit-witness]]\n"); return 2; }
-    const char *w3 = argc > 1 ? argv[1] : "data/witness/n3_f_hoggar_moonlab.txt";
-    const char *w4 = argc > 2 ? argv[2] : "data/witness/n4_h_hoggar_moonlab.txt";
+    const char *w3 = argc > 1 ? argv[1] : resolve_witness("data/witness/n3_f_hoggar_moonlab.txt", "../../data/witness/n3_f_hoggar_moonlab.txt");
+    const char *w4 = argc > 2 ? argv[2] : resolve_witness("data/witness/n4_h_hoggar_moonlab.txt", "../../data/witness/n4_h_hoggar_moonlab.txt");
     ComplexDouble h3[8] = {{-1, 2}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}};
     ComplexDouble h4[16] = {{-1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0}, {1, 0},
                             {2, 0},  {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};

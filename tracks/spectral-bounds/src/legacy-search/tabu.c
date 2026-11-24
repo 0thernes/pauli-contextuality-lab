@@ -40,8 +40,8 @@ int main(int argc, char **argv) {
     int N = atoi(argv[1]); char kind = argv[2][0]; uint64_t sd = strtoull(argv[3], 0, 10); double secs = atof(argv[4]);
     const char *out = argv[5];
     seed(sd); g = geom_build(N, kind);
-    f = malloc(g->npts); bad = malloc(g->L); delta = malloc(sizeof(int32_t) * g->npts);
-    int8_t *best = malloc(g->npts); uint64_t *tabu = calloc(g->npts, sizeof(uint64_t));
+    f = xmalloc(g->npts); bad = xmalloc(g->L); delta = xmalloc(sizeof(int32_t) * g->npts);
+    int8_t *best = xmalloc(g->npts); uint64_t *tabu = xcalloc(g->npts, sizeof(uint64_t));
     if (argc > 6) {
         int n2; char k2; long long c; uint8_t *bits;
         if (witness_read(argv[6], &n2, &k2, &c, &bits) || n2 != N || k2 != kind) {
@@ -55,11 +55,12 @@ int main(int argc, char **argv) {
     recount();
     long long bestv = viol; memcpy(best, f, g->npts);
     const char *td = getenv("TABU_DIV"); const char *fr = getenv("TABU_FRESH");
-    uint32_t T = g->npts / (td ? atoi(td) : 10) + 3; int fresh_pct = fr ? atoi(fr) : 12; uint64_t it = 0, last_imp = 0, window = 20ull * g->npts;
+    int tdiv = td ? atoi(td) : 10; if (tdiv <= 0) tdiv = 10;
+    uint32_t T = g->npts / (uint32_t)tdiv + 3; int fresh_pct = fr ? atoi(fr) : 12; uint64_t it = 0, last_imp = 0, window = 20ull * g->npts;
     long long cur_best = viol;
     double t0 = now(), tend = t0 + secs;
     fprintf(stderr, "N=%d kind=%c pts=%u lines=%llu start=%lld\n", N, kind, g->npts, (unsigned long long)g->L, viol);
-    uint32_t *cand = malloc(sizeof(uint32_t) * g->npts);
+    uint32_t *cand = xmalloc(sizeof(uint32_t) * g->npts);
     while (1) {
         it++;
         if ((it & 1023) == 0 && now() > tend) break;

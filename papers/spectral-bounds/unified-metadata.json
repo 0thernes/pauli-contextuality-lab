@@ -1,6 +1,6 @@
 {
   "title": "Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "type": "research preprint",
   "author": {
     "name": "Alexander S. Donahue",
@@ -14,7 +14,7 @@
   "canonical_source": "papers/spectral-bounds/unified-contextuality.md",
   "public_landing_page": "https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html",
   "public_pdf": "https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.pdf",
-  "source_release": "https://github.com/0thernes/pauli-contextuality-lab/releases/tag/v2.5.0",
+  "source_release": "https://github.com/0thernes/pauli-contextuality-lab/releases/tag/v2.6.0",
   "destinations": [
     "Google Scholar",
     "arXiv",

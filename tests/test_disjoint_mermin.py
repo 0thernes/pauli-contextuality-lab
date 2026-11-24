@@ -33,17 +33,17 @@ def _mul(a, b):
     return a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]
 
 
+def _dot_entry(a, b, i, j, n):
+    acc = ZERO
+    for k in range(n):
+        acc = _add(acc, _mul(a[i][k], b[k][j]))
+    return acc
+
+
 def _matmul(a, b):
     n = len(a)
     return tuple(
-        tuple(
-            (
-                lambda acc=ZERO: [
-                    acc := _add(acc, _mul(a[i][k], b[k][j])) for k in range(n)
-                ][-1]
-            )()
-            for j in range(n)
-        )
+        tuple(_dot_entry(a, b, i, j, n) for j in range(n))
         for i in range(n)
     )
 

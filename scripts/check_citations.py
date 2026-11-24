@@ -50,9 +50,11 @@ def scan_papers() -> dict:
 def check_online(urls: list[str]) -> list[dict]:
     results = []
     for url in urls:
-        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "pauli-contextuality-lab-audit/2.0"})
+        if not url.startswith(("https://", "http://")):
+            raise ValueError(f"Unsupported URL scheme: {url!r}")
+        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "pauli-contextuality-lab-audit/2.0"})  # noqa: S310
         try:
-            with urllib.request.urlopen(req, timeout=10) as resp:
+            with urllib.request.urlopen(req, timeout=10) as resp:  # noqa: S310
                 results.append({"url": url, "status": resp.status, "ok": 200 <= resp.status < 400})
         except Exception as exc:
             results.append({"url": url, "status": None, "ok": False, "error": str(exc)})

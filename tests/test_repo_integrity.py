@@ -286,6 +286,13 @@ class RepoIntegrityTests(unittest.TestCase):
         for rel in mjs_drivers:
             txt = (ROOT / rel).read_text(encoding="utf-8")
             self.assertIn("repoRoot", txt, f"{rel} missing repoRoot monorepo resolution")
+        for rel, needle in (
+            ("tracks/spectral-bounds/scripts/run_falsify.sh", "../../data"),
+            ("tracks/spectral-bounds/src/qgt_flat.c", "../../data/flat/"),
+            ("tracks/spectral-bounds/src/qgt_hoggar.c", "../../data/witness/"),
+        ):
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+            self.assertIn(needle, txt, f"{rel} missing monorepo fallback {needle}")
         # Verify isolated monorepo stack runner stages shared third_party/ cleanly for all 3 tracks
         # while keeping SHA-256-fingerprinted Track 2 & 3 stack drivers byte-identical to receipts.
         for track in ("disjoint-mermin", "sequential-evidence", "spectral-bounds"):

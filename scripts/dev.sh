@@ -44,8 +44,9 @@ case "$cmd" in
     ;;
 
   lint)
-    "$PY" -m ruff check scripts/ tests/ tracks/ || true
-    "$PY" -m mypy --ignore-missing-imports scripts/check_citations.py scripts/check_readme_axioms.py scripts/arithmetic_audit.py scripts/build_blueprint.py || true
+    "$PY" -m ruff check scripts/ tests/ || true
+    "$PY" -m ruff check --select E9,F821,F822,F823,B tracks/ || true
+    "$PY" -m mypy --ignore-missing-imports scripts/ || true
     if command -v lake >/dev/null 2>&1; then
       (cd lean && lake exe runLinter ContextualityTensor Evidence || true)
     fi
@@ -54,6 +55,7 @@ case "$cmd" in
   sanitizers)
     mkdir -p build/san
     QR=third_party/quantum_rng/src/quantum_rng
+    QG="-Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c"
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
     ./build/san/hoggar_san table 4 >/dev/null
@@ -67,7 +69,27 @@ case "$cmd" in
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
       tracks/spectral-bounds/src/third_level.c -lm -o build/san/third_level_san
     ./build/san/third_level_san >/dev/null
-    echo "ASan/UBSan checks passed."
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/spectral-bounds/src/orbits7.c -o build/san/orbits7_san
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/spectral-bounds/src/legacy-search/wcheck.c -o build/san/wcheck_san
+    ./build/san/wcheck_san data/witness/n4_f.txt data/witness/n4_h.txt >/dev/null
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/spectral-bounds/src/legacy-search/exhaust.c -o build/san/exhaust_san
+    ./build/san/exhaust_san 2 f >/dev/null
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/spectral-bounds/src/legacy-search/tabu.c -lm -o build/san/tabu_san
+    ./build/san/tabu_san 2 f 42 0.05 build/san/tabu_out.txt >/dev/null
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      $QG tracks/spectral-bounds/src/qgt_hoggar.c -lm -o build/san/qgt_hoggar_san
+    ./build/san/qgt_hoggar_san data/witness/n3_f_hoggar_moonlab.txt data/witness/n4_h_hoggar_moonlab.txt >/dev/null
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      $QG tracks/spectral-bounds/src/qgt_flat.c -lm -o build/san/qgt_flat_san
+    ./build/san/qgt_flat_san --no-seven >/dev/null
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/disjoint-mermin/src/stack_qrng.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/dm_qrng_san
+    ./build/san/dm_qrng_san 20261109 64 >/dev/null
+    echo "All 10 C11 ASan/UBSan checks passed."
     ;;
 
   verify-lean)

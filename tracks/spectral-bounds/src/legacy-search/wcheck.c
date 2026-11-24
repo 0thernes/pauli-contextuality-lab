@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
         int N; char kind; long long claim; uint8_t *bits;
         if (witness_read(argv[a], &N, &kind, &claim, &bits)) { printf("%s: unreadable\n", argv[a]); bad = 1; continue; }
         geom_t *g = geom_build(N, kind);
-        int8_t *f = malloc(g->npts);
+        int8_t *f = xmalloc(g->npts);
         for (uint32_t i = 0; i < g->npts; i++) f[i] = bits[g->pts[i]] ? -1 : 1;
         long long v = count_viol(g, f);
         printf("%s: N=%d type=%c points=%u lines=%llu claimed=%lld recomputed=%lld %s\n", argv[a], N, kind, g->npts,

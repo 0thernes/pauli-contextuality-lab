@@ -8,6 +8,14 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.6.0] — 2026-11-24
+
+### Pass 7 TOC Deep-Dive Hardening (Track 1 Shell/C11 Path Fixes, 10-Engine ASan/UBSan, OOM & Security Guards)
+
+- **Post-Consolidation Track 1 Shell & C11 Runtime Path Fixes:** Fixed `tracks/spectral-bounds/scripts/run_falsify.sh`, `tracks/spectral-bounds/src/qgt_flat.c`, and `tracks/spectral-bounds/src/qgt_hoggar.c` so `data/witness/` and `data/flat/` resolve dynamically from either repo root or `tracks/spectral-bounds/` (`../../data/...`), and cleaned stale comments in `tracks/spectral-bounds/scripts/run_all.sh`. Added automated monorepo-fallback regression checks to `tests/test_repo_integrity.py`.
+- **10-Engine C11 ASan/UBSan CI Coverage & OOM/Div0 Hardening:** Fixed early-return heap cleanup (`goto fail`) in `qgt_flat.c` and `qgt_hoggar.c`, added OOM-checked allocators (`xmalloc`/`xcalloc`/`xrealloc`) across `tracks/spectral-bounds/src/legacy-search/{geom.h,exhaust.c,wcheck.c,tabu.c}`, guarded `TABU_DIV <= 0` divide-by-zero in `tabu.c`, and expanded both `.github/workflows/ci.yml` and `scripts/dev.sh sanitizers` to compile and execute `qgt_flat_san --no-seven` and `tabu_san` (now **10 C11 ASan/UBSan engines**, 0 repo compiler warnings).
+- **Zero `ruff E9,F,B,S` Security/Bugbear Findings & 55/55 Live PDF URI Audit:** Added explicit `https://`/`http://` scheme validation (`S310`) in `scripts/check_citations.py`, replaced the `B023` lambda matrix multiplication in `tests/test_disjoint_mermin.py` with a clean helper function, verified all 566 JSON / 23 YAML / 4 TOML / 4 SVG / 24 JS files strictly parse with 0 errors, and live-HTTP verified all 55 clickable HTTP(S) URIs embedded across all 5 PDFs (55/55 HTTP 2xx/3xx).
+
 ## [2.5.0] — 2026-11-24
 
 ### Pass 6 TOC Deep-Dive Hardening (Zero-Warning C11, Full Manuscript Path Sync, Active Web Explorer & Workflow Guards)

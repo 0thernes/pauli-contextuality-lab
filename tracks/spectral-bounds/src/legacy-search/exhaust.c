@@ -8,17 +8,17 @@ int main(int argc, char **argv) {
     int N = atoi(argv[1]); char kind = argv[2][0];
     geom_t *g = geom_build(N, kind);
     /* choose basis points greedily */
-    uint32_t basis[64], piv[64]; int r = 0; uint8_t *fixed = calloc(g->npts, 1);
+    uint32_t basis[64], piv[64]; int r = 0; uint8_t *fixed = xcalloc(g->npts, 1);
     for (uint32_t i = 0; i < g->npts; i++) {
         uint32_t x = g->pts[i];
         for (int k = 0; k < r; k++) if ((x >> piv[k]) & 1) x ^= basis[k];
         if (x) { basis[r] = x; piv[r] = 31 - __builtin_clz(x); r++; fixed[i] = 1; }
     }
-    uint32_t nfree = 0, *freev = malloc(sizeof(uint32_t) * g->npts);
+    uint32_t nfree = 0, *freev = xmalloc(sizeof(uint32_t) * g->npts);
     for (uint32_t i = 0; i < g->npts; i++) if (!fixed[i]) freev[nfree++] = i;
     if (nfree > 40) { fprintf(stderr, "too many free points (%u)\n", nfree); free(freev); free(fixed); geom_free(g); return 2; }
-    int8_t *f = malloc(g->npts); memset(f, 1, g->npts);
-    uint8_t *bad = malloc(g->L); long long v = 0;
+    int8_t *f = xmalloc(g->npts); memset(f, 1, g->npts);
+    uint8_t *bad = xmalloc(g->L); long long v = 0;
     for (uint64_t l = 0; l < g->L; l++) { bad[l] = f[g->line[l][0]] * f[g->line[l][1]] * f[g->line[l][2]] != g->sgn[l]; v += bad[l]; }
     long long best = v, nbest = 1;
     for (uint64_t m = 1; m < (1ull << nfree); m++) {

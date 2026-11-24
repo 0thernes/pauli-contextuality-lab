@@ -68,10 +68,14 @@ static void apply_pauli(int N, uint32_t a, uint32_t c, const ComplexDouble *psi,
 
 static int run(const char *name, int N, const ComplexDouble *psi_in) {
     uint32_t D = 1u << N, n = 1u << (2 * N);
-    char path[128];
+    char path[192];
     snprintf(path, sizeof path, "data/flat/n%d_%s.txt", N, name);
     FILE *fp = fopen(path, "r");
-    if (!fp) { fprintf(stderr, "cannot open %s (run scripts/flat_states.py first)\n", path); return 2; }
+    if (!fp) {
+        snprintf(path, sizeof path, "../../data/flat/n%d_%s.txt", N, name);
+        fp = fopen(path, "r");
+    }
+    if (!fp) { fprintf(stderr, "cannot open data/flat/n%d_%s.txt (run tracks/spectral-bounds/scripts/flat_states.py first)\n", N, name); return 2; }
     int fN = 0; unsigned long points = 0, contexts = 0, degree = 0;
     char head[96];
     static uint8_t inS[MAXPTS], isNeg[MAXPTS];
@@ -83,17 +87,21 @@ static int run(const char *name, int N, const ComplexDouble *psi_in) {
 
     ComplexDouble *psi = malloc(sizeof(ComplexDouble) * D), *tmp = malloc(sizeof(ComplexDouble) * D);
     uint32_t *dir = malloc(sizeof(uint32_t) * n), P = 0;
-    if (!psi || !tmp || !dir) return 2;
+    ComplexDouble *deriv = NULL;
+    double *g = NULL, *F = NULL;
+    diffgeo_engine_t *eng = NULL;
+    if (!psi || !tmp || !dir) goto fail;
     double nrm = 0;
     for (uint32_t x = 0; x < D; x++) nrm += psi_in[x].real * psi_in[x].real + psi_in[x].imag * psi_in[x].imag;
     nrm = sqrt(nrm);
     for (uint32_t x = 0; x < D; x++) { psi[x].real = psi_in[x].real / nrm; psi[x].imag = psi_in[x].imag / nrm; }
     for (uint32_t v = 1; v < n; v++) if (inS[v]) dir[P++] = v;
-    if (P != points) { fprintf(stderr, "%s: mask has %u points, header says %lu\n", name, P, points); return 2; }
+    if (P != points) { fprintf(stderr, "%s: mask has %u points, header says %lu\n", name, P, points); goto fail; }
 
-    ComplexDouble *deriv = malloc(sizeof(ComplexDouble) * (size_t)P * D);
-    double *g = malloc(sizeof(double) * (size_t)P * P), *F = malloc(sizeof(double) * (size_t)P * P);
-    if (!deriv || !g || !F) return 2;
+    deriv = malloc(sizeof(ComplexDouble) * (size_t)P * D);
+    g = malloc(sizeof(double) * (size_t)P * P);
+    F = malloc(sizeof(double) * (size_t)P * P);
+    if (!deriv || !g || !F) goto fail;
     for (uint32_t i = 0; i < P; i++) {
         apply_pauli(N, dir[i] & (D - 1), dir[i] >> N, psi, tmp);
         for (uint32_t x = 0; x < D; x++) {                 /* multiply by -i/2 */
@@ -101,10 +109,10 @@ static int run(const char *name, int N, const ComplexDouble *psi_in) {
             deriv[(size_t)i * D + x].imag = -0.5 * tmp[x].real;
         }
     }
-    diffgeo_engine_t *eng = diffgeo_engine_create();
-    if (!eng) { fprintf(stderr, "engine create failed\n"); return 2; }
-    if (!diffgeo_compute_fubini_study(eng, psi, D, deriv, P, g)) { fprintf(stderr, "fubini_study failed\n"); return 2; }
-    if (!diffgeo_compute_berry_curvature(eng, psi, D, deriv, P, F)) { fprintf(stderr, "berry_curvature failed\n"); return 2; }
+    eng = diffgeo_engine_create();
+    if (!eng) { fprintf(stderr, "engine create failed\n"); goto fail; }
+    if (!diffgeo_compute_fubini_study(eng, psi, D, deriv, P, g)) { fprintf(stderr, "fubini_study failed\n"); goto fail; }
+    if (!diffgeo_compute_berry_curvature(eng, psi, D, deriv, P, F)) { fprintf(stderr, "berry_curvature failed\n"); goto fail; }
 
     double mu = sqrt((double)(D - 1) / (double)P);
     double dev_diag = 0, dev_viol = 0, dev_sat = 0, dev_small = 0, dev_F = 0;
@@ -153,6 +161,10 @@ static int run(const char *name, int N, const ComplexDouble *psi_in) {
     diffgeo_engine_destroy(eng);
     free(g); free(F); free(deriv); free(dir); free(psi); free(tmp);
     return ok ? 0 : 1;
+fail:
+    if (eng) diffgeo_engine_destroy(eng);
+    free(g); free(F); free(deriv); free(dir); free(psi); free(tmp);
+    return 2;
 }
 
 /* amplitudes i^q, q = sum over CS pairs of x_j x_k + 2 sum over CCZ triples of x_j x_k x_l (mod 4) */

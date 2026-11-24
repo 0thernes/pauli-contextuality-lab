@@ -35,10 +35,10 @@ stage "QGTL kernels on the eight flat states"          bash -c "./build/qgt_flat
 if [ -n "$ESHKOL" ]; then
   stage "Eshkol: the pivot configuration + autodiff"   bash -c "$ESHKOL -r src/eshkol/saturated.esk | tee results/eshkol_saturated.log | grep -q ESHKOL-SATURATED-PASS"
 fi
-# ---- the cospectral pair (combined paper, Section 8) and the completion minima (publication/ADDENDUM-completion-optima.md)
+# ---- the cospectral pair (unified paper, Section 8) and completion optima
 stage "cospectral pair, exact arithmetic (30 checks)"  bash -c 'python scripts/cospectral_pair.py | tee results/cospectral_pair.log | tail -1 | grep -q "30 of 30"'
 stage "seven qubits, the kernel's evaluation against direct sums (14 checks)" bash -c 'python scripts/phase_seven_lean.py | tail -1 | grep -q "14 of 14"'
-# ---- case C3 for every number of qubits (publication/ADDENDUM-c3-all-qubits.md)
+# ---- case C3 for every number of qubits (unified paper, Section 8.6)
 stage "C3 family, full configurations N = 3..6 (43 checks)" bash -c 'python scripts/cospectral_family.py --six | tee results/cospectral_family.log | tail -1 | grep -q "43 of 43"'
 stage "C3 family, second route by tensor products (18 checks)" bash -c 'python scripts/cospectral_family_tensor_check.py | tee results/cospectral_family_tensor.log | tail -1 | grep -q "18 of 18"'
 stage "C11: cone lifts of the C3 family, 4 to 6 qubits (21 checks)" bash -c 'python scripts/cospectral_family_cone_lift.py | tee results/cospectral_family_cone_lift.log | tail -1 | grep -q "21 of 21"'
