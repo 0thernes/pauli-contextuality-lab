@@ -242,7 +242,7 @@ def render_html(nodes: list[dict[str, Any]]) -> str:
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Pauli Contextuality Lab · Lean 4 Dependency Blueprint</title>
-<script>window.MathJax={{tex:{{inlineMath:[["$","$"],["\\(","\\)"]]}}}};</script>
+<script>window.MathJax={{tex:{{inlineMath:[["$","$"]]}}}};</script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
 <style>
 body{{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1020;color:#e2e8f0;margin:0;padding:1.75rem;line-height:1.5}}
