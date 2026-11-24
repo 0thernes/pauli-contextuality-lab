@@ -17,6 +17,9 @@ import sys
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parents[1] if (ROOT.parents[1] / "third_party").is_dir() else ROOT
+THIRD_PARTY = REPO_ROOT / "third_party"
+DATA_DIR = REPO_ROOT / "data"
 BUILD = ROOT / "build"
 RESULTS = ROOT / "results"
 BUILD.mkdir(exist_ok=True)
@@ -41,8 +44,8 @@ def qgtl_audit():
     """Call actual QGTL C kernels through ctypes; compare independent NumPy."""
     dll = BUILD / ("stack_diffgeo.dll" if os.name == "nt" else "stack_diffgeo.so")
     cmd = ["gcc", "-O2", "-std=gnu11", "-shared", "-fPIC",
-           "-Ithird_party/qgtl/include", "-Ithird_party/qgtl/stub",
-           "third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c",
+           f"-I{THIRD_PARTY / 'qgtl/include'}", f"-I{THIRD_PARTY / 'qgtl/stub'}",
+           str(THIRD_PARTY / "qgtl/src/quantum_geometric/distributed/differential_geometry.c"),
            "-o", dll, "-lm"]
     run(cmd)
     if os.name == "nt" and hasattr(os, "add_dll_directory"):
@@ -157,8 +160,8 @@ def qgtl_audit():
 def qrng_audit():
     exe = BUILD / ("stack_qrng.exe" if os.name == "nt" else "stack_qrng")
     run(["gcc", "-O2", "-std=gnu11", "src/qrng_stream.c",
-         "third_party/quantum_rng/src/quantum_rng/quantum_rng.c",
-         "-Ithird_party/quantum_rng/src/quantum_rng", "-o", exe, "-lm"])
+         str(THIRD_PARTY / "quantum_rng/src/quantum_rng/quantum_rng.c"),
+         f"-I{THIRD_PARTY / 'quantum_rng/src/quantum_rng'}", "-o", exe, "-lm"])
     a = bytes.fromhex(run([exe, "20261109", "4096"]).stdout)
     b = bytes.fromhex(run([exe, "20261109", "4096"]).stdout)
     c = bytes.fromhex(run([exe, "20261110", "4096"]).stdout)
@@ -197,7 +200,8 @@ def moonlab_audit():
     for rel in paths:
         target = isolated/rel
         target.parent.mkdir(exist_ok=True, parents=True)
-        shutil.copyfile(ROOT/rel, target)
+        src_file = ROOT/rel if (ROOT/rel).exists() else REPO_ROOT/rel
+        shutil.copyfile(src_file, target)
     (isolated/"build").mkdir(exist_ok=True)
     # This source snapshot uses the Windows .exe spelling on every platform;
     # POSIX executes the same binary with that suffix without requiring Wine.
@@ -221,7 +225,7 @@ def moonlab_audit():
             "mode": "Executed unchanged source snapshot in build/stack_moonlab_run",
             "ideal_context_trials": sum(row["contexts"] for row in e["E3"]),
             "result_sha256": sha(file), "runner_sha256": sha(isolated/"src/moonlab_experiment.mjs"),
-            "wasm_sha256": sha(ROOT/"third_party/moonlab/moonlab.wasm"),
+            "wasm_sha256": sha(THIRD_PARTY/"moonlab/moonlab.wasm"),
             "scope": "Simulation cannot establish physical contextuality or hardware quantum advantage; noisy-run sigma labels are not audited as statistical claims"}
 
 

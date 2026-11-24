@@ -120,6 +120,7 @@ int main(void) {
         uint32_t total = 1u << (N + nb + nc);
         size_t cap = 1 << 18, n = 0;
         uint32_t *sol = malloc(cap * 4);
+        if (!sol) { fprintf(stderr, "FATAL: OOM sol\n"); return 2; }
         int rank_seen = -1, mixed = 0;
         for (uint32_t code = 1; code < total; code++) {
             uint8_t M[MAXN][MAXN];
@@ -128,11 +129,17 @@ int main(void) {
             if (r < 0) continue;
             if (rank_seen >= 0 && r != rank_seen) mixed = 1;
             rank_seen = r;
-            if (n == cap) { cap *= 2; sol = realloc(sol, cap * 4); }
+            if (n == cap) {
+                cap *= 2;
+                uint32_t *tmp = realloc(sol, cap * 4);
+                if (!tmp) { free(sol); fprintf(stderr, "FATAL: OOM sol realloc\n"); return 2; }
+                sol = tmp;
+            }
             sol[n++] = code;
         }
         /* orbits under the transvections x -> x + x_k e_j, which generate GL(N,2) */
         parent = malloc((n + 1) * 4);
+        if (!parent) { free(sol); fprintf(stderr, "FATAL: OOM parent\n"); return 2; }
         for (size_t i = 0; i < n; i++) parent[i] = (uint32_t)i;
         size_t escaped = 0;
         for (size_t i = 0; i < n; i++) for (int j = 0; j < N; j++) for (int k = 0; k < N; k++) if (j != k) {
@@ -148,6 +155,7 @@ int main(void) {
         double gl = 1;
         for (int i = 0; i < N; i++) gl *= (double)((1u << N) - (1u << i));
         uint32_t *size = calloc(n + 1, 4), *best = malloc((n + 1) * 4);
+        if (!size || !best) { free(size); free(best); free(parent); free(sol); fprintf(stderr, "FATAL: OOM orbit arrays\n"); return 2; }
         for (size_t i = 0; i < n; i++) {
             uint32_t r = find((uint32_t)i);
             if (!size[r] || __builtin_popcount(sol[i]) < __builtin_popcount(best[r])) best[r] = sol[i];

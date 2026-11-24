@@ -86,6 +86,10 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertRegex(lakefile, re.compile(rf'^version\s*=\s*"{re.escape(version)}"$', re.M))
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(f"v{version}", readme)
+        self.assertIn(f"Version {version}", readme)
+        meta = json.loads((ROOT / "papers" / "spectral-bounds" / "unified-metadata.json").read_text(encoding="utf-8"))
+        self.assertEqual(meta["version"], version)
+        self.assertTrue(meta["source_release"].endswith(f"/v{version}"))
 
     def test_all_root_doc_repo_paths_exist(self) -> None:
         path_pat = re.compile(r"`((?:lean|tracks|papers|scripts|tests|docs|data|third_party|results|blueprint)/[A-Za-z0-9_./-]+)`")
@@ -246,6 +250,87 @@ class RepoIntegrityTests(unittest.TestCase):
             p = ROOT / rel
             if p.is_file():
                 self.assertIsNone(pat.search(p.read_text(encoding="utf-8")), f"Placeholder left in {rel}")
+
+    def test_no_malformed_or_double_replaced_paper_urls(self) -> None:
+        bad: list[str] = []
+        for p in sorted((ROOT / "papers").rglob("*")):
+            if not p.is_file() or p.suffix.lower() not in {".html", ".md", ".tex"}:
+                continue
+            txt = p.read_text(encoding="utf-8", errors="replace")
+            if re.search(r"consolidated from[^\n]*consolidated from", txt):
+                bad.append(f"{p.relative_to(ROOT)}: double consolidated-from string")
+            if re.search(r'href="[^"]*\s+[^"]*"', txt):
+                bad.append(f"{p.relative_to(ROOT)}: whitespace inside href URL")
+        self.assertEqual(bad, [], f"Malformed paper URLs/headers: {bad}")
+
+    def test_track_scripts_resolve_shared_monorepo_roots(self) -> None:
+        import subprocess
+        import sys
+        py_scripts = [
+            "tracks/spectral-bounds/scripts/stack_audit.py",
+            "tracks/spectral-bounds/scripts/phase_seven_lean.py",
+            "tracks/spectral-bounds/scripts/flat_states.py",
+            "tracks/spectral-bounds/scripts/phase_states.py",
+            "tracks/spectral-bounds/scripts/frontier_c3_axioms.py",
+            "tracks/spectral-bounds/scripts/frontier_c3_certificate_audit.py",
+            "tracks/spectral-bounds/scripts/analysis.py",
+            "tracks/sequential-evidence/scripts/make_figures.py",
+        ]
+        for rel in py_scripts:
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+            self.assertIn("REPO_ROOT", txt, f"{rel} missing REPO_ROOT monorepo resolution")
+        mjs_drivers = [
+            "tracks/spectral-bounds/src/moonlab_experiment.mjs",
+            "tracks/spectral-bounds/src/moonlab_saturated.mjs",
+        ]
+        for rel in mjs_drivers:
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+            self.assertIn("repoRoot", txt, f"{rel} missing repoRoot monorepo resolution")
+        # Verify isolated monorepo stack runner stages shared third_party/ cleanly for all 3 tracks
+        # while keeping SHA-256-fingerprinted Track 2 & 3 stack drivers byte-identical to receipts.
+        for track in ("disjoint-mermin", "sequential-evidence", "spectral-bounds"):
+            res = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "run_track_stack.py"), track, "--dry-run"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(res.returncode, 0, f"run_track_stack --dry-run failed for {track}: {res.stderr}")
+            self.assertIn("PASS: staged", res.stdout)
+
+    def test_blueprint_generates_exact_github_line_links(self) -> None:
+        import subprocess
+        import sys
+        res = subprocess.run(
+            [sys.executable, str(ROOT / "scripts" / "build_blueprint.py")],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        self.assertIn("PASS: Blueprint validated 24 nodes (140 Lean decls", res.stdout)
+        bp = json.loads((ROOT / "build" / "site" / "blueprint" / "blueprint.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(bp), 24)
+        total = 0
+        for node in bp:
+            self.assertEqual(len(node["lean"]), len(node["lean_links"]))
+            for link in node["lean_links"]:
+                self.assertRegex(link["url"], r"^https://github\.com/0thernes/pauli-contextuality-lab/blob/main/lean/.+\.lean#L\d+$")
+                self.assertTrue((ROOT / link["file"]).is_file(), f"Missing file {link['file']}")
+                total += 1
+        self.assertEqual(total, 140)
+
+    def test_phase_seven_and_c3_audit_paths_live(self) -> None:
+        import subprocess
+        import sys
+        res = subprocess.run(
+            [sys.executable, str(ROOT / "tracks" / "spectral-bounds" / "scripts" / "frontier_c3_certificate_audit.py")],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 0, f"frontier_c3_certificate_audit failed: {res.stderr}\n{res.stdout}")
+        self.assertIn('"status": "pass"', res.stdout)
 
 
 if __name__ == "__main__":

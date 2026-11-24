@@ -34,6 +34,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import flat_states as fs  # noqa: E402
 
 ROOT = fs.ROOT
+REPO_ROOT = fs.REPO_ROOT
 pc = fs.pc
 check = fs.check
 
@@ -389,13 +390,13 @@ def main():
         check("field model, N=9 and N=11: no member of the torus-invariant family has constant rank", none45)
 
     # ---- data files
-    os.makedirs(os.path.join(ROOT, "data", "flat"), exist_ok=True)
+    os.makedirs(os.path.join(REPO_ROOT, "data", "flat"), exist_ok=True)
     for key in ("phase5", "phase7"):
         if key not in results:
             continue
         r = results[key]
         neg = [v for v in r["S"] if r["f"][v] < 0]
-        with open(os.path.join(ROOT, "data", "flat", "n%d_%s.txt" % (r["N"], key)), "w", newline="\n") as fh:
+        with open(os.path.join(REPO_ROOT, "data", "flat", "n%d_%s.txt" % (r["N"], key)), "w", newline="\n") as fh:
             fh.write("%d %d %d %d\n%x\n%x\n" % (r["N"], r["points"], r["contexts"], r["degree"], fs.mask_of(r["S"]), fs.mask_of(neg)))
 
     print()
@@ -432,7 +433,7 @@ def write_lean(results):
         lines.append("def %sNeg : Nat := 0x%x" % (key, fs.mask_of(neg)))
         lines.append("")
     lines.append("end HoggarBound.PhaseData")
-    open(os.path.join(ROOT, "lean", "HoggarBound", "PhaseData.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
+    open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "PhaseData.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
     print("wrote lean/HoggarBound/PhaseData.lean")
 
     r5 = results["phase5"]
@@ -488,7 +489,7 @@ def write_lean(results):
           "theorem phase5_contexts : (contexts (cfg 5 phase5Mask)).card = 10880 :=",
           "  contexts_of_flags phase5Mask 10880 (by decide) phase5_flags", "",
           "end HoggarBound"]
-    open(os.path.join(ROOT, "lean", "HoggarBound", "SaturatedPhaseFive.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
+    open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "SaturatedPhaseFive.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
     print("wrote lean/HoggarBound/SaturatedPhaseFive.lean")
 
 

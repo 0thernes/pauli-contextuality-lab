@@ -30,6 +30,8 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_CAND_REPO = os.path.dirname(os.path.dirname(ROOT))
+REPO_ROOT = _CAND_REPO if os.path.isdir(os.path.join(_CAND_REPO, "lean")) else ROOT
 CHECKS = []
 
 
@@ -182,10 +184,10 @@ def fastViolRow(T, z):
 
 # ------------------------------------------------------------ data
 def read_masks():
-    lines = open(os.path.join(ROOT, "data", "flat", "n7_phase7.txt"), encoding="utf-8").read().split()
+    lines = open(os.path.join(REPO_ROOT, "data", "flat", "n7_phase7.txt"), encoding="utf-8").read().split()
     head = [int(x) for x in lines[:4]]
     mask, neg = int(lines[4], 16), int(lines[5], 16)
-    lean = open(os.path.join(ROOT, "lean", "HoggarBound", "PhaseData.lean"), encoding="utf-8").read()
+    lean = open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "PhaseData.lean"), encoding="utf-8").read()
     got = {name: int(value, 16) for name, value in re.findall(r"def (\w+) : Nat := 0x([0-9a-f]+)", lean)}
     return head, mask, neg, got
 
@@ -270,7 +272,7 @@ def main():
 
     print("== five qubits: the block totals that the kernel has checked by the direct double sum ==")
     head, mask7, neg7, lean_masks = read_masks()
-    five = open(os.path.join(ROOT, "lean", "HoggarBound", "SaturatedPhaseFive.lean"), encoding="utf-8").read()
+    five = open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "SaturatedPhaseFive.lean"), encoding="utf-8").read()
     f5 = [int(v) for _, v in sorted(((int(k), v) for k, v in re.findall(
         r"theorem p5_flags_(\d+) : block \(flagRow 5 phase5Mask\) 64 \d+ = (\d+)", five)))]
     v5 = [int(v) for _, v in sorted(((int(k), v) for k, v in re.findall(
@@ -332,7 +334,7 @@ def main():
 
     print("== the Lean file ==")
     text = lean_text(fb, vb, points, contexts, degree)
-    path = os.path.join(ROOT, "lean", "HoggarBound", "SaturatedPhaseSeven.lean")
+    path = os.path.join(REPO_ROOT, "lean", "HoggarBound", "SaturatedPhaseSeven.lean")
     if write:
         open(path, "w", encoding="utf-8", newline="\n").write(text)
         print("wrote lean/HoggarBound/SaturatedPhaseSeven.lean")

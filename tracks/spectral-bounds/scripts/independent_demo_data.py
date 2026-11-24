@@ -5,7 +5,11 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location('checker',ROOT/'tests/independent_validation.py')
+REPO_ROOT = ROOT.parents[1] if (ROOT.parents[1] / 'data').is_dir() else ROOT
+_checker_path = ROOT / 'tests/independent_validation.py'
+if not _checker_path.is_file():
+    _checker_path = REPO_ROOT / 'tests/test_spectral_bounds.py'
+spec = importlib.util.spec_from_file_location('checker', _checker_path)
 checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)
 
@@ -18,7 +22,7 @@ for n,kind,name,witness in [
     (5,'f','Five qubits · 86,955 constraints','n5_f.txt'),
 ]:
     points,lines = checker.geometry(n,kind)
-    wn,wk,claimed,signs = checker.load_witness(ROOT/'data/witness'/witness)
+    wn,wk,claimed,signs = checker.load_witness(REPO_ROOT/'data/witness'/witness)
     assert (wn,wk)==(n,kind) and checker.degree(lines,signs)==claimed
     lower = checker.exact_bound(len(points),len(lines),2**n)
     labels = {v:''.join('IXZY'[c] for c in reversed(checker.codes(n,v))) for v in points}
@@ -28,7 +32,7 @@ for n,kind,name,witness in [
         'exact':claimed==lower,
         'theorem': { '3f':'three_qubit_contexts', '4h':'four_qubit_hyperbolic_contexts',
           '4f':'four_qubit_contexts','5h':'five_qubit_hyperbolic_contexts','5f':'five_qubit_contexts'}[str(n)+kind]})
-dest=ROOT/'independent-review'
+dest = ROOT / 'web' / 'independent-review' if (ROOT / 'web' / 'independent-review').is_dir() else ROOT / 'independent-review'
 dest.mkdir(exist_ok=True)
 (dest/'data.js').write_text('globalThis.HOGGAR_DATA = '+json.dumps(profiles,separators=(',',':'))+';\n',encoding='utf-8')
 print(f'Exported {len(profiles)} independently checked profiles')

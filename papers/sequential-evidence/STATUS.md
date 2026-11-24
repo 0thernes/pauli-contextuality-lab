@@ -1,30 +1,19 @@
-# Publication status
+# Publication Status (Track 3 — Sequential Contextuality Evidence)
 
-Version: 1.0.0. Date: 10 November 2026.
+- **Current release:** `v2.4.0` (24 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) (`papers/sequential-evidence/`, `tracks/sequential-evidence/`, `lean/Evidence/`).
+- **Author:** Alexander S. Donahue (Independent researcher, Spokane, WA, USA; ORCID [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)).
+- **Licences:** Code `Apache-2.0` (`LICENSE`); manuscripts and documentation `CC-BY-4.0` (`LICENSE-DOCS`).
 
-This repository is the public research-software and methods-preprint release of
-Contextuality Evidence Lab. The versioned GitHub release contains the paper PDF
-and reproducibility archive. GitHub Pages serves the interactive lab and paper.
+| Channel | Status | Link |
+|---|---|---|
+| Unified repository | Live (`v2.4.0`) | [pauli-contextuality-lab](https://github.com/0thernes/pauli-contextuality-lab) |
+| Unified GitHub Pages (Track 3 lab) | Live | [Sequential Evidence Lab](https://0thernes.github.io/pauli-contextuality-lab/sequential-evidence/) |
+| Paper PDF | Live | [whitepaper.pdf](https://0thernes.github.io/pauli-contextuality-lab/papers/sequential-evidence/whitepaper.pdf) |
+| Archived standalone snapshot | Read-only archive (`v1.0.0`) | [contextuality-evidence-lab](https://github.com/0thernes/contextuality-evidence-lab) |
+| Journal submission / external peer review | Not submitted / not peer reviewed | Research preprint only |
 
-- Repository: https://github.com/0thernes/contextuality-evidence-lab
-- Release: https://github.com/0thernes/contextuality-evidence-lab/releases/tag/v1.0.0
-- Lab: https://0thernes.github.io/contextuality-evidence-lab/
-- Paper: https://0thernes.github.io/contextuality-evidence-lab/paper/
+## Verification Boundaries
 
-Publication means public distribution as a preprint and executable research
-artifact. It does not mean journal acceptance, arXiv submission, a DOI,
-independent external peer review, or established historical priority.
+Publication means public distribution as a research preprint and executable artifact. It does not mean journal acceptance, arXiv submission, a DOI, independent external peer review, or established historical priority.
 
-Local verification includes the fresh four-tool run, exact benchmark, eleven
-Python tests, browser-model and desktop/mobile browser tests, independent replay,
-and the clean Lean build with its 61-declaration axiom audit. Inspect the
-repository's Actions runs for the separately recorded hosted-CI status.
-
-The result proves a conditional finite-model statement and supplies a concrete
-miscalibration counterexample. No physical quantum apparatus was used. The
-conditional setting floor, absence of within-trial context leakage, and physical
-measurement compatibility cannot be established by the recorded simulations.
-
-No statistical meta-analysis, major open-problem solution, quantum speedup,
-certified quantum entropy, institutional affiliation, prize-level evaluation or
-external endorsement is claimed.
+The Lean 4 formalization (`lean/Evidence/Square.lean`, `lean/Evidence/Sequential.lean`, audited inside `lean/VerifyAll.lean` and replayed across 6 Lean kernels via `lake comparator --paranoid`) proves a conditional finite-model setting-bias bound and constructs a concrete 36-round miscalibration counterexample. No physical quantum apparatus was used; the conditional setting floor, absence of within-trial context leakage, and physical measurement compatibility are explicit hypotheses outside the recorded classical simulations.

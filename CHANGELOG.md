@@ -8,6 +8,16 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.4.0] — 2026-11-24
+
+### Pass 5 TOC Deep-Dive Hardening (Post-Consolidation Runtime Fixes, Blueprint UX, Web QA & C11)
+
+- **Post-Consolidation Track Script & Monorepo Stack Runner Fixes:** Fixed 12 consolidated track scripts and Node/WASM drivers (`tracks/sequential-evidence/scripts/make_figures.py`, `tracks/spectral-bounds/scripts/{stack_audit,phase_seven_lean,flat_states,phase_states,frontier_c3_axioms,frontier_c3_certificate_audit,analysis,independent_demo_data}.py`, `build.sh`, `src/{moonlab_experiment,moonlab_saturated}.mjs`) so references to shared `third_party/`, `data/`, `lean/`, and `papers/` resolve dynamically via `REPO_ROOT` (with standalone fallback), and added `scripts/run_track_stack.py` to stage isolated native Tsotchke stack runs across all three tracks while keeping the SHA-256-fingerprinted Track 2 & Track 3 `run_stack.py` / `stack_moonlab.mjs` sources byte-identical to their recorded `stack_report.json` provenance receipts.
+- **Interactive Lean 4 Blueprint Upgrade (`/blueprint/`):** Upgraded `scripts/build_blueprint.py` so every one of the **140 statically verified Lean declarations** links directly to its exact file and line on GitHub (`.../blob/main/lean/...#L<line>`), added interactive hover/click transitive **dependency-cone highlighting** (upstream prerequisites in amber, downstream corollaries/targets in green) across both the SVG DAG and theorem cards, and added an instant live search filter.
+- **Live Browser QA & HTML Paper Fixes:** Fixed broken space-corrupted GitHub tag URLs, stale `<meta>`/`canonical` tags, and double-replaced version strings in `papers/spectral-bounds/unified-contextuality.html`; fixed the `<select id="profile">` caret-wrapping CSS glitch in `tracks/spectral-bounds/web/independent-review/style.css`; updated track branding links in `independent-review/` and `c3-lab/`; updated `papers/sequential-evidence/STATUS.md`; fixed Abstract nested parentheses in `unified-contextuality.tex` and header line-wrapping in `c3-spectral-counterexample.tex`; and recompiled all 4 PDFs with zero overfull hboxes ≥ 5 pt.
+- **C11 Memory Hygiene & Expanded ASan/UBSan Coverage:** Added `geom_free()` and complete cleanup across `tracks/spectral-bounds/src/legacy-search/{geom.h,wcheck.c,exhaust.c,tabu.c}`, added OOM checks in `third_level.c`, and expanded `.github/workflows/ci.yml` to compile and execute `wcheck`, `exhaust`, `qgt_hoggar`, and `stack_qrng` under `-Wall -Wextra -fsanitize=address,undefined`.
+- **Regression Guards (`tests/test_repo_integrity.py`):** Added automated checks enforcing `README.md` version badge and `unified-metadata.json` version sync, zero malformed/space-corrupted tag URLs in `papers/`, live execution of `phase_seven_lean.py` / `frontier_c3_certificate_audit.py` path resolution, and exact GitHub `#L` links in `blueprint.json`.
+
 ## [2.3.0] — 2026-11-24
 
 ### Pass 4 TOC Deep-Dive Hardening (Manuscripts, Lean, CI, C11, Site, & Security)

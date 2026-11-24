@@ -67,6 +67,17 @@ static geom_t *geom_build(int N, char kind) {
     return g;
 }
 
+static void geom_free(geom_t *g) {
+    if (!g) return;
+    free(g->pts);
+    free(g->pos);
+    free(g->line);
+    free(g->sgn);
+    free(g->inc_off);
+    free(g->inc);
+    free(g);
+}
+
 /* witness I/O: header "N type viol", then 4^N/4 hex chars, MS nibble first, bit v set <=> f(v) = -1 */
 static int witness_read(const char *path, int *N, char *kind, long long *claim, uint8_t **bits_out) {
     FILE *fp = fopen(path, "r"); if (!fp) return -1;

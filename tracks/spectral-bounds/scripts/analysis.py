@@ -17,8 +17,10 @@ import json, math, os, sys, collections
 import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_CAND_REPO = os.path.dirname(os.path.dirname(ROOT))
+REPO_ROOT = _CAND_REPO if os.path.isdir(os.path.join(_CAND_REPO, "data")) else ROOT
 RES = os.path.join(ROOT, "results")
-FIG = os.path.join(ROOT, "paper", "figures")
+FIG = os.path.join(REPO_ROOT, "papers", "spectral-bounds", "figures") if os.path.isdir(os.path.join(REPO_ROOT, "papers", "spectral-bounds")) else os.path.join(ROOT, "paper", "figures")
 os.makedirs(RES, exist_ok=True); os.makedirs(FIG, exist_ok=True)
 failures = []
 report = {}
@@ -108,15 +110,16 @@ rng = np.random.default_rng(20261109)
 
 # ------------------------------------------------------------------ 1. witnesses
 wit = {}
-for fn in sorted(os.listdir(os.path.join(ROOT, "data", "witness"))):
+wit_dir = os.path.join(REPO_ROOT, "data", "witness")
+for fn in sorted(os.listdir(wit_dir)):
     if not fn.endswith(".txt"):
         continue
-    with open(os.path.join(ROOT, "data", "witness", fn)) as fh:
+    with open(os.path.join(wit_dir, fn)) as fh:
         N = int(fh.readline().split()[0])
     if N not in geos:
         continue
     g = geos[N]
-    N, t, claimed, f = read_assignment(os.path.join(ROOT, "data", "witness", fn), g.n)
+    N, t, claimed, f = read_assignment(os.path.join(wit_dir, fn), g.n)
     m = g.mask(t); ln = g.lines(m)
     v = viol(ln, f)
     n_eff = g.D // 2 if t == "e" else g.D

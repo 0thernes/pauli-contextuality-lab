@@ -5,11 +5,12 @@ import json
 import re
 
 ROOT=Path(__file__).resolve().parents[1]
+REPO_ROOT=ROOT.parents[1] if (ROOT.parents[1]/'lean').is_dir() else ROOT
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('log',type=Path)
-    parser.add_argument('--source',type=Path,default=ROOT/'lean/C3Verification.lean')
+    parser.add_argument('--source',type=Path,default=REPO_ROOT/'lean/C3Verification.lean')
     parser.add_argument('--minimum',type=int,default=10)
     parser.add_argument('--output',type=Path,default=ROOT/'results/frontier-c3-axioms.json')
     args=parser.parse_args()

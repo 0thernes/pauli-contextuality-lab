@@ -6,6 +6,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parents[1] if (ROOT.parents[1] / 'papers' / 'sequential-evidence').is_dir() else ROOT
+PAPER_FIG = REPO_ROOT / 'papers' / 'sequential-evidence' / 'figures' if (REPO_ROOT / 'papers' / 'sequential-evidence').is_dir() else ROOT / 'paper/figures'
 data = json.loads((ROOT / 'results/experiment.json').read_text())
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 9, 'svg.fonttype': 'none'})
 fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.5), gridspec_kw={'width_ratios':[1.7, 1]})
@@ -27,9 +29,9 @@ for axis in axes:
     axis.spines[['top','right']].set_visible(False)
     axis.grid(axis='y', alpha=.15)
 fig.tight_layout(pad=1.5)
-for folder in (ROOT / 'paper/figures', ROOT / 'docs/paper/figures'):
+for folder in (PAPER_FIG, ROOT / 'web/figures'):
     folder.mkdir(parents=True, exist_ok=True)
     fig.savefig(folder / 'evidence.svg', bbox_inches='tight')
     fig.savefig(folder / 'evidence.png', dpi=180, bbox_inches='tight')
-fig.savefig(ROOT / 'paper/figures/evidence.pdf', bbox_inches='tight')
+fig.savefig(PAPER_FIG / 'evidence.pdf', bbox_inches='tight')
 print('Saved evidence figure (SVG, PNG, PDF).')

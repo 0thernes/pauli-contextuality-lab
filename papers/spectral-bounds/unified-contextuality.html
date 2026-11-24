@@ -7,11 +7,11 @@
 <meta name="citation_publication_date" content="2026/11/24">
 <meta name="citation_online_date" content="2026/11/24">
 <meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
-<meta name="citation_technical_report_number" content="Hoggar Bound Lab, version 1.9.0">
-<meta name="citation_pdf_url" content="https://0thernes.github.io/hoggar-bound-lab/paper/unified-contextuality.pdf">
-<meta name="citation_abstract_html_url" content="https://0thernes.github.io/hoggar-bound-lab/paper/unified-contextuality.html">
+<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 2.4.0">
+<meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.pdf">
+<meta name="citation_abstract_html_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html">
 <meta name="citation_language" content="en">
-<link rel="canonical" href="https://0thernes.github.io/hoggar-bound-lab/paper/unified-contextuality.html"><style>
+<link rel="canonical" href="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html"><style>
 :root{color-scheme:light;--ink:#183239;--muted:#50666c;--rule:#cbd7d6;--accent:#126c61}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:#fafbf8;color:var(--ink);font:17px/1.65 Georgia,serif}
@@ -35,10 +35,10 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font:14
 @media(max-width:600px){.math.inline{display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle}}
 @media(max-width:500px){main{padding:1.4rem 1rem 3rem}h1{font-size:1.65rem}body{font-size:16px}}
 @media print{body{background:white;color:black;font-size:10.5pt}main{max-width:none;padding:0}nav{display:none}h2,h3{break-after:avoid}img,blockquote,pre{break-inside:avoid}}
-</style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>{document.documentElement.setAttribute('data-math','ready')})}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head><body><main><nav aria-label="Research links"><a href="../">Research index</a><a href="unified-contextuality.pdf">Full paper PDF</a><a href="../../c3-lab/">C3 demonstration</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/v2.3.0 (consolidated from v1.9.0)/lean">Lean proofs</a></nav><h1 id="spectral-bounds-and-their-limits-in-pauli-contextuality-exact-configurations-and-a-proof-of-jonahs-conjecture-e">Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E</h1>
+</style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>{document.documentElement.setAttribute('data-math','ready')})}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head><body><main><nav aria-label="Research links"><a href="../../">Research index</a><a href="unified-contextuality.pdf">Full paper PDF</a><a href="../../c3-lab/">C3 demonstration</a><a href="../../blueprint/">Lean 4 Blueprint</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/main/lean">Lean proofs</a></nav><h1 id="spectral-bounds-and-their-limits-in-pauli-contextuality-exact-configurations-and-a-proof-of-jonahs-conjecture-e">Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E</h1>
 <p><strong>A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case</strong></p>
 <p>Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a>. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a><br>
-Pauli Contextuality Lab (Track 1), version 2.2.0 (consolidated from Hoggar Bound Lab v2.3.0 (consolidated from v1.9.0)), 24 November 2026. Research preprint. Not peer reviewed.<br>
+Pauli Contextuality Lab (Track 1), version 2.4.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.</p>
 <blockquote>
 <p><strong>Prior work and scope.</strong> The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -2710,7 +2710,7 @@ editable modules, adds a declaration-checked Lean Blueprint (<code>blueprint/</c
 enforces the verbatim <code>#print axioms</code> README block and arithmetic/citation audits in CI, and adds
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
 provenance attestations; its release CI receipts are recorded in <code>publication/STATUS.md</code> and
-<code>results/publication-v2.3.0 (consolidated from v1.9.0)-distribution.json</code>.</p>
+<code>results/publication-v1.9.0-distribution.json</code>.</p>
 <h2 id="10-a-running-example-on-the-tsotchke-stack">10. A running example on the Tsotchke stack</h2>
 <h3 id="101-state-preparation-simulated-contexts-and-quantum-geometry">10.1 State preparation, simulated contexts and quantum geometry</h3>
 <p>All four components are used for what they are.</p>
@@ -3260,14 +3260,12 @@ accurately describe that work before making a submission that requires it. AI sy
 tools, not listed as authors.</p>
 <p><strong>Funding and competing interests.</strong> This research was self-funded by Alexander S. Donahue as an independent researcher. The author declares no competing interests.</p>
 <p><strong>Data availability statement.</strong> Source, data, formal proofs, test results and the earlier manuscripts
-are available in <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (consolidated from archived <code>hoggar-bound-lab</code> v2.3.0 (consolidated from v1.9.0)). Release and workflow
+are available in <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (consolidated from archived <code>hoggar-bound-lab</code> v1.9.0). Release and workflow
 records identify the checked snapshots; Software Heritage and Internet Archive captures are archival
-records of particular snapshots, not evidence of review. The addenda in <code>publication/</code> record each
-result of version 1.3.0 as first stated.
+records of particular snapshots, not evidence of review.
 Appendix A gives reproduction commands. No new arXiv identifier, DOI or journal decision is implied
 by this manuscript or its local submission packages.</p>
-<p><strong>Licence.</strong> The repository's <code>LICENSE</code> is authoritative. Its Apache-2.0 / CC-BY-4.0 open licences is preserved;
-this combined manuscript does not relicense the project. Vendored Moonlab, quantum_rng and
+<p><strong>Licence.</strong> The repository's <code>LICENSE</code> (Apache-2.0 for code) and <code>LICENSE-DOCS</code> (CC-BY-4.0 for manuscripts and documentation) are authoritative. Vendored Moonlab, quantum_rng and
 quantum_geometric_tensor retain their authors' MIT licences and provenance records.</p>
 <h2 id="references">References</h2>
 <ul>
@@ -3315,7 +3313,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># case C3 for every number of qubits from four on (Theorem 17)</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Bound HoggarBound.Quadric</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean HoggarBound/CarrierFamily.lean</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v2.3.0 (consolidated from v1.9.0) Lean formalizations (110 axioms), Batteries linter, and multi-kernel comparator</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v2.4.0 Lean formalizations (160 explicit axioms + exhaustive 2,206-theorem audit), Batteries linter, and multi-kernel comparator</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Kramers HoggarBound.SaturationTheory HoggarBound.ConjectureE <span class="dt">\</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  HoggarBound.ConjectureEExtras HoggarBound.AuditUpgrades HoggarBound.C3ExactOptima <span class="dt">\</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  HoggarBound.SaturatedPhaseSix HoggarBound.NormPhaseFamily HoggarBound.ExactDegreesN4N5 <span class="dt">\</span></span>
@@ -3326,7 +3324,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> scripts/run_family7.sh</span></code></pre></div>
 <p>The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v2.3.0 (consolidated from v1.9.0) verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v2.4.0 verification audits, from
 the repository root:</p>
 <pre class="text"><code>python scripts/cospectral_pair.py
 python scripts/phase_seven_lean.py
@@ -3351,7 +3349,7 @@ python scripts/check_citations.py
 python -m unittest tests/test_properties.py tests/test_mutation_and_fuzz.py</code></pre>
 <p>Their exact-verifier last lines read <code>30 of 30</code>, <code>14 of 14</code>, <code>43 of 43</code>, <code>18 of 18</code>, <code>21 of 21</code>,
 <code>81 of 81</code>, <code>36 of 36</code>, <code>115 of 115</code>, <code>46 of 46</code>, <code>97 of 97</code>, <code>39 of 39</code>, <code>15 of 15</code>, <code>10 of 10</code>,
-<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v2.3.0 (consolidated from v1.9.0) verification
+<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v2.4.0 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 <code>c3_sdp_dual_check.py</code>).</p>
 <p>The C3 verification programs require Python, NumPy, SymPy and Node.js. From the repository root:</p>
@@ -3407,4 +3405,4 @@ versions. The theorem's assignments are fully defined in Section 8.2 independent
 <code>results/cospectral_family.json</code>, <code>results/cospectral_family_cone_lift.json</code>,
 <code>results/conjecture_e.json</code>, <code>results/conjecture_e_n6.json</code>, <code>results/conjecture_e_lemmas.json</code> and
 <code>results/conjecture_e_lemmas_n6.json</code>.</p>
-<footer>Version 1.9.0. Research preprint; not peer reviewed. The journal manuscript and supplement are formats of this paper. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/v2.3.0 (consolidated from v1.9.0)/publication/PAPER-MAP.md">Publication map</a></footer></main></body></html>
+<footer>Pauli Contextuality Lab (Track 1), version 2.4.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>

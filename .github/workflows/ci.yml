@@ -71,6 +71,20 @@ jobs:
           ./build/san/third_level_san
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
             tracks/spectral-bounds/src/orbits7.c -o build/san/orbits7_san
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/legacy-search/wcheck.c -o build/san/wcheck_san
+          ./build/san/wcheck_san data/witness/n4_f.txt data/witness/n4_h.txt
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/legacy-search/exhaust.c -o build/san/exhaust_san
+          ./build/san/exhaust_san 2 f
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            -Ithird_party/qgtl/include -Ithird_party/qgtl/stub \
+            third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c \
+            tracks/spectral-bounds/src/qgt_hoggar.c -lm -o build/san/qgt_hoggar_san
+          ./build/san/qgt_hoggar_san data/witness/n3_f_hoggar_moonlab.txt data/witness/n4_h_hoggar_moonlab.txt
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/disjoint-mermin/src/stack_qrng.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/dm_qrng_san
+          ./build/san/dm_qrng_san 20261109 64 >/dev/null
       - name: Report-only linters (ruff & mypy)
         continue-on-error: true
         run: |

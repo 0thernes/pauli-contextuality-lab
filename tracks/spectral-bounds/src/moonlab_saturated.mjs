@@ -72,7 +72,9 @@ const violations = (g, f) => g.lines.reduce((acc, [u, v, w, s]) => acc + (f[u] *
 const maskOf = (vs) => vs.reduce((m, v) => m | (1n << BigInt(v)), 0n);
 
 /* ------------------------------------------------------------------ Moonlab wrapper */
-const Moonlab = await require(path.join(root, 'third_party', 'moonlab', 'moonlab.js'))({ print: () => {}, printErr: () => {} });
+const repoRoot = existsSync(path.join(root, 'third_party', 'moonlab', 'moonlab.js')) ? root : path.resolve(root, '..', '..');
+const dataRoot = existsSync(path.join(root, 'data', 'flat')) ? root : repoRoot;
+const Moonlab = await require(path.join(repoRoot, 'third_party', 'moonlab', 'moonlab.js'))({ print: () => {}, printErr: () => {} });
 const STRUCT = 256;
 function newState(N) {
   const p = Moonlab._malloc(STRUCT);
@@ -215,7 +217,7 @@ for (const st of [...STATES, ...PHASE]) {
   const viol = violations(g, f);
   const muExact = Math.sqrt((D - 1) / pts.length);
   const beta = ((D - 1) * (D - 2)) / (6 * muExact ** 3);
-  const [, maskHex, negHex] = readFileSync(path.join(root, 'data', 'flat', `n${N}_${name}.txt`), 'utf8').trim().split('\n');
+  const [, maskHex, negHex] = readFileSync(path.join(dataRoot, 'data', 'flat', `n${N}_${name}.txt`), 'utf8').trim().split('\n');
   const sameSupport = maskOf(pts) === BigInt('0x' + maskHex);
   const sameSigns = maskOf(pts.filter((v) => f[v] < 0)) === BigInt('0x' + negHex);
   check(dev < 1e-12 && zeroDev < 1e-12 && Math.abs(mu - muExact) < 1e-12,

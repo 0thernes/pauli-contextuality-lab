@@ -74,7 +74,9 @@ function geometry(N, type = 'f') {
 const countViolations = (g, f) => g.lines.reduce((acc, [u, v, w, s]) => acc + (f[u] * f[v] * f[w] !== s ? 1 : 0), 0);
 
 /* ------------------------------------------------------------------ Moonlab wrapper */
-const Moonlab = await require(path.join(root, 'third_party', 'moonlab', 'moonlab.js'))({ print: () => {}, printErr: () => {} });
+const repoRoot = existsSync(path.join(root, 'third_party', 'moonlab', 'moonlab.js')) ? root : path.resolve(root, '..', '..');
+const dataRoot = existsSync(path.join(root, 'data', 'witness')) ? root : repoRoot;
+const Moonlab = await require(path.join(repoRoot, 'third_party', 'moonlab', 'moonlab.js'))({ print: () => {}, printErr: () => {} });
 const STRUCT = 256;
 function newState(N) {
   const p = Moonlab._malloc(STRUCT);
@@ -176,7 +178,7 @@ const results = { seed: SEED, moonlab_abi: Moonlab._moonlab_abi_version ? Moonla
 const log = (...a) => console.log(...a);
 const rnd = new Stream(SEED);
 mkdirSync(path.join(root, 'results'), { recursive: true });
-mkdirSync(path.join(root, 'data', 'witness'), { recursive: true });
+mkdirSync(path.join(dataRoot, 'data', 'witness'), { recursive: true });
 
 /* ------------------------------------------------------------------ E0: self-test of the measurement primitive */
 {
@@ -215,7 +217,7 @@ mkdirSync(path.join(root, 'data', 'witness'), { recursive: true });
   for (const v of g.pts) { const e = expectPauli(p, N, g.A(v), g.C(v)); maxdev = Math.max(maxdev, Math.abs(Math.abs(e) - 1 / 3)); f[v] = e >= 0 ? 1 : -1; }
   const viol = countViolations(g, f);
   const deg = new Map(); for (const [u, v, w, s] of g.lines) if (f[u] * f[v] * f[w] !== s) for (const x of [u, v, w]) deg.set(x, (deg.get(x) ?? 0) + 1);
-  writeAssignment(g, f, viol, path.join(root, 'data', 'witness', 'n3_f_hoggar_moonlab.txt'));
+  writeAssignment(g, f, viol, path.join(dataRoot, 'data', 'witness', 'n3_f_hoggar_moonlab.txt'));
   freeState(p);
   results.experiments.E1 = { contexts: g.lines.length, max_deviation_from_one_third: maxdev, violated: viol, points_on_violated_lines: deg.size, violated_lines_per_point: [...new Set(deg.values())] };
   log(`E1 Hoggar state on Moonlab: 63 Pauli expectations = +-1/3 (max dev ${maxdev.toExponential(2)}); sign assignment violates ${viol} of ${g.lines.length} contexts; every point on ${[...new Set(deg.values())]} violated lines`);
@@ -235,7 +237,7 @@ mkdirSync(path.join(root, 'data', 'witness'), { recursive: true });
   }
   const viol = countViolations(gh, f);
   const deg = new Map(); for (const [u, v, w, s] of gh.lines) if (f[u] * f[v] * f[w] !== s) for (const x of [u, v, w]) deg.set(x, (deg.get(x) ?? 0) + 1);
-  writeAssignment(gh, f, viol, path.join(root, 'data', 'witness', 'n4_h_hoggar_moonlab.txt'));
+  writeAssignment(gh, f, viol, path.join(dataRoot, 'data', 'witness', 'n4_h_hoggar_moonlab.txt'));
   freeState(p);
   results.experiments.E2 = { contexts: gh.lines.length, max_dev_real: devReal, max_abs_imaginary: devImag, violated: viol, violated_lines_per_point: [...new Set(deg.values())] };
   log(`E2 realified Hoggar on Moonlab: 135 real observables = +-1/3 (dev ${devReal.toExponential(2)}), 120 imaginary = 0 (max ${devImag.toExponential(2)}); violates ${viol} of ${gh.lines.length} contexts of Q+(7,2); every point on ${[...new Set(deg.values())]} violated lines`);
@@ -269,7 +271,7 @@ const ceilings = {   // success-probability ceilings for a noncontextual model: 
 results.experiments.E4 = [];
 for (const N of [2, 3, 4]) {
   const g = geometry(N), shots = N === 4 ? 4000 : 3000;
-  const fbestFile = path.join(root, 'data', 'witness', N === 4 ? 'n4_f.txt' : 'n3_f_hoggar_moonlab.txt');
+  const fbestFile = path.join(dataRoot, 'data', 'witness', N === 4 ? 'n4_f.txt' : 'n3_f_hoggar_moonlab.txt');
   const fbest = N >= 3 && existsSync(fbestFile) ? readAssignment(g, fbestFile) : null;
   for (const perr of [0, 0.01, 0.02, 0.05, 0.1, 0.2]) {
     const p = randomState(N, rnd);

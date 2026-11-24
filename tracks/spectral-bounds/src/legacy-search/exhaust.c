@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     }
     uint32_t nfree = 0, *freev = malloc(sizeof(uint32_t) * g->npts);
     for (uint32_t i = 0; i < g->npts; i++) if (!fixed[i]) freev[nfree++] = i;
-    if (nfree > 40) { fprintf(stderr, "too many free points (%u)\n", nfree); return 2; }
+    if (nfree > 40) { fprintf(stderr, "too many free points (%u)\n", nfree); free(freev); free(fixed); geom_free(g); return 2; }
     int8_t *f = malloc(g->npts); memset(f, 1, g->npts);
     uint8_t *bad = malloc(g->L); long long v = 0;
     for (uint64_t l = 0; l < g->L; l++) { bad[l] = f[g->line[l][0]] * f[g->line[l][1]] * f[g->line[l][2]] != g->sgn[l]; v += bad[l]; }
@@ -29,5 +29,6 @@ int main(int argc, char **argv) {
     }
     printf("N=%d kind=%c points=%u lines=%llu rank=%d enumerated=2^%u exact_degree=%lld (attained by %lld gauge classes)\n",
            N, kind, g->npts, (unsigned long long)g->L, r, nfree, best, nbest);
+    free(bad); free(f); free(freev); free(fixed); geom_free(g);
     return 0;
 }

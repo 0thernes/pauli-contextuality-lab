@@ -2,7 +2,7 @@
 
 Alexander S. Donahue · Independent researcher, Spokane, WA, USA · ORCID 0009-0006-8168-9648 · CC-BY-4.0  
 AI-assisted research software and methods preprint · 24 November 2026 · https://github.com/0thernes/pauli-contextuality-lab  
-Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 2.2.0 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
+Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 2.4.0 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
 
 ## Abstract
 

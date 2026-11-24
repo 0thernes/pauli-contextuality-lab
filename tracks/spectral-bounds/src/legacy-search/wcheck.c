@@ -13,6 +13,9 @@ int main(int argc, char **argv) {
         printf("%s: N=%d type=%c points=%u lines=%llu claimed=%lld recomputed=%lld %s\n", argv[a], N, kind, g->npts,
                (unsigned long long)g->L, claim, v, v == claim ? "OK" : "MISMATCH");
         if (v != claim) bad = 1;
+        free(f);
+        free(bits);
+        geom_free(g);
     }
     return bad;
 }

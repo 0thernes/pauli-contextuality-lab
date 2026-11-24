@@ -44,8 +44,13 @@ int main(int argc, char **argv) {
     int8_t *best = malloc(g->npts); uint64_t *tabu = calloc(g->npts, sizeof(uint64_t));
     if (argc > 6) {
         int n2; char k2; long long c; uint8_t *bits;
-        if (witness_read(argv[6], &n2, &k2, &c, &bits) || n2 != N || k2 != kind) { fprintf(stderr, "bad start\n"); return 2; }
+        if (witness_read(argv[6], &n2, &k2, &c, &bits) || n2 != N || k2 != kind) {
+            fprintf(stderr, "bad start\n");
+            free(tabu); free(best); free(delta); free(bad); free(f); geom_free(g);
+            return 2;
+        }
         for (uint32_t i = 0; i < g->npts; i++) f[i] = bits[g->pts[i]] ? -1 : 1;
+        free(bits);
     } else for (uint32_t i = 0; i < g->npts; i++) f[i] = (rnd() >> 63) ? -1 : 1;
     recount();
     long long bestv = viol; memcpy(best, f, g->npts);
@@ -85,5 +90,6 @@ int main(int argc, char **argv) {
     long long chk = count_viol(g, best);
     printf("final N=%d kind=%c best=%lld recount=%lld iters=%llu\n", N, kind, bestv, chk, (unsigned long long)it);
     witness_write(out, g, best, bestv);
+    free(cand); free(tabu); free(best); free(delta); free(bad); free(f); geom_free(g);
     return chk == bestv ? 0 : 1;
 }

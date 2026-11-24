@@ -26,6 +26,8 @@ and sign masks), results/flat_states.json and, with --lean, lean/HoggarBound/Fla
 import collections, itertools, json, math, os, random, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_CAND_REPO = os.path.dirname(os.path.dirname(ROOT))
+REPO_ROOT = _CAND_REPO if os.path.isdir(os.path.join(_CAND_REPO, "lean")) else ROOT
 pc = lambda x: bin(x).count("1")
 CHECKS = []
 
@@ -209,12 +211,12 @@ def main():
         sys.stdout.reconfigure(encoding="utf-8")
     table, results = [], {}
     sts, T = states()
-    os.makedirs(os.path.join(ROOT, "data", "flat"), exist_ok=True)
+    os.makedirs(os.path.join(REPO_ROOT, "data", "flat"), exist_ok=True)
     for name, N, amp, expect in sts:
         r = analyse(name, amp, N, expect)
         results[name] = r
         neg = [v for v in r["S"] if r["f"][v] < 0]
-        with open(os.path.join(ROOT, "data", "flat", "n%d_%s.txt" % (N, name)), "w", newline="\n") as fh:
+        with open(os.path.join(REPO_ROOT, "data", "flat", "n%d_%s.txt" % (N, name)), "w", newline="\n") as fh:
             fh.write("%d %d %d %d\n%x\n%x\n" % (N, r["points"], r["contexts"], r["degree"], mask_of(r["S"]), mask_of(neg)))
         table.append((name, N, r["points"], r["contexts"], r["degree"], r["mu"], r["line_closed"]))
 
@@ -341,7 +343,7 @@ def main():
             lines.append("def %sNeg : Nat := 0x%x" % (name, mask_of(neg)))
             lines.append("")
         lines.append("end HoggarBound.FlatData")
-        open(os.path.join(ROOT, "lean", "HoggarBound", "FlatData.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
+        open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "FlatData.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
         print("wrote lean/HoggarBound/FlatData.lean")
 
         # five qubits: the double sums have 2^20 terms; they are evaluated in 16 blocks of 64 rows
@@ -386,7 +388,7 @@ def main():
               "  have e : (2 : ℕ) ^ (2 * 5) = 64 * 16 := by norm_num",
               "  rw [card_violated_cfg, e]",
               "  exact h.trans (by norm_num)", "", "end HoggarBound"]
-        open(os.path.join(ROOT, "lean", "HoggarBound", "SaturatedFive.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
+        open(os.path.join(REPO_ROOT, "lean", "HoggarBound", "SaturatedFive.lean"), "w", encoding="utf-8", newline="\n").write("\n".join(L) + "\n")
         print("wrote lean/HoggarBound/SaturatedFive.lean")
 
     npass = sum(ok for _, ok in CHECKS)

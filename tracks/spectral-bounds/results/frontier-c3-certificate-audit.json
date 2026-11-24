@@ -70,13 +70,13 @@
     }
   ],
   "source_sha256": {
-    "lean/HoggarBound/C3Data.lean": "a7150262f5edf80aca74e5e4a5f02dba49001a32c27d97c0094a7ae07251dbf8",
-    "lean/HoggarBound/C3Geometry.lean": "bb66e7238e78e1227d1e69fa25dff3ca2e77a74576c5ac32dc50bdc6065d2679",
-    "lean/HoggarBound/C3Certificate.lean": "3052cd0f9acd53afd66d6496189ceeace749114c4bdedcb80589eac15a2aa9e1",
-    "paper/c3-spectral-counterexample.md": "7b394af67904619b5d77bb3bca7f911396d8c90879e4b561875da0053c678453",
-    "lean/HoggarBound/C3Theorem.lean": "0625ca6d1f52511ce13978eb9691bd71b50d10f9923a4668ca38e2d9d57b06ee",
+    "lean/HoggarBound/C3Data.lean": "cd7fd590e1b5e7ba747fbdc966c77e3879db3251a204ff9eb4b2b946601d4476",
+    "lean/HoggarBound/C3Geometry.lean": "692df9385ee625a2edee35d6cb7d4dc6a57b4547c4b30e7bdf9d32494d19f7ea",
+    "lean/HoggarBound/C3Certificate.lean": "5c52678a7450bf8acfbff90abef85ee62727a15f9a3a758efd476ef34f685842",
+    "papers/spectral-bounds/c3-spectral-counterexample.tex": "534f574d747a609bd35c4d01252aae876479ca08bfd7a6524bc1fe608f64f8b8",
+    "lean/HoggarBound/C3Theorem.lean": "77201cec43172d4cb46ad8507a33738afb24625cb65b67ed9a2cead47919138b",
     "lean/HoggarBound/C3Spectra.lean": "42e302aa4b3eca2ca61d11ff73703e49ba5e0ae27d3136c1d19f07a8ec270b1c"
   },
-  "script_sha256": "c07e1cc5803cd9bfc7fb3fee567c67885f918c3cd17374803dbd1f4d7ca6f750",
+  "script_sha256": "3b443c2a96c14ae569a930e9063c6f699f6acebf78e636485296f45a5839d501",
   "arithmetic": "Python arbitrary-precision integers for every certificate product; exact literal entries 0,+/-1,+/-i during tensor construction"
 }

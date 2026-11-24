@@ -13,6 +13,7 @@ import numpy as np
 import sympy as sp
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parents[1] if (ROOT.parents[1] / 'lean').is_dir() else ROOT
 
 
 def require(condition, message):
@@ -32,9 +33,10 @@ def literal_pauli(v):
 
 def main():
     names = ['lean/HoggarBound/C3Data.lean', 'lean/HoggarBound/C3Geometry.lean',
-             'lean/HoggarBound/C3Certificate.lean', 'paper/c3-spectral-counterexample.md',
+             'lean/HoggarBound/C3Certificate.lean',
+             'papers/spectral-bounds/c3-spectral-counterexample.tex',
              'lean/HoggarBound/C3Theorem.lean', 'lean/HoggarBound/C3Spectra.lean']
-    sources = {name: (ROOT / name).read_bytes() for name in names}
+    sources = {name: (REPO_ROOT / name).read_bytes() for name in names}
     lean = sources[names[0]].decode('utf8')
     geometry = sources[names[1]].decode('utf8')
     paper = sources[names[3]].decode('utf8')
