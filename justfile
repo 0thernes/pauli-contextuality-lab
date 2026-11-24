@@ -20,15 +20,11 @@ test:
 # Report-only linters & type checks (ruff, mypy, C warnings, Batteries runLinter)
 lint:
     python3 -m ruff check scripts/ tests/ || true
-    python3 -m mypy --ignore-missing-imports scripts/check_citations.py scripts/check_readme_axioms.py scripts/arithmetic_audit.py scripts/build_blueprint.py || true
+    python3 -m mypy --ignore-missing-imports scripts/ || true
     bash scripts/dev.sh lint
 
 # Compile and execute C11 verifiers with AddressSanitizer + UndefinedBehaviorSanitizer
 sanitizers:
-    mkdir -p build/san
-    cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer tracks/spectral-bounds/src/hoggar.c third_party/quantum_rng/src/quantum_rng/quantum_rng.c -Ithird_party/quantum_rng/src/quantum_rng -lm -o build/san/hoggar_san
-    ./build/san/hoggar_san table 4
-    ./build/san/hoggar_san verify 4 f data/witness/n4_f.txt
     bash scripts/dev.sh sanitizers
 
 # Build Lean libraries, audit axioms (VerifyAll.lean), scan forbidden tokens, run lake comparator --paranoid

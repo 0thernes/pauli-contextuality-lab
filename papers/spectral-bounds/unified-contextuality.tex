@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.0.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed.
+Pauli Contextuality Lab (Track 1), version 2.2.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -65,9 +65,11 @@ four-qubit C3 spectral certificate and \textbf{exact global binary completion op
 constructions (Theorem 17, Corollary 18), Lemmas 20--21, Theorem 22, signed-Clifford orbit transport,
 Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every \(N\ge4\), and ten
 existential non-vacuity witnesses (\texttt{NonVacuity.lean}), all strictly within the standard axioms (110
-audited declarations in \nolinkurl{VerifyNewFormalizations.lean} alongside the retained baseline, saturation and C3
-audits, checked across multiple Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, Batteries linted, and
-cross-checked in a declaration-verified Lean Blueprint). None of this invalidates the spectral floor.
+audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (158 explicit
+\texttt{\#print\ axioms} lines plus an exhaustive 1,920-theorem \texttt{Lean.collectAxioms} check across all
+three tracks), replayed across six independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, Batteries
+linted with zero errors, and mapped in a 24-node interactive Lean Blueprint at \texttt{/blueprint/}). None of this
+invalidates the spectral floor.
 \end{quote}
 
 \begin{abstract}
@@ -2349,7 +2351,7 @@ editable modules, adds a declaration-checked Lean Blueprint (\texttt{blueprint/}
 enforces the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and adds
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
 provenance attestations; its release CI receipts are recorded in \nolinkurl{publication/STATUS.md} and
-\nolinkurl{results/publication-v1.9.0-distribution.json}.
+\nolinkurl{results/publication-v1.9.0-distribution.json}. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.2.0), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 158 explicit headline declarations plus all 1,920 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI, and the unified GitHub Pages portal mounts the 24-node interactive Blueprint at \texttt{/blueprint/}.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 
@@ -2942,26 +2944,20 @@ quantum\_geometric\_tensor retain their authors\textquotesingle{} MIT licences a
 bash scripts/build.sh
 # every test: exhaustive N=2, falsification suite, flat states, analysis, ladder, Moonlab, QGTL, Eshkol
 bash scripts/run_all.sh
-# Lean (needs elan; fetches Lean 4.35.0 and the Mathlib cache)
-cd lean && lake exe cache get && lake build
-# the exact degrees of Section 5 (kernel evaluations; see the CI evidence for time and memory)
-lake build HoggarBound.Saturated HoggarBound.SaturatedPhaseFive
-lake env lean SaturatedVerification.lean
-# the seven-qubit degree (in CI about 1.5 minutes and 6.4 GB of memory)
-lake build HoggarBound.MaskRows HoggarBound.SaturatedPhaseSeven
-lake env lean SaturatedSevenVerification.lean
-# case C3 for every number of qubits from four on (Theorem 17)
-lake build HoggarBound.Bound HoggarBound.Quadric
-lake env lean HoggarBound/CarrierFamily.lean
-# All v1.5.0-v1.9.0 Lean formalizations (110 axioms), Batteries linter, and multi-kernel comparator
-lake build HoggarBound.Kramers HoggarBound.SaturationTheory HoggarBound.ConjectureE \
-  HoggarBound.ConjectureEExtras HoggarBound.AuditUpgrades HoggarBound.C3ExactOptima \
-  HoggarBound.SaturatedPhaseSix HoggarBound.NormPhaseFamily HoggarBound.ExactDegreesN4N5 \
-  HoggarBound.NonVacuity HoggarBound.Solution
-lake env lean VerifyNewFormalizations.lean
+# Lean 4.35.0 (needs elan; fetches Lean 4.35.0 and the pinned Mathlib v4.35.0 cache)
+cd lean && lake exe cache get
+# Build all three libraries plus the isolated 12-target comparator bridge
+lake build HoggarBound ContextualityTensor Evidence Solution
+# Exhaustive axiom audit (158 explicit #print axioms + all 1,920 project theorems)
+lake env lean VerifyAll.lean
+# Batteries linter (0 errors) and 6-kernel independent replay
+lake exe runLinter ContextualityTensor Evidence
 lake comparator --config comparator.json --paranoid
-# the seven-qubit enumeration of Theorem 13 (about eight core-hours)
-cd .. && bash scripts/run_family7.sh
+# Additional Section 5 & 8 finite-certificate modules (optional standalone builds)
+lake build HoggarBound.Saturated HoggarBound.SaturatedPhaseFive HoggarBound.SaturatedPhaseSeven
+lake build HoggarBound.C3Data HoggarBound.C3Certificate HoggarBound.C3Theorem HoggarBound.C3Spectra
+# Seven-qubit enumeration of Theorem 13 (about eight core-hours)
+cd .. && bash tracks/spectral-bounds/scripts/run_family7.sh
 \end{verbatim}
 
 The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
@@ -2970,27 +2966,26 @@ determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0 verifi
 the repository root:
 
 \begin{verbatim}
-python scripts/cospectral_pair.py
-python scripts/phase_seven_lean.py
-python scripts/cospectral_family.py --six
-python scripts/cospectral_family_tensor_check.py
-python scripts/cospectral_family_cone_lift.py
-python scripts/conjecture_e.py
-python scripts/conjecture_e.py 6
-python scripts/conjecture_e_lemmas.py
-python scripts/conjecture_e_lemmas.py 6
-python scripts/conjecture_e_trace_formula.py
-python scripts/conjecture_e_trace_formula.py 6
-python scripts/c3_sdp_dual_check.py
-python scripts/c3_exact_optima_check.py
-python scripts/norm_phase_family.py
-python scripts/exact_degrees_n4_n5.py
-python scripts/c3_sparse_search.py 3 3
+# One-command unified verifier across all three tracks + data & third-party SHA-256 manifests
+python scripts/verify_all.py
+# Unified pytest (exact, Hypothesis property, negative, 6-mutant killing, 300-payload fuzz, integrity)
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
+# Repository audits, interactive 24-node Blueprint, and link-checked Pages site
 python scripts/check_readme_axioms.py
 python scripts/arithmetic_audit.py
-python scripts/build_blueprint.py
 python scripts/check_citations.py
-python -m unittest tests/test_properties.py tests/test_mutation_and_fuzz.py
+python scripts/build_blueprint.py
+python scripts/build_site.py
+# C11 ASan/UBSan sanitizers (Linux/macOS; builds & executes hoggar_san + third_level_san)
+bash scripts/dev.sh sanitizers
+# Individual Track 1 exact verifiers (all located under tracks/spectral-bounds/scripts/)
+python tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py
+python tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py 6
+python tracks/spectral-bounds/scripts/c3_sdp_dual_check.py
+python tracks/spectral-bounds/scripts/c3_exact_optima_check.py
+python tracks/spectral-bounds/scripts/norm_phase_family.py
+python tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py
 \end{verbatim}
 
 Their exact-verifier last lines read \texttt{30\ of\ 30}, \texttt{14\ of\ 14}, \texttt{43\ of\ 43}, \texttt{18\ of\ 18}, \texttt{21\ of\ 21},
@@ -3002,12 +2997,11 @@ audits and property/mutation/fuzz tests exit with status 0. NumPy is required (a
 The C3 verification programs require Python, NumPy, SymPy and Node.js. From the repository root:
 
 \begin{verbatim}
-python scripts/frontier_c3_verify.py
-python scripts/frontier_c3_context_verify.py
-node tests/frontier_c3_browser_test.cjs
-python scripts/frontier_c3_integer_bounds.py
-python scripts/unified_section_score.py
-python scripts/frontier_c3_demo.py
+python tracks/spectral-bounds/scripts/frontier_c3_verify.py
+python tracks/spectral-bounds/scripts/frontier_c3_context_verify.py
+python tracks/spectral-bounds/scripts/frontier_c3_integer_bounds.py
+python tracks/spectral-bounds/scripts/unified_section_score.py
+python tracks/spectral-bounds/scripts/frontier_c3_demo.py
 \end{verbatim}
 
 The last command requires Eshkol; set \texttt{ESHKOL\_RUN} when it is not on the system path. The wrapper
@@ -3018,12 +3012,9 @@ input to these arithmetic checks.
 From \texttt{lean/}, build the C3 targets sequentially and then audit the declarations:
 
 \begin{verbatim}
-lake build HoggarBound.C3Data
-lake build HoggarBound.C3Certificate
-lake build HoggarBound.C3Geometry
-lake build HoggarBound.C3Theorem
-lake build HoggarBound.C3Spectra
-lake env lean C3Verification.lean
+lake build HoggarBound.C3Data HoggarBound.C3Certificate HoggarBound.C3Geometry \
+  HoggarBound.C3Theorem HoggarBound.C3Spectra
+lake env lean VerifyAll.lean
 \end{verbatim}
 
 The recorded Windows finite-certificate check took approximately 61 minutes. This is proof-checking

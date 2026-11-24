@@ -20,6 +20,66 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertRegex(citation, re.compile(rf'^version:\s*"{re.escape(version)}"$', re.M))
         formal = (ROOT / "formalization.yaml").read_text(encoding="utf-8")
         self.assertRegex(formal, re.compile(rf'^version:\s*"{re.escape(version)}"$', re.M))
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn(f"v{version}", readme)
+
+    def test_all_root_doc_repo_paths_exist(self) -> None:
+        path_pat = re.compile(r"`((?:lean|tracks|papers|scripts|tests|docs|data|third_party|results|blueprint)/[A-Za-z0-9_./-]+)`")
+        missing: list[tuple[str, str]] = []
+        for rel in ("README.md", "CLAIMS.md", "LIMITATIONS.md", "REPLICATION.md", "docs/statement-fidelity.md", "AGENTS.md"):
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+            for m in path_pat.finditer(txt):
+                cand = m.group(1).rstrip("/.")
+                if any(ch in cand for ch in ("*", "<", "{", "..")):
+                    continue
+                if not (ROOT / cand).exists():
+                    missing.append((rel, cand))
+        self.assertEqual(missing, [], f"Dead repo paths referenced in root docs: {missing}")
+
+    def test_all_doc_lean_decl_refs_exist(self) -> None:
+        decl_re = re.compile(
+            r"^\s*(?:private\s+|noncomputable\s+|protected\s+)*(?:theorem|lemma|def|structure|abbrev|inductive|instance)\s+([A-Za-z0-9_.']+)",
+            re.M,
+        )
+        ns_re = re.compile(r"^\s*namespace\s+([A-Za-z0-9_.]+)", re.M)
+        known: set[str] = set()
+        for lf in (ROOT / "lean").rglob("*.lean"):
+            if ".lake" in lf.parts:
+                continue
+            t = lf.read_text(encoding="utf-8", errors="replace")
+            nss = ns_re.findall(t)
+            for m in decl_re.finditer(t):
+                short = m.group(1)
+                known.add(short)
+                for ns in nss:
+                    known.add(f"{ns}.{short}")
+        ref_re = re.compile(r"`((?:HoggarBound|ContextualityTensor|Evidence|PauliContextualityLab)\.[A-Za-z0-9_.']+)`")
+        missing: list[tuple[str, str]] = []
+        for rel in ("README.md", "CLAIMS.md", "docs/statement-fidelity.md"):
+            t = (ROOT / rel).read_text(encoding="utf-8")
+            for m in ref_re.finditer(t):
+                d = m.group(1)
+                if d not in known and d.split(".")[-1] not in known:
+                    missing.append((rel, d))
+        self.assertEqual(missing, [], f"Unresolved Lean decl refs in docs: {missing}")
+
+    def test_no_legacy_llc_in_active_papers_and_docs(self) -> None:
+        pat = re.compile(r"0thernes\s+LLC", re.I)
+        active = [
+            "README.md", "CLAIMS.md", "LIMITATIONS.md", "REPLICATION.md", "LEGAL.md",
+            "papers/README.md",
+            "papers/spectral-bounds/unified-contextuality.tex",
+            "papers/spectral-bounds/unified-contextuality.md",
+            "papers/spectral-bounds/unified-contextuality.html",
+            "papers/spectral-bounds/unified-citation.bib",
+            "papers/spectral-bounds/unified-metadata.json",
+            "papers/disjoint-mermin/contextuality-tensor.tex",
+            "papers/disjoint-mermin/contextuality-tensor.md",
+            "papers/disjoint-mermin/contextuality-tensor.bib",
+            "papers/sequential-evidence/whitepaper.md",
+        ]
+        hits = [r for r in active if (ROOT / r).is_file() and pat.search((ROOT / r).read_text(encoding="utf-8"))]
+        self.assertEqual(hits, [], f"Legacy LLC reference found in active docs/papers: {hits}")
 
     def test_open_dual_license_and_independent_affiliation(self) -> None:
         lic = (ROOT / "LICENSE").read_text(encoding="utf-8")

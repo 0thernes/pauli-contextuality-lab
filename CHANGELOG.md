@@ -8,6 +8,17 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.2.0] - 2026-11-24
+
+### Added & Upgraded
+- **Interactive 24-node SVG DAG Lean Blueprint (`blueprint/src/content.tex` + `scripts/build_blueprint.py`):** expanded from 13 nodes / 48 refs to **24 formal nodes & 138 statically verified Lean declarations** across Tracks 1–3 and the 12-target 6-kernel Comparator Bridge, rendered as an interactive, track-filterable SVG dependency graph with clickable jump-to-card nodes at `/blueprint/`.
+- **Publication-grade Track 3 PDF (`papers/sequential-evidence/whitepaper.tex` + `whitepaper.pdf`):** compiled via Pandoc + Tectonic with proper PDF Author/Title metadata, ORCID, independent-researcher affiliation, `CC-BY-4.0` license, and canonical `pauli-contextuality-lab` links.
+- **Expanded integrity regression tests (`tests/test_repo_integrity.py`):** automatically enforce live repo-path existence across all root docs, live Lean declaration resolution across `README.md`/`CLAIMS.md`/`docs/statement-fidelity.md`, zero legacy LLC strings in active docs/papers, and full single-version consistency.
+
+### Fixed
+- **Track 1 Flagship Paper Appendix A (`papers/spectral-bounds/unified-contextuality.tex` & `.pdf`):** replaced all six pre-consolidation reproduction commands (`VerifyNewFormalizations.lean`, `HoggarBound.Solution`, `SaturatedVerification.lean`, `scripts/c3_exact_optima_check.py`, `frontier_c3_browser_test.cjs`) with live, verified `pauli-contextuality-lab` commands (`VerifyAll.lean`, `lake comparator --paranoid`, `scripts/verify_all.py`, `tracks/spectral-bounds/scripts/...`) and updated Section 9.4 with the 1,920-theorem / 6-kernel verification record.
+- Fixed dead path in `CLAIMS.md` (`results/n9_rank8_search.tsv` → `tracks/spectral-bounds/results/n9_rank8_search.tsv`), documented Track 2 exact $\mathbb{Z}$-evenness and Track 2/3 non-vacuity in `docs/statement-fidelity.md`, and verified all 20 arXiv IDs & 23 DOIs live online (`scripts/check_citations.py --online`, 43/43 HTTP 200).
+
 ## [2.1.0] - 2026-11-24
 
 ### Added
