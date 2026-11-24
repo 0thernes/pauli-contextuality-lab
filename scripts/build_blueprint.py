@@ -8,6 +8,7 @@ import html
 import json
 import re
 import sys
+from typing import Any
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,16 +42,16 @@ def index_lean_declarations() -> set[str]:
     return found
 
 
-def parse_blueprint(tex: str) -> list[dict]:
-    nodes = []
+def parse_blueprint(tex: str) -> list[dict[str, Any]]:
+    nodes: list[dict[str, Any]] = []
     for m in ENV_RE.finditer(tex):
         kind, title, body = m.group(1), (m.group(2) or "").strip(), m.group(3)
         label_m = LABEL_RE.search(body)
         label = label_m.group(1).strip() if label_m else f"node-{len(nodes)}"
-        lean_decls = []
+        lean_decls: list[str] = []
         for lm in LEAN_RE.finditer(body):
             lean_decls.extend(x.strip() for x in lm.group(1).split(",") if x.strip())
-        uses = []
+        uses: list[str] = []
         for um in USES_RE.finditer(body):
             uses.extend(x.strip() for x in um.group(1).split(",") if x.strip())
         leanok = "\\leanok" in body

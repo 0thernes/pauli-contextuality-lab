@@ -1,0 +1,11 @@
+# Gitleaks configuration extending the default secret-detection ruleset.
+# Only targeted false positives in mathematical Lean 4 proof terms are allowlisted.
+title = "pauli-contextuality-lab gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Lean 4 local hypothesis names (`have key := ...`) are mathematical proof terms, not API keys."
+paths = ['''^lean/.*\.lean$''']
+regexes = ['''have\s+key\s*:=''']

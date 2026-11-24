@@ -19,7 +19,7 @@ OUT_HTML = os.path.join(ROOT, "paper", "spectral-floor.html")
 OUT_PDF = os.path.join(ROOT, "paper", "spectral-floor.pdf")
 DOCS = os.path.join(ROOT, "docs")
 AUTHOR = "Donahue, Alexander S."
-INSTITUTION = "0thernes LLC"
+INSTITUTION = "Independent researcher, Spokane, WA, USA"
 ORCID = "https://orcid.org/0009-0006-8168-9648"
 SITE = "https://0thernes.github.io/hoggar-bound-lab/"
 

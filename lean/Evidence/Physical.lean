@@ -18,10 +18,14 @@ open scoped Kronecker
 
 namespace Evidence
 
+/-- Integer `2 × 2` single-qubit matrix representation. -/
 abbrev OneQubitMatrix := Matrix (Fin 2) (Fin 2) ℤ
+/-- Integer `4 × 4` two-qubit matrix representation indexed by `Fin 2 × Fin 2`. -/
 abbrev TwoQubitMatrix := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℤ
 
+/-- Real integer Pauli `X` matrix `[[0, 1], [1, 0]]`. -/
 def pauliX : OneQubitMatrix := !![0, 1; 1, 0]
+/-- Real integer Pauli `Z` matrix `[[1, 0], [0, -1]]`. -/
 def pauliZ : OneQubitMatrix := !![1, 0; 0, -1]
 
 /-- Observable order XI, IX, XX, IZ, ZI, ZZ, XZ, ZX, YY. -/

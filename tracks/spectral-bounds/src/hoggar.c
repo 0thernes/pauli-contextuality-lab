@@ -363,7 +363,9 @@ static int cmd_search(int N, char type, uint64_t seed, int restarts, uint64_t st
     printf("N=%d type=%c best=%lld recount=%lld lower_bound=%lld lines=%llu\n", N, type, (long long)best,
            (long long)check, (long long)dlow, (unsigned long long)g->nlines);
     if (out) asg_write(g, best_f, best, out);
-    return (check == best && best >= dlow) ? 0 : 3;
+    int rc = (check == best && best >= dlow) ? 0 : 3;
+    free(best_f); free(run_f); qrng_free(r.ctx); asg_free(a); geo_free(g);
+    return rc;
 }
 
 /* Falsification harness: many independent random starts, each greedily + thermally improved; the theorem
@@ -391,6 +393,7 @@ static int cmd_falsify(int N, char type, uint64_t seed, uint64_t trials, uint64_
     printf("N=%d type=%c lines=%llu lower_bound=%lld trials=%llu mean_random=%.2f min_random=%lld min_optimised=%lld counterexamples=%llu\n",
            N, type, (unsigned long long)g->nlines, (long long)dlow, (unsigned long long)trials, sumraw / (double)trials,
            (long long)minraw, steps ? (long long)minopt : -1LL, (unsigned long long)below);
+    free(tmp); qrng_free(r.ctx); asg_free(a); geo_free(g);
     return below ? 3 : 0;
 }
 
@@ -409,6 +412,7 @@ static int cmd_exhaust2(void) {
                (unsigned long long)g->nlines, (long long)(((int64_t)g->nlines - b) / 2));
         for (int d = 0; d < 32; d++) if (hist[d]) printf(" %d:%u", d, hist[d]);
         printf("\n");
+        asg_free(a); geo_free(g);
     }
     return 0;
 }
@@ -424,6 +428,7 @@ static int cmd_lines(int N, char type) {
             if (p < q) printf("%u %u %u %d\n", p, q, r, (e >> 31) ? -1 : 1);
         }
     }
+    geo_free(g);
     return 0;
 }
 

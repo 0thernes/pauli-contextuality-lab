@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble the single unified GitHub Pages site at build/site/.
+"""Assemble and link-check the single unified GitHub Pages site at build/site/.
 
 Mounts:
   /                       Unified landing portal for all 3 tracks
@@ -8,12 +8,15 @@ Mounts:
   /independent-review/    Track 1 independent review explorer
   /disjoint-mermin/       Track 2 interactive 4-qubit Mermin-square lab
   /sequential-evidence/   Track 3 interactive sequential evidence lab
-  /papers/                All 3 research preprints (PDF & HTML)
+  /papers/                All 3 research preprints (PDF, HTML, and figures)
+  /results/               Referenced audit reports for interactive explorers
   /vendor/moonlab/        Single deduplicated Moonlab WASM runtime
 """
 from __future__ import annotations
 
+import re
 import shutil
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +29,13 @@ def copy_if_dir(src: Path, dst: Path) -> None:
     if dst.exists():
         shutil.rmtree(dst)
     shutil.copytree(src, dst)
+
+
+def copy_if_file(src: Path, dst: Path) -> None:
+    if not src.is_file():
+        return
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(src, dst)
 
 
 def render_portal() -> str:
@@ -63,7 +73,7 @@ def render_portal() -> str:
 <body>
   <header>
     <div class="wrap">
-      <div class="eyebrow">Lean 4.35.0 · Mathlib v4.35.0 · Exact Arithmetic · v{version}</div>
+      <div class="eyebrow">Lean 4.35.0 · Mathlib v4.35.0 · 6-Kernel Verified · v{version}</div>
       <h1>Pauli Contextuality Lab</h1>
       <p class="lead">Unified, machine-checked research laboratory for spectral bounds on Pauli contextuality, floor-saturating states, Jonah&rsquo;s Conjecture E, exact disjoint Mermin configuration degrees, and finite-horizon sequential contextuality certificates.</p>
       <div class="pills">
@@ -85,6 +95,7 @@ def render_portal() -> str:
         </div>
         <div class="links">
           <a href="papers/spectral-bounds/unified-contextuality.pdf">Unified PDF</a>
+          <a href="papers/spectral-bounds/unified-contextuality.html">Unified HTML</a>
           <a href="c3-lab/">C3 Exact Lab</a>
           <a href="independent-review/">Independent Explorer</a>
         </div>
@@ -116,7 +127,7 @@ def render_portal() -> str:
     </div>
 
     <div class="note">
-      <strong>Verification &amp; Epistemic Disclosure:</strong> All manuscripts are unreviewed research preprints by Alexander S. Donahue (independent researcher, ORCID <a href="https://orcid.org/0009-0006-8168-9648" style="color:#fcd34d">0009-0006-8168-9648</a>), produced with AI assistance under human direction. Lean 4.35.0 proofs depend strictly on <code>[propext, Classical.choice, Quot.sound]</code>; browser simulations run on classical WebAssembly state-vector code (Moonlab), not quantum hardware.
+      <strong>Verification &amp; Epistemic Disclosure:</strong> All manuscripts are unreviewed research preprints by Alexander S. Donahue (independent researcher, Spokane, WA, USA; ORCID <a href="https://orcid.org/0009-0006-8168-9648" style="color:#fcd34d">0009-0006-8168-9648</a>), produced with AI assistance under human direction. Lean 4.35.0 proofs depend strictly on <code>[propext, Classical.choice, Quot.sound]</code>; browser simulations run on classical WebAssembly state-vector code (Moonlab), not quantum hardware.
     </div>
   </main>
   <footer>
@@ -129,6 +140,27 @@ def render_portal() -> str:
 """
 
 
+def verify_internal_links(site_root: Path) -> list[tuple[str, str, str]]:
+    broken: list[tuple[str, str, str]] = []
+    for html_file in sorted(site_root.rglob("*.html")):
+        txt = html_file.read_text(encoding="utf-8", errors="ignore")
+        for attr, href in re.findall(r'(href|src)="([^"]+)"', txt):
+            if href.startswith(("http://", "https://", "mailto:", "#", "data:", "javascript:")):
+                continue
+            clean = href.split("#", 1)[0].split("?", 1)[0]
+            if not clean:
+                continue
+            if clean.startswith("/pauli-contextuality-lab/"):
+                target = site_root / clean[len("/pauli-contextuality-lab/"):]
+            elif clean.startswith("/"):
+                target = site_root / clean.lstrip("/")
+            else:
+                target = (html_file.parent / clean).resolve()
+            if not target.exists():
+                broken.append((html_file.relative_to(site_root).as_posix(), attr, href))
+    return broken
+
+
 def main() -> int:
     SITE.mkdir(parents=True, exist_ok=True)
     (SITE / ".nojekyll").write_text("", encoding="utf-8")
@@ -139,21 +171,47 @@ def main() -> int:
     copy_if_dir(ROOT / "tracks" / "disjoint-mermin" / "web", SITE / "disjoint-mermin")
     copy_if_dir(ROOT / "tracks" / "sequential-evidence" / "web", SITE / "sequential-evidence")
     copy_if_dir(ROOT / "third_party" / "moonlab", SITE / "vendor" / "moonlab")
-    # Also mount moonlab inside disjoint-mermin/vendor/moonlab if referenced relatively
+    copy_if_file(ROOT / "NOTICE", SITE / "vendor" / "NOTICE.md")
+
+    # Mount relative runtime & receipt files expected by Track 2 web lab
     if (SITE / "disjoint-mermin").is_dir():
         copy_if_dir(ROOT / "third_party" / "moonlab", SITE / "disjoint-mermin" / "vendor" / "moonlab")
+        copy_if_file(ROOT / "NOTICE", SITE / "disjoint-mermin" / "vendor" / "NOTICE.md")
+        copy_if_file(
+            ROOT / "tracks" / "disjoint-mermin" / "results" / "stack_report.json",
+            SITE / "disjoint-mermin" / "results" / "stack_report.json",
+        )
 
-    # Copy PDF & HTML papers
+    # Mount referenced Track 1 audit files for c3-lab and independent-review explorers
+    for fname in (
+        "frontier-c3-lean-audit.md",
+        "lean-audit.md",
+        "independent_validation.json",
+        "stack-independent-audit.md",
+        "literature-audit.md",
+    ):
+        copy_if_file(ROOT / "tracks" / "spectral-bounds" / "results" / fname, SITE / "results" / fname)
+
+    # Copy PDF, HTML, and figure directories for all 3 tracks
     for track in ("spectral-bounds", "disjoint-mermin", "sequential-evidence"):
         src = ROOT / "papers" / track
         dst = SITE / "papers" / track
         if src.is_dir():
             dst.mkdir(parents=True, exist_ok=True)
-            for ext in ("*.pdf", "*.html"):
+            for ext in ("*.pdf", "*.html", "*.md"):
                 for f in src.glob(ext):
                     shutil.copy2(f, dst / f.name)
+            for fig_dir in ("figures", "c3-figures"):
+                copy_if_dir(src / fig_dir, dst / fig_dir)
 
-    print(f"PASS: Unified Pages site assembled at {SITE}")
+    broken = verify_internal_links(SITE)
+    if broken:
+        print(f"ERROR: {len(broken)} broken local link(s) in {SITE}:", file=sys.stderr)
+        for page, attr, href in broken:
+            print(f"  {page}: {attr}={href!r}", file=sys.stderr)
+        return 1
+
+    print(f"PASS: Unified Pages site assembled & link-checked (0 broken links) at {SITE}")
     return 0
 
 

@@ -6,11 +6,11 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 [![Lean 4.35.0 Verification](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml)
 [![Pages & Blueprint](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/pauli-contextuality-lab/)
 [![License: Apache-2.0 / CC-BY-4.0](https://img.shields.io/badge/license-Apache--2.0%20%2F%20CC--BY--4.0-green)](LICENSE)
-[![Version 2.0.0](https://img.shields.io/badge/version-2.0.0-informational)](CHANGELOG.md)
+[![Version 2.1.0](https://img.shields.io/badge/version-2.1.0-informational)](CHANGELOG.md)
 
 ![Pauli Contextuality Lab overview](docs/media/social-preview.svg)
 
-**Status:** Active research preprints (`v2.0.0`, 24 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
+**Status:** Active research preprints (`v2.1.0`, 24 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
 **Author:** Alexander S. Donahue, independent researcher ([ORCID 0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648) · `0_0@0thernes.art`).  
 **Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Replication Protocol](REPLICATION.md)
 
@@ -20,7 +20,7 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 
 ## Five-Second Formal Proof Check (`#print axioms`)
 
-Every headline theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 87-declaration log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
+Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 158-declaration + 1,920-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
 
 ```text
 'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]

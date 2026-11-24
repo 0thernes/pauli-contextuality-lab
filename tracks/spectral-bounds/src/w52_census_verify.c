@@ -19,7 +19,7 @@
  *      and closes the resulting set C_0 under the 63 Clifford transvections
  *      generating Sp(6,2) (order 1,451,520) via BFS.
  *
- * Author: Alexander S. Donahue (0thernes LLC) / Hoggar Bound Lab (v1.8.0).
+ * Author: Alexander S. Donahue (Independent researcher) / Pauli Contextuality Lab (Track 1).
  * Compile (Windows MSVC/Clang): clang -O3 -march=native src/w52_census_verify.c -o w52_census_verify.exe
  * Compile (Linux GCC/Clang):    cc -O3 -pthread src/w52_census_verify.c -o w52_census_verify
  */

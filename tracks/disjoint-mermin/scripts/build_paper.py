@@ -72,9 +72,9 @@ PREAMBLE = r"""\documentclass[10pt,a4paper]{article}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \providecommand{\pandocbounded}[1]{#1}
 \emergencystretch=3em
-\hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue; 0thernes LLC}}
+\hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
-\author{Alexander S. Donahue\\\small 0thernes LLC\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
+\author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
 \date{9 November 2026\quad\textbullet\quad Version 0.1.0}
 \begin{document}
 \maketitle
@@ -118,13 +118,13 @@ def main():
 <title>Exact contextuality degrees for disjoint Mermin configurations</title>
 <meta name="citation_title" content="Exact contextuality degrees for disjoint Mermin configurations">
 <meta name="citation_author" content="Donahue, Alexander S."><meta name="citation_publication_date" content="2026/11/09">
-<meta name="citation_technical_report_institution" content="0thernes LLC">
+<meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
 <meta name="citation_pdf_url" content="https://0thernes.github.io/contextuality-tensor-lab/paper/{STEM}.pdf">
 <link rel="canonical" href="https://0thernes.github.io/contextuality-tensor-lab/paper/">
 <style>body{{max-width:850px;margin:60px auto;padding:0 24px;font:18px/1.7 system-ui;color:#183c48;background:#f8faf9}}h1{{line-height:1.18;font-size:36px}}a{{color:#146b81}}.meta{{font-size:15px;color:#536d76}}nav{{display:flex;gap:24px;flex-wrap:wrap}}section{{margin-top:36px}}</style>
 <script>MathJax={{tex:{{inlineMath:[['$','$']]}}}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
 <body><article><p class="meta">CONTEXTUALITY TENSOR LAB / RESEARCH PREPRINT</p><h1>Exact contextuality degrees for disjoint Mermin configurations</h1>
-<p>Alexander S. Donahue · 0thernes LLC</p><p class="meta">9 November 2026 · Version 0.1.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
+<p>Alexander S. Donahue · Independent researcher, Spokane, WA, USA</p><p class="meta">9 November 2026 · Version 0.1.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
 <nav><a href="{STEM}.pdf">Read PDF</a><a href="../">Run the lab</a><a href="https://github.com/0thernes/contextuality-tensor-lab">Code and Lean proofs</a></nav>
 <section><h2>Abstract</h2><p>{html.escape(abstract)}</p></section>
 <section><h2>Verification and disclosure</h2><p>The repository provides the precise Lean theorem boundary, exact certificates, falsification controls and Tsotchke-stack execution records. The manuscript discloses substantive AI contributions. Public hosting is separate from external peer review, repository deposit and indexing.</p></section>

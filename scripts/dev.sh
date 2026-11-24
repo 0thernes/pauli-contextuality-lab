@@ -57,10 +57,16 @@ case "$cmd" in
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
     ./build/san/hoggar_san table 4 >/dev/null
+    ./build/san/hoggar_san exhaust2 >/dev/null
+    ./build/san/hoggar_san lines 2 f >/dev/null
+    ./build/san/hoggar_san falsify 2 f 42 5 50 >/dev/null
     ./build/san/hoggar_san verify 4 f data/witness/n4_f.txt >/dev/null
     ./build/san/hoggar_san verify 4 h data/witness/n4_h.txt >/dev/null
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
       tracks/spectral-bounds/src/w52_census_verify.c -lm -o build/san/w52_san
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
+      tracks/spectral-bounds/src/third_level.c -lm -o build/san/third_level_san
+    ./build/san/third_level_san >/dev/null
     echo "ASan/UBSan checks passed."
     ;;
 

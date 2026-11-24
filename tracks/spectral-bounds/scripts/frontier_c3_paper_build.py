@@ -40,9 +40,9 @@ def main():
     preamble=preamble.replace(r'A verified spectral bound\\for Pauli contextuality',r'Cospectral Pauli carriers\\with different completion spectra')
     preamble=preamble.replace('Independent validation and critical synthesis','An exact four-qubit C3 certificate')
     preamble=preamble.replace('pdfauthor={Hoggar Bound Lab; AI-assisted research artifact}',
-                              'pdfauthor={Alexander S. Donahue; 0thernes LLC}')
+                              'pdfauthor={Alexander S. Donahue}')
     preamble=preamble.replace('Hoggar Bound Lab; AI-assisted research artifact',
-                              r'Alexander S. Donahue · 0thernes LLC\\{\small\color{Muted}Hoggar Bound Lab · \href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}')
+                              r'Alexander S. Donahue · Independent researcher, Spokane, WA, USA\\{\small\color{Muted}Hoggar Bound Lab · \href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}')
     tex=preamble+fragment+'\n\\end{document}\n'
     texpath=ROOT/'paper'/(STEM+'.tex');texpath.write_text(tex,encoding='utf-8')
     with tempfile.TemporaryDirectory(prefix='hoggar-c3-paper-') as tmp:
@@ -67,13 +67,13 @@ def main():
 <meta name="citation_title" content="{title}">
 <meta name="citation_author" content="Donahue, Alexander S.">
 <meta name="citation_publication_date" content="2026/11/09">
-<meta name="citation_technical_report_institution" content="0thernes LLC">
+<meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
 <meta name="citation_pdf_url" content="{base}{stem}.pdf">
 <link rel="canonical" href="{base}{stem}.html">
 <style>body{{max-width:900px;margin:40px auto;padding:0 24px;font:17px/1.65 system-ui,sans-serif;color:#172f38;background:#f9fbfa}}h1{{font-size:31px;line-height:1.2;margin-bottom:20px}}.author{{font-size:21px;margin:0}}.meta{{color:#526971;font-size:14px}}a{{color:#116b61}}nav{{display:flex;flex-wrap:wrap;gap:18px}}section{{margin-top:27px}}footer{{border-top:1px solid #b8cbca;margin-top:35px;padding-top:18px;font-size:13px}}h2{{font-size:20px}}</style></head>
 <body><article><h1 class="citation_title">{title}</h1>
 <p class="citation_author author">Alexander S. Donahue</p>
-<p class="meta">0thernes LLC · Hoggar Bound Lab · 9 November 2026<br>Research preprint; not peer reviewed. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a></p>
+<p class="meta">Independent researcher, Spokane, WA, USA · Hoggar Bound Lab · 9 November 2026<br>Research preprint; not peer reviewed. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a></p>
 <nav><a href="{stem}.pdf">Full paper (PDF)</a><a href="../c3-lab/">Run the exact demonstration</a><a href="https://github.com/0thernes/hoggar-bound-lab">Code and Lean proofs</a><a href="c3-citation.cff">Citation metadata</a></nav>
 <section><h2>Abstract</h2><p>{abstract}</p></section>
 <section><h2>Research and verification record</h2><p>The manuscript discloses substantive AI assistance in problem selection, discovery, formalization, computation and drafting. The repository contains exact witness assignments, independent integer checks, Lean sources, execution evidence and falsification controls. The original open case is stated in <a href="https://zenodo.org/records/23524332">Jonah’s section-square preprint, v0.5, Section 6</a>.</p></section>

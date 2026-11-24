@@ -32,12 +32,13 @@ jobs:
         run: node --test tests/test_web_models.mjs
       - name: Run all-track exact verification
         run: python scripts/verify_all.py
-      - name: Run arithmetic, citation, axiom-sync, and blueprint audits
+      - name: Run arithmetic, citation, axiom-sync, blueprint, and site-link audits
         run: |
           python scripts/arithmetic_audit.py
           python scripts/check_citations.py
           python scripts/check_readme_axioms.py
           python scripts/build_blueprint.py
+          python scripts/build_site.py
 
   c11-sanitizers-and-lint:
     name: C11 ASan/UBSan, Linters & Build Standard Audit
@@ -49,24 +50,28 @@ jobs:
           python-version: "3.12"
       - name: Install pinned Python dependencies
         run: python -m pip install -r requirements.txt
-      - name: Compile C11 engines with -Wall -Wextra and ASan/UBSan
+      - name: Compile & run C11 engines with -Wall -Wextra and ASan/UBSan
         run: |
           mkdir -p build/san
           QR=third_party/quantum_rng/src/quantum_rng
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
             tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
           ./build/san/hoggar_san table 4
+          ./build/san/hoggar_san exhaust2
+          ./build/san/hoggar_san lines 2 f >/dev/null
+          ./build/san/hoggar_san falsify 2 f 42 5 50
           ./build/san/hoggar_san verify 4 f data/witness/n4_f.txt
           ./build/san/hoggar_san verify 4 h data/witness/n4_h.txt
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
             tracks/spectral-bounds/src/w52_census_verify.c -lm -o build/san/w52_san
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
             tracks/spectral-bounds/src/third_level.c -lm -o build/san/third_level_san
+          ./build/san/third_level_san
       - name: Report-only linters (ruff & mypy)
         continue-on-error: true
         run: |
           python -m ruff check scripts/ tests/
-          python -m mypy --ignore-missing-imports scripts/check_citations.py scripts/check_readme_axioms.py scripts/arithmetic_audit.py scripts/build_blueprint.py
+          python -m mypy --ignore-missing-imports scripts/
       - name: Build Standard v1.1.0 repo audit
         run: bash scripts/audit-repo.sh .
       - name: Secret scan (gitleaks, report-only)

@@ -1,6 +1,6 @@
 # Contextuality Evidence Lab: Exact Sequential Certificates and a Constructive Setting-Bias Attack
 
-0thernes · AI-assisted research artifact  
+Alexander S. Donahue · Independent researcher, Spokane, WA, USA · ORCID 0009-0006-8168-9648 · CC-BY-4.0  
 AI-assisted research software and methods preprint · 10 November 2026  
 Manuscript status: research preprint, version 1.0.0. Not externally peer reviewed.
 

@@ -19,10 +19,13 @@ open Finset
 
 namespace ContextualityTensor
 
+/-- Sign encoding mapping `false ↦ +1` and `true ↦ -1`. -/
 def sign (b : Bool) : ℤ := if b then -1 else 1
 
 @[simp] theorem abs_sign (b : Bool) : |sign b| = 1 := by cases b <;> decide
 
+/-- Signed context response of a deterministic Boolean assignment `a` on a context set. -/
+@[nolint unusedArguments]
 def response {V : Type*} [DecidableEq V] (a : V → Bool) (negative : Bool)
     (context : Finset V) : ℤ := sign negative * ∏ v ∈ context, sign (a v)
 
@@ -30,21 +33,27 @@ theorem abs_response {V : Type*} [DecidableEq V] (a : V → Bool)
     (negative : Bool) (context : Finset V) : |response a negative context| = 1 := by
   simp [response, abs_mul, abs_prod]
 
+/-- Augments a local context-response function with value `1` on the empty context `none`. -/
 def extend {C : Type*} (f : C → ℤ) : Option C → ℤ
   | none => 1
   | some c => f c
 
+/-- Product response of a tuple of local context choices across `k` disjoint registers. -/
 def contextValue {k : ℕ} {C : Type*} (f : Fin k → C → ℤ)
     (q : Fin k → Option C) : ℤ := ∏ i, extend (f i) (q i)
 
+/-- The all-empty context choice tuple excluded from the nonempty union family. -/
 def emptyChoice {k : ℕ} {C : Type*} : Fin k → Option C := fun _ => none
 
+/-- The full nonempty-union context family over `k` disjoint copies of `C`. -/
 def contexts (k : ℕ) (C : Type*) [Fintype C] [DecidableEq C] :
     Finset (Fin k → Option C) := univ.erase emptyChoice
 
+/-- Classical correlation score summed over all nonempty union contexts. -/
 def score {k : ℕ} {C : Type*} [Fintype C] [DecidableEq C]
     (f : Fin k → C → ℤ) : ℤ := ∑ q ∈ contexts k C, contextValue f q
 
+/-- Count of violated contexts (`contextValue = -1`) in the full union family. -/
 def violations {k : ℕ} {C : Type*} [Fintype C] [DecidableEq C]
     (f : Fin k → C → ℤ) : ℕ :=
   ((contexts k C).filter fun q => contextValue f q = -1).card
@@ -101,15 +110,19 @@ theorem score_upper_bound {k : ℕ} {C : Type*} [Fintype C] [DecidableEq C]
   have := le_abs_self (score f + 1)
   linarith
 
+/-- The six three-observable contexts (three rows, three columns) of the Peres–Mermin square. -/
 def squareContext : Fin 6 → Finset (Fin 9) :=
   ![{0,1,2}, {3,4,5}, {6,7,8}, {0,3,6}, {1,4,7}, {2,5,8}]
 
+/-- Signed response of an assignment `a` on context `c` of the Peres–Mermin square. -/
 def squareResponse (a : Fin 9 → Bool) (c : Fin 6) : ℤ :=
   response a (c == 5) (squareContext c)
 
+/-- The five four-observable contexts of the Mermin pentagram. -/
 def pentagramContext : Fin 5 → Finset (Fin 10) :=
   ![{0,1,2,6}, {0,4,5,7}, {3,1,5,8}, {3,4,2,9}, {6,7,8,9}]
 
+/-- Signed response of an assignment `a` on context `c` of the Mermin pentagram. -/
 def pentagramResponse (a : Fin 10 → Bool) (c : Fin 5) : ℤ :=
   response a (c == 4) (pentagramContext c)
 

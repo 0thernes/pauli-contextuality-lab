@@ -8,6 +8,19 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.1.0] - 2026-11-24
+
+### Added
+- **Exhaustive Lean axiom metaprogram + 158 explicit `#print axioms` declarations** in `lean/VerifyAll.lean`, auditing 100% of historical Track 1 (`VerifyNewFormalizations.lean`, 110 decls + 6 baseline/legacy), Track 2 (`Verification.lean`, 16 decls), Track 3 (`Evidence`, 14 decls), and the 12 `ComparatorTarget` bridges, plus an automatic `Lean.collectAxioms` check over all **1,920 theorems** across `HoggarBound`, `ContextualityTensor`, `Evidence`, and `PauliContextualityLab`.
+- **Automated Pages internal link & figure checker** embedded directly in `scripts/build_site.py` and executed on every CI push (`0` broken links/images).
+- Surgical `.gitleaks.toml` allowlist extending defaults strictly for Lean proof-term `have key :=` bindings in `lean/` (zero false-positive leak alerts).
+
+### Fixed
+- **21 broken local links & missing figures on the unified GitHub Pages site:** mounted `papers/*/figures/`, `papers/spectral-bounds/c3-figures/`, `results/*` audit reports, and `vendor/NOTICE.md`, and fixed relative paths and archived repository URLs across `c3-lab/`, `independent-review/`, `disjoint-mermin/`, `sequential-evidence/`, and `unified-contextuality.html`.
+- **C11 heap memory leaks across all `hoggar.c` subcommands** (`cmd_table`, `cmd_verify`, `cmd_search`, `cmd_falsify`, `cmd_exhaust2`, `cmd_lines`) and expanded CI ASan/UBSan execution to run `hoggar_san table/exhaust2/lines/falsify/verify` plus `./build/san/third_level_san`.
+- **Zero-warning static analysis:** resolved all 3 `mypy` annotations in `scripts/build_blueprint.py` (`0` ruff errors, `0` mypy errors across all `scripts/`), and added all missing docstrings + `@[nolint unusedArguments]` across `ContextualityTensor.lean` and `Evidence/` (`0` Batteries `runLinter` errors).
+- **Security & manuscript hygiene:** bumped `pytest==9.0.3` (closing CVE-2025-71176), recompiled Track 1 (`unified-contextuality.pdf`) and Track 2 (`contextuality-tensor.pdf`) cleanly via Tectonic under `Independent researcher, Spokane, WA, USA` and `CC-BY-4.0`, and cleaned remaining legacy affiliation references in Track 3 `whitepaper.md` and build scripts.
+
 ## [2.0.0] - 2026-11-24
 
 ### Added

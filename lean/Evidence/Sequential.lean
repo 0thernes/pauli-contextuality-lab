@@ -28,6 +28,7 @@ theorem local_factor_bound (s b A B : ℝ)
   have h := mul_nonneg (sub_nonneg.mpr hsb) (sub_nonneg.mpr hBA)
   nlinarith
 
+/-- Finite adaptive betting tree encoding an optional-stopping sequential evidence process. -/
 inductive BetTree where
   | stop : BetTree
   | node (q A B : ℝ) (win lose : BetTree) : BetTree
@@ -41,11 +42,13 @@ def BetTree.Valid : BetTree → Prop
       0 ≤ q ∧ q ≤ 1 ∧ 0 ≤ A ∧ 0 ≤ B ∧
       q * A + (1 - q) * B ≤ 1 ∧ win.Valid ∧ lose.Valid
 
+/-- Exact expected terminal wealth starting from initial wealth `z`. -/
 def BetTree.expectedWealth : BetTree → ℝ → ℝ
   | .stop, z => z
   | .node q A B win lose, z =>
       q * win.expectedWealth (z * A) + (1 - q) * lose.expectedWealth (z * B)
 
+/-- Exact probability that wealth reaches or exceeds threshold `T` before stopping. -/
 def BetTree.hitProbability : BetTree → ℝ → ℝ → ℝ
   | .stop, z, T => if T ≤ z then 1 else 0
   | .node q A B win lose, z, T =>

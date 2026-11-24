@@ -23,15 +23,19 @@ noncomputable section
 
 namespace Evidence
 
+/-- Noncontextual Boolean assignment (`false ↦ +1`, `true ↦ -1`) on the 9 Peres–Mermin observables. -/
 abbrev Assignment := Fin 9 → Bool
 
+/-- Triple of observable indices belonging to each of the 6 contexts (3 rows, 3 columns). -/
 def contextTriple : Fin 6 → Fin 3 → Fin 9 :=
   ![![0, 1, 2], ![3, 4, 5], ![6, 7, 8],
     ![0, 3, 6], ![1, 4, 7], ![2, 5, 8]]
 
+/-- XOR parity of a deterministic assignment along context `c`. -/
 def contextParity (a : Assignment) (c : Fin 6) : Bool :=
   (a (contextTriple c 0) != a (contextTriple c 1)) != a (contextTriple c 2)
 
+/-- Predicate indicating that assignment `a` violates the quantum sign on context `c`. -/
 def loses (a : Assignment) (c : Fin 6) : Bool :=
   contextParity a c != (c == 5)
 
@@ -46,9 +50,11 @@ theorem square_singleton_witness : ∀ c : Fin 6, ∃ a : Assignment,
     ∀ d : Fin 6, loses a d = (d == c) := by
   decide +kernel
 
+/-- Probability that deterministic assignment `a` fails under context distribution `p`. -/
 def failureProbability (p : Fin 6 → ℝ) (a : Assignment) : ℝ :=
   ∑ c, if loses a c then p c else 0
 
+/-- Probability that deterministic assignment `a` succeeds under context distribution `p`. -/
 def successProbability (p : Fin 6 → ℝ) (a : Assignment) : ℝ :=
   ∑ c, if loses a c then 0 else p c
 
@@ -133,6 +139,7 @@ theorem defect_success_bound (β δ goodSuccess badSuccess : ℝ)
   have hb := mul_le_mul_of_nonneg_left hbad hδ0
   nlinarith
 
+/-- Concrete biased context-selection distribution (`1/12` on context 5, `11/60` on contexts 0–4). -/
 def biasedContextProbability : Fin 6 → ℝ :=
   ![11/60, 11/60, 11/60, 11/60, 11/60, 1/12]
 
