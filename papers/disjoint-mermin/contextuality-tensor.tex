@@ -27,10 +27,10 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \providecommand{\pandocbounded}[1]{#1}
 \emergencystretch=3em
-\hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue; 0thernes LLC}}
+\hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
-\author{Alexander S. Donahue\\\small 0thernes LLC\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{9 November 2026\quad\textbullet\quad Version 0.1.0}
+\author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
+\date{24 November 2026\quad\textbullet\quad Version 2.0.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not peer reviewed. Substantive AI assistance disclosed in Section 9.\end{center}
@@ -270,16 +270,15 @@ The literature audit searched the source question and combinations of contextual
 
 The decisive mathematical assumptions are distinct nonempty seed contexts, disjoint vertex alphabets, inclusion of every nonempty tuple in (2), and a single context-independent value for each observable. Violating those assumptions changes the problem. Large normalized gaps do not establish a quantum computational speedup, a hardware fault-tolerance threshold, or an optimum in a different contextuality measure.
 
-The project is self-contained at \href{https://github.com/0thernes/contextuality-tensor-lab}{the repository}, with \href{https://0thernes.github.io/contextuality-tensor-lab/}{a live demonstration}. Source, certificates, execution records, Lean dependencies and the manuscript are versioned together. The primary commands are:
+The project is maintained as Track~2 of \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from archived \texttt{contextuality-tensor-lab} v0.1.0), with \href{https://0thernes.github.io/pauli-contextuality-lab/}{a live demonstration and interactive Lean Blueprint}. Source, certificates, execution records, Lean dependencies and the manuscript are versioned together (code under Apache-2.0, manuscripts under CC-BY-4.0). The primary commands are:
 
 \begin{verbatim}
-python scripts/verify_exact.py
-python -m unittest discover -s tests -v
-python scripts/run_stack.py
+python scripts/verify_all.py
+python -m pytest -v tests/
 cd lean
 lake exe cache get
-lake build
-lake env lean Verification.lean
+lake build ContextualityTensor
+lake env lean VerifyAll.lean
 \end{verbatim}
 
 The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol installation. The independent exact verifier uses the Python standard library. See the repository for platform-specific paths and the exact distinction between rebuilt and pre-recorded components.

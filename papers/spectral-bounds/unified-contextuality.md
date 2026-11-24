@@ -2,8 +2,8 @@
 
 **A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case**
 
-Alexander S. Donahue, 0thernes LLC, Washington, USA. ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648). Correspondence: 0_0@0thernes.art<br>
-Hoggar Bound Lab, version 1.9.0, 24 November 2026. Research preprint. Not peer reviewed.<br>
+Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648). Correspondence: 0_0@0thernes.art<br>
+Pauli Contextuality Lab (Track 1), version 2.0.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.
 
 > **Prior work and scope.** The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -2659,19 +2659,19 @@ completed human critical review or venue-specific final approval is asserted her
 accurately describe that work before making a submission that requires it. AI systems are disclosed as
 tools, not listed as authors.
 
-**Funding and competing interests.** This research was self-funded by Alexander S. Donahue, the sole
-operator of the affiliated 0thernes LLC. The author declares no competing interests.
+**Funding and competing interests.** This research was self-funded by Alexander S. Donahue as an independent researcher.
+The author declares no competing interests.
 
 **Data availability statement.** Source, data, formal proofs, test results and the earlier manuscripts
-are available in [Hoggar Bound Lab](https://github.com/0thernes/hoggar-bound-lab). Release and workflow
+are available in [Pauli Contextuality Lab](https://github.com/0thernes/pauli-contextuality-lab) (consolidated from archived `hoggar-bound-lab` v1.9.0). Release and workflow
 records identify the checked snapshots; Software Heritage and Internet Archive captures are archival
 records of particular snapshots, not evidence of review. The addenda in `publication/` record each
 result of version 1.3.0 as first stated.
 Appendix A gives reproduction commands. No new arXiv identifier, DOI or journal decision is implied
 by this manuscript or its local submission packages.
 
-**Licence.** The repository's `LICENSE` is authoritative. Its verification licence is preserved;
-this combined manuscript does not relicense the project. Vendored Moonlab, quantum_rng and
+**Licence.** Code is released under Apache-2.0 (`LICENSE`); this manuscript and documentation are
+released under CC-BY-4.0 (`LICENSE-DOCS`). Vendored Moonlab, quantum_rng and
 quantum_geometric_tensor retain their authors' MIT licences and provenance records.
 
 ## References

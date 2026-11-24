@@ -14,6 +14,7 @@ jobs:
   lean-verify:
     name: Build, Axiom Audit, Batteries Linter & 6-Kernel Comparator
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Install elan & Lean 4.35.0
@@ -29,12 +30,42 @@ jobs:
           lake build HoggarBound ContextualityTensor Evidence Solution
       - name: Forbidden-token scan (sorry, admit, native_decide, custom axiom)
         run: |
-          if grep -rnE '\b(sorry|admit|native_decide)\b|^\s*axiom\b|implemented_by|@\[extern' \
-            lean/HoggarBound lean/ContextualityTensor lean/Evidence lean/Solution.lean \
-            | grep -vE '^[^:]+:[0-9]+:\s*(--|/-|\*|/)'; then
-            echo "Forbidden Lean token detected!" >&2
-            exit 1
-          fi
+          python3 - <<'PY'
+          import re, sys
+          from pathlib import Path
+          forbidden = re.compile(r"\b(sorry|admit|native_decide)\b|^\s*axiom\b|implemented_by|@\[extern")
+          roots = [
+              Path("lean/HoggarBound"),
+              Path("lean/ContextualityTensor"),
+              Path("lean/Evidence"),
+              Path("lean/Solution.lean"),
+              Path("lean/HoggarBound.lean"),
+              Path("lean/ContextualityTensor.lean"),
+              Path("lean/Evidence.lean"),
+          ]
+          hits = []
+          for item in roots:
+              files = [item] if item.is_file() else sorted(item.rglob("*.lean"))
+              for f in files:
+                  in_block = False
+                  for lineno, raw in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
+                      s = raw.strip()
+                      if s.startswith("/-"):
+                          in_block = True
+                      if in_block:
+                          if "-/" in s:
+                              in_block = False
+                          continue
+                      code = raw.split("--", 1)[0]
+                      if forbidden.search(code):
+                          hits.append(f"{f}:{lineno}: {code.strip()}")
+          if hits:
+              print("Forbidden Lean token detected:", file=sys.stderr)
+              for h in hits:
+                  print(" ", h, file=sys.stderr)
+              sys.exit(1)
+          print("PASS: 0 forbidden Lean tokens across all proof modules (excluding comments/docstrings).")
+          PY
       - name: Run unified exhaustive #print axioms audit (VerifyAll.lean)
         working-directory: lean
         run: |

@@ -57,7 +57,7 @@ case "$cmd" in
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
     ./build/san/hoggar_san table 4 >/dev/null
-    ./build/san/hoggar_san verify 3 f data/witness/n3_f.txt >/dev/null
+    ./build/san/hoggar_san verify 4 f data/witness/n4_f.txt >/dev/null
     ./build/san/hoggar_san verify 4 h data/witness/n4_h.txt >/dev/null
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
       tracks/spectral-bounds/src/w52_census_verify.c -lm -o build/san/w52_san
@@ -67,10 +67,7 @@ case "$cmd" in
   verify-lean)
     (cd lean && lake build HoggarBound ContextualityTensor Evidence Solution)
     (cd lean && lake env lean VerifyAll.lean)
-    if grep -rnE '\b(sorry|admit|native_decide)\b|^\s*axiom\b|implemented_by|@\[extern' lean/HoggarBound lean/ContextualityTensor lean/Evidence lean/Solution.lean | grep -vE '^[^:]+:[0-9]+:\s*(--|/-)'; then
-      echo "ERROR: forbidden Lean token found!" >&2
-      exit 1
-    fi
+    "$PY" -m pytest -v -k test_no_forbidden_lean_tokens_in_proof_modules tests/test_repo_integrity.py
     (cd lean && lake comparator --config comparator.json --paranoid)
     ;;
 

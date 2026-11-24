@@ -28,7 +28,7 @@ sanitizers:
     mkdir -p build/san
     cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer tracks/spectral-bounds/src/hoggar.c third_party/quantum_rng/src/quantum_rng/quantum_rng.c -Ithird_party/quantum_rng/src/quantum_rng -lm -o build/san/hoggar_san
     ./build/san/hoggar_san table 4
-    ./build/san/hoggar_san verify 3 f data/witness/n3_f.txt
+    ./build/san/hoggar_san verify 4 f data/witness/n4_f.txt
     bash scripts/dev.sh sanitizers
 
 # Build Lean libraries, audit axioms (VerifyAll.lean), scan forbidden tokens, run lake comparator --paranoid

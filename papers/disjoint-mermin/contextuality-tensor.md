@@ -6,7 +6,7 @@ date: "9 November 2026"
 
 # Exact contextuality degrees for disjoint Mermin configurations
 
-**Alexander S. Donahue — 0thernes LLC**  
+**Alexander S. Donahue — Independent researcher, Spokane, WA, USA**  
 ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)  
 Correspondence: [0_0@0thernes.art](mailto:0_0@0thernes.art)  
 Research preprint, version 0.1.0. Not peer reviewed. Substantive AI assistance disclosed below.
@@ -228,7 +228,7 @@ The literature audit searched the source question and combinations of contextual
 
 The decisive mathematical assumptions are distinct nonempty seed contexts, disjoint vertex alphabets, inclusion of every nonempty tuple in (2), and a single context-independent value for each observable. Violating those assumptions changes the problem. Large normalized gaps do not establish a quantum computational speedup, a hardware fault-tolerance threshold, or an optimum in a different contextuality measure.
 
-The project is self-contained at [the repository](https://github.com/0thernes/contextuality-tensor-lab), with [a live demonstration](https://0thernes.github.io/contextuality-tensor-lab/). Source, certificates, execution records, Lean dependencies and the manuscript are versioned together. The primary commands are:
+The project is self-contained at [the repository](https://github.com/0thernes/pauli-contextuality-lab), with [a live demonstration](https://0thernes.github.io/pauli-contextuality-lab/). Source, certificates, execution records, Lean dependencies and the manuscript are versioned together. The primary commands are:
 
 ```text
 python scripts/verify_exact.py
