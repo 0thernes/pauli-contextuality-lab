@@ -1,0 +1,117 @@
+# yaml-language-server: $schema=./repo-standard.schema.json
+# Project manifest for Build Standard for LLMs v1.1.0.
+standard: "1.1.0"
+name: "pauli-contextuality-lab"
+description: "Unified Lean 4.35.0 and exact-verification laboratory for Pauli contextuality: spectral bounds, floor-saturating states, Jonah Conjecture E, disjoint Mermin tensor degrees, and sequential contextuality evidence."
+owner: "Alexander S. Donahue (0thernes)"
+year: "2026"
+project_type: research
+stack: [lean, python, c-cpp, node]
+flags:
+  public: true
+  package: false
+  visual: true
+  ui: true
+  native: true
+  ai: false
+  personal_data: false
+  service: false
+  deployed: false
+  api: false
+  perf: false
+  concurrent: false
+  numeric: true
+  experimental: true
+  ml: false
+  formal: true
+items:
+  A01: {status: done}
+  A02: {status: done}
+  A03: {status: done}
+  A04: {status: done}
+  A05: {status: done}
+  A06: {status: done}
+  A07: {status: done}
+  A08: {status: done}
+  A09: {status: done}
+  A10: {status: done}
+  A11: {status: done}
+  A12: {status: done}
+  A13: {status: done}
+  A14: {status: done}
+  A15: {status: done}
+  A16: {status: done}
+  A17: {status: done}
+  A18: {status: done}
+  A19: {status: done}
+  A20: {status: done}
+  A21: {status: done}
+  A22: {status: done}
+  A23: {status: done}
+  A24: {status: done}
+  A25: {status: done}
+  A26: {status: done}
+  A27: {status: done}
+  A28: {status: n/a, note: "Research monorepo, not an installable package"}
+  A29: {status: done}
+  A30: {status: done}
+  A31: {status: done}
+  A32: {status: done}
+  A33: {status: done}
+  A34: {status: n/a, note: "Not a long-running service or daemon"}
+  A35: {status: done}
+  A36: {status: n/a, note: "Static GitHub Pages only; no deployed application backend"}
+  A37: {status: n/a, note: "No speed or latency performance claims"}
+  A38: {status: done}
+  A39: {status: done}
+  A40: {status: n/a, note: "Code neither calls nor ships an AI model; authoring AI disclosure is in formalization.yaml and LIMITATIONS.md"}
+  A41: {status: n/a, note: "Research repository, not a library or public API"}
+  A42: {status: done}
+  A43: {status: n/a, note: "Research repository; runnable commands live in tracks/ and README Usage"}
+  A44: {status: done}
+  A45: {status: n/a, note: "Collects, stores, and processes zero personal data"}
+  B01: {status: done}
+  B02: {status: done}
+  B03: {status: done}
+  B04: {status: done}
+  B05: {status: done}
+  B06: {status: done}
+  B07: {status: done}
+  B08: {status: done}
+  B09: {status: n/a, note: "No network API or external wire protocol exposed"}
+  B10: {status: done}
+  B11: {status: done}
+  B12: {status: done}
+  B13: {status: done}
+  B14: {status: done}
+  B15: {status: done}
+  B16: {status: done}
+  B17: {status: done}
+  B18: {status: done}
+  B19: {status: n/a, note: "Deterministic single-threaded verifiers and formal proofs"}
+  B20: {status: done}
+  B21: {status: n/a, note: "No networked service or external runtime dependency"}
+  B22: {status: done}
+  B23: {status: n/a, note: "Deductive Lean 4 theorem proving rather than distributed state-machine model checking"}
+  B24: {status: done}
+  B25: {status: n/a, note: "C11 engines verified via ASan/UBSan and exact integer Python/Lean oracles"}
+  B26: {status: n/a, note: "No speed or performance claims"}
+  B27: {status: n/a, note: "No speed or performance claims"}
+  B28: {status: done}
+  B29: {status: n/a, note: "Exact algebraic theorems and exact rational dynamic programming, not frequentist hypothesis tests"}
+  B30: {status: n/a, note: "Exact integer bounds and exact rational probabilities, not sample confidence intervals"}
+  B31: {status: n/a, note: "No multi-arm statistical hypothesis testing"}
+  B32: {status: n/a, note: "Deductive formal mathematics and deterministic exact calculations, not prospective empirical trials"}
+  B33: {status: n/a, note: "No ML models trained or evaluated"}
+  B34: {status: n/a, note: "Code neither calls nor ships generative AI"}
+  B35: {status: done}
+  B36: {status: done}
+  B37: {status: done}
+  B38: {status: done}
+  B39: {status: done}
+  B40: {status: done}
+  B41: {status: done}
+  B42: {status: done}
+  B43: {status: done}
+  B44: {status: done}
+  B45: {status: done}

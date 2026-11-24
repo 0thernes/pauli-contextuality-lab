@@ -1,0 +1,76 @@
+name: CI (Cross-Platform Tests, C11 Sanitizers & Audits)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-matrix:
+    name: Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install pinned Python dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run unified pytest suite (exact, property, negative, mutation/fuzz, integrity)
+        run: python -m pytest -v tests/
+      - name: Run Node.js web-model unit tests
+        run: node --test tests/test_web_models.mjs
+      - name: Run all-track exact verification
+        run: python scripts/verify_all.py
+      - name: Run arithmetic, citation, axiom-sync, and blueprint audits
+        run: |
+          python scripts/arithmetic_audit.py
+          python scripts/check_citations.py
+          python scripts/check_readme_axioms.py
+          python scripts/build_blueprint.py
+
+  c11-sanitizers-and-lint:
+    name: C11 ASan/UBSan, Linters & Build Standard Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned Python dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile C11 engines with -Wall -Wextra and ASan/UBSan
+        run: |
+          mkdir -p build/san
+          QR=third_party/quantum_rng/src/quantum_rng
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
+          ./build/san/hoggar_san table 4
+          ./build/san/hoggar_san verify 3 f data/witness/n3_f.txt
+          ./build/san/hoggar_san verify 4 h data/witness/n4_h.txt
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
+            tracks/spectral-bounds/src/w52_census_verify.c -lm -o build/san/w52_san
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
+            tracks/spectral-bounds/src/third_level.c -lm -o build/san/third_level_san
+      - name: Report-only linters (ruff & mypy)
+        continue-on-error: true
+        run: |
+          python -m ruff check scripts/ tests/
+          python -m mypy --ignore-missing-imports scripts/check_citations.py scripts/check_readme_axioms.py scripts/arithmetic_audit.py scripts/build_blueprint.py
+      - name: Build Standard v1.1.0 repo audit
+        run: bash scripts/audit-repo.sh .
+      - name: Secret scan (gitleaks, report-only)
+        uses: gitleaks/gitleaks-action@v2
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

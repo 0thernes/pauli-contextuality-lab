@@ -1,0 +1,59 @@
+# Palomar-compatible formalization metadata & epistemic disclosure
+# Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
+title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
+repository: "https://github.com/0thernes/pauli-contextuality-lab"
+version: "2.0.0"
+date: "2026-11-24"
+license:
+  code: "Apache-2.0"
+  documentation_and_papers: "CC-BY-4.0"
+authors:
+  - name: "Alexander S. Donahue"
+    orcid: "0009-0006-8168-9648"
+    affiliation: "Independent researcher"
+    credit_roles:
+      - "Conceptualization"
+      - "Methodology"
+      - "Project administration"
+      - "Resources"
+      - "Supervision"
+      - "Validation (direction & audit oversight)"
+lean_toolchain: "leanprover/lean4:v4.35.0"
+mathlib_rev: "56a005855ea1"
+batteries_rev: "66e469188fe0"
+lake_package_dir: "lean"
+libraries:
+  - name: "HoggarBound"
+    track: "tracks/spectral-bounds"
+    summary: "Spectral floor (real/complex/quaternionic), saturation equivalences, infinite CCZ family |Psi_{3m}>, exact C3 binary optima (368 vs 344), N=4..5 ladders, TwoQubit & Hoggar witnesses, Jonah's Conjecture E (all 9 cases, N >= 4), and NonVacuity."
+  - name: "ContextualityTensor"
+    track: "tracks/disjoint-mermin"
+    summary: "Exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares) and (6^k - 4^k)/2 (k Mermin pentagrams), answering Section 6 of Muller & Saniga (arXiv:2609.19862v1)."
+  - name: "Evidence"
+    track: "tracks/sequential-evidence"
+    summary: "Peres-Mermin setting-bias bound, finite adaptive-tree wealth supermartingale bound, and exact counterexample to naive calibration."
+challenge_module: "Challenge"
+solution_module: "Solution"
+comparator_config: "lean/comparator.json"
+axiom_audit_file: "lean/VerifyAll.lean"
+permitted_axioms:
+  - "propext"
+  - "Classical.choice"
+  - "Quot.sound"
+kernels_configured:
+  - "Lean 4.35.0 official C++ kernel"
+  - "leanchecker-paranoid (v4.35.0)"
+  - "lean4lean (v4.35.0)"
+  - "nanoda (0.4.19)"
+  - "con-leche (v4.35.0)"
+  - "con-ron (v4.35.0)"
+automation:
+  origin: "AI-assisted mathematical formalization, exact computation, and manuscript drafting under human direction"
+  models_used:
+    - "Anthropic Claude: spectral-floor & saturation study, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs & verifiers"
+    - "OpenAI Codex: independent validation, four-qubit C3 counterexample & manuscript audits"
+    - "Google Gemini / Antigravity: Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family |Psi_{3m}>, N=4..5 ladders, NonVacuity, unified monorepo consolidation, Build Standard v1.1.0 & Playbook v1.1 verification stack)"
+  human_line_by_line_review_recorded: false
+  statement_fidelity_table: "docs/statement-fidelity.md"
+review_status: "Research preprints; NOT externally peer reviewed; NOT yet registered on Palomar Registry, arXiv, or Zenodo."
+limitations: "See LIMITATIONS.md and CLAIMS.md. In particular: the 42-orbit W(5,2) C census reproducing Jonah [J1]'s (315, 1575, 6975), the 540.3M-form N=9 cyclic-symmetry rank-8 census, Jonah [J3, Theorem B4]'s single-orbit group transitivity classification, and external simulator/browser code lie outside the Lean 4 kernel boundary."

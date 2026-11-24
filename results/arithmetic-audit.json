@@ -1,0 +1,643 @@
+{
+  "status": "pass",
+  "total_python_files": 67,
+  "counts": {
+    "exact_integer_or_symbolic": 31,
+    "exact_integer_with_math_helpers": 2,
+    "hybrid_exact_core_with_numerical_approximation": 8,
+    "numerical_approximation": 26
+  },
+  "note": "All headline mathematical theorems are certified in Lean 4.35.0 or exact integer/rational arithmetic; any file classified as numerical_approximation is explicitly non-proof.",
+  "files": [
+    {
+      "path": "scripts/arithmetic_audit.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/build_blueprint.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/build_site.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/check_citations.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/check_readme_axioms.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/generate_llms_full.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "scripts/verify_all.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/disjoint-mermin/scripts/build_paper.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "matplotlib",
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/disjoint-mermin/scripts/check_release.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/disjoint-mermin/scripts/package_release.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/disjoint-mermin/scripts/run_stack.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/disjoint-mermin/scripts/verify_exact.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/disjoint-mermin/src/certificates.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/check_reproduction.py",
+      "classification": "numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/make_figures.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "matplotlib"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/run_experiment.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/run_stack.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/serve.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/sequential-evidence/scripts/verify_artifact.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/sequential-evidence/src/evidence.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/analysis.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "matplotlib",
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/averaging_legacy.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/build_journal.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/build_latex.py",
+      "classification": "numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/build_paper.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/build_unified_paper.py",
+      "classification": "numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/c3_exact_optima_check.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy",
+        "scipy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/c3_sdp_dual_check.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "fractions",
+        "sympy"
+      ],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/c3_sparse_search.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/check_github_math.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/conjecture_e.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/conjecture_e_lemmas.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/cospectral_family.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/cospectral_family_cone_lift.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/cospectral_family_tensor_check.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/cospectral_pair.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy",
+        "scipy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/fix_github_math.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/flat_states.py",
+      "classification": "numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_axioms.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_certificate_audit.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_context_verify.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_demo.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_extend.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_figure.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "matplotlib",
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_integer_bounds.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_paper_build.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_search.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_similarity.py",
+      "classification": "exact_integer_with_math_helpers",
+      "float_imports": [],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_sparse_family.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/frontier_c3_verify.py",
+      "classification": "hybrid_exact_core_with_numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/ilp_qminus.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy",
+        "scipy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/independent_demo_data.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/independent_figures.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "matplotlib",
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/independent_paper_build.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/ladder.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/norm_phase_family.py",
+      "classification": "exact_integer_with_math_helpers",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/phase_seven_lean.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/phase_states.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/stack_audit.py",
+      "classification": "numerical_approximation",
+      "float_imports": [
+        "numpy"
+      ],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/unified_section_score.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tests/test_disjoint_mermin.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tests/test_mutation_and_fuzz.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tests/test_properties.py",
+      "classification": "numerical_approximation",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": true,
+      "has_float_literal": true
+    },
+    {
+      "path": "tests/test_repo_integrity.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tests/test_sequential_evidence.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    }
+  ]
+}

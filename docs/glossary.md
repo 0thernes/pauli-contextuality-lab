@@ -1,0 +1,13 @@
+# Glossary
+
+- **Context (Pauli):** Three mutually commuting non-identity $N$-qubit Pauli observables whose product is $\pm I$. A classical $\pm 1$ assignment *violates* a context if the product of assigned values disagrees with the operator sign.
+- **Contextuality degree $d(S)$:** The minimum number of contexts of an observable configuration $S$ violated by any noncontextual assignment $f: S \to \{\pm 1\}$.
+- **Symplectic polar space $W(2N-1,2)$:** The geometry of all $4^N - 1$ non-identity $N$-qubit Pauli observables and their commuting triples (lines / contexts), isomorphic to isotropic lines of $\mathbb{F}_2^{2N}$ under the symplectic commutator form.
+- **Hyperbolic / Elliptic quadrics $Q^+(2N-1,2)$ and $Q^-(2N-1,2)$:** The subsets of symmetric (real, even number of $Y$ factors) and antiunitary-commuting observables inside $W(2N-1,2)$.
+- **Hoggar / Spectral floor bound:** The third-moment inequality $\beta \le (n-2)|S|^{3/2} / (6\sqrt{n-1})$ bounding satisfied minus violated contexts via Okumura's maximal-skewness lemma, attained on $W(5,2)$ by the Hoggar SIC fiducial state ($n=D=2^N$, or $n=D/2$ under Kramers doubling).
+- **Flat state / Floor-saturating configuration:** A pure quantum state whose non-zero Pauli expectation values all share a single modulus; saturation of the spectral floor is proved equivalent to flatness (`saturation_tfae`).
+- **Jonah's Conjecture E:** The conjecture (B. W. Jonah, Zenodo preprint, Oct 2026) that in every vertex case of the hyperplane-carrier classification ($N \ge 4$), two sign carriers can share identical carrier characteristic polynomials while their full completions have distinct spectra.
+- **Case C3 binary completion optima:** For the four-qubit C3 cospectral pair $(\sigma_0, \sigma_1)$, the exact minimum number of violated outside contexts over all binary completions: `368` vs `344` (gap `24`).
+- **Disjoint Mermin full context family:** Given $k$ disjoint copies of the Peres-Mermin square (or Mermin pentagram), all nonempty unions choosing at most one local context from each copy; exact degrees $(7^k - 5^k)/2$ and $(6^k - 4^k)/2$.
+- **Sequential contextuality evidence (e-process / wealth martingale):** An adaptive nonnegative betting process with conditional expected factor $\le 1$ under the noncontextual null, guaranteeing finite-horizon stopping-time validity $\Pr(\text{wealth} \ge T) \le 1/T$ when calibrated to the true conditional setting floor $\beta$.
+- **Statement fidelity:** Whether a Lean 4 formal statement accurately encodes the intended mathematical definition in the published literature without hidden extra assumptions or vacuity.

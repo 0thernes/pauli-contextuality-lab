@@ -1,0 +1,225 @@
+# Pauli Contextuality Lab — Generated Bulk Context (`llms-full.txt`)
+
+> Generated automatically by `scripts/generate_llms_full.py`. Do not hand-edit.
+
+
+---
+
+## File: `AGENTS.md`
+
+# AGENTS.md
+
+Canonical instructions for every coding agent working in `pauli-contextuality-lab` (Codex, OpenCode, Claude Code, Gemini CLI, Antigravity, Cursor, Grok Build, Grok Bot, and others).
+`CLAUDE.md`, `GEMINI.md`, `.cursor/rules/build-standard.mdc`, and `llms.txt` only point here. Edit this file, never the pointers.
+Full standard: `docs/build-standard.md` (Build Standard for LLMs v1.1.0, 90 items).
+
+## Project
+
+- **Name:** Pauli Contextuality Lab (`pauli-contextuality-lab`)
+- **Purpose:** Unified Lean 4.35.0 (Mathlib v4.35.0) and exact-arithmetic verification repository for three Pauli contextuality research tracks:
+  1. `tracks/spectral-bounds/` (`lean/HoggarBound/`): Spectral floor (Hoggar/Kramers bound), floor-saturating states including the infinite pure-CCZ determinant family `|Psi_{3m}>`, classical N=4..5 ladders, exact four-qubit C3 binary optima (`368` vs `344`), and Jonah's Conjecture E across all nine vertex cases for every `N >= 4`.
+  2. `tracks/disjoint-mermin/` (`lean/ContextualityTensor/`): Exact contextuality degrees `d_k = (7^k - 5^k)/2` (`k` disjoint Peres-Mermin squares) and `(6^k - 4^k)/2` (`k` Mermin pentagrams), answering Section 6 of Muller & Saniga (`arXiv:2609.19862v1`).
+  3. `tracks/sequential-evidence/` (`lean/Evidence/`): Exact finite-tree sequential contextuality evidence bounds and constructive setting-bias attack on the Peres-Mermin square (`97.24%` naive vs `0.89%` corrected false rejection at nominal `1%`).
+- **Author:** Alexander S. Donahue (independent researcher, ORCID `0009-0006-8168-9648`, `0_0@0thernes.art`)
+- **Licenses:** `Apache-2.0` (`LICENSE`, all code) + `CC-BY-4.0` (`LICENSE-DOCS`, all papers/docs/figures) + MIT for vendored `third_party/` (`NOTICE`)
+- **Manifest:** `repo.yaml` (schema: `repo-standard.schema.json`), `formalization.yaml` (Palomar-compatible Lean provenance)
+- **Status:** Active research preprints — NOT externally peer reviewed; AI-assisted under human direction.
+
+## Layout
+
+- `lean/`: Single unified Lean 4.35.0 + Mathlib v4.35.0 package (`HoggarBound`, `ContextualityTensor`, `Evidence`, `Challenge`, `Solution`, `VerifyAll`, `comparator.json`).
+- `tracks/`: Track-specific C11 engines, Python exact verifiers, interactive browser labs (`web/`), and checked JSON receipts (`results/`).
+- `papers/`: Publication manuscripts (`spectral-bounds/`, `disjoint-mermin/`, `sequential-evidence/`), PDFs, LaTeX sources, BibTeX, and correspondence guide.
+- `data/`: Witness hex masks, flat-state supports, and `data/MANIFEST.sha256`.
+- `third_party/`: Single deduplicated vendored Tsotchke stack (`moonlab/`, `qgtl/`, `quantum_rng/`, `SHA256SUMS.json`).
+- `blueprint/`: Lean Blueprint LaTeX (`blueprint/src/content.tex`) + declaration-checked dependency graph builder.
+- `scripts/`: Unified verification (`verify_all.py`), Blueprint builder (`build_blueprint.py`), static site builder (`build_site.py`), citation/axiom/arithmetic audits, and Build Standard v1.1.0 auditors (`audit-repo.sh`, `Audit-Repo.ps1`).
+- `tests/`: Automated Python (exact, Hypothesis property, negative, mutation/fuzz, integrity) and Node.js test suites.
+- `docs/`: Architecture, ADRs, statement-fidelity table, threat model, operations, FAQ, glossary, run log, and 10-pass review logs.
+
+## Commands
+
+Run via `just <recipe>` or `bash scripts/dev.sh <recipe>`:
+
+- `just setup`: Install pinned Python dependencies (`requirements.txt`) and fetch pinned Mathlib cache (`lean/`).
+- `just build`: Build all three Lean libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and compile C11 verifiers with `-Wall -Wextra`.
+- `just test`: Run the unified Python (`pytest`) and Node (`node --test`) verification suites across all 3 tracks.
+- `just lint`: Run `ruff`, `mypy`, C compiler warnings, and Batteries `lake exe runLinter` (report-only).
+- `just sanitizers`: Compile and execute C11 engines under `-fsanitize=address,undefined`.
+- `just verify-lean`: Build Lean modules, run exhaustive `#print axioms` audit (`VerifyAll.lean`), check zero forbidden tokens, and run 6-kernel `lake comparator --config comparator.json --paranoid`.
+- `just blueprint`: Validate every `\lean{...}` declaration in `blueprint/src/content.tex` and build the dependency graph.
+- `just site`: Assemble the unified GitHub Pages portal (`build/site/`) including all 3 browser labs, papers, and `/blueprint/`.
+- `just reproduce`: Clean-clone end-to-end exact verification + audits + blueprint + site assembly.
+- `just audit`: Score this repository against Build Standard v1.1.0 (`scripts/audit-repo.sh` / `scripts/Audit-Repo.ps1`).
+- `just release X.Y.Z`: Bump `VERSION`, update `CHANGELOG.md`/`CITATION.cff`, tag `vX.Y.Z`, and push straight to `main`.
+
+## Hard Rules (Build Standard v1.1.0)
+
+- **R1.** Nothing may gate, block, or slow a commit or push. No branch protection, no required status checks, no commit/tag signing requirements, no git hooks, no push protection, no merge queues.
+- **R2.** Commit and push straight to `main`. No pull requests and no feature branches.
+- **R3.** CI is informational. Failures are findings fixed in follow-up commits to `main`.
+- **R4.** Banned tools/files: no Dependabot/Renovate, no PR templates, no CodeRabbit, no Copilot review or `.github/copilot-instructions.md`, no `FUNDING.yml`.
+- **R5.** One-person lean, not corporate. Prefer one file over a framework, one command over a checklist.
+- **R6.** Never fabricate. Every number, claim, axiom output, badge, and test result must come from a real run of current code.
+- **R7.** Classify every finding as exactly one of: `bug`, `error`, `issue`, `problem`, `dilemma`, `conflict`.
+- **R8.** Precedence: Owner's explicit instruction > Hard Rules > Build Standard items > ecosystem conventions.
+
+## Known Traps
+
+- **`lean/Challenge.lean` intentional `sorry` stubs:** `Challenge.lean` contains `sorry` ONLY as the isolated statement-only specification checked against sorry-free `Solution.lean` by `lake comparator --config comparator.json --paranoid`. Never put `sorry`, `admit`, `native_decide`, or custom `axiom` in any proof module or `Solution.lean`.
+- **Single GitHub Pages site:** `.github/workflows/pages.yml` deploys `build/site/` assembled by `scripts/build_site.py`, mounting `/blueprint/` alongside all three interactive browser labs and papers. Never add a second Pages workflow.
+- **PowerShell bracket safety on Windows:** On the author's ReFS Dev Drive (`Z:\[Vibe Coded (AI)]\...`), always use `-LiteralPath` in PowerShell file cmdlets.
+- **Honest affiliation & scope:** Always use `Alexander S. Donahue (independent researcher)` (never assert an unformed LLC). Never claim external peer review, journal acceptance, arXiv submission, or Palomar registration unless genuinely completed.
+
+
+---
+
+## File: `CLAIMS.md`
+
+# Claims & Falsification Ledger (`CLAIMS.md`)
+
+Every headline claim in `pauli-contextuality-lab` is tagged with its exact verification status (`kernel-checked`, `certificate-checked`, `paper proof`, `numerical_approximation`, or `open`) and an explicit falsification condition (Build Standard items B04 & B42).
+
+| ID | Track | Claim | Evidence Tag | Verification Artifact | What Would Prove Us Wrong (Falsifier) |
+|---|---|---|---|---|---|
+| **C01** | Track 1 | Universal spectral floor $(D-1)\beta_6(S,f) \le (D-2)|S|\sqrt{(D-1)|S|}$ for all $N \ge 1$ and $S \subseteq W(2N-1,2)$ | `kernel-checked` | `lean/HoggarBound/Bound.lean` (`hoggar_bound`), `Challenge.lean` Target 1 | Exhibiting any $N$-qubit Pauli set $S$ and $\pm 1$ assignment violating the inequality, or a non-standard axiom in `VerifyAll.lean`. |
+| **C02** | Track 1 | Quaternionic / Kramers spectral floor ($n = D/2$) on $Q^-(2N-1,2)$ giving $d(Q^-(5,2))\ge 9$, $d(Q^-(7,2))\ge 291$, $d(Q^-(9,2))\ge 6501$ | `kernel-checked` | `lean/HoggarBound/Kramers.lean` (`hoggar_bound_quaternionic`), Target 2 | Any assignment on $Q^-(2N-1,2)$ beating the Kramers bound or violating antiunitary commutation. |
+| **C03** | Track 1 | Exact small degrees: $d(Q^+(3,2))=1$, $d(W(5,2))=63$, $d(Q^-(5,2))=9$, and $2 \le d(W(3,2)) \le 3$ | `kernel-checked` | `lean/HoggarBound/TwoQubit.lean`, `Witness.lean` (`mermin_peres`, `degree_three_qubit`, `degree_three_qubit_elliptic`) | Any assignment violating $<63$ contexts in $W(5,2)$, $<9$ in $Q^-(5,2)$, or $0$ in $Q^+(3,2)$. |
+| **C04** | Track 1 | Asymptotic half-violation limit $d/L \to 1/2$ for $W(2N-1,2)$, $Q^+(2N-1,2)$, $Q^-(2N-1,2)$ | `kernel-checked` | `lean/HoggarBound/AuditUpgrades.lean` (`*_fraction_tendsto_half`) | A sequence of assignments whose violated fraction stays bounded below $1/2 - \varepsilon$. |
+| **C05** | Track 1 | Five-way saturation equivalence (`saturation_tfae`) and squareness $(2^N-1)|S| = \square$ | `kernel-checked` | `lean/HoggarBound/SaturationTheory.lean`, Target 3 | A floor-saturating set with $(2^N-1)|S|$ non-square or no flat pure state. |
+| **C06** | Track 1 | Infinite non-closed contextual floor-saturating CCZ family $|\Psi_{3m}\rangle$ ($m \ge 1$) + finite flat degrees $75, 480, 2016, 729344$ | `kernel-checked` | `lean/HoggarBound/NormPhaseFamily.lean`, `SaturatedPhaseSix.lean`, `Saturated*`, `norm_phase_family.py` (32/32 checks), Target 4 | A counterexample $m \ge 2$ where support is closed or degree differs from $\frac{1}{12}(q^3-1)q^3(q-1)(q-2)$. |
+| **C07** | Track 1 | Jonah's Conjecture E holds in all 9 vertex cases for every $N \ge 4$ (canonical Hermitian eigenvalue-multiset separation) | `kernel-checked` | `lean/HoggarBound/ConjectureE.lean`, `AuditUpgrades.lean`, `conjecture_e_trace_formula.py` (136 checks), Target 6 | A case among the 9 where the constructed carrier pair is not cospectral or has identical completion spectra. *(Note: single-orbit transitivity of Jonah [J3, Thm B4] is a cited paper input, not in Lean.)* |
+| **C08** | Track 1 | Exact four-qubit Case C3 global binary completion optima: $\min_y F(\sigma_0,y) = 368$ and $\min_y F(\sigma_1,y) = 344$ (exact gap 24) | `kernel-checked` | `lean/HoggarBound/C3ExactOptima.lean`, `c3_exact_optima_check.py` (10/10 checks), Target 5 | Any binary vector $y \in \{\pm 1\}^{64}$ giving $<368$ for $\sigma_0$ or $<344$ for $\sigma_1$. |
+| **C09** | Track 1 | Unconditional Kramers-lifted bounds $d(W(7,2)) \ge 1455$, $d(Q^+(9,2)) \ge 6444$, CSS witnesses $(315, 1575, 6975)$, and master reduction to $d(Q^-(7,2)) \ge 315$ | `kernel-checked` (ladders/bounds) + `certificate-checked` (42-orbit census) | `lean/HoggarBound/ExactDegreesN4N5.lean`, `w52_census_verify.c`, `exact_degrees_n4_n5.py` (9/9), Targets 7–8 | An assignment violating $<1455$ lines in $W(7,2)$ or $<315$ in $Q^-(7,2)$, or an orbit missed by the 42-orbit C census. |
+| **C10** | Track 1 | Exhaustive $N=9$ cyclic-invariant rank-8 search finds 0 hits across 540,299,769 forms | `certificate-checked` (C census, outside Lean) | `tracks/spectral-bounds/src/n9_rank8_search.c`, `results/n9_rank8_search.tsv` | Exhibiting a cyclic-invariant cubic form on 9 qubits with constant rank 8. |
+| **C11** | Track 2 | Exact degrees $d_k = (7^k - 5^k)/2$ ($k$ disjoint Peres-Mermin squares) and $(6^k - 4^k)/2$ ($k$ Mermin pentagrams) with $2d_k/L_k \to 1$ | `kernel-checked` | `lean/ContextualityTensor.lean`, `ActualModel.lean`, `tests/test_disjoint_mermin.py`, Targets 9–10 | Any deterministic assignment on $k$ disjoint blocks violating fewer than $(7^k - 5^k)/2$ (squares) or $(6^k - 4^k)/2$ (pentagrams) union contexts. |
+| **C12** | Track 3 | Sharp Peres-Mermin setting-bias failure floor $\min_c p(c)$, finite adaptive-tree hitting bound $\le z/T$, and miscalibrated 1% test false-rejection probability $97.2443815\%$ vs $0.8907211\%$ at horizon 1,000 | `kernel-checked` (bounds & 36-step counterexample) + `certificate-checked` (exact rational 1,000-step DP & 18,000-trial replay) | `lean/Evidence/{Square,Sequential}.lean`, `tracks/sequential-evidence/scripts/verify_artifact.py`, `tests/test_sequential_evidence.py`, Targets 11–12 | A valid finite tree exceeding $z/T$ hitting probability, or a rational DP discrepancy against exhaustive path enumeration. |
+| **C13** | All | Browser labs and Moonlab / QGTL / `quantum_rng` runs | `numerical_approximation` (classical simulation) | `third_party/`, `results/arithmetic-audit.json` | Not a hardware quantum claim; falsified if simulator disagrees with exact analytical Pauli expectations beyond stated tolerance. |
+
+
+---
+
+## File: `LIMITATIONS.md`
+
+# Limitations, Epistemic Boundaries, and AI-Contribution Disclosure
+
+## 1. Real vs. Metaphor & What Is Not Claimed
+
+- **Not externally peer reviewed:** All three manuscripts in `papers/` are unreviewed research preprints. Passing Lean 4 kernel checks certifies the logical validity of the formalized statements inside Lean — not external referee acceptance, historical priority, or statement-to-literature fidelity.
+- **No quantum hardware measurements:** Moonlab (`third_party/moonlab/`) is a classical state-vector simulator compiled to WebAssembly; `quantum_rng` (`third_party/quantum_rng/`) is a seeded classical pseudorandom generator; QGTL (`third_party/qgtl/`) provides classical differential-geometry C kernels. Nothing in this repository is a physical experiment on quantum hardware or certified quantum randomness.
+- **Prior work & unreviewed preprint citations:**
+  - The spectral floor inequality and Conjecture E stem from unreviewed Zenodo preprints by B. W. Jonah (`doi:10.5281/zenodo.23538829`, `23510634`, `23524332`).
+  - Symplectic polar-space degrees and the repeated-disjoint-copy problem come from A. Muller, M. Saniga, F. Holweck, A. Giorgetti, and C. Kelleher (`arXiv:2407.02928`, `arXiv:2609.19862v1`).
+  - $d(Q^+(7,2))=315$ is due to Li, Gupta, and Ganesh (`arXiv:2610.26465`); the numerical five-qubit flat state is due to Cieśliński (`arXiv:2610.07172`); the scalar skewness bound is Okumura (1974).
+  - Novelty claims (Track 1 Section 5 flat states and $|\Psi_{3m}\rangle$, Track 1 Conjecture E formalization, Track 2 arbitrary-$k$ closed forms) rest on bounded literature searches and do not claim exhaustive historical priority.
+
+## 2. Explicit Kernel Boundary (What Lies Outside Lean 4)
+
+The following items are **not** certified by the Lean 4 kernel and are explicitly tagged as `certificate-checked`, `paper proof`, or `numerical_approximation` in `CLAIMS.md`:
+
+1. **42-orbit `W(5,2)` census (`tracks/spectral-bounds/src/w52_census_verify.c`):** Exhaustive C11 enumeration (17,652,160 classes across 42 orbits) + pure-integer Python duals reproducing Jonah's $(315, 1575, 6975)$. Lean proves the exact master reduction (`exact_degrees_n4_n5_of_q7minus_315`) and unconditional bounds `1455` and `6444`, not the C orbit search itself.
+2. **Nine-qubit cyclic-symmetry rank-8 search (`n9_rank8_search.c`):** C11 enumeration of 540,299,769 forms (0 hits).
+3. **Single-orbit transitivity input (`Jonah [J3, Theorem B4]`):** Cited paper input for transporting Conjecture E to arbitrary hyperplane classes outside our constructed representatives.
+4. **Floating-point scripts:** Every Python file using `numpy` or floating-point arithmetic is automatically classified in `results/arithmetic-audit.json` (`scripts/arithmetic_audit.py`) and never relied upon for a formal proof.
+5. **Physical assumptions of Track 3 (`Evidence`):** The finite adaptive-tree theorem assumes a true conditional setting floor $\beta$ and single context-independent value table per trial; no empirical transcript alone can certify those physical assumptions.
+6. **Human line-by-line statement fidelity audit:** `formalization.yaml` explicitly records `human_line_by_line_review_recorded: false` until an independent mathematician (or the author line-by-line) signs off on every row of `docs/statement-fidelity.md`.
+
+## 3. AI-Contribution & CRediT Statement
+
+- **Author:** Alexander S. Donahue (independent researcher, ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648)). No legal entity or institutional affiliation is claimed.
+- **Human contributions (CRediT):** Conceptualization; Methodology; Project administration; Resources (self-funded); Supervision; Validation direction and publication decisions.
+- **AI tools used:**
+  - **Anthropic Claude:** Initial spectral-floor and saturation studies, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs and verifiers.
+  - **OpenAI Codex:** Independent validation, four-qubit C3 counterexample, manuscript review.
+  - **Google Gemini / Antigravity:** Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family $|\Psi_{3m}\rangle$, $N=4,5$ ladders, `NonVacuity`, unified monorepo consolidation, Build Standard v1.1.0 & verification stack).
+- **Responsibility:** No AI system is listed as an author. Alexander S. Donahue takes full responsibility for all claims, errors, and corrections (`0_0@0thernes.art`).
+- **Conflict of interest:** None declared (self-funded independent research).
+
+
+---
+
+## File: `formalization.yaml`
+
+# Palomar-compatible formalization metadata & epistemic disclosure
+# Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
+title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
+repository: "https://github.com/0thernes/pauli-contextuality-lab"
+version: "2.0.0"
+date: "2026-11-24"
+license:
+  code: "Apache-2.0"
+  documentation_and_papers: "CC-BY-4.0"
+authors:
+  - name: "Alexander S. Donahue"
+    orcid: "0009-0006-8168-9648"
+    affiliation: "Independent researcher"
+    credit_roles:
+      - "Conceptualization"
+      - "Methodology"
+      - "Project administration"
+      - "Resources"
+      - "Supervision"
+      - "Validation (direction & audit oversight)"
+lean_toolchain: "leanprover/lean4:v4.35.0"
+mathlib_rev: "56a005855ea1"
+batteries_rev: "66e469188fe0"
+lake_package_dir: "lean"
+libraries:
+  - name: "HoggarBound"
+    track: "tracks/spectral-bounds"
+    summary: "Spectral floor (real/complex/quaternionic), saturation equivalences, infinite CCZ family |Psi_{3m}>, exact C3 binary optima (368 vs 344), N=4..5 ladders, TwoQubit & Hoggar witnesses, Jonah's Conjecture E (all 9 cases, N >= 4), and NonVacuity."
+  - name: "ContextualityTensor"
+    track: "tracks/disjoint-mermin"
+    summary: "Exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares) and (6^k - 4^k)/2 (k Mermin pentagrams), answering Section 6 of Muller & Saniga (arXiv:2609.19862v1)."
+  - name: "Evidence"
+    track: "tracks/sequential-evidence"
+    summary: "Peres-Mermin setting-bias bound, finite adaptive-tree wealth supermartingale bound, and exact counterexample to naive calibration."
+challenge_module: "Challenge"
+solution_module: "Solution"
+comparator_config: "lean/comparator.json"
+axiom_audit_file: "lean/VerifyAll.lean"
+permitted_axioms:
+  - "propext"
+  - "Classical.choice"
+  - "Quot.sound"
+kernels_configured:
+  - "Lean 4.35.0 official C++ kernel"
+  - "leanchecker-paranoid (v4.35.0)"
+  - "lean4lean (v4.35.0)"
+  - "nanoda (0.4.19)"
+  - "con-leche (v4.35.0)"
+  - "con-ron (v4.35.0)"
+automation:
+  origin: "AI-assisted mathematical formalization, exact computation, and manuscript drafting under human direction"
+  models_used:
+    - "Anthropic Claude: spectral-floor & saturation study, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs & verifiers"
+    - "OpenAI Codex: independent validation, four-qubit C3 counterexample & manuscript audits"
+    - "Google Gemini / Antigravity: Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family |Psi_{3m}>, N=4..5 ladders, NonVacuity, unified monorepo consolidation, Build Standard v1.1.0 & Playbook v1.1 verification stack)"
+  human_line_by_line_review_recorded: false
+  statement_fidelity_table: "docs/statement-fidelity.md"
+review_status: "Research preprints; NOT externally peer reviewed; NOT yet registered on Palomar Registry, arXiv, or Zenodo."
+limitations: "See LIMITATIONS.md and CLAIMS.md. In particular: the 42-orbit W(5,2) C census reproducing Jonah [J1]'s (315, 1575, 6975), the 540.3M-form N=9 cyclic-symmetry rank-8 census, Jonah [J3, Theorem B4]'s single-orbit group transitivity classification, and external simulator/browser code lie outside the Lean 4 kernel boundary."
+
+
+---
+
+## File: `docs/statement-fidelity.md`
+
+# Statement-Fidelity Audit Table (`docs/statement-fidelity.md`)
+
+Maps every headline Lean 4.35.0 declaration across all three tracks to its informal mathematical statement and literature anchor so an independent mathematician can check for definition drift, weakened hypotheses, or vacuity without reading proof internals.
+
+> **Human review status:** Mechanical compilation, non-vacuity witnesses (`NonVacuity.lean`), and 6-kernel `lake comparator --paranoid` are automated. **Independent human line-by-line fidelity sign-off remains OPEN** (`human_line_by_line_review_recorded: false` in `formalization.yaml`).
+
+| Track | Lean Declaration | Informal Claim | Literature Anchor | Fidelity Notes | Human Sign-Off |
+|---|---|---|---|---|---|
+| 1 | `HoggarBound.hoggar_bound` | $(D-1)\beta_6(S,f) \le (D-2)|S|\sqrt{(D-1)|S|}$ for any $N \ge 1$ Pauli subset $S$ | Jonah (Zenodo `23538829`, Oct 2026, unreviewed); Okumura (1974) | Uses explicit complex $2^N \times 2^N$ Pauli matrices (`Pauli.lean`) and operator-product signs (`lineSign`), no abstract oracle. Non-vacuity proved in `spectral_floor_nonvacuous`. | Open |
+| 1 | `HoggarBound.hoggar_bound_quaternionic` | Kramers-doubled floor ($n = D/2$) on antiunitary-commuting sets & $Q^-(2N-1,2)$ | Jonah (Zenodo `23538829`); Muller et al. (`arXiv:2407.02928`) | Explicitly constructs $\theta^2 = -1$ commutation condition `qform u + symp w u = 0`. Non-vacuity: `kramers_nonvacuous`. | Open |
+| 1 | `HoggarBound.mermin_peres`, `degree_three_qubit`, `degree_three_qubit_elliptic` | Exact degrees $d(Q^+(3,2))=1$, $d(W(5,2))=63$, $d(Q^-(5,2))=9$ | Mermin (1990); Muller et al. (`arXiv:2407.02928`); Jonah (`23538829`) | Lower bound from `hoggar_bound`/`Kramers`; upper bound by explicit witness evaluated via kernel `decide +kernel` (zero `native_decide`). | Open |
+| 1 | `HoggarBound.saturation_tfae`, `saturation_mul_isSquare` | Floor saturation $\iff$ flat pure state on $S$, forcing $(2^N-1)|S|=\square$ | Unified paper Sec. 4; Cieśliński (`arXiv:2610.07172`) | Exact operator identity on `opA S f ^ 2`; non-vacuity: `saturation_tfae_nonvacuous`. | Open |
+| 1 | `HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family` | Infinite non-closed contextual floor-saturating CCZ family $|\Psi_{3m}\rangle$ ($m \ge 1$) | Unified paper Thm 13b (new to bounded literature search) | Proves non-closure (`u + v ∉ S`), exact size $(q^3-1)q^2$, context count, lower bound, and attaining assignment for all $m \ge 1$. | Open |
+| 1 | `HoggarBound.C3ExactOptima.corollary16_exact_binary_optima` | Four-qubit C3 global binary optima: $368$ ($\sigma_0$) vs $344$ ($\sigma_1$), gap $24$ | Jonah (Zenodo `23524332`, unreviewed); Unified paper Thm 16'' | Pure-integer MET-SDP dual certificates (421/442 frustrated-triangle cuts) + explicit attaining binary vectors; zero floating point. | Open |
+| 1 | `HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases`, `AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra` | Jonah's Conjecture E across all 9 vertex cases for every $N \ge 4$ | Jonah (Zenodo `23524332`, unreviewed) | Matches all 9 vertex classes explicitly on `allPoints`, `quadric`, `perpSet`, separating both `charpoly` and canonical Hermitian eigenvalue multisets. *Caveat:* transport to arbitrary hyperplane class uses cited Theorem B4 of Jonah [J3] outside Lean. | Open |
+| 1 | `HoggarBound.ExactDegreesN4N5.w72_ge_1455`, `q9plus_ge_6444`, `exact_degrees_n4_n5_of_q7minus_315` | Unconditional bounds $1455$, $6444$, CSS witnesses $(315,1575,6975)$, reduction to $d(Q^-(7,2)) \ge 315$ | Jonah (Zenodo `23510634`, unreviewed); Li–Gupta–Ganesh (`arXiv:2610.26465`); Muller et al. (`arXiv:2407.02928`) | Symplectic transvection invariance + double-counting proved in Lean; the 42-orbit `W(5,2)` census establishing $d(Q^-(7,2)) \ge 315$ is C11 + integer Python outside Lean. | Open |
+| 2 | `ContextualityTensor.square_minimum_closed_form`, `pentagram_minimum_closed_form`, `global_actual_*` | Exact degrees $(7^k-5^k)/2$ ($k$ disjoint squares) and $(6^k-4^k)/2$ ($k$ pentagrams) | **Muller & Saniga (`arXiv:2609.19862v1`, Sec. 6)** | Full union context family (every nonempty choice of $\le 1$ local context per block) on disjoint observable vertices; literal Pauli realization in `PhysicalBridge.lean`. | Open |
+| 3 | `Evidence.sharp_minimum`, `success_upper_bound`, `BetTree.finite_hitting_bound`, `concrete_classical_false_positive` | Sharp Peres-Mermin setting-bias floor $\min_c p(c)$, finite adaptive-tree bound $\le z/T$, 36-round naive attack $>4.3\%$ | Peres (1990); Mermin (1990); Zhang–Glancy–Knill (2011) | Formalized over exact finite binary trees with real probabilities; physical conditional-floor assumption is an explicit hypothesis, not verified by transcripts alone. | Open |

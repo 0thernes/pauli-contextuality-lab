@@ -1,0 +1,27 @@
+# Pauli Contextuality Lab
+
+> Unified Lean 4.35.0 (Mathlib v4.35.0) and exact-arithmetic research repository covering spectral bounds on Pauli contextuality, floor-saturating states (including |Psi_{3m}>), exact four-qubit C3 optima (368 vs 344), Jonah's Conjecture E (all 9 cases, N >= 4), exact disjoint Mermin tensor degrees ((7^k - 5^k)/2 and (6^k - 4^k)/2), and sequential contextuality evidence bounds.
+
+## Start here
+
+- [README.md](README.md): Overview, verbatim #print axioms proofs, quickstart, and track summary
+- [AGENTS.md](AGENTS.md): Canonical instructions, commands, hard rules, and known traps for coding agents
+- [CLAIMS.md](CLAIMS.md): Tagged claims ledger with explicit falsification criteria
+- [LIMITATIONS.md](LIMITATIONS.md): Honest scope, verification boundaries, AI-contribution & CRediT disclosure
+- [REPLICATION.md](REPLICATION.md): Clean-clone replication protocol and run log
+- [docs/statement-fidelity.md](docs/statement-fidelity.md): Line-by-line mapping between Lean 4 declarations and mathematical definitions
+
+## Formal proofs & papers
+
+- [lean/README.md](lean/README.md): Unified Lean 4.35.0 trust base (HoggarBound, ContextualityTensor, Evidence)
+- [formalization.yaml](formalization.yaml): Palomar-compatible provenance metadata
+- [blueprint/src/content.tex](blueprint/src/content.tex): Declaration-checked Lean Blueprint
+- [papers/README.md](papers/README.md): Guide to the three research preprints and Muller/Saniga/Holweck/Giorgetti/Kelleher correspondence
+
+## Tracks & architecture
+
+- [tracks/spectral-bounds/README.md](tracks/spectral-bounds/README.md): Track 1 — Spectral floor, saturating states, N=4..5 ladders, Conjecture E
+- [tracks/disjoint-mermin/README.md](tracks/disjoint-mermin/README.md): Track 2 — Disjoint Mermin squares & pentagrams (Muller & Saniga Sec. 6)
+- [tracks/sequential-evidence/README.md](tracks/sequential-evidence/README.md): Track 3 — Exact sequential certificates & setting-bias attack
+- [docs/architecture.md](docs/architecture.md): Repository architecture and verification stack
+- [docs/build-standard.md](docs/build-standard.md): Build Standard for LLMs v1.1.0

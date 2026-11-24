@@ -1,0 +1,9 @@
+# Pinned verification & test environment for pauli-contextuality-lab (Python 3.11-3.13)
+numpy==2.2.3
+sympy==1.13.3
+matplotlib==3.10.0
+pytest==8.3.5
+hypothesis==6.127.4
+ruff==0.9.9
+mypy==1.15.0
+PyYAML==6.0.2

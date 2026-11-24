@@ -1,0 +1,57 @@
+name: Lean 4.35.0 Formal Verification & 6-Kernel Audit
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  lean-verify:
+    name: Build, Axiom Audit, Batteries Linter & 6-Kernel Comparator
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan & Lean 4.35.0
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Install bubblewrap for sandboxed lake comparator
+        run: sudo apt-get update && sudo apt-get install -y bubblewrap
+      - name: Fetch pinned Mathlib cache & build all 3 libraries
+        working-directory: lean
+        run: |
+          lake exe cache get
+          lake build HoggarBound ContextualityTensor Evidence Solution
+      - name: Forbidden-token scan (sorry, admit, native_decide, custom axiom)
+        run: |
+          if grep -rnE '\b(sorry|admit|native_decide)\b|^\s*axiom\b|implemented_by|@\[extern' \
+            lean/HoggarBound lean/ContextualityTensor lean/Evidence lean/Solution.lean \
+            | grep -vE '^[^:]+:[0-9]+:\s*(--|/-|\*|/)'; then
+            echo "Forbidden Lean token detected!" >&2
+            exit 1
+          fi
+      - name: Run unified exhaustive #print axioms audit (VerifyAll.lean)
+        working-directory: lean
+        run: |
+          lake env lean VerifyAll.lean | tee ../results/lean-axioms-ci.log
+      - name: Check README verbatim #print axioms sync & standard allowlist
+        run: python3 scripts/check_readme_axioms.py
+      - name: Run Batteries linter (report-only)
+        working-directory: lean
+        continue-on-error: true
+        run: lake exe runLinter ContextualityTensor Evidence
+      - name: Run 6-kernel lake comparator --paranoid
+        working-directory: lean
+        run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
+          lake comparator --config comparator.json --paranoid
+      - name: Attest Lean axiom audit report (SLSA / Sigstore)
+        uses: actions/attest-build-provenance@v2
+        continue-on-error: true
+        with:
+          subject-path: results/lean-axioms-ci.log

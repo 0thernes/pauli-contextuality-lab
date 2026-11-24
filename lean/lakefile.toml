@@ -1,0 +1,27 @@
+name = "PauliContextualityLab"
+version = "2.0.0"
+defaultTargets = ["HoggarBound", "ContextualityTensor", "Evidence", "Solution"]
+
+[leanOptions]
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0"
+
+[[lean_lib]]
+name = "HoggarBound"
+
+[[lean_lib]]
+name = "ContextualityTensor"
+
+[[lean_lib]]
+name = "Evidence"
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"

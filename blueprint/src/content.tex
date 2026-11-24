@@ -1,0 +1,109 @@
+% Pauli Contextuality Lab — Unified Lean 4.35.0 Blueprint (Tracks 1–3)
+% Every \lean{...} declaration is verified against lean/ by scripts/build_blueprint.py.
+
+\section{Track 1: Spectral Floor, Saturating States, Ladders \& Conjecture E}
+
+\begin{theorem}[Universal Spectral Floor]
+\label{thm:spectral-floor}
+\lean{HoggarBound.hoggar_bound, HoggarBound.NonVacuity.spectral_floor_nonvacuous}
+\leanok
+For every $N \ge 1$, every subset $S \subseteq W(2N-1,2)$ of non-identity $N$-qubit Pauli observables, and every $\pm 1$ assignment $f$, the context balance satisfies $(D-1)\beta_6(S,f) \le (D-2)|S|\sqrt{(D-1)|S|}$ where $D = 2^N$.
+\end{theorem}
+
+\begin{theorem}[Quaternionic / Kramers Spectral Floor]
+\label{thm:kramers-floor}
+\lean{HoggarBound.hoggar_bound_quaternionic, HoggarBound.elliptic_fraction, HoggarBound.NonVacuity.kramers_nonvacuous}
+\uses{thm:spectral-floor}
+\leanok
+For every $N \ge 2$ and every antiunitary-commuting subset $S \subseteq Q^-(2N-1,2)$, Kramers doubling tightens the spectral floor to $n = D/2$, yielding $d(Q^-(5,2)) \ge 9$, $d(Q^-(7,2)) \ge 291$, and $d(Q^-(9,2)) \ge 6501$.
+\end{theorem}
+
+\begin{theorem}[Exact Small Witnesses: Mermin-Peres, Doily, and Hoggar SIC]
+\label{thm:small-witnesses}
+\lean{HoggarBound.mermin_peres, HoggarBound.doily_contexts, HoggarBound.degree_three_qubit, HoggarBound.degree_three_qubit_elliptic}
+\uses{thm:spectral-floor, thm:kramers-floor}
+\leanok
+Explicit kernel-checked witnesses establish $d(Q^+(3,2)) = 1$, $2 \le d(W(3,2)) \le 3$, $d(W(5,2)) = 63$, and $d(Q^-(5,2)) = 9$.
+\end{theorem}
+
+\begin{theorem}[Asymptotic Half-Violation Limit]
+\label{thm:asymptotic-half}
+\lean{HoggarBound.AuditUpgrades.floor_deficit_tendsto_zero, HoggarBound.AuditUpgrades.full_space_fraction_tendsto_half, HoggarBound.AuditUpgrades.hyperbolic_fraction_tendsto_half}
+\uses{thm:spectral-floor, thm:kramers-floor}
+\leanok
+As $N \to \infty$, the guaranteed violated-context fraction $d/L$ tends to $1/2$ for $W(2N-1,2)$, $Q^+(2N-1,2)$, and $Q^-(2N-1,2)$.
+\end{theorem}
+
+\begin{theorem}[Saturation Equivalences and Squareness Obstruction]
+\label{thm:saturation-tfae}
+\lean{HoggarBound.saturation_tfae, HoggarBound.saturation_mul_isSquare, HoggarBound.NonVacuity.saturation_tfae_nonvacuous}
+\uses{thm:spectral-floor}
+\leanok
+Saturation of the spectral floor is equivalent to existence of a pure flat quantum state supported on $S$, forcing $(2^N - 1)|S|$ to be a perfect square.
+\end{theorem}
+
+\begin{theorem}[Infinite Non-Closed Contextual Floor-Saturating Family]
+\label{thm:infinite-ccz}
+\lean{HoggarBound.NormPhaseFamily.detPhase_isFlatState, HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family, HoggarBound.NormPhaseFamily.infinite_nonclosed_family_contextual, HoggarBound.det6_degree}
+\uses{thm:saturation-tfae}
+\leanok
+For every $m \ge 1$ ($N=3m$, $q=2^m$), the pure-CCZ determinant phase state $|\Psi_{3m}\rangle$ is flat on a strictly non-closed support of size $(q^3-1)q^2$ with exact contextuality degree $\frac{1}{12}(q^3-1)q^3(q-1)(q-2)$ (strictly positive for all $m \ge 2$; $m=2$ gives $N=6$, degree $2{,}016$).
+\end{theorem}
+
+\begin{theorem}[Classical N=4,5 Double-Counting Ladders and Unconditional Bounds]
+\label{thm:n4n5-ladders}
+\lean{HoggarBound.ExactDegreesN4N5.transv_violatedLines_eq, HoggarBound.ExactDegreesN4N5.w72_ge_1455, HoggarBound.ExactDegreesN4N5.q9plus_ge_6444, HoggarBound.ExactDegreesN4N5.exact_degrees_n4_n5_of_q7minus_315}
+\uses{thm:kramers-floor}
+\leanok
+Symplectic transvection invariance and hyperplane double-counting yield unconditional bounds $d(W(7,2)) \ge 1455$, $d(Q^+(9,2)) \ge 6444$, CSS witnesses $(315, 1575, 6975)$, and the exact master reduction to $d(Q^-(7,2)) \ge 315$.
+\end{theorem}
+
+\begin{theorem}[Jonah's Conjecture E Across All Nine Vertex Cases]
+\label{thm:conjecture-e}
+\lean{HoggarBound.ConjectureE.trace_completion_cube_universal, HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases, HoggarBound.AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra, HoggarBound.AuditUpgrades.clifford_transport_strict_law_fails, HoggarBound.ConjectureE.corollary18_c11_from_c3}
+\uses{thm:spectral-floor}
+\leanok
+In all nine vertex cases of Jonah's hyperplane-carrier classification and for every $N \ge 4$, explicit sign carriers share identical carrier characteristic polynomials while their completions have distinct canonical Hermitian spectra.
+\end{theorem}
+
+\begin{theorem}[Exact Four-Qubit Case C3 Binary Completion Optima]
+\label{thm:c3-exact-optima}
+\lean{HoggarBound.C3ExactOptima.corollary16_sigmaA_exact_lower, HoggarBound.C3ExactOptima.corollary16_sigmaB_exact_lower, HoggarBound.C3ExactOptima.corollary16_exact_binary_optima}
+\uses{thm:conjecture-e}
+\leanok
+Pure-integer MET-SDP dual certificates inside Lean 4 establish exact global binary completion minima $\min_y F(\sigma_0, y) = 368$ and $\min_y F(\sigma_1, y) = 344$ (exact separation gap $24$).
+\end{theorem}
+
+\section{Track 2: Exact Contextuality Degrees for Disjoint Mermin Configurations}
+
+\begin{theorem}[Score Factorization for Disjoint Unions]
+\label{thm:score-factorization}
+\lean{ContextualityTensor.score_factorization, ContextualityTensor.score_violations}
+\leanok
+For the full union context family over $k$ disjoint blocks, $1 + \operatorname{score}(f) = \prod_{i=1}^k (1 + \operatorname{local\_score}_i(f))$.
+\end{theorem}
+
+\begin{theorem}[Exact Degrees for Disjoint Mermin Squares and Pentagrams]
+\label{thm:disjoint-mermin}
+\lean{ContextualityTensor.square_minimum_closed_form, ContextualityTensor.pentagram_minimum_closed_form, ContextualityTensor.global_actual_square_minimum, ContextualityTensor.global_actual_pentagram_minimum, ContextualityTensor.square_epsilon_tends_to_one, ContextualityTensor.pentagram_epsilon_tends_to_one}
+\uses{thm:score-factorization}
+\leanok
+Answering Section 6 of Muller \& Saniga (arXiv:2609.19862v1), the exact contextuality degree of $k$ disjoint Peres-Mermin squares is $(7^k - 5^k)/2$ and of $k$ disjoint Mermin pentagrams is $(6^k - 4^k)/2$, with normalized gap $2d_k/L_k \to 1$.
+\end{theorem}
+
+\section{Track 3: Exact Sequential Contextuality Certificates}
+
+\begin{theorem}[Peres-Mermin Sharp Setting-Bias Bound]
+\label{thm:pm-setting-bias}
+\lean{Evidence.square_no_all_win, Evidence.square_singleton_witness, Evidence.sharp_minimum, Evidence.success_upper_bound, Evidence.defect_success_bound}
+\leanok
+For every setting distribution $p$ on the six contexts of the Peres-Mermin square, the sharp classical minimum failure probability equals $\min_c p(c)$, capping noncontextual success at $1 - \beta$ under conditional floor $\beta$.
+\end{theorem}
+
+\begin{theorem}[Finite Adaptive-Tree Supermartingale Hitting Bound]
+\label{thm:sequential-hitting}
+\lean{Evidence.local_factor_bound, Evidence.BetTree.finite_hitting_bound, Evidence.naive_attack_prefix_crosses, Evidence.concrete_classical_false_positive}
+\uses{thm:pm-setting-bias}
+\leanok
+For every valid finite adaptive betting tree, $\Pr(\text{ever hit } T) \le z / T$ under arbitrary optional stopping; conversely, a miscalibrated naive $1\%$ test under setting bias $(11/60,\dots,1/12)$ exceeds $4.3\%$ false crossings within 36 trials ($97.24\%$ by 1,000 trials).
+\end{theorem}

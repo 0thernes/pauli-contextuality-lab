@@ -1,0 +1,481 @@
+\documentclass[aps,pra,onecolumn,11pt,superscriptaddress,nofootinbib]{revtex4-2}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Qp}{\mathcal{Q}^{+}}
+\newcommand{\Qm}{\mathcal{Q}^{-}}
+\newcommand{\W}{W}
+\newcommand{\lean}[1]{\texttt{#1}}
+
+\sloppy
+\begin{document}
+
+\title{A third-moment bound on the contextuality degree\\ of multiqubit Pauli configurations}
+
+\author{Alex Donahue (0thernes)}
+\affiliation{Independent researcher}
+
+\date{November 9, 2026}
+
+\begin{abstract}
+For a set $S$ of non-identity $N$-qubit Pauli observables, a noncontextual $\pm1$ assignment
+must violate some of the lines of $S$ (triples of pairwise commuting observables whose product
+is $\pm I$). The contextuality degree $d(S)$ is the least number of violated lines.
+We give a lower bound on $d(S)$ from the first three spectral moments of the operator
+$A=\sum_{v\in S} f(v)P_v$. With $D=2^N$ we have $\tr A^2=D|S|$ and $\tr A^3=6D\beta(f)$,
+where $\beta$ is the number of satisfied minus violated lines. A maximal-skewness
+inequality then gives $\beta\le (n-2)|S|^{3/2}/(6\sqrt{n-1})$ with $n=D$. When every
+observable in $S$ commutes with an antiunitary $\theta$ with $\theta^2=-1$, as on elliptic
+quadrics, Kramers degeneracy improves this to $n=D/2$. For the full space, equality
+characterises Pauli-covariant SIC fiducials, and the three-qubit Hoggar fiducial attains it.
+For the symplectic polar spaces $W(2N-1,2)$ and for both kinds of quadric, the guaranteed
+violated fraction is $1/2-O(D^{-1/2})$. Combined with averaging over sub-configurations, the
+bound gives new lower bounds, among them $d(\Qm(7,2))\ge 291$ (previously 215),
+$d(W(7,2))\ge 1455$ (1071) and $d(\Qp(9,2))\ge 6444$ (4743). The last of these answers two
+questions of Li, Gupta and Ganesh in the negative. The core inequalities and the numerical
+corollaries obtained directly from them are formalised in Lean~4 with Mathlib. We find no new
+upper bounds, and $d(\Qm(7,2))$ remains open.
+\end{abstract}
+
+\maketitle
+
+%=====================================================================
+\section{Introduction}
+%=====================================================================
+
+Kochen--Specker contextuality can be shown with finite sets of multiqubit Pauli
+observables. Take a set $S$ of non-identity Pauli operators on $N$ qubits. A \emph{line} (or
+context) is a triple $\{P_u,P_v,P_{u+v}\}\subseteq S$ of pairwise commuting observables. Its
+product is $s\,I$ with a sign $s=\pm1$. A noncontextual value assignment $f:S\to\{\pm1\}$
+\emph{satisfies} the line if $f(u)f(v)f(u+v)=s$, and otherwise \emph{violates} it. When the
+negative lines cannot all be satisfied, the configuration is a Kochen--Specker-type proof.
+The \emph{contextuality degree} $d(S)$, the minimum over $f$ of the number of violated lines,
+measures how far the configuration is from being noncontextual~\cite{deBoutray2022}. It
+determines the classical bound of the associated linear inequality~\cite{deBoutray2022,Muller2024}.
+
+The configurations studied most are the symplectic polar spaces $W(2N-1,2)$ (all
+$4^N-1$ observables) and their hyperbolic and elliptic quadrics $\Qp(2N-1,2)$ and
+$\Qm(2N-1,2)$. Exact degrees are known only for small cases: the doily
+$W(3,2)$ (degree~3), the Mermin--Peres grid $\Qp(3,2)$ (1), $W(5,2)$
+(63)~\cite{deBoutray2022,Muller2024}, $\Qm(5,2)$ (9) and $\Qp(5,2)$
+(21)~\cite{deBoutray2022}. Saniga \emph{et al.}\ showed that generalised hexagons
+govern three-qubit contextuality~\cite{Saniga2025hex}, and Muller and Giorgetti related the
+degree to an abstract incidence structure~\cite{MullerGiorgetti2025}. For four to seven qubits,
+Muller \emph{et al.}\ obtained heuristic upper bounds and the lower bound $\lceil L/5\rceil$,
+where $L$ is the number of lines~\cite{Muller2025heur}. Li, Gupta and Ganesh (LGG) recently
+proved $d(\Qp(7,2))=315$. They used averaging over doilies, SAT certificates and Lean, and
+proved $\lceil L/5\rceil$ for every quadric with $N\ge3$~\cite{LGG2026}. They list as open
+problems, among others: (1) $215\le d(\Qm(7,2))\le 315$ and $1071\le d(W(7,2))\le 1575$;
+(2) ``Is $\deg\Qp(9,2)=4743$?''; and (4) ``Does a hyperbolic quadric $\Qp(2N-1,2)$ have degree
+$L/5$ whenever 5 divides $L$\,?''. They also remark that ``the open question is which of
+[the quadrics] have a violated fraction strictly above $1/5$''~\cite{LGG2026}.
+
+For larger $N$, Cabello argued that the violated fraction of $W(2N-1,2)$ grows towards its
+maximum~\cite{Cabello2010}. That argument identified the degree with the number of negative
+lines, and this identification fails already for $N=3$, where there are 90 negative lines but
+$d=63$~\cite{deBoutray2022,Muller2024}. Muller and Saniga define the tolerated error
+$\varepsilon=2d/L$, report a record value $0.707$ in their automated search, and note that
+whether $\varepsilon$ tends to a limit or to~1 is open~\cite{MullerSaniga2026}. Related
+work includes state-dependent stabiliser-testing games whose classical value tends to $1/2$
+exponentially~\cite{Zhao2025}, and frame functions on the $n$-qubit Pauli
+group~\cite{Frembs2026}. These address different questions.
+
+This paper gives an elementary spectral lower bound on $d(S)$ that holds for every $N$ and
+every $S$. The only inputs are three trace identities and a classical inequality on the
+skewness of a list of real numbers. The bound is attained in several known cases, with an
+equality case tied to symmetric informationally complete (SIC) measurements: for $W(5,2)$ the
+extremal state is the Hoggar SIC fiducial~\cite{Stacey2016,Zhu2015,GodsilRoy2009}. It gives
+new lower bounds for the open four- and five-qubit cases. It also shows unconditionally that the
+violated fraction of $W(2N-1,2)$ and of both quadric families tends to $1/2$, so $\varepsilon\to1$. All results are lower
+bounds. We do not improve any upper bound.
+
+%=====================================================================
+\section{Setup and trace identities}
+%=====================================================================
+
+Write points as $u=(a,c)\in\mathbb F_2^N\times\mathbb F_2^N$, the Weyl operator as
+$W_u=X^aZ^c$, and the Hermitian Pauli operator as $P_u=i^{a\cdot c}W_u$. Then
+$P_uP_v=\pm P_vP_u$ according to the symplectic form $\langle u,v\rangle=a_u\cdot c_v+a_v\cdot c_u$.
+For commuting $u,v$ we have $P_uP_vP_{u+v}=s(u,v)I$ with $s=\pm1$. Let $S\subseteq\mathbb F_2^{2N}\setminus\{0\}$, let $L$ be the number of lines contained in $S$, and fix
+$f:S\to\{\pm1\}$. Put
+\begin{equation}
+  A=\sum_{v\in S}f(v)P_v,\qquad
+  \beta(f)=\#\{\text{sat.\ lines}\}-\#\{\text{viol.\ lines}\}.
+\end{equation}
+The number of violated lines is then $(L-\beta)/2$.
+
+\begin{lemma}[Trace identities]\label{lem:traces}
+$\tr A=0$, $\tr A^2=D|S|$ and $\tr A^3=6D\,\beta(f)$.
+\end{lemma}
+\begin{proof}
+$\tr P_u=D\,\delta_{u,0}$. In $\tr A^2$ only diagonal terms survive. In
+$\tr A^3=\sum f(u)f(v)f(w)\tr(P_uP_vP_w)$ only triples with $u+v+w=0$ survive. If $u,v$
+do not commute, the terms for $(u,v)$ and $(v,u)$ cancel. If they commute, the term is
+$D\,s(u,v)f(u)f(v)f(u+v)$. Each line occurs as $3!=6$ ordered triples.
+\end{proof}
+
+\begin{lemma}[Maximal skewness]\label{lem:skew}
+Let $x_1,\dots,x_n\in\mathbb R$ with $n\ge2$, $\sum x_i=0$ and $\sum x_i^2=nm$. Then
+\begin{equation}
+  \sum_i x_i^3\;\le\;\frac{n(n-2)}{\sqrt{n-1}}\,m^{3/2},
+\end{equation}
+with equality iff one $x_i$ equals $\sqrt{(n-1)m}$ and the others equal $-\sqrt{m/(n-1)}$.
+\end{lemma}
+\begin{proof}
+Put $a=\sqrt{(n-1)m}$, so that $|x_i|\le a$ for all $i$. The polynomial
+$(x-a)(x+a/(n-1))^2$ is $\le0$ for $x\le a$. Summing it over the $x_i$ and using the first two
+moments gives the claim. Equality requires every $x_i\in\{a,-a/(n-1)\}$.
+\end{proof}
+
+%=====================================================================
+\section{Main theorem}
+%=====================================================================
+
+\begin{theorem}[Third-moment bound]\label{thm:main}
+For every $S$ and every $f:S\to\{\pm1\}$,
+\begin{equation}\label{eq:main}
+  \beta(f)\;\le\;\frac{(n-2)\,|S|^{3/2}}{6\sqrt{n-1}},\qquad n=D,
+\end{equation}
+and hence $d(S)\ge (L-\beta_{\max})/2$. Here $\beta_{\max}$ is the largest integer with
+$\beta_{\max}\equiv L\pmod 2$ satisfying \eqref{eq:main}. Equality in \eqref{eq:main} holds iff
+there is a pure state $\psi$ that is \emph{$S$-flat}: $\langle\psi|P_v|\psi\rangle=f(v)\sqrt{(D-1)/|S|}$
+for $v\in S$ and $\langle\psi|P_v|\psi\rangle=0$ for $v\notin S\cup\{0\}$.
+\end{theorem}
+\begin{proof}
+Apply Lemma~\ref{lem:skew} to the $D$ eigenvalues of $A$, with $m=|S|$, and use
+Lemma~\ref{lem:traces}. At equality,
+$A=\kappa(|\psi\rangle\langle\psi|-I/D)$ with $\kappa=D\sqrt{|S|/(D-1)}$, and
+$\tr(AP_v)=Df(v)$ gives the expectations. Conversely, an $S$-flat $\psi$ has
+$|\psi\rangle\langle\psi|=(I+\sum_v\langle P_v\rangle P_v)/D$, which reproduces this $A$.
+\end{proof}
+
+In the form used in Lean the statement reads
+$(D-1)\,\beta_6\le(D-2)|S|\sqrt{(D-1)|S|}$, where $\beta_6=6\beta$ is counted on
+ordered flags (Sec.~\ref{sec:lean}).
+
+\paragraph*{Pure-state cubic identity.}
+For any pure state with Pauli vector $p_v=\langle P_v\rangle$, expanding $\tr\rho^3=1$ as in
+Lemma~\ref{lem:traces} gives $\sum_{\text{lines}}s\,p_up_vp_{u+v}=(D-1)(D-2)/6$. This is the
+cubic (``QBic'') condition familiar from SIC theory~\cite{Stacey2016}. We checked it
+numerically for $N=2,\dots,5$; it is not formalised.
+
+%=====================================================================
+\section{The Kramers (elliptic) case}
+%=====================================================================
+
+Let $\theta=UK$ be antiunitary ($K$ is complex conjugation) with $\theta^2=-1$, i.e.\
+$U^{\mathsf T}=-U$. Suppose that \emph{every} $P_v$ with $v\in S$ commutes with $\theta$.
+Because $f$ is arbitrary, it is not enough for $S$ to be invariant as a set up to signs. Then
+$\theta A\theta^{-1}=A$, and by Kramers' theorem every eigenvalue of $A$ has even
+multiplicity.
+
+\begin{theorem}[Kramers refinement]\label{thm:kramers}
+Under these hypotheses, \eqref{eq:main} holds with $n=D/2$. Equality holds iff the top
+eigenvalue of $A$ is exactly doubly degenerate and the rank-2 state $\rho=\Pi/2$ (with $\Pi$
+the top eigenprojector) is $\theta$-invariant and $S$-flat:
+$\tr(\rho P_v)=f(v)\sqrt{(n-1)/|S|}$ on $S$ and $0$ off $S$.
+\end{theorem}
+\begin{proof}
+The spectrum is $D/2$ values $x_i$, each taken twice, so $\sum x_i=0$ and $\sum x_i^2=(D/2)|S|$.
+Apply Lemma~\ref{lem:skew} with $n=D/2$ to the $x_i$ and double the result. The equality
+analysis is as in Theorem~\ref{thm:main}, with $A=\kappa(\Pi-2I/D)$.
+\end{proof}
+
+The equality state in the Kramers case is mixed, not pure. For example, restricting the Hoggar
+sign pattern to $\Qm(5,2)$ gives $A$ the spectrum $\{9,9,-3^{\times6}\}$, which attains the
+$n=4$ bound with a rank-2 flat state.
+
+For a Pauli $P_e$ with $e$ ``imaginary'' (an odd number of $Y$ factors), $\theta_e=P_eK$
+satisfies $\theta_e^2=-1$. The $P_v$ commuting with $\theta_e$ are exactly the zeros of the
+quadratic form $q(v)+\langle v,e\rangle$, where $q$ counts $Y$ factors mod~2. This set is an
+elliptic quadric with $(4^N-2^N)/2-1$ points. Theorem~\ref{thm:kramers} therefore applies to
+every $\Qm(2N-1,2)$ and to every subset of one.
+
+%=====================================================================
+\section{Threefold way and violated fractions}
+%=====================================================================
+
+Let $\varphi(x)=\tfrac12-\sqrt{x+1}/(x+2)$. Substituting the point and line counts of the three
+families into Theorems~\ref{thm:main} and~\ref{thm:kramers} gives, for the fraction of
+violated lines of \emph{every} assignment:
+\begin{align}
+  W(2N-1,2)&:\ \varphi(D) && (n=D),\\
+  \Qm(2N-1,2)&:\ \varphi(D) && (n=D/2,\ \text{Kramers}),\\
+  \Qp(2N-1,2)&:\ \varphi(D/2) && (n=D).
+\end{align}
+The labels follow Dyson's threefold way: complex for the full space, quaternionic for the
+elliptic quadric (via $\theta^2=-1$), real for the hyperbolic quadric (real symmetric
+$P_v$). For $\Qp$ the general bound with $n=D$ is used. The form $\varphi(D/2)$ arises from
+$|\Qp|=(D-1)(D+2)/2$ and is not a Kramers effect.
+
+\begin{corollary}[Asymptotics]\label{cor:asym}
+For all three families, $d/L\ge\tfrac12-O(D^{-1/2})$, while trivially $d/L\le\tfrac12$
+(a uniformly random $f$ violates half the lines on average). In particular, for $W(2N-1,2)$
+the tolerated error satisfies $\varepsilon=2d/L\ge 1-2\sqrt{D+1}/(D+2)\to1$.
+\end{corollary}
+
+This gives an unconditional proof that $\varepsilon\to1$ for $W(2N-1,2)$, the behaviour
+Cabello's argument suggested~\cite{Cabello2010}. The exact integer bounds give
+$\varepsilon\ge0.756$ for $W(11,2)$ and $\varepsilon\ge0.825$ for $W(13,2)$. These are not
+directly comparable with the value $0.707$ of Ref.~\cite{MullerSaniga2026}, which concerns
+the much smaller configurations found by their search.
+
+The fractions also answer LGG's question of which quadrics violate strictly more than a fifth
+of their lines~\cite{LGG2026}. Since $\varphi(8)=1/5$ exactly and $\varphi$ is increasing, every
+elliptic quadric with $N\ge4$ and every hyperbolic quadric with $N\ge5$ has $d/L>1/5$. Together
+with the known values $d(\Qm(5,2))=9$, $d(\Qp(5,2))=21$ and
+$d(\Qp(7,2))=315$~\cite{deBoutray2022,LGG2026}, this shows that for $N\ge3$ the fraction
+equals $1/5$ exactly for $\Qm(5,2)$, $\Qp(5,2)$ and $\Qp(7,2)$, and exceeds $1/5$ for every
+other quadric.
+
+%=====================================================================
+\section{The Hoggar equality case}
+%=====================================================================
+
+For $S$ equal to all $D^2-1$ Paulis, an $S$-flat state has $|\langle P_v\rangle|^2=1/(D+1)$ for
+all $v\neq0$. Such a state is precisely a fiducial of a SIC that is covariant under the
+$N$-qubit Pauli group. Godsil and Roy showed that these exist only for $N=1$ and
+$N=3$~\cite{GodsilRoy2009}. For $N=3$ the orbit is the set of 64 Hoggar
+lines~\cite{Stacey2016,Zhu2015}. So Theorem~\ref{thm:main} is attained on $W(2N-1,2)$ exactly
+when $N\in\{1,3\}$. For $N=3$ it gives the lower bound $d(W(5,2))\ge63$, which matches the
+known value~\cite{deBoutray2022,Muller2024}.
+
+Take the fiducial $\psi=(-1+2i,1,1,1,1,1,1,1)/\sqrt{12}$~\cite{Stacey2016} and
+$f(v)=\operatorname{sign}\langle\psi|P_v|\psi\rangle$. We verified the following facts by
+exact and floating-point computation, in three independent implementations:
+\begin{itemize}
+\item all 63 expectations are $\pm1/3$, and $f$ violates exactly 63 of the 315 lines;
+\item the 63 violated lines, with the 63 points, form a generalised hexagon of order $(2,2)$
+(every point lies on 3 violated lines, the incidence graph has girth 12 and diameter 6).
+This is consistent with the hexagon structure of Ref.~\cite{Saniga2025hex}. We did not
+determine whether it is the split Cayley hexagon or its dual;
+\item $F=I+A$ has spectrum $\{22,-2^{\times7}\}$;
+\item restricted to $\Qm(5,2)$, $f$ violates 9 lines and attains the Kramers bound with $n=4$
+(spectrum $\{9,9,-3^{\times6}\}$). Restricted to $\Qp(5,2)$, it violates 21 lines, but the
+bound (which only gives 14) is not attained;
+\item the realification of $\psi$, a four-qubit real state, has $|\langle P\rangle|=1/3$ on all
+135 real Paulis and $0$ on the 120 imaginary ones. It is therefore $\Qp(7,2)$-flat, its sign
+pattern violates exactly 315 lines, and $A$ has spectrum $\{45,-3^{\times15}\}$. This gives an
+independent proof of the lower bound $d(\Qp(7,2))\ge315$, which LGG established by
+different methods~\cite{LGG2026}.
+\end{itemize}
+Weyl--Heisenberg SIC fiducials are also known to maximise stabiliser
+entropy~\cite{CuffaroFuchs2024}, and related magic measures appear in
+Ref.~\cite{HowardCampbell2017}. Whether this connection to contextuality has a deeper explanation is
+not addressed here.
+
+%=====================================================================
+\section{Averaging over sub-configurations}
+%=====================================================================
+
+\begin{lemma}[Averaging]\label{lem:avg}
+Let $S_1,\dots,S_k\subseteq S$ be such that the lines of each $S_i$ are exactly the lines of
+$S$ contained in $S_i$, with the inherited signs, and every line of $S$ lies in exactly $r$ of
+the $S_i$. Then $d(S)\ge\lceil\sum_i d(S_i)/r\rceil$.
+\end{lemma}
+\begin{proof}
+For any $f$, counting violated lines with multiplicity gives $r\cdot\mathrm{viol}_S(f)
+\ge\sum_i\mathrm{viol}_{S_i}(f)\ge\sum_i d(S_i)$.
+\end{proof}
+
+LGG use this with doilies and note the elliptic-quadric covering of $W(7,2)$~\cite{LGG2026}.
+We apply it with the third-moment bounds as input. The incidence counts below were checked
+exhaustively by computer (\texttt{verify/averaging.py}).
+
+\begin{itemize}
+\item[(a)] \emph{$W(7,2)$.} There are 120 imaginary $w$, each giving an elliptic $E_w\cong\Qm(7,2)$,
+and every line of $W(7,2)$ lies in 24 of them. Hence $d(W(7,2))\ge120\cdot291/24=1455$.
+\item[(b)] \emph{$W(9,2)$.} There are 496 elliptic $E_w$, and every line lies in 112. With
+$d(\Qm(9,2))\ge6501$ this gives $d(W(9,2))\ge\lceil496\cdot6501/112\rceil=28791$.
+\item[(c)] \emph{$\Qp(9,2)$.} For imaginary $w$ the section
+$T_w=\{v\in\Qp(9,2):\langle v,w\rangle=0\}$ is a parabolic quadric, which is isomorphic to
+$W(7,2)$. For $w=Y$ on the top qubit, the map $P\otimes I,\ P\otimes Y\mapsto P$ is a
+bijection that preserves all 5355 lines and their signs. The real Clifford group generated by
+$H$ and CNOT acts transitively on the 496 imaginary $w$, and each line of $\Qp(9,2)$ lies in
+112 sections. Using (a), $d(\Qp(9,2))\ge\lceil496\cdot1455/112\rceil=6444$.
+\end{itemize}
+
+\paragraph*{The 5/17 chain.}
+LGG observe that the heuristic upper bounds~\cite{Muller2025heur} for $W(7,2)$, $\Qm(7,2)$ and
+$\Qp(9,2)$ are all exactly $5/17$ of their lines. They also observe that $d(\Qm(7,2))=315$ would
+force $d(W(7,2))=1575$~\cite{LGG2026}. Item (c) adds a second link:
+\begin{equation}
+d(\Qm(7,2))=315\ \Rightarrow\ d(W(7,2))=1575\ \Rightarrow\ d(\Qp(9,2))=6975,
+\end{equation}
+since $496\cdot1575/112=6975$ is the known upper bound. Curiously, the real-valued third-moment
+fraction is the same number for all three configurations, $\varphi(16)=\tfrac12-\sqrt{17}/18\approx0.2709$,
+just below $5/17\approx0.2941$.
+
+%=====================================================================
+\section{Results}
+%=====================================================================
+
+Table~\ref{tab:results} collects the bounds. Status codes:
+\textbf{L}: the numerical statement is a theorem in the Lean development;
+\textbf{T}: an instance of a Lean-proved general theorem, with the final arithmetic
+done by computer and not stated in Lean;
+\textbf{A}: a paper proof (Lemma~\ref{lem:avg}) whose incidence counts were checked by
+computer;
+\textbf{E}: exhaustive enumeration (our Gray-code search, modulo gauge);
+\textbf{H}: heuristic search only (an upper bound with an explicit witness).
+
+\begin{table*}[t]
+\caption{Contextuality degree bounds. ``prev.\ LB'' is the best lower bound we found in the
+literature: $\lceil L/5\rceil$ from Refs.~\cite{Muller2025heur,LGG2026} where applicable, and
+the exact values of Refs.~\cite{deBoutray2022,Muller2024,LGG2026}. Upper bounds for $N\ge4$ are
+from Ref.~\cite{Muller2025heur} (Table~3); we re-found each of them with our own tabu search,
+never going lower. Bold entries improve the previous lower bound.}
+\label{tab:results}
+\begin{ruledtabular}
+\begin{tabular}{lrrrlll}
+config & $|S|$ & $L$ & prev.\ LB & this work (LB) & UB & $d$ \\
+\midrule
+$W(3,2)$ doily & 15 & 15 & 3 & 2 (L) & 3 & 3 (E) \\
+$\Qp(3,2)$ grid & 9 & 6 & 1 & 1 (L, exact with witness) & 1 & 1 \\
+$W(5,2)$ & 63 & 315 & 63 & 63 (L, exact with Hoggar witness) & 63 & 63 \\
+$\Qp(5,2)$ & 35 & 105 & 21 & 14 (T) & 21 & 21 (E) \\
+$\Qm(5,2)$ & 27 & 45 & 9 & 9 (L, exact with Hoggar witness) & 9 & 9 (E) \\
+$W(7,2)$ & 255 & 5355 & 1071 & \textbf{1451} (L); \textbf{1455} (A) & 1575 (H) & open \\
+$\Qp(7,2)$ & 135 & 1575 & 315 & 315 (L) & 315 & 315~\cite{LGG2026} \\
+$\Qm(7,2)$ & 119 & 1071 & 215 & \textbf{291} (L) & 315 (H) & open \\
+$W(9,2)$ & 1023 & 86955 & 17391 & \textbf{28786} (L); \textbf{28791} (A) & 31479 (H) & open \\
+$\Qp(9,2)$ & 527 & 23715 & 4743 & \textbf{6426} (L); \textbf{6444} (A) & 6975 (H) & open \\
+$\Qm(9,2)$ & 495 & 19635 & 3927 & \textbf{6501} (L) & 7087 (H) & open \\
+$W(11,2)$ & 4095 & 1396395 & 279279 & \textbf{527621} (T) & 553140 (H) & open \\
+$W(13,2)$ & 16383 & 22362795 & 4472559 & \textbf{9227609} (T) & 9406024 (H) & open \\
+\end{tabular}
+\end{ruledtabular}
+\end{table*}
+
+\noindent Remarks. (i) The rows ``exact with witness'' combine the Lean lower bound with an
+explicit assignment whose violated-line count is checked by the Lean kernel
+(\lean{degree\_three\_qubit}, \lean{degree\_three\_qubit\_elliptic}, \lean{mermin\_peres}).
+(ii) The $\Qp(3,2)$ entry under ``prev.\ LB'' is the classical Mermin--Peres value; the $L/5$
+rule does not apply there, since $\lceil6/5\rceil=2>d$. (iii) For $W(13,2)$ an averaging argument would
+give 9227612, but the uniform coverage it needs was checked only on a random sample of lines, so
+we do not claim that value. (iv) Ref.~\cite{MullerGiorgetti2025} lists $\le9405663$ for $W(13,2)$. We quote
+9406024 from Ref.~\cite{Muller2025heur}. (v) An exact integer program for $\Qm(7,2)$
+(HiGHS, 30\,min limit, with the cut $\ge291$) found no assignment with $\le314$ violated lines,
+but did not raise the dual bound above 291. This is evidence, not proof, that $d(\Qm(7,2))=315$.
+
+\paragraph*{Answer to LGG questions (2) and (4).}
+Since $d(\Qp(9,2))\ge6426>4743$ (Lean, \lean{five\_qubit\_hyperbolic\_contexts}), and
+$\ge6444$ by averaging, the answer to question (2) is no. Because $5\mid23715$, the same
+inequality answers question (4) in the negative for $N=5$~\cite{LGG2026}.
+
+%=====================================================================
+\section{A simulator demonstration}
+%=====================================================================
+
+As an independent end-to-end check we ran the equality case on Moonlab
+v1.2.1~\cite{moonlab}, a \emph{classical} state-vector simulator, compiled to WebAssembly
+(\texttt{demo/hoggar\_demo.cjs}). No quantum hardware was used. The script prepares the
+Hoggar fiducial with an explicit circuit of uniformly controlled $R_y/R_z$ rotations and CNOTs,
+reaching fidelity $1$ to machine precision. Moonlab offers no call for arbitrary Pauli-string
+expectations on state vectors, so the script measures all 63 Pauli expectations by basis
+rotation followed by the computational-basis distribution. The line geometry and signs are
+rebuilt in JavaScript, independently of our C and Python code.
+
+The run reproduces the facts of the previous sections: all $|\langle P\rangle|=1/3$; 63
+violated lines with exact equality in~\eqref{eq:main}; 9 violated lines on $\Qm(5,2)$ with
+Kramers equality; 21 on $\Qp(5,2)$ without equality; and the realified four-qubit state, flat
+on $\Qp(7,2)$, violating 315 lines. Random restarts of a sign power iteration
+($\psi\mapsto f=\operatorname{sign}\langle P\rangle\mapsto$ top eigenvector of $A_f$) are seeded
+by the \texttt{quantum\_rng} library~\cite{qrng}, run in its deterministic seeded mode. That
+library is a classical pseudo-random mixer, not a quantum source. The restarts reach 63 on
+$W(5,2)$ and 315 on $\Qm(7,2)$ and never go below the proven bounds. The demo takes about
+1.5\,s.
+
+%=====================================================================
+\section{Lean formalisation}\label{sec:lean}
+%=====================================================================
+
+The development (\texttt{lean/}, 11 files, about 2300 lines) builds with Lean v4.35.0 and
+Mathlib v4.35.0 (commit \texttt{56a0058})~\cite{mathlib}. It contains no \texttt{sorry}, no
+\texttt{native\_decide} and no new axioms. Finite certificates are checked with
+\texttt{decide +kernel}. \texttt{\#print axioms} reports only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound} for all 36 audited
+theorems. Points are $(\mathtt{Fin}\,N\to\mathbb Z/2)^2$, $W_u$ is an explicit matrix on
+$\mathbb C^{2^N}$, and $\beta$ is counted on ordered flags ($\beta_6=6\beta$). Passing from flags
+to lines uses only $\#\text{viol.\ flags}\le6\,\#\text{viol.\ lines}$, which is the direction
+needed for lower bounds. The main theorem names are as follows.
+\begin{itemize}
+\item Algebra and traces: \lean{weyl\_mul}, \lean{trace\_weyl}, \lean{pauli\_isHermitian},
+  \lean{pauli\_mul}, \lean{trace\_opA\_sq}, \lean{trace\_opA\_cube}.
+\item Inequality and bound: \lean{sum\_cube\_le}, \lean{trace\_cube\_le}, \lean{hoggar\_bound},
+  \lean{hoggar\_bound\_violated}, \lean{full\_space\_bound}, \lean{full\_space\_fraction}.
+\item Kramers case: \lean{kramers\_pair}, \lean{sum\_cube\_le\_paired},
+  \lean{trace\_cube\_le\_kramers}, \lean{hoggar\_bound\_kramers}.
+\item Counting: \lean{card\_flags\_all}, \lean{card\_flags\_real}, \lean{card\_flags\_ell}.
+\item Families: \lean{elliptic\_fraction}, \lean{hyperbolic\_fraction}.
+\item Corollaries: \lean{three\_qubit\_contexts} (63), \lean{four\_qubit\_contexts} (1451),
+  \lean{five\_qubit\_contexts} (28786), \lean{four\_qubit\_hyperbolic\_contexts} (315),
+  \lean{five\_qubit\_hyperbolic\_contexts} (6426), \lean{three\_qubit\_elliptic\_contexts} (9),
+  \lean{four\_qubit\_elliptic\_contexts} (291), \lean{five\_qubit\_elliptic\_contexts} (6501).
+\item Witnesses and checks: \lean{degree\_three\_qubit}, \lean{degree\_three\_qubit\_elliptic},
+  \lean{mermin\_peres}, \lean{doily\_contexts}, \lean{lineSign\_eq\_lsign},
+  \lean{sign\_XX\_ZZ}, \lean{pauli\_XX\_mul\_ZZ}.
+\end{itemize}
+The statement of \lean{hoggar\_bound} is
+\[
+(2^N-1)\,\beta_6(S,f)\le(2^N-2)\,|S|\sqrt{(2^N-1)|S|}
+\]
+for any $S\not\ni0$ and any $f$ that is $\pm1$ on $S$. \lean{hoggar\_bound\_kramers} is the same with $2^{N-1}$ in place of
+$2^N$, under the hypothesis $q(u)+\langle u,e\rangle=0$ for all $u\in S$ and $q(e)=1$.
+\lean{kramers\_pair} holds for any $\theta=UK$ with $U^{\mathsf T}=-U$ invertible.
+
+The following are \emph{not} formalised: the equality characterisations and the Godsil--Roy
+classification; the cubic identity; the averaging lemma and its applications (1455, 6444,
+28791, the 5/17 chain); the upper-bound witnesses for $N\ge4$; the doily value 3 (Lean proves
+$\ge2$); and the exact 6:1 correspondence between flags and lines in general.
+
+%=====================================================================
+\section{Limitations and open problems}
+%=====================================================================
+
+\begin{itemize}
+\item \emph{No new upper bounds.} Our tabu searches (over $10^9$ tabu moves on $\Qm(7,2)$ alone)
+reproduce the literature upper bounds and never go below them. All improvements here are
+lower bounds.
+\item \emph{$d(\Qm(7,2))$ remains open} ($291\le d\le315$), so the 5/17 chain is unresolved;
+by the chain, settling it would also settle $W(7,2)$ and $\Qp(9,2)$. The real-valued bound
+$119\sqrt{17}$ for $\beta$ is irrational, so no flat state attains Theorem~\ref{thm:kramers}
+there. A proof of 315 seems to need information beyond the first three moments.
+\item \emph{The bound is not tight in general}: it gives 2 for the doily (true value 3) and 14
+for $\Qp(5,2)$ (21). Equality requires flat states, which are rare.
+\item \emph{Asymptotics of $d$.} We show $\tfrac12-d/L=O(D^{-1/2})$ for all three families. We do not know whether
+the correct rate is $\Theta(D^{-1/2})$. For $W(13,2)$ the heuristic upper bound and our lower bound give
+$0.079\le\tfrac12-d/L\le0.087$, compared with $\sqrt{D+1}/(D+2)\approx0.087$. This is
+compatible with that rate but proves nothing. Higher spectral moments, or semidefinite strengthenings, are natural
+next steps.
+\item The averaging bound for $W(13,2)$ awaits an exhaustive coverage check.
+\end{itemize}
+
+\section*{Data and code availability}
+All code, witnesses, verification scripts, the Lean development and this paper are in the
+accompanying repository (\texttt{hoggar-lab}). \texttt{./run\_all.sh} reproduces every
+computer-checked claim and exits nonzero on any mismatch. The repository's own code is
+MIT-licensed. Vendored third-party components keep their own licences.
+
+\begin{acknowledgments}
+The computations and the Lean proofs were AI-assisted. The author thanks the authors of the
+cited works for making their papers, data and code openly available.
+\end{acknowledgments}
+
+\bibliography{refs}
+
+\end{document}

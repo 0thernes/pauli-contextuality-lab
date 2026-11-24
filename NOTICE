@@ -1,0 +1,26 @@
+Pauli Contextuality Lab
+Copyright 2026 Alexander S. Donahue (independent researcher, ORCID 0009-0006-8168-9648)
+
+Code license: Apache-2.0 (see LICENSE)
+Manuscript & documentation license: CC-BY-4.0 (see LICENSE-DOCS)
+
+Consolidation provenance:
+This repository consolidates four earlier standalone public repositories by Alexander S. Donahue:
+1. 0thernes/hoggar-bound-lab (spectral floor, floor-saturating states, |Psi_{3m}>, N=4..5 ladders, Conjecture E, C3 binary optima)
+2. 0thernes/hoggar-bound (initial third-moment bound prototype, TwoQubit & Witness Lean modules, tabu/exhaust C search, ILP checks)
+3. 0thernes/contextuality-tensor-lab (exact degrees (7^k-5^k)/2 and (6^k-4^k)/2 for disjoint Mermin configurations)
+4. 0thernes/contextuality-evidence-lab (exact sequential contextuality certificates and setting-bias attack)
+
+Third-party vendored software (all MIT-licensed; pinned SHA-256 digests in third_party/SHA256SUMS.json):
+- Moonlab WebAssembly state-vector simulator (`third_party/moonlab/`, MIT License, see third_party/moonlab/LICENSE)
+- QGTL differential geometry kernels (`third_party/qgtl/`, MIT License, see third_party/qgtl/LICENSE)
+- quantum_rng classical PRNG kernels (`third_party/quantum_rng/`, MIT License, see third_party/quantum_rng/LICENSE)
+
+Prior mathematical work (credited, never claimed as original to this repo):
+- Spectral floor inequality & Conjecture E formulation: B. W. Jonah (Zenodo preprints, Oct 2026; non-peer-reviewed)
+- Scalar maximal-skewness inequality: M. Okumura (1974)
+- Symplectic polar spaces W(2N-1,2), quadrics Q^+/Q^-, heuristic upper bounds & disjoint-copy problem:
+  A. Muller, M. Saniga, F. Holweck, A. Giorgetti, C. Kelleher (arXiv:2407.02928; arXiv:2609.19862v1)
+- Exact four-qubit hyperbolic quadric degree d(Q+(7,2)) = 315: Li, Gupta & Ganesh (arXiv:2610.26465)
+- Numerical five-qubit flat-Pauli state: P. Cieslinski (arXiv:2610.07172)
+- Peres-Mermin square & sequential prediction-based-ratio tests: Peres (1990), Mermin (1990), Zhang-Glancy-Knill (2011)

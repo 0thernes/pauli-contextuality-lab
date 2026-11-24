@@ -1,0 +1,119 @@
+'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.hoggar_bound_quaternionic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.elliptic_fraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.three_qubit_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.three_qubit_elliptic_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.four_qubit_elliptic_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.five_qubit_elliptic_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.mermin_peres' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.doily_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.degree_three_qubit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.degree_three_qubit_elliptic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.saturation_tfae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.saturation_mul_isSquare' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ConjectureE.trace_completion_cube_universal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ConjectureE.corollary18_c11_from_c3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ConjectureE.corollary16_binary_minima_differ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.floor_deficit_tendsto_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.full_space_fraction_tendsto_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.hyperbolic_fraction_tendsto_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.proposition3_violated_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.proposition8_flat_state_qgt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.proposition10_two_character_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.clifford_transport_strict_law_fails' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.AuditUpgrades.corollary16_sigmaB_sdp_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.corollary16_binary_minima_tightened' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.C3ExactOptima.corollary16_sigmaA_exact_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.C3ExactOptima.corollary16_sigmaB_exact_lower' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.C3ExactOptima.corollary16_exact_binary_optima' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.det6_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NormPhaseFamily.detPhase_isFlatState' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.NormPhaseFamily.infinite_nonclosed_family_contextual' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.ExactDegreesN4N5.transv_violatedLines_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.q7minus_css_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.w72_css_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.q9plus_css_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.w72_ge_1455' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.q9plus_ge_6444' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.exact_degrees_n4_n5_of_q7minus_315' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'HoggarBound.NonVacuity.spectral_floor_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.kramers_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.saturation_tfae_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.conjecture_e_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.clifford_transport_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.cone_lift_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.norm_phase_family_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.c3_exact_optima_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.exact_degrees_ladders_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NonVacuity.propositions_qgt_twochar_nonvacuous' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.score_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.score_violations' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.square_minimum_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.pentagram_minimum_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.global_actual_square_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.global_actual_pentagram_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.square_epsilon_tends_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.pentagram_epsilon_tends_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.actual_square_epsilon_tends_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.actual_pentagram_epsilon_tends_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.square_no_all_win' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.square_singleton_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.sharp_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.success_upper_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.defect_success_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.ideal_observables' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.ideal_context_commutation' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.ideal_context_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.local_factor_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.BetTree.finite_hitting_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.naive_attack_prefix_crosses' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.naive_attack_prefix_probability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.concrete_classical_false_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.classical_square_node_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_spectral_floor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_kramers_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_w72_ge_1455' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

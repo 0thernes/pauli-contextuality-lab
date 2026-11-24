@@ -1,0 +1,23 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "PauliContextualityLab.ComparatorTarget.target_spectral_floor",
+    "PauliContextualityLab.ComparatorTarget.target_kramers_floor",
+    "PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare",
+    "PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family",
+    "PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima",
+    "PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases",
+    "PauliContextualityLab.ComparatorTarget.target_w72_ge_1455",
+    "PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444",
+    "PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree",
+    "PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree",
+    "PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum",
+    "PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
+}

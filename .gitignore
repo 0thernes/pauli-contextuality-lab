@@ -1,0 +1,58 @@
+# Lean / Lake caches & build outputs
+.lake/
+lean/.lake/
+*.olean
+*.ilean
+*.c.o
+*.trace
+
+# Build & site staging outputs
+build/
+dist/
+_site/
+*.exe
+*.out
+*.o
+*.so
+*.dylib
+*.a
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+htmlcov/
+.coverage
+
+# Node
+node_modules/
+npm-debug.log*
+
+# LaTeX intermediates
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.synctex.gz
+*.toc
+*.xdv
+blueprint/web/
+blueprint/print/
+
+# Local secrets & OS / editor junk
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp

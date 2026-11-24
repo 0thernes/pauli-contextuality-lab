@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: "Pauli Contextuality Lab: Lean 4.35.0 Proofs and Exact Verifiers for Spectral Bounds, Conjecture E, Disjoint Mermin Configurations, and Sequential Contextuality Evidence"
+message: "If you use this software, formal proofs, or manuscripts, please cite this repository. Note that all manuscripts are unreviewed research preprints produced with AI assistance under human direction."
+type: software
+version: "2.0.0"
+date-released: "2026-11-24"
+license: Apache-2.0
+repository-code: "https://github.com/0thernes/pauli-contextuality-lab"
+url: "https://0thernes.github.io/pauli-contextuality-lab/"
+authors:
+  - family-names: Donahue
+    given-names: Alexander S.
+    orcid: "https://orcid.org/0009-0006-8168-9648"
+    email: "0_0@0thernes.art"
+keywords:
+  - quantum-contextuality
+  - pauli-matrices
+  - symplectic-polar-spaces
+  - peres-mermin
+  - hoggar-bound
+  - lean4
+  - mathlib
+  - formal-verification
+  - reproducible-research
+abstract: >-
+  A unified, machine-checked Lean 4.35.0 (Mathlib v4.35.0) and exact-arithmetic
+  research repository consolidating three Pauli contextuality tracks: (1) spectral
+  bounds, floor-saturating states including the infinite pure-CCZ determinant family
+  |Psi_{3m}>, exact four-qubit C3 binary completion optima (368 vs 344), N=4..5
+  double-counting ladders, and Jonah's Conjecture E across all nine vertex cases
+  for all N >= 4; (2) exact contextuality degrees (7^k - 5^k)/2 and (6^k - 4^k)/2
+  for k disjoint copies of the Peres-Mermin square and Mermin pentagram (answering
+  Section 6 of Muller and Saniga, arXiv:2609.19862v1); and (3) exact finite-tree
+  sequential contextuality evidence bounds and a constructive setting-bias attack
+  on the Peres-Mermin square. Not externally peer reviewed; AI-assisted under human
+  direction.
