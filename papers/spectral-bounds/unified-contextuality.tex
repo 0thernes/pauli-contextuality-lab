@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.2.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 2.3.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -65,8 +65,8 @@ four-qubit C3 spectral certificate and \textbf{exact global binary completion op
 constructions (Theorem 17, Corollary 18), Lemmas 20--21, Theorem 22, signed-Clifford orbit transport,
 Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every \(N\ge4\), and ten
 existential non-vacuity witnesses (\texttt{NonVacuity.lean}), all strictly within the standard axioms (110
-audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (158 explicit
-\texttt{\#print\ axioms} lines plus an exhaustive 1,920-theorem \texttt{Lean.collectAxioms} check across all
+audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (160 explicit
+\texttt{\#print\ axioms} lines plus an exhaustive 2,206-theorem \texttt{Lean.collectAxioms} check across all
 three tracks), replayed across six independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, Batteries
 linted with zero errors, and mapped in a 24-node interactive Lean Blueprint at \texttt{/blueprint/}). None of this
 invalidates the spectral floor.
@@ -139,7 +139,7 @@ of non-closed contextual configurations attaining the spectral floor: for every 
 \(q=2^m\)), the pure-CCZ determinant phase state \(|\Psi_{3m}\rangle\) of \(\operatorname{Tr}_{\mathbb F_q/\mathbb F_2}(x_1x_2x_3)\)
 is proved in Lean to be flat on a strictly non-closed support of size \((q^3-1)q^2\) with
 \((q^3-1)q^4(q^2+q-3)/6\) contexts and exact floor-saturating degree \((q^3-1)q^3(q-1)(q-2)/12\)
-(strictly positive for every \(m\ge2\); Theorem 13b), while an exhaustive C census (\nolinkurl{src/n9_rank8_search.c})
+(strictly positive for every \(m\ge2\); Theorem 13b), while an exhaustive C census (\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c})
 rules out constant rank 8 on nine qubits across all 25 cyclic-invariant subspaces of \(GL(9,2)\)
 (540 299 769 forms). On the classical geometries \(Q^-(7,2)\), \(W(7,2)\) and \(Q^+(9,2)\), \nolinkurl{ExactDegreesN4N5.lean}
 proves symplectic transvection invariance for all \(N\), exact CSS witnesses (315, 1575, 6975), the exact
@@ -147,8 +147,8 @@ double-counting ladders \(Q^-(7,2)\to W(7,2)\to Q^+(9,2)\), unconditional Kramer
 \(d(W(7,2))\ge1455\) (beating the complex floor 1451 by \(+4\)) and \(d(Q^+(9,2))\ge6444\) (beating the real
 floor 6200 by \(+244\) and \nolinkurl{five_qubit_hyperbolic_contexts} 6426 by \(+18\)), pigeonhole Lemmas L1 and L4,
 and the exact master reduction from \(d(Q^-(7,2))\ge315\) to \((315,1575,6975)\), accompanied by our
-independent from-scratch C census (\nolinkurl{src/w52_census_verify.c}: 42 orbits, 17 652 160 classes) and pure-integer
-42-orbit dual certification (\nolinkurl{scripts/exact_degrees_n4_n5.py}, 9 checks, zero floating point) reproducing
+independent from-scratch C census (\nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}: 42 orbits, 17 652 160 classes) and pure-integer
+42-orbit dual certification (\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}, 9 checks, zero floating point) reproducing
 Jonah\textquotesingle s {[}J1{]} exact triple. The Pauli expansion of \(A^2\), the full five-way saturation equivalence of
 Theorems 3 and 4, and the integrality condition \((D-1)|S|=\square\) for \(N\ge2\) are formalized in
 \nolinkurl{SaturationTheory.lean}; \nolinkurl{AuditUpgrades.lean} formalizes the asymptotic \texttt{Filter.Tendsto} limit
@@ -168,7 +168,7 @@ different completion spectra in the actual Pauli and signed-context interpretati
 completely inside Lean 4\textquotesingle s kernel}, proving exact global binary optima
 \textbf{\(\min_y F(\sigma_0,y) = 368\)} and \textbf{\(\min_y F(\sigma_1,y) = 344\)} (exact binary gap \textbf{24};
 Theorem 16\textquotesingle\textquotesingle) via pure-integer frustrated-triangle MET-SDP dual certificates with lower-triangular
-integer Cholesky factorizations (\nolinkurl{scripts/c3_exact_optima_check.py}, 10 checks). The printed
+integer Cholesky factorizations (\nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py}, 10 checks). The printed
 factorizations and continuous-relaxation gap 32 rest on exact algebraic and executable checks. It then
 gives an explicit family of pairs with equal carrier spectra and different completion spectra for every
 \(N\ge4\), built from graphs with one edge for each nonzero difference (Theorem 17), proved in Lean by
@@ -184,9 +184,9 @@ levels), exact four-qubit C3 binary optima (Theorem 16\textquotesingle\textquote
 \(|\Psi_{3m}\rangle\) (Theorem 13b), and the \(Q^-(7,2)\), \(W(7,2)\) and \(Q^+(9,2)\) ladders, CSS witnesses and
 unconditional Kramers-lifted bounds are all formalized in Lean 4 (100 audited declarations in
 \nolinkurl{VerifyNewFormalizations.lean}, strictly standard axioms) and checked by exact computation through six
-qubits (\nolinkurl{scripts/conjecture_e.py}, \nolinkurl{scripts/conjecture_e_lemmas.py}, \nolinkurl{scripts/conjecture_e_trace_formula.py}
-{[}136 checks{]}, \nolinkurl{scripts/c3_sdp_dual_check.py} {[}15 checks{]}, \nolinkurl{scripts/c3_exact_optima_check.py} {[}10 checks{]},
-\nolinkurl{scripts/norm_phase_family.py} {[}32 checks{]}, \nolinkurl{scripts/exact_degrees_n4_n5.py} {[}9 checks{]}). Only the
+qubits (\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e.py}, \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_lemmas.py}, \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py}
+{[}136 checks{]}, \nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py} {[}15 checks{]}, \nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} {[}10 checks{]},
+\nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py} {[}32 checks{]}, \nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py} {[}9 checks{]}). Only the
 single-orbit group transitivity classification of {[}J3, Theorem B4{]} and the 42-orbit \(W(5,2)\) census step
 itself remain outside Lean.
 
@@ -302,8 +302,8 @@ An assignment \(f : S \to \{+1,-1\}\) \emph{violates}
 \qquad d(S) = \min_f \mathrm{viol}(f).\]
 
 \(d(S)\) is the contextuality degree {[}dB{]}. For the noncontextuality inequality
-\(\chi = \sum_\ell s_\ell \langle P_u P_v P_{u+v}\rangle \le L_S - 2 d(S)\) quantum mechanics gives
-\(\chi = L_S\) in every state {[}C, LGG{]}.
+\[\chi = \sum_\ell s_\ell \langle P_u P_v P_{u+v}\rangle \le L_S - 2 d(S),\]
+quantum mechanics yields \(\chi = L_S\) in every state {[}C, LGG{]}.
 
 \textbf{Three families.} The \emph{full space} is \(S = \mathbb{F}_2^{2N}\setminus\{0\}\), with \(D^2-1\) points
 and \(L = (D^2-1)(D^2-4)/12\) contexts. Let \(q_0(v)=|a\wedge c|\bmod2\) for \(v=(a\mid c)\).
@@ -528,7 +528,7 @@ attains the floor has \(|S| = (D-1)k^2\) and excess \((D-2)k/2\): \(|S| \in \{3,
 
 {\def\LTcaptype{none} % do not increment counter
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.2018}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0415}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0859}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1369}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1552}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0621}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0969}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0556}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1641}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1718}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0415}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1059}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1269}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1452}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0821}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0969}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0756}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1541}}@{}}
 \toprule\noalign{}
 state & \(N\) & observables & contexts & degree & modulus & excess & closed & state from \\
 \midrule\noalign{}
@@ -777,8 +777,8 @@ Clifford operation, the Pauli support of a circuit of five gates. The excluded z
 diagonal-Clifford stabilizer states, which are flat in every number of qubits.
 
 \emph{Proof.} Exhaustive enumeration, with the orbits computed from the transvections that generate
-\(GL(N,2)\) (\texttt{src/third\_level.c}; for \(N \le 4\) also \nolinkurl{scripts/phase_states.py}). The two symplectic maps
-are found by search and verified on every point; the second is recorded in \nolinkurl{results/phase_states.json}.
+\(GL(N,2)\) (\texttt{tracks/spectral-bounds/src/third\_level.c}; for \(N \le 4\) also \nolinkurl{tracks/spectral-bounds/scripts/phase_states.py}). The two symplectic maps
+are found by search and verified on every point; the second is recorded in \nolinkurl{tracks/spectral-bounds/results/phase_states.json}.
 \(\qquad\blacksquare\)
 
 For \(N = 2\) the state is that of {[}LLY{]} up to a phase and complex conjugation. In coordinates
@@ -822,11 +822,11 @@ and let \(S_7\) be its Pauli support.
 \end{enumerate}
 
 \emph{Proof.} Item 1 and the counts of item 2 are finite computations in \(\mathbb{Z}[i]\), made exactly by
-\nolinkurl{scripts/phase_states.py}, which records the counts per observable in \nolinkurl{results/phase_states.json}.
+\nolinkurl{tracks/spectral-bounds/scripts/phase_states.py}, which records the counts per observable in \nolinkurl{tracks/spectral-bounds/results/phase_states.json}.
 Two programs that share no code with it recount the totals 8128, 2 824 192 and 729 344 (Section 11):
 the Moonlab program from the expectation values of the simulated state, which also give the support
 and the modulus \(1/8\) up to rounding, and the QGTL program in C from the support and signs that
-\nolinkurl{scripts/phase_states.py} writes to \texttt{data/flat/}. The lower bound is Theorem 1 with \(|S| = 8128\), \(D = 128\):
+\nolinkurl{tracks/spectral-bounds/scripts/phase_states.py} writes to \texttt{data/flat/}. The lower bound is Theorem 1 with \(|S| = 8128\), \(D = 128\):
 \(\beta \le 126 \cdot 8128 \cdot 1016/(6\cdot 127) = 1\,365\,504 = 2\,824\,192 - 2 \cdot 729\,344\). In Lean, for
 the set of observables given by the mask of \(S_7\), these are \texttt{phase7\_contexts} and \texttt{phase7\_degree}
 (Section 9.1). For item 3,
@@ -834,9 +834,9 @@ choose a basis in which \(e_6\) spans the radical of \(B\) and \(e_0,\dots,e_5\)
 complement. Every form of \(\mathcal{F}\) is then the third difference of
 \(2(x_0x_1 + x_2x_3 + x_4x_5) + 4w(x_0,\dots,x_5) + 4x_6\,s(x_0,\dots,x_5)\) for a set \(w\) of \(CCZ\) gates
 on the first six qubits (\(2^{20}\) choices) and a graph \(s\) on them, which must be nondegenerate (13888
-choices). All \(1.46 \times 10^{10}\) such forms were tested (\texttt{src/family7.c}): 13 271 040 have constant
+choices). All \(1.46 \times 10^{10}\) such forms were tested (\texttt{tracks/spectral-bounds/src/family7.c}): 13 271 040 have constant
 rank. The group that preserves the normal form has order \(64\,|Sp(6,2)| = 92\,897\,280\), and the
-solutions are one orbit of it, of size \(92\,897\,280/7\) (\texttt{src/orbits7.c}). \(\qquad\blacksquare\)
+solutions are one orbit of it, of size \(92\,897\,280/7\) (\texttt{tracks/spectral-bounds/src/orbits7.c}). \(\qquad\blacksquare\)
 
 The noncontextuality inequality of \(S_7\) has classical bound \(1\,365\,504\) and quantum value \(2\,824\,192\):
 no noncontextual model reproduces more than \(74.2\) per cent of its contexts. Item 4 is evidence, not
@@ -908,13 +908,13 @@ six-qubit member \(m = 2\) (six CCZ gates: \(CCZ_{025} CCZ_{034} CCZ_{035} CCZ_{
 1008 observables, 45 696 contexts, exact degree 2016) is also independently kernel-checked by mask
 evaluation (\nolinkurl{lean/HoggarBound/SaturatedPhaseSix.lean}: \texttt{det6\_card}, \texttt{det6\_contexts}, \texttt{det6\_degree}), and
 \(m = 1, 2, 3, 4\) (\(N = 3, 6, 9, 12\)) are independently checked in exact integer arithmetic by
-\nolinkurl{scripts/norm_phase_family.py} (32 checks; \nolinkurl{results/norm_phase_family.json}). \(\qquad\blacksquare\)
+\nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py} (32 checks; \nolinkurl{tracks/spectral-bounds/results/norm_phase_family.json}). \(\qquad\blacksquare\)
 
 \textbf{Nine-qubit constant rank 8: negative cyclic-symmetry census.} While \(|\Psi_9\rangle\) (\(m=3\), 12 CCZ
 gates, 32 704 observables, 24 070 144 contexts, exact degree 915 712) exhibits a flat nine-qubit phase
 state of constant rank 6, the maximal rank-8 nine-qubit question (\(|S| = 511 \cdot 256 = 130\,816\),
 modulus \(1/16\), which would extend \(\Phi_3, \Phi_5, \Phi_7\)) remains open in full generality. An
-exhaustive compiled C search (\nolinkurl{src/n9_rank8_search.c}, \nolinkurl{results/n9_rank8_search.tsv}) tested all
+exhaustive compiled C search (\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c}, \nolinkurl{tracks/spectral-bounds/results/n9_rank8_search.tsv}) tested all
 \textbf{540 299 769} nonzero realizable symmetric trilinear forms across all 25 nontrivial cyclic-invariant
 subspaces of \(GL(9,2)\) (orders 73, 51, 31, 21, 17, all eight \(\mathbb{Z}_{15}\) actions, \(\mathbb{Z}_9\),
 all seven \(\mathbb{Z}_7\) actions on \(\mathbb{F}_8^3\) including the three 27-dimensional subspaces of
@@ -995,19 +995,21 @@ and pigeonhole Lemmas L1 (\(40 \cdot 314 \lt 136 \cdot 93\)) and L4 (\(15 \cdot 
 the Lean Kramers floor \(d(Q^-(7,2)) \ge 291\) (\nolinkurl{four_qubit_elliptic_contexts}) with these two ladders
 yields \textbf{unconditional Lean 4 lower bounds} strictly beating the spectral floors:
 
-\[d(W(7,2)) \;\ge\; 1455 \quad (+4\text{ above }1451), \qquad
-d(Q^+(9,2)) \;\ge\; 6444 \quad (+244\text{ above }6200,\; +18\text{ above }6426)\]
+\begin{align*}
+d(W(7,2)) &\;\ge\; 1455 \quad (+4\text{ above }1451), \\
+d(Q^+(9,2)) &\;\ge\; 6444 \quad (+244\text{ above }6200,\; +18\text{ above }6426)
+\end{align*}
 
 (\texttt{w72\_ge\_1455} and \texttt{q9plus\_ge\_6444}; exact averaging of \(W(9,2)\) similarly yields \(\ge 28791\)). Moreover,
 \nolinkurl{exact_degrees_n4_n5_of_q7minus_315} reduces all three exact degrees \((315, 1575, 6975)\) inside Lean 4 to
 the single bound \(d(Q^-(7,2)) \ge 315\). To verify Jonah\textquotesingle s {[}J1{]} proof of \(d(Q^-(7,2)) \ge 315\)
 independently with zero floating point, we implemented a clean multithreaded C census from scratch
-(\nolinkurl{src/w52_census_verify.c}, \nolinkurl{data/w52_orbits_42.tsv}), reproducing every count of {[}J1{]} without pruning
+(\nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}, \nolinkurl{data/w52_orbits_42.tsv}), reproducing every count of {[}J1{]} without pruning
 (all \(2^{25}\) canonical classes on \(H = Z_0^\perp\) yield 18 752 classes with \(n_H \le 21\) in 18
 stabilizer orbits; all \(18 \times 2^{31}\) completions yield \(|C_0| = 9\,017\,680\); BFS closure under the
 63 transvections of \(Sp(6,2)\) yields exactly \textbf{42 orbits} and \textbf{17 652 160} total classes), and
 certified \(n_k + F(\sigma_k) \ge 315\) on all 42 orbit representatives in exact arbitrary-precision
-integer arithmetic (\nolinkurl{scripts/exact_degrees_n4_n5.py}, 9 checks, \nolinkurl{data/q7minus_42_certs.json}: 28 spectral,
+integer arithmetic (\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}, 9 checks, \nolinkurl{data/q7minus_42_certs.json}: 28 spectral,
 10 diagonal-shift, and 4 triangle-cut pure-integer dual certificates, plus a negative control rejecting
 \(F \ge 253\) on the Hoggar orbit). Thus \((315, 1575, 6975)\) are independently verified in exact integer
 arithmetic and structurally reduced in Lean 4, while the 42-orbit census and 42 integer certificates
@@ -1056,8 +1058,8 @@ configuration & \(N\) & points & contexts & averaging bound \(\lceil L/5\rceil\)
 † computer-assisted in {[}J1{]}, not peer reviewed; in version 1.8.0 the CSS witnesses (315, 1575, 6975),
 exact ladders (\(Q^-(7,2)\to W(7,2)\to Q^+(9,2)\)), unconditional Kramers-lifted bounds (\(\ge 1455\), \(\ge 6444\)),
 and Lemmas L1/L4 are proved in Lean 4 (\nolinkurl{ExactDegreesN4N5.lean}), while the 42-orbit \(W(5,2)\) census and all
-42 pure-integer dual certificates are independently reproduced in \nolinkurl{src/w52_census_verify.c} and
-\nolinkurl{scripts/exact_degrees_n4_n5.py}.
+42 pure-integer dual certificates are independently reproduced in \nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c} and
+\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}.
 
 Reading of the table. (1) All 17 rows are consistent with the floor; it is attained in the three rows
 in bold and, after rounding, in \(Q^+(3,2)\), the Mermin--Peres square. (2) From four qubits on (five for
@@ -1365,10 +1367,10 @@ inside Lean 4\textquotesingle s kernel:
 \textbf{Theorem 16\textquotesingle\textquotesingle{} (exact global binary completion optima of four-qubit C3).} Over all \(2^{64}\) binary
 completions \(y \in \{-1, +1\}^O\) of the cospectral four-qubit C3 pair \((\sigma_0, \sigma_1)\),
 
-\[\min_{y \in \{-1, +1\}^O} F(\sigma_0, y) \;=\; 368, \qquad
-\min_{y \in \{-1, +1\}^O} F(\sigma_1, y) \;=\; 344, \qquad
-\min_y F(\sigma_0, y) - \min_y F(\sigma_1, y) \;=\; 24 .
-\tag{C13}\]
+\begin{equation}\tag{C13}\begin{aligned}
+\min_{y \in \{-1, +1\}^O} F(\sigma_0, y) &= 368, \qquad \min_{y \in \{-1, +1\}^O} F(\sigma_1, y) = 344, \\
+\min_y F(\sigma_0, y) - \min_y F(\sigma_1, y) &= 24.
+\end{aligned}\end{equation}
 
 \emph{Proof.} Adding metric-polytope triangle inequalities closes the entire integrality gap between the
 elliptope SDP dual and the exact binary optimum. For any triple of outside points \(\{i, j, k\} \subset O\)
@@ -1406,10 +1408,10 @@ Lean 4\textquotesingle s kernel (\nolinkurl{lean/HoggarBound/C3ExactOptimaData.l
 \nolinkurl{corollary16_sigmaA_exact_lower}, \nolinkurl{corollary16_sigmaB_exact_lower}, \nolinkurl{corollary16_exact_binary_optima};
 Section 9.4). \(\qquad\blacksquare\)
 
-Independently, \nolinkurl{scripts/cospectral_pair.py} (30 checks) rebuilds the configuration, both carriers, both
+Independently, \nolinkurl{tracks/spectral-bounds/scripts/cospectral_pair.py} (30 checks) rebuilds the configuration, both carriers, both
 degree-64 completion polynomials, the enclosure of \(\rho\) and both witnesses without code shared with
-Section 11.2; \nolinkurl{scripts/c3_sdp_dual_check.py} (15 checks) verifies Proposition 16\textquotesingle; and
-\nolinkurl{scripts/c3_exact_optima_check.py} (10 checks; \nolinkurl{results/c3_exact_optima_check.json}) verifies both
+Section 11.2; \nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py} (15 checks) verifies Proposition 16\textquotesingle; and
+\nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} (10 checks; \nolinkurl{tracks/spectral-bounds/results/c3_exact_optima_check.json}) verifies both
 MET-SDP triangle-cut dual certificates, both integer Cholesky Gershgorin margins, both binary witnesses
 (368 and 344), and four negative controls (rejecting impossible targets 369 and 345, rejecting a
 non-frustrated triangle \(s_1 s_2 s_3 = +1\), and rejecting a perturbed Cholesky entry).
@@ -1421,8 +1423,8 @@ non-frustrated triangle \(s_1 s_2 s_3 = +1\), and rejecting a perturbed Cholesky
 \textbf{The fixed-section score is also identical.} The section has \(1575-1120=455\) contexts. The trace
 identity of Section 3 gives \(\beta_H=18336/(6\cdot16)=191\) for each carrier, hence
 \((455-191)/2=132\) violated section contexts and 323 satisfied ones. Independent integer
-Pauli-label phase arithmetic in \nolinkurl{scripts/unified_section_score.py} recounts these values; the record
-is \nolinkurl{results/unified-section-score.json}. Flipping label 1 of the first assignment changes its count
+Pauli-label phase arithmetic in \nolinkurl{tracks/spectral-bounds/scripts/unified_section_score.py} recounts these values; the record
+is \nolinkurl{tracks/spectral-bounds/results/unified-section-score.json}. Flipping label 1 of the first assignment changes its count
 to 147 and its score to 161, furnishing a negative control. This section-score observation is a
 derived and executable check, not an additional specialized Lean theorem.
 
@@ -1566,7 +1568,7 @@ changes of the all-plus carrier do not suffice at five qubits. Among the 10 908 
 move to \(D\) with either sign), no two are cospectral with different block spectra. At four qubits,
 among 182 176 such carriers, exactly four cospectral classes contain different block spectra, three of
 them with different \(r_D\), and the pair of Section 8.2 lies in one of the three. The search
-(\nolinkurl{scripts/c3_sparse_search.py}) is exhaustive and exact; it says nothing about pairs with only one
+(\nolinkurl{tracks/spectral-bounds/scripts/c3_sparse_search.py}) is exhaustive and exact; it says nothing about pairs with only one
 member in this set.
 
 \textbf{Table 5. Explicit instances of Theorem 17 (the triangle for \(N=3\)) and of Corollary 18.}
@@ -1873,7 +1875,7 @@ are conjugate by a controlled-NOT. That gate fixes \(d\) and maps the section on
 \(e^\perp\) to \((e+d)^\perp\); an outside point \(p\) has \(\langle p,e+d\rangle=1\), so its image lies outside \(e^\perp\)
 and hence outside \(X\). The gate therefore does not carry one completion problem to the other.
 
-\textbf{Table 7. Exact values for the pairs of Table 6}, three to six qubits (\nolinkurl{scripts/conjecture_e.py}).
+\textbf{Table 7. Exact values for the pairs of Table 6}, three to six qubits (\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e.py}).
 
 {\def\LTcaptype{none} % do not increment counter
 {\small
@@ -1982,11 +1984,11 @@ Theorem 22 (\nolinkurl{trace_completion_cube_universal}), Lemmas 20 and 21, ever
 in all nine vertex cases---both at the characteristic-polynomial level (\nolinkurl{jonah_conjecture_e_all_nine_cases})
 and upgraded to canonical Hermitian eigenvalue lists and real root multisets with multiplicities
 (\nolinkurl{jonah_conjecture_e_all_nine_cases_spectra})---are formalized in Lean 4 (Section 9.4). Independently,
-\nolinkurl{scripts/conjecture_e_trace_formula.py} verifies (E13) on every pair of Table 6 and on random sign
+\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} verifies (E13) on every pair of Table 6 and on random sign
 carriers, every formula of Table 8, the six pair-swap moments and three negative controls in exact integer
-arithmetic for three to five qubits (97 of 97 checks passed; \nolinkurl{results/conjecture_e_trace_formula.json})
+arithmetic for three to five qubits (97 of 97 checks passed; \nolinkurl{tracks/spectral-bounds/results/conjecture_e_trace_formula.json})
 and, with the argument \texttt{6}, across all nine vertex cases at six qubits (39 of 39 checks passed;
-\nolinkurl{results/conjecture_e_trace_formula_n6.json}, 136 exact checks in total).
+\nolinkurl{tracks/spectral-bounds/results/conjecture_e_trace_formula_n6.json}, 136 exact checks in total).
 
 \subsubsection{8.8 Why the spectral floor survives}\label{88-why-the-spectral-floor-survives}
 
@@ -2114,8 +2116,8 @@ report, and added two modules of its own (\nolinkurl{IndependentContexts.lean}, 
 prove that a violated context carries exactly six violated flags (used in \texttt{MaskConfig.lean}) and, by
 kernel evaluation of an integer certificate, that the explicit assignment
 "\(f(a,c) = +1\) if \(a = 0\) or \(c = 0\) or the number of \(Y\) factors is at least 2, and \(-1\) otherwise"
-violates exactly 63 contexts. Their reports are in \nolinkurl{results/lean-audit.md},
-\nolinkurl{results/literature-audit.md} and \nolinkurl{results/stack-independent-audit.md}, and their companion note is
+violates exactly 63 contexts. Their reports are in \nolinkurl{tracks/spectral-bounds/results/lean-audit.md},
+\nolinkurl{tracks/spectral-bounds/results/literature-audit.md} and \nolinkurl{tracks/spectral-bounds/results/stack-independent-audit.md}, and their companion note is
 \nolinkurl{paper/independent-research-note.md}. The literature audit is what first pointed us to {[}J1{]}. The
 modules from \texttt{MaskConfig.lean} on, and everything in Section 5, were written after that audit and are
 not covered by it.
@@ -2138,7 +2140,7 @@ certifies an invertible similarity over the rationals. For each completion, an i
 is checked entry by entry and substituted into a checked cubic trace. No external eigensolver supplies
 a proof premise. All 42 declarations in \nolinkurl{lean/C3Verification.lean} passed the axiom audit with only
 \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}; the finite checks use kernel reduction, not
-\texttt{native\_decide}. Commands, source hashes and results are in \nolinkurl{results/frontier-c3-lean-audit.md} and
+\texttt{native\_decide}. Commands, source hashes and results are in \nolinkurl{tracks/spectral-bounds/results/frontier-c3-lean-audit.md} and
 its evidence files.
 
 \subsubsection{9.3 Case C3 for every number of qubits from four on}\label{93-case-c3-for-every-number-of-qubits-from-four-on}
@@ -2185,7 +2187,7 @@ completion matrix is symmetric (\nolinkurl{completionMatrix_transpose}). The com
 
 The 74 audited declarations of the file depend only on \texttt{propext}, \texttt{Classical.choice} and
 \texttt{Quot.sound}; the file has no \texttt{sorry}, \texttt{native\_decide}, \texttt{axiom} declaration or \texttt{set\_option}
-(\nolinkurl{results/lean-c3-all-qubits-axioms.log}). Left to the reader are the identification of these
+(\nolinkurl{tracks/spectral-bounds/results/lean-c3-all-qubits-axioms.log}). Left to the reader are the identification of these
 definitions with the objects of {[}J3{]}, the fact that equal characteristic polynomials of Hermitian or
 real symmetric matrices mean equal spectra with multiplicities, and the trust base: the Lean kernel,
 Mathlib at the pinned revision and the three standard axioms.
@@ -2194,7 +2196,7 @@ Mathlib at the pinned revision and the three standard axioms.
 
 Versions 1.5.0 through 1.8.0 add twelve self-contained Lean 4.35.0 modules (13 910 lines of library
 source, changing no previously audited Lean file) together with the 100-declaration audit entry point
-\nolinkurl{lean/VerifyNewFormalizations.lean}:
+\nolinkurl{lean/VerifyAll.lean} (which supersedes the historical \nolinkurl{lean/VerifyNewFormalizations.lean}):
 
 \begin{itemize}
 \tightlist
@@ -2254,9 +2256,9 @@ source, changing no previously audited Lean file) together with the 100-declarat
   \nolinkurl{lemma_L4_w52_hyperplane_le_21}), and the exact master reduction (\nolinkurl{exact_degrees_n4_n5_of_q7minus_315}).
 \end{itemize}
 
-All \textbf{100 declarations} in \nolinkurl{lean/VerifyNewFormalizations.lean} depend strictly on
+All audited declarations in \nolinkurl{lean/VerifyAll.lean} (160 explicit \texttt{\#print axioms} declarations plus the exhaustive 2,206-theorem metaprogram across all four namespaces) depend strictly on
 \texttt{{[}propext,\ Classical.choice,\ Quot.sound{]}}, with zero \texttt{sorry}, \texttt{admit}, \texttt{native\_decide}, \texttt{unsafe}, or
-custom \texttt{axiom} declarations across all twelve modules (\nolinkurl{results/new-formalizations-lean-axioms.log};
+custom \texttt{axiom} declarations across all twelve modules (\nolinkurl{tracks/spectral-bounds/results/new-formalizations-lean-axioms.log};
 \texttt{set\_option\ maxRecDepth} / \texttt{maxHeartbeats} appears only on kernel \texttt{decide\ +kernel} evaluation lemmas in
 \nolinkurl{C3ExactOptima.lean}, \nolinkurl{SaturatedPhaseSix.lean}, and \nolinkurl{ExactDegreesN4N5.lean}, mirroring \nolinkurl{SaturatedSeven.lean},
 while all conceptual proof modules contain zero \texttt{set\_option} directives). For each of the nine vertex cases,
@@ -2278,12 +2280,12 @@ Claim & Evidence boundary \\
 \endlastfoot
 Arbitrary-support spectral floor (Theorem 1), quaternionic/Kramers floor (Theorem 2), finite bounds, and asymptotic limits \(d/L\to1/2\) & Lean statements about the defined Pauli/context model (\texttt{Bound.lean}, \texttt{Corollaries.lean}, \texttt{Quadric.lean}, \texttt{Kramers.lean}, \nolinkurl{AuditUpgrades.lean}) \\
 Saturation equivalences (Theorems 3 and 4), \((2^N-1)\vert S\vert=\square\), quantum-metric criteria (Propositions 3 and 8), and two-character hyperplane sums (Proposition 10) & Lean theorems for arbitrary nonempty supports and pure states (\nolinkurl{SaturationTheory.lean}, \nolinkurl{AuditUpgrades.lean}) \\
-Infinite non-closed contextual floor-saturating family \(\vert\Psi_{3m}\rangle\) for all \(m\ge1\) (Theorem 13b) and six-qubit exact degree 2016 & Lean theorems directly from the state vector for all \(m\ge1\) (\nolinkurl{NormPhaseFamily.lean}) plus six-qubit kernel mask certificate (\nolinkurl{SaturatedPhaseSix.lean}) and exact checks for \(m=1\text{–}4\) (\nolinkurl{scripts/norm_phase_family.py}, 32 checks) \\
+Infinite non-closed contextual floor-saturating family \(\vert\Psi_{3m}\rangle\) for all \(m\ge1\) (Theorem 13b) and six-qubit exact degree 2016 & Lean theorems directly from the state vector for all \(m\ge1\) (\nolinkurl{NormPhaseFamily.lean}) plus six-qubit kernel mask certificate (\nolinkurl{SaturatedPhaseSix.lean}) and exact checks for \(m=1\text{–}4\) (\nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py}, 32 checks) \\
 Degrees 75, 480 and 729344 for the explicit masks & Lean lower bounds, witnesses and kernel-evaluated counts; state-to-mask interpretation checked separately by programs \\
-Classical \(N=4\text{–}5\) degrees: unconditional \(d(W(7,2))\ge1455\) and \(d(Q^+(9,2))\ge6444\), CSS witnesses \((315,1575,6975)\), ladders, transvection invariance, Lemmas L1/L4, and master reduction & Lean theorems in \nolinkurl{ExactDegreesN4N5.lean}; independent from-scratch C census (\nolinkurl{src/w52_census_verify.c}: 42 orbits, 17 652 160 classes) and pure-integer 42-orbit certification (\nolinkurl{scripts/exact_degrees_n4_n5.py}, 9 checks) reproduce Jonah\textquotesingle s {[}J1{]} \(d(Q^-(7,2))\ge315\) with zero floating point (outside Lean kernel) \\
-Probabilistic upper bound, phase-state enumerations (Propositions 4, 6, 9, 11, Theorems 12--13), and nine-qubit rank-8 cyclic-symmetry negative census (540.3M forms) & Mathematical arguments and executable computations (\nolinkurl{src/n9_rank8_search.c}); not Lean theorems \\
+Classical \(N=4\text{–}5\) degrees: unconditional \(d(W(7,2))\ge1455\) and \(d(Q^+(9,2))\ge6444\), CSS witnesses \((315,1575,6975)\), ladders, transvection invariance, Lemmas L1/L4, and master reduction & Lean theorems in \nolinkurl{ExactDegreesN4N5.lean}; independent from-scratch C census (\nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}: 42 orbits, 17 652 160 classes) and pure-integer 42-orbit certification (\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}, 9 checks) reproduce Jonah\textquotesingle s {[}J1{]} \(d(Q^-(7,2))\ge315\) with zero floating point (outside Lean kernel) \\
+Probabilistic upper bound, phase-state enumerations (Propositions 4, 6, 9, 11, Theorems 12--13), and nine-qubit rank-8 cyclic-symmetry negative census (540.3M forms) & Mathematical arguments and executable computations (\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c}); not Lean theorems \\
 Four-qubit C3 carrier cospectrality, unequal completion spectra and cube traces (Theorem 14) & Complete 42-declaration Lean audit (\texttt{C3Spectra.lean}), including original Pauli and context-sign bridges \\
-Four-qubit C3 \textbf{exact global binary completion optima} (\(\min_y F(\sigma_0,y)=368\), \(\min_y F(\sigma_1,y)=344\), gap 24; Corollary 16, Proposition 16\textquotesingle, Theorem 16\textquotesingle\textquotesingle) & Complete Lean kernel proof in \nolinkurl{C3ExactOptima.lean} (plus \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean}) via pure-integer MET-SDP triangle-cut duals and integer Cholesky certificates + \nolinkurl{scripts/c3_exact_optima_check.py} (10 checks); printed C3 factorizations and spherical gap 32 remain separately checked algebraic/executable results \\
+Four-qubit C3 \textbf{exact global binary completion optima} (\(\min_y F(\sigma_0,y)=368\), \(\min_y F(\sigma_1,y)=344\), gap 24; Corollary 16, Proposition 16\textquotesingle, Theorem 16\textquotesingle\textquotesingle) & Complete Lean kernel proof in \nolinkurl{C3ExactOptima.lean} (plus \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean}) via pure-integer MET-SDP triangle-cut duals and integer Cholesky certificates + \nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} (10 checks); printed C3 factorizations and spherical gap 32 remain separately checked algebraic/executable results \\
 Case C3 for every \(N\ge4\) (Theorem 17) & Lean theorem \nolinkurl{c3_strict_law_fails_general} (\nolinkurl{CarrierFamily.lean}, 74 audited declarations) and \nolinkurl{c3_strict_law_fails} (\texttt{ConjectureE.lean}, \(N\ge3\)) \\
 General cone lift and case C11 (Corollary 18), Lemmas 20--21, Theorem 22, Table 8, Clifford transport, and eigenvalue-multiset Conjecture E across all nine vertex cases for every \(N\ge4\) (Theorem 19) & Lean theorems in \nolinkurl{ConjectureECore.lean}, \nolinkurl{ConjectureECones.lean}, \texttt{ConjectureE.lean}, \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean} (part of the 100 audited declarations in \nolinkurl{VerifyNewFormalizations.lean}, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites {[}J3, Theorem B4{]} \\
 Physical hardware, compiler correctness, historical priority or external peer review & Not established by these theorem checks \\
@@ -2302,7 +2304,7 @@ passed the executable checks and audits of 42 C3, 22 baseline and six auxiliary 
 declarations. The separate
 \href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42741638912}{saturation run}
 passed its exact-computation jobs and 14-declaration audit. The archived records
-\nolinkurl{results/full-ci-87-audit.json} and \nolinkurl{results/saturation-ci-audit.json} identify the checkout,
+\nolinkurl{tracks/spectral-bounds/results/full-ci-87-audit.json} and \nolinkurl{tracks/spectral-bounds/results/saturation-ci-audit.json} identify the checkout,
 artifact digests and source hashes. These are checks of those source snapshots, not evidence of a
 new proof produced by combining the texts; the auxiliary stability results are not used here.
 
@@ -2310,7 +2312,7 @@ The subsequent additions have their own recorded runs on clean Ubuntu machines. 
 \href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42808984960}{seven-qubit run} of the
 saturation workflow, at commit \texttt{b7b0273}, built \nolinkurl{SaturatedPhaseSeven} in 1 minute 26 seconds with a
 maximum resident set of 6 271 660 KiB (6.4 GB) and passed its 13-declaration axiom audit
-(\nolinkurl{results/saturation-seven-ci-audit.json}). It repeats, after a review that made one program check
+(\nolinkurl{tracks/spectral-bounds/results/saturation-seven-ci-audit.json}). It repeats, after a review that made one program check
 able to fail and corrected a comment, the first run
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42791713861}{42791713861}, commit
 \texttt{77a529f}), whose Lean results were the same. The workflow \emph{Case C3 for every number of qubits} checked
@@ -2318,12 +2320,12 @@ able to fail and corrected a comment, the first run
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42797323071}{run}) and \texttt{f294d9d}
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42801908151}{run}). The first run also
 repeated the C3 checks of Section 11.3 (\texttt{scripts/cospectral\_family.py\ -\/-six}, the tensor check, the
-cone lifts and the four-qubit search); the second added \nolinkurl{scripts/conjecture_e.py} for three to five
+cone lifts and the four-qubit search); the second added \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e.py} for three to five
 qubits (81 checks). Version 1.3.0 added the six-qubit step (\texttt{scripts/conjecture\_e.py\ 6}, 36 checks); at
 commit \texttt{6189b62}, whose programs and Lean files are those of that release, the workflow ran every
 step and passed (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42817286684}{run}; logs in
 \nolinkurl{results/ci-run-42817286684/}). Version 1.4.0 added the checks of Lemmas 20 and 21
-(\nolinkurl{scripts/conjecture_e_lemmas.py} and its six-qubit run, Section 11.3) to the same workflow; at commit
+(\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_lemmas.py} and its six-qubit run, Section 11.3) to the same workflow; at commit
 \texttt{7d746a3}, it ran every step and passed (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/42834831157}{run}; logs in
 \nolinkurl{results/ci-run-42834831157/}). Version 1.5.0 added the workflow \emph{Conjecture E (all 9 cases), Kramers
 floor \& saturation Lean 4 audit} (\nolinkurl{.github/workflows/conjecture-e-all-cases.yml}); at commit \texttt{5d4f489}
@@ -2331,17 +2333,17 @@ it passed all 37 declarations on clean Ubuntu in 1 minute 56 seconds
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/44888403135}{run}), alongside green runs of
 the saturation and C3 all-qubits workflows. Version 1.6.0 extended that workflow to build \nolinkurl{ConjectureEExtras.lean}, enforce the standard axiom
 allowlist across 49 declarations of \nolinkurl{VerifyNewFormalizations.lean}, and execute
-\nolinkurl{scripts/conjecture_e_trace_formula.py} (97 checks), passing on clean Ubuntu
+\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} (97 checks), passing on clean Ubuntu
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/44893871335}{run}; receipts in
 \nolinkurl{results/publication-v1.6.0-distribution.json}). Version 1.7.0 extended the same workflow to build \nolinkurl{AuditUpgrades.lean}, enforce the standard axiom
-allowlist across 77 declarations of \nolinkurl{VerifyNewFormalizations.lean}, execute \nolinkurl{scripts/conjecture_e_trace_formula.py}
-for three to five qubits (97 checks) and six qubits (39 checks), and execute \nolinkurl{scripts/c3_sdp_dual_check.py}
+allowlist across 77 declarations of \nolinkurl{VerifyNewFormalizations.lean}, execute \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py}
+for three to five qubits (97 checks) and six qubits (39 checks), and execute \nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py}
 (15 checks), passing on clean Ubuntu (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/44908422882}{run};
 receipts in \nolinkurl{results/publication-v1.7.0-distribution.json}). Version 1.8.0 extended that workflow to build
 \texttt{C3ExactOptima}, \texttt{SaturatedPhaseSix}, \texttt{NormPhaseFamily} and \texttt{ExactDegreesN4N5}, enforce the standard
 axiom allowlist across 100 declarations of \nolinkurl{VerifyNewFormalizations.lean}, and execute
-\nolinkurl{scripts/c3_exact_optima_check.py} (10 checks), \nolinkurl{scripts/norm_phase_family.py} (32 checks) and
-\nolinkurl{scripts/exact_degrees_n4_n5.py} (9 checks), passing on clean Ubuntu
+\nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} (10 checks), \nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py} (32 checks) and
+\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py} (9 checks), passing on clean Ubuntu
 (\href{https://github.com/0thernes/hoggar-bound-lab/actions/runs/44959312365}{run}; receipts in
 \nolinkurl{results/publication-v1.8.0-distribution.json}). Version 1.9.0 expands \nolinkurl{VerifyNewFormalizations.lean} to
 110 declarations by adding ten existential non-vacuity witnesses (\texttt{NonVacuity.lean}), adds isolated
@@ -2351,7 +2353,7 @@ editable modules, adds a declaration-checked Lean Blueprint (\texttt{blueprint/}
 enforces the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and adds
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
 provenance attestations; its release CI receipts are recorded in \nolinkurl{publication/STATUS.md} and
-\nolinkurl{results/publication-v1.9.0-distribution.json}. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.2.0), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 158 explicit headline declarations plus all 1,920 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI, and the unified GitHub Pages portal mounts the 24-node interactive Blueprint at \texttt{/blueprint/}.
+\nolinkurl{results/publication-v1.9.0-distribution.json}. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.2.0), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI, and the unified GitHub Pages portal mounts the 24-node interactive Blueprint at \texttt{/blueprint/}.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 
@@ -2376,7 +2378,7 @@ All four components are used for what they are.
   implementation of the geometry and the differentiation checks.
 \end{itemize}
 
-\textbf{Experiment on Moonlab, classical families} (\nolinkurl{src/moonlab_experiment.mjs}, seed 20261109). A Pauli
+\textbf{Experiment on Moonlab, classical families} (\nolinkurl{tracks/spectral-bounds/src/moonlab_experiment.mjs}, seed 20261109). A Pauli
 observable is measured projectively by rotating its eigenbasis onto \(Z\) of one qubit (gates \(H\),
 \(S^\dagger\), CNOT), calling Moonlab\textquotesingle s single-qubit measurement with a number from quantum\_rng, and
 undoing the rotation.
@@ -2425,7 +2427,7 @@ best classical model known & 0.800 & 0.800 & 0.706 \\
 }
 }
 
-\textbf{Experiment on Moonlab, the configurations of Table 1} (\nolinkurl{src/moonlab_saturated.mjs}, seed 20261110).
+\textbf{Experiment on Moonlab, the configurations of Table 1} (\nolinkurl{tracks/spectral-bounds/src/moonlab_saturated.mjs}, seed 20261110).
 
 {\def\LTcaptype{none} % do not increment counter
 {\small
@@ -2476,7 +2478,7 @@ measurements on hardware or a loophole analysis.
 
 \emph{Figure 4. Simulated success fraction on Moonlab against the classical ceilings, for the full space.}
 
-\textbf{QGTL} (\texttt{src/qgt\_hoggar.c}, \texttt{src/qgt\_flat.c}). The kernels \nolinkurl{diffgeo_compute_fubini_study} and
+\textbf{QGTL} (\nolinkurl{tracks/spectral-bounds/src/qgt_hoggar.c}, \nolinkurl{tracks/spectral-bounds/src/qgt_flat.c}). The kernels \nolinkurl{diffgeo_compute_fubini_study} and
 \nolinkurl{diffgeo_compute_berry_curvature}, applied to \(\psi_H\) and the 63 tangent vectors \(-\tfrac{i}{2}P_v\psi_H\),
 return the values of Proposition 3 to \(10^{-16}\), and the 189 pairs with \(|g_{uv}| \gt 1/12\) are exactly
 the pairs on the 63 violated contexts. For the eight states of Table 1 and the tangent vectors of their
@@ -2484,7 +2486,7 @@ supports they return the three values of Proposition 8 to \(10^{-16}\); the pair
 recover the 75 violated contexts of \(S_B\) (225 pairs of 9045), the 480 of \(S_5\) and of the support of
 \(\Phi_5\) (1440 pairs of 122760), and the 729 344 of \(S_7\) (2 188 032 pairs of 33 028 128), and no others.
 
-\textbf{Eshkol} (\nolinkurl{src/eshkol/hoggar.esk}, \nolinkurl{src/eshkol/saturated.esk}). An exhaustive pass over all \(2^{15}\)
+\textbf{Eshkol} (\nolinkurl{tracks/spectral-bounds/src/eshkol/hoggar.esk}, \nolinkurl{tracks/spectral-bounds/src/eshkol/saturated.esk}). An exhaustive pass over all \(2^{15}\)
 two-qubit assignments gives minimum 3, attained 640 times. The Hoggar signs violate 63 contexts.
 Reverse-mode automatic differentiation of the cubic form at the Hoggar Pauli vector \(x^\ast\) gives
 \(T(x^\ast) = 7 = (D-1)(D-2)/6\) and \(\nabla T(x^\ast) = 3x^\ast\) to \(7\times10^{-16}\) (the Lagrange condition
@@ -2499,7 +2501,7 @@ The separate serial compiled run uses Eshkol 1.3.6-evolve through
 \texttt{eshkol-run\ -r}. It checks \(A_0M=MA_1\) and both \(MR=RM=46656I\), then evaluates the block-moment
 formula to obtain 14976 and 15360. An arbitrary-precision Python replay bounds every input, product
 and ordered accumulation of this program by 408304 in absolute value, below \(2^{63}-1\). The recorded
-run returned zero with empty standard error; \nolinkurl{results/frontier-c3-eshkol.json} records its command,
+run returned zero with empty standard error; \nolinkurl{tracks/spectral-bounds/results/frontier-c3-eshkol.json} records its command,
 hashes and process-local paths to the existing LLVM 21 and CUDA 12.9 installations. This qualifies
 the tested serial arithmetic execution, not compiler correctness or GPU/parallel behavior.
 
@@ -2515,7 +2517,7 @@ measurements reproduce every context sign in every state. (P7) For a flat state,
 Theorem 4 holds. A counterexample to P1 would provide a finite assignment whose violation count can
 be recomputed independently from the context definitions.
 
-\textbf{Tests} (\nolinkurl{scripts/run_all.sh}).
+\textbf{Tests} (\nolinkurl{tracks/spectral-bounds/scripts/run_all.sh}).
 
 \begin{itemize}
 \tightlist
@@ -2523,7 +2525,7 @@ be recomputed independently from the context definitions.
   \texttt{hoggar\ exhaust2}: all 32768 two-qubit assignments; minimum 3 (640 assignments); for the square,
   minimum 1.
 \item
-  \nolinkurl{scripts/run_falsify.sh}: 20 runs over \(N = 2, \dots, 5\) and the three families; 20000, 5000 and 500
+  \nolinkurl{tracks/spectral-bounds/scripts/run_falsify.sh}: 20 runs over \(N = 2, \dots, 5\) and the three families; 20000, 5000 and 500
   uniformly random assignments and 1500, 200 and 12 annealed ones per configuration for
   \(N = 3, 4, 5\). No assignment below the floor. Minima reached by annealing: 63, 21, 9 (\(N=3\));
   1575, 315, 315 (\(N=4\)); 31479, 6975, 7087 (\(N=5\)). These equal the best known values in every case.
@@ -2531,7 +2533,7 @@ be recomputed independently from the context definitions.
   A negative control: the false claim \(d(W(5,2)) \ge 64\) is refuted by the Hoggar witness with exit
   code 3, showing that the harness can fail.
 \item
-  \nolinkurl{scripts/flat_states.py} (68 checks, integer arithmetic in \(\mathbb{Z}[i]\) except one labelled check):
+  \nolinkurl{tracks/spectral-bounds/scripts/flat_states.py} (68 checks, integer arithmetic in \(\mathbb{Z}[i]\) except one labelled check):
   for the six states of Table 1, the single modulus, the support, the number of contexts, the number
   violated, the floor, condition (d) at every point and the vanishing of every outside sum; the statements
   of Theorem 5 about \(S_B\); Proposition 6 on all 4096 phase patterns; Proposition 9 for one to four
@@ -2541,25 +2543,25 @@ be recomputed independently from the context definitions.
   \texttt{build/third\_level} (seven seconds): the enumeration of Theorem 12, all 33 554 431 forms for five
   qubits included, with the orbit computation; it fails if any count differs from the table.
 \item
-  \nolinkurl{scripts/phase_states.py} (81 checks, integer arithmetic): for \(CS|{+}{+}\rangle\), \(CCZ|{+}{+}{+}\rangle\),
+  \nolinkurl{tracks/spectral-bounds/scripts/phase_states.py} (81 checks, integer arithmetic): for \(CS|{+}{+}\rangle\), \(CCZ|{+}{+}{+}\rangle\),
   \(CS\,CS|{+}{+}{+}\rangle\), \(\Phi_5\) and \(\Phi_7\), the constant rank, the single modulus, the support, the
   numbers of contexts and violated contexts, condition (d) and the outside sums, and the description of
   the support in Proposition 11; Proposition 10 for all eleven states of this paper; the enumeration of
   Theorem 12 for \(N \le 4\) by a second implementation; the two symplectic maps of Theorem 12; and the
   finite-field descriptions of the five- and seven-qubit forms.
 \item
-  \nolinkurl{scripts/run_family7.sh} (about eight core-hours, not part of the everyday run): the enumeration of
+  \nolinkurl{tracks/spectral-bounds/scripts/run_family7.sh} (about eight core-hours, not part of the everyday run): the enumeration of
   Theorem 13, the orbit computation, and the random census of the other types; its output is
-  \nolinkurl{results/family7.log}. The two counts agree: 13 271 040 solutions found, and
+  \nolinkurl{tracks/spectral-bounds/results/family7.log}. The two counts agree: 13 271 040 solutions found, and
   \(92\,897\,280/7 = 13\,271\,040\) for one orbit with a stabilizer of order 7.
 \item
   The seven-qubit numbers 8128, 2 824 192 and 729 344 are computed three times without shared code: in
   Python with exact integers, in C from the masks (inside the QGTL program) and in JavaScript from the
-  expectation values returned by Moonlab; and a fourth time by \nolinkurl{scripts/phase_seven_lean.py} (14
+  expectation values returned by Moonlab; and a fourth time by \nolinkurl{tracks/spectral-bounds/scripts/phase_seven_lean.py} (14
   checks), with the evaluation that the kernel carries out, compared with the direct double loop and
   with two negative controls.
 \item
-  \nolinkurl{scripts/analysis.py} (62 checks) and \texttt{scripts/ladder.py} (14 checks): P3 on random data to machine
+  \nolinkurl{tracks/spectral-bounds/scripts/analysis.py} (62 checks) and \nolinkurl{tracks/spectral-bounds/scripts/ladder.py} (14 checks): P3 on random data to machine
   precision; P4 on all 120 four-qubit elliptic quadrics; P5; the geometry of the violated sets; closed-form
   counts against enumeration; agreement of the C and Python integer bounds.
 \item
@@ -2567,8 +2569,8 @@ be recomputed independently from the context definitions.
 \end{itemize}
 
 \textbf{Independent implementations.} The geometry, the context signs and the counts are implemented five
-times: C (\texttt{src/hoggar.c}), Python with explicit matrices or exact integers (\nolinkurl{scripts/analysis.py},
-\nolinkurl{scripts/flat_states.py}), JavaScript (\nolinkurl{src/moonlab_experiment.mjs}, \nolinkurl{src/moonlab_saturated.mjs}),
+times: C (\texttt{tracks/spectral-bounds/src/hoggar.c}), Python with explicit matrices or exact integers (\nolinkurl{tracks/spectral-bounds/scripts/analysis.py},
+\nolinkurl{tracks/spectral-bounds/scripts/flat_states.py}), JavaScript (\nolinkurl{tracks/spectral-bounds/src/moonlab_experiment.mjs}, \nolinkurl{tracks/spectral-bounds/src/moonlab_saturated.mjs}),
 Eshkol, and the Lean model, in which the signs are theorems about matrix products. Their overlapping
 checks agree on the counts recorded for those tests. This does not mean that each implementation
 checks every result: in particular, the C3 checks use the separate programs described next.
@@ -2600,7 +2602,7 @@ sign triggers a fresh computation. A modified assignment is not required to reta
 the original four-negative-word witnesses are the exact claim being tested. The experiments concern
 finite mathematical operators and are separate from the Moonlab measurement simulations.
 
-A further reconstruction, \nolinkurl{scripts/cospectral_pair.py} (30 checks), shares no code with these
+A further reconstruction, \nolinkurl{tracks/spectral-bounds/scripts/cospectral_pair.py} (30 checks), shares no code with these
 programs. It rebuilds the 135 points, the 1575 contexts and their signs by two routes, the carrier and
 block polynomials, the identity between each completion matrix and \(M\mapsto\frac12(CM+MD)\), both degree-64
 completion polynomials, the enclosure of \(\rho\) and the two witnesses of Corollary 16.
@@ -2619,26 +2621,26 @@ completion polynomials, the enclosure of \(\rho\) and the two witnesses of Corol
   four qubits, and has two negative controls: moving an edge that is not a whole component, or the
   component that contains \(t\), must destroy cospectrality.
 \item
-  \nolinkurl{scripts/cospectral_family_tensor_check.py} (18 checks) takes only the two sign tables from the first
+  \nolinkurl{tracks/spectral-bounds/scripts/cospectral_family_tensor_check.py} (18 checks) takes only the two sign tables from the first
   program, builds every observable as a Kronecker product of literal \(2\times2\) matrices, decides
   reality, commutation and context signs from matrix products, and compares power sums
   \(\operatorname{tr}A^k\) for all \(k\le2^N\) and the completion traces.
 \item
-  \nolinkurl{scripts/cospectral_family_cone_lift.py} (21 checks) builds the C11 configurations with 4, 5 and 6
+  \nolinkurl{tracks/spectral-bounds/scripts/cospectral_family_cone_lift.py} (21 checks) builds the C11 configurations with 4, 5 and 6
   qubits from the definitions, without the lifting lemma, and checks the lifted pairs of Table 5.
 \item
-  \nolinkurl{scripts/conjecture_e.py} (81 checks; with the argument \texttt{6} a further 36 checks at six qubits, record
-  \nolinkurl{results/conjecture_e_n6.json}) builds every vertex case at four and five qubits, and at three
+  \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e.py} (81 checks; with the argument \texttt{6} a further 36 checks at six qubits, record
+  \nolinkurl{tracks/spectral-bounds/results/conjecture_e_n6.json}) builds every vertex case at four and five qubits, and at three
   qubits for C1, C3, C6 and C11, from the definitions of {[}J3{]}: the type of the quadric and of \(e\) and \(d\)
   as in {[}J3, Table 1{]}, the vertex set of the section, the outside lines and their signs (checked against
   products of three matrices at three and four qubits). It compares power sums \(\operatorname{tr}A^k\), \(k\le2^N\), with
   Python integers on Gaussian-integer matrices, and requires different completion cubic traces. The cone
   cases are done twice, by the pair swap and by the cone lift, except C6 and C11 at three qubits and C14
   at four, which have no base pair to lift and are done by the pair swap only. The record is
-  \nolinkurl{results/conjecture_e.json}.
+  \nolinkurl{tracks/spectral-bounds/results/conjecture_e.json}.
 \item
-  \nolinkurl{scripts/conjecture_e_lemmas.py} (115 checks; with the argument \texttt{6} a further 46 checks at six qubits,
-  record \nolinkurl{results/conjecture_e_lemmas_n6.json}) checks Lemmas 20 and 21 on the pairs of Table 6, in
+  \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_lemmas.py} (115 checks; with the argument \texttt{6} a further 46 checks at six qubits,
+  record \nolinkurl{tracks/spectral-bounds/results/conjecture_e_lemmas_n6.json}) checks Lemmas 20 and 21 on the pairs of Table 6, in
   Gaussian-integer arithmetic on the same configurations. For both carriers of every pair it checks the
   identity \(\frac12(A_\sigma P_p+P_pA_\sigma)=\sum_q(\Lambda_\sigma)_{qp}P_q\) for every outside point \(p\), with
   \(\Lambda_\sigma\) filled from the outside lines; the hypotheses verified in the proof (the form and number
@@ -2650,17 +2652,17 @@ completion polynomials, the enclosure of \(\rho\) and the two witnesses of Corol
   the eigenvalues that the lemma predicts from the blocks of \(A_\sigma\). Four negative controls,
   \(\kappa=1\) in C1, one flipped sign of \(\Lambda_\sigma\), \(\eta=-1\) in C12 and, in C12, a second basis
   equal to the first, must fail. The record is
-  \nolinkurl{results/conjecture_e_lemmas.json}.
+  \nolinkurl{tracks/spectral-bounds/results/conjecture_e_lemmas.json}.
 \item
-  \nolinkurl{scripts/conjecture_e_trace_formula.py} (97 checks, record \nolinkurl{results/conjecture_e_trace_formula.json};
-  with the argument \texttt{6} a further 39 checks at six qubits, record \nolinkurl{results/conjecture_e_trace_formula_n6.json})
+  \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} (97 checks, record \nolinkurl{tracks/spectral-bounds/results/conjecture_e_trace_formula.json};
+  with the argument \texttt{6} a further 39 checks at six qubits, record \nolinkurl{tracks/spectral-bounds/results/conjecture_e_trace_formula_n6.json})
   checks Theorem 22 (equation E13) in exact integer arithmetic across all nine vertex cases for three to
   six qubits on every pair of Table 6 and on random sign carriers, checks every closed form of Table 8 on
   the complete section, checks the six central pair-swap moments \(\operatorname{tr}(A^2P_v)\)
   (\(v\in\{e,d,e+d\}\)) and the resulting difference \(-3K(|H|-3)\) for C6, C11 and C14, and enforces three
   negative controls (wrong coefficient, perturbed \(S_O(e)\) and dropped outside point).
 \item
-  \nolinkurl{scripts/c3_sdp_dual_check.py} (15 checks, record \nolinkurl{results/c3_sdp_dual_check.json}) verifies
+  \nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py} (15 checks, record \nolinkurl{tracks/spectral-bounds/results/c3_sdp_dual_check.json}) verifies
   Proposition 16\textquotesingle{} in exact integer and SymPy arithmetic: uniform top-eigenspace diagonal \(P_{ii}=1/8\) for
   \(\sigma_0\), four-orbit geometric shift \(d_{16}(p\bmod4)\in\{-40,+8,+8,+24\}\) for \(\sigma_1\), exact
   SymPy characteristic-polynomial identity \(\chi_{M_{64}}(t)=\prod_{k=0}^3\chi_{B_k}(t)^2\), all four
@@ -2668,28 +2670,28 @@ completion polynomials, the enclosure of \(\rho\) and the two witnesses of Corol
   witnesses (368 and 344), and three negative controls (including failure of positive definiteness at
   threshold \(230/16\)).
 \item
-  \nolinkurl{scripts/c3_exact_optima_check.py} (10 checks, record \nolinkurl{results/c3_exact_optima_check.json}, certificates
+  \nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} (10 checks, record \nolinkurl{tracks/spectral-bounds/results/c3_exact_optima_check.json}, certificates
   \nolinkurl{data/c3_exact_optima_certs.json}) verifies Theorem 16\textquotesingle\textquotesingle{} in pure integer arithmetic: both MET-SDP
   frustrated-triangle dual certificates (\texttt{signA\ \textgreater{}=\ 368}: 421 cuts, \(Q=48\), \(\mu=273\), \(K=2048\), margin
   \(+262\,747\); \texttt{signB\ \textgreater{}=\ 344}: 442 cuts, \(Q=48\), \(\mu=431\), \(K=2048\), margin \(+460\,491\)), both binary
   witnesses (368 and 344), and four negative controls (targets 369 and 345 rejected, non-frustrated cut
   rejected, perturbed Cholesky entry rejected).
 \item
-  \nolinkurl{scripts/norm_phase_family.py} (32 checks, record \nolinkurl{results/norm_phase_family.json}, mask
+  \nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py} (32 checks, record \nolinkurl{tracks/spectral-bounds/results/norm_phase_family.json}, mask
   \nolinkurl{data/flat/n6_det6.txt}) verifies Theorem 13b in exact integer arithmetic for \(m = 1, 2, 3, 4\)
   (\(N = 3, 6, 9, 12\)), including full integer Walsh--Hadamard verification of \(|\Psi_6\rangle\) (1008
   observables, 45 696 contexts, degree 2016) and \(|\Psi_9\rangle\) (32 704 observables, 24 070 144
   contexts, degree 915 712), two-character sets, non-closure, and two negative controls.
 \item
-  \nolinkurl{scripts/exact_degrees_n4_n5.py} (9 checks, record \nolinkurl{results/exact_degrees_n4_n5.json}, certificates
+  \nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py} (9 checks, record \nolinkurl{tracks/spectral-bounds/results/exact_degrees_n4_n5.json}, certificates
   \nolinkurl{data/q7minus_42_certs.json}) verifies the CSS witnesses (315, 1575, 6975), the \(N=4\) and \(N=5\)
   double-counting ladders, the closed-form degree-4 SOS identities matching the Kramers floor 291, the
-  independent C census table \nolinkurl{data/w52_orbits_42.tsv} produced by \nolinkurl{src/w52_census_verify.c} (42 orbits,
+  independent C census table \nolinkurl{data/w52_orbits_42.tsv} produced by \nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c} (42 orbits,
   17 652 160 classes, \(|C_0|=9\,017\,680\)), pure-integer dual certification of all 42 orbits
   (\(n_k + F(\sigma_k) \ge 315\): 28 spectral, 10 diagonal-shift, 4 triangle-cut), and a negative control
   rejecting \(F \ge 253\) on the Hoggar orbit.
 \item
-  \nolinkurl{src/n9_rank8_search.c} (\nolinkurl{results/n9_rank8_search.tsv}) exhaustively tests all 540 299 769 nonzero
+  \nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c} (\nolinkurl{tracks/spectral-bounds/results/n9_rank8_search.tsv}) exhaustively tests all 540 299 769 nonzero
   realizable symmetric trilinear forms across all 25 cyclic-invariant subspaces of \(GL(9,2)\) for constant
   rank 8 (0 hits; tightest near-miss 504/511).
 \item
@@ -2697,10 +2699,10 @@ completion polynomials, the enclosure of \(\rho\) and the two witnesses of Corol
   five-qubit search, about fifteen minutes.
 \end{itemize}
 
-The Python verifiers are stages of \nolinkurl{scripts/run_all.sh}; the first six and the sparse search are steps of
-\emph{Case C3 for every number of qubits}, and \nolinkurl{scripts/conjecture_e_trace_formula.py} (\(n=3\text{–}6\)),
-\nolinkurl{scripts/c3_sdp_dual_check.py}, \nolinkurl{scripts/c3_exact_optima_check.py}, \nolinkurl{scripts/norm_phase_family.py}, and
-\nolinkurl{scripts/exact_degrees_n4_n5.py} are steps of \emph{Conjecture E (all 9 cases), Kramers floor \& saturation
+The Python verifiers are stages of \nolinkurl{tracks/spectral-bounds/scripts/run_all.sh}; the first six and the sparse search are steps of
+\emph{Case C3 for every number of qubits}, and \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} (\(n=3\text{–}6\)),
+\nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py}, \nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py}, \nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py}, and
+\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py} are steps of \emph{Conjecture E (all 9 cases), Kramers floor \& saturation
 Lean 4 audit}, each requiring regenerated JSON records to equal the committed ones. No floating point
 enters a comparison of characteristic polynomials or any integer dual certificate.
 
@@ -2718,7 +2720,7 @@ enters a comparison of characteristic polynomials or any integer dual certificat
   the spectral floor} is now settled by \textbf{Theorem 13b} (\(|\Psi_{3m}\rangle\), \(N=3m\), constant rank \(2m\),
   proved for every \(m\ge1\) in \nolinkurl{NormPhaseFamily.lean}). In the maximal-rank (\(N-1\)) odd-qubit phase-state
   family (\(\Phi_3, \Phi_5, \Phi_7\)), the nine-qubit constant-rank-8 case is now ruled out across all 25
-  cyclic-invariant subspaces of \(GL(9,2)\) (540 299 769 forms tested, 0 hits; \nolinkurl{src/n9_rank8_search.c}),
+  cyclic-invariant subspaces of \(GL(9,2)\) (540 299 769 forms tested, 0 hits; \nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c}),
   leaving only asymmetric 129-bit existence open. Theorem 12 is complete for its class of states; whether
   Table 1 is complete for all states on \(N \le 5\) qubits is supported by numerical search only. Whether
   the states of the odd class of Proposition 6 form a single Clifford orbit was not determined.
@@ -2735,8 +2737,8 @@ enters a comparison of characteristic polynomials or any integer dual certificat
   For the classical four- and five-qubit exact triple \((315, 1575, 6975)\) of Jonah {[}J1{]}, Lean 4 now
   proves unconditionally \(d(W(7,2)) \ge 1455\), \(d(Q^+(9,2)) \ge 6444\), exact CSS witnesses (315, 1575,
   6975), exact double-counting ladders, transvection invariance, Lemmas L1 and L4, and the reduction from
-  \(d(Q^-(7,2)) \ge 315\) to all three exact degrees (\nolinkurl{ExactDegreesN4N5.lean}), while \nolinkurl{src/w52_census_verify.c}
-  and \nolinkurl{scripts/exact_degrees_n4_n5.py} independently reproduce the 42-orbit census and certify all 42
+  \(d(Q^-(7,2)) \ge 315\) to all three exact degrees (\nolinkurl{ExactDegreesN4N5.lean}), while \nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}
+  and \nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py} independently reproduce the 42-orbit census and certify all 42
   orbits in exact integer arithmetic with zero floating point. Moving the 42-orbit census and all 42
   integer certificates themselves into the Lean kernel remains an open formalization target (while
   \(d(Q^+(7,2)) = 315\) is already fully kernel-proved).
@@ -2747,7 +2749,7 @@ enters a comparison of characteristic polynomials or any integer dual certificat
   Theorem 22, signed-Clifford orbit transport, eigenvalue-multiset Theorem 19 across all nine vertex
   cases for every \(N\ge4\), the \(Q^-(7,2)\), \(W(7,2)\) and \(Q^+(9,2)\) witnesses, ladders and unconditional
   Kramers-lifted bounds, and ten existential non-vacuity witnesses (\texttt{NonVacuity.lean}) are all formalized
-  in Lean 4 (110 audited declarations in \nolinkurl{VerifyNewFormalizations.lean}, Section 9.4, independently
+  in Lean 4 (160 explicit declarations and 2,206 exhaustively audited theorems in \nolinkurl{lean/VerifyAll.lean}, Section 9.4, independently
   replayed via \texttt{lake\ comparator\ -\/-paranoid}). Remaining formalization boundaries include the
   state-to-mask identifications of the finite Table 1 rows (other than \(|\Psi_{3m}\rangle\), which is
   proved directly from the state vector), Propositions 4, 6, 9 and 11, the enumerations of Theorems 12
@@ -2787,7 +2789,7 @@ through Claude Code under the author\textquotesingle s direction (the commits of
 corrections and of this revision name Claude Opus 5.5 as co-author; those of Corollary 16 and of the
 first seven-qubit evaluation name only Claude): Corollary 16, the kernel evaluation of the
 seven-qubit counts (in a separate session), Theorem 17 with its Lean formalization, Corollary 18 and
-Theorem 19, with the programs of Section 11.3 and \nolinkurl{scripts/cospectral_pair.py}. They were first
+Theorem 19, with the programs of Section 11.3 and \nolinkurl{tracks/spectral-bounds/scripts/cospectral_pair.py}. They were first
 recorded as addenda in \texttt{publication/} and are folded into this text by the same line of work. Before
 publication the C3 results were examined by separate automated passes, instances of the same AI system
 each started without the others\textquotesingle{} work and with one task: a re-derivation of the proof and of the
@@ -2804,7 +2806,7 @@ program and by one separate pass of the same kind, recorded in \nolinkurl{public
 Version 1.4.0, prepared the same day in the same way, writes out in that proof the arguments of
 {[}J3, Theorem A and the proof of Theorem B3{]} that it uses (Lemmas 20 and 21) instead of citing them,
 repeats the proof of the cone lift in Corollary 18, adds the transport from one hyperplane class to
-every class of a case and the program \nolinkurl{scripts/conjecture_e_lemmas.py}, and changes no theorem
+every class of a case and the program \nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_lemmas.py}, and changes no theorem
 statement. Before release its changes were examined by seven further separate passes of the same
 kind (the two lemmas, the three groups of cases, the program with deliberate faults, and the
 dependence on {[}J3{]}), each finding by one or two adversarial verifiers. No mathematical error was
@@ -2813,20 +2815,20 @@ hyperplane class to all, are corrected (\nolinkurl{results/review-lemmas-20-21/}
 
 Versions 1.5.0 through 1.9.0 (21--24 November 2026) were produced under Alexander S. Donahue\textquotesingle s direction and
 explicit autonomous-approval directive by Google Gemini / Antigravity agents working on top of the
-existing repository and integrating the exact cubic-trace check (\nolinkurl{scripts/conjecture_e_trace_formula.py},
+existing repository and integrating the exact cubic-trace check (\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py},
 prepared in the Claude line of work). Version 1.5.0 added \texttt{Kramers.lean}, \nolinkurl{SaturationTheory.lean},
 \nolinkurl{ConjectureECore.lean}, \nolinkurl{ConjectureECones.lean}, \texttt{ConjectureE.lean}, the initial 37-declaration
 \nolinkurl{VerifyNewFormalizations.lean}, and the CI workflow \nolinkurl{.github/workflows/conjecture-e-all-cases.yml}.
 Version 1.6.0 added \nolinkurl{ConjectureEExtras.lean} (Corollaries 16 and 18), expanded
 \nolinkurl{VerifyNewFormalizations.lean} to 49 audited declarations, added Theorem 22 and Table 8 together with
-\nolinkurl{scripts/conjecture_e_trace_formula.py} (97 exact checks) to the paper, CI and release audits, and
+\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} (97 exact checks) to the paper, CI and release audits, and
 rebuilt all publication outputs. Version 1.7.0 followed a multi-layer repository, mathematical, software
 and typesetting audit: it added \nolinkurl{AuditUpgrades.lean} (expanding \nolinkurl{VerifyNewFormalizations.lean} to 77
 audited declarations: asymptotic \texttt{Filter.Tendsto} limits, Propositions 3, 8 and 10, signed-Clifford orbit
 transport, eigenvalue-multiset Conjecture E across all nine vertex cases, and Proposition 16\textquotesingle{} tightening
 Corollary 16\textquotesingle s lower bound for \(\sigma_1\) from 315 to 330 via an exact zero-sum QUBO SDP dual), extended
-\nolinkurl{scripts/conjecture_e_trace_formula.py} to six qubits (39 additional checks, 136 total), added
-\nolinkurl{scripts/c3_sdp_dual_check.py} (15 exact checks), repaired Python script warnings and broken dependencies
+\nolinkurl{tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py} to six qubits (39 additional checks, 136 total), added
+\nolinkurl{tracks/spectral-bounds/scripts/c3_sdp_dual_check.py} (15 exact checks), repaired Python script warnings and broken dependencies
 (\nolinkurl{check_github_math.py}, \nolinkurl{fix_github_math.py}, \texttt{analysis.py}, \texttt{ladder.py}), eliminated wide TeX equation
 and URL overflows in the unified PDF build, and synchronized all documentation and legal disclosures.
 Version 1.8.0 resolves the open frontier targets without modifying any previously audited Lean module:
@@ -2837,9 +2839,9 @@ determinant family \(|\Psi_{3m}\rangle\) for every \(m\ge1\) plus six-qubit exac
 \nolinkurl{ExactDegreesN4N5.lean} (transvection invariance, CSS witnesses 315/1575/6975, exact ladders, unconditional
 Kramers-lifted bounds \(d(W(7,2))\ge1455\) and \(d(Q^+(9,2))\ge6444\), Lemmas L1/L4, and master reduction),
 expanding \nolinkurl{VerifyNewFormalizations.lean} to \textbf{100} audited declarations strictly within standard axioms,
-alongside independent computational verifiers (\nolinkurl{scripts/c3_exact_optima_check.py},
-\nolinkurl{scripts/norm_phase_family.py}, \nolinkurl{scripts/exact_degrees_n4_n5.py}, \nolinkurl{src/w52_census_verify.c}, and
-\nolinkurl{src/n9_rank8_search.c}) and refreshed v1.8.0 submission packets.
+alongside independent computational verifiers (\nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py},
+\nolinkurl{tracks/spectral-bounds/scripts/norm_phase_family.py}, \nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}, \nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}, and
+\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c}) and refreshed v1.8.0 submission packets.
 Version 1.9.0 (24 November 2026) implements a full six-layer verification-hardening and repository-standard
 audit without modifying any frozen proof or legal file: it adds \texttt{NonVacuity.lean} (ten existential
 non-vacuity witnesses, expanding \nolinkurl{VerifyNewFormalizations.lean} to \textbf{110} audited declarations),
@@ -2866,10 +2868,10 @@ tools, not listed as authors.
 The author declares no competing interests.
 
 \textbf{Data availability statement.} Source, data, formal proofs, test results and the earlier manuscripts
-are available in \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from archived \texttt{hoggar-bound-lab} v1.9.0). Release and workflow
+are available in \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from the archived \texttt{hoggar-bound-lab} v1.9.0 snapshot; Track~1 scripts, C~sources, and JSON receipts live under \texttt{tracks/spectral-bounds/}). Release and workflow
 records identify the checked snapshots; Software Heritage and Internet Archive captures are archival
-records of particular snapshots, not evidence of review. The addenda in \texttt{publication/} record each
-result of version 1.3.0 as first stated.
+records of particular snapshots, not evidence of review. Historical addenda from version~1.3.0 are
+preserved in the archived snapshot and integrated directly into Sections~4--8 of this manuscript.
 Appendix A gives reproduction commands. No new arXiv identifier, DOI or journal decision is implied
 by this manuscript or its local submission packages.
 
@@ -2948,7 +2950,7 @@ bash scripts/run_all.sh
 cd lean && lake exe cache get
 # Build all three libraries plus the isolated 12-target comparator bridge
 lake build HoggarBound ContextualityTensor Evidence Solution
-# Exhaustive axiom audit (158 explicit #print axioms + all 1,920 project theorems)
+# Exhaustive axiom audit (160 explicit #print axioms + all 2,206 project theorems)
 lake env lean VerifyAll.lean
 # Batteries linter (0 errors) and 6-kernel independent replay
 lake exe runLinter ContextualityTensor Evidence
@@ -3050,8 +3052,8 @@ The same two numbers are \texttt{pivotMask} and \texttt{pivotNeg} in \nolinkurl{
 seven-qubit masks have 4096 hexadecimal digits.
 
 For C3, the four negative labels of each carrier are given in Table 3. The principal machine-readable
-records are \nolinkurl{results/frontier-c3-n4-pair.json}, \nolinkurl{results/frontier-c3-n4-verification.json},
-\nolinkurl{results/frontier-c3-n4-completions.json} and \nolinkurl{results/frontier-c3-context-verification.json}.
+records are \nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-pair.json}, \nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-verification.json},
+\nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-completions.json} and \nolinkurl{tracks/spectral-bounds/results/frontier-c3-context-verification.json}.
 They record the matrices, counts, exact polynomials and moments, mutation controls and dependency
 versions. The theorem\textquotesingle s assignments are fully defined in Section 8.2 independently of those files.
 
@@ -3068,11 +3070,11 @@ The best completion found for \(\sigma_0\), 368 violated outside lines (500 in a
 8 12 13 14 24 26 28 30 40 41 44 45 56 59 60 63 90 93 105 110 123 125 126 153 155 157 159 170 171 174 175 189 190 217 219 234 235 255
 \end{verbatim}
 
-The record is \nolinkurl{results/cospectral_pair.json} (\nolinkurl{completion_witnesses}). The carriers of Sections 8.6 and
+The record is \nolinkurl{tracks/spectral-bounds/results/cospectral_pair.json} (\nolinkurl{completion_witnesses}). The carriers of Sections 8.6 and
 8.7 are defined by formulas; their complete sign tables, graphs and characteristic polynomials are in
-\nolinkurl{results/cospectral_family.json}, \nolinkurl{results/cospectral_family_cone_lift.json},
-\nolinkurl{results/conjecture_e.json}, \nolinkurl{results/conjecture_e_n6.json}, \nolinkurl{results/conjecture_e_lemmas.json} and
-\nolinkurl{results/conjecture_e_lemmas_n6.json}.
+\nolinkurl{tracks/spectral-bounds/results/cospectral_family.json}, \nolinkurl{tracks/spectral-bounds/results/cospectral_family_cone_lift.json},
+\nolinkurl{tracks/spectral-bounds/results/conjecture_e.json}, \nolinkurl{tracks/spectral-bounds/results/conjecture_e_n6.json}, \nolinkurl{tracks/spectral-bounds/results/conjecture_e_lemmas.json} and
+\nolinkurl{tracks/spectral-bounds/results/conjecture_e_lemmas_n6.json}.
 
 
 \end{document}

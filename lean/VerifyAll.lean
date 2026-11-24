@@ -30,6 +30,7 @@ import HoggarBound.ConjectureE
 import HoggarBound.ConjectureEExtras
 import HoggarBound.AuditUpgrades
 import HoggarBound.C3ExactOptima
+import HoggarBound.CarrierFamily
 import HoggarBound.SaturatedPhaseSix
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
@@ -241,6 +242,10 @@ import Solution
 #print axioms PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree
 #print axioms PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum
 #print axioms PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound
+
+-- All-qubit C3 explicit carrier-family construction (Theorem 17, CarrierFamily.lean)
+#print axioms HoggarBound.C3AllQubits.c3_strict_law_fails_general
+#print axioms HoggarBound.C3AllQubits.c3_all_qubits_completion
 
 -- ============================================================================
 -- Exhaustive Metaprogram Audit: EVERY theorem across all four project namespaces

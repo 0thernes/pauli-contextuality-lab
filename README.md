@@ -10,7 +10,7 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 
 ![Pauli Contextuality Lab overview](docs/media/social-preview.svg)
 
-**Status:** Active research preprints (`v2.2.0`, 24 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
+**Status:** Active research preprints (`v2.3.0`, 24 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
 **Author:** Alexander S. Donahue, independent researcher ([ORCID 0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648) · `0_0@0thernes.art`).  
 **Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Replication Protocol](REPLICATION.md)
 
@@ -20,7 +20,7 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 
 ## Five-Second Formal Proof Check (`#print axioms`)
 
-Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 158-declaration + 1,920-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
+Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 158-declaration + 2,206-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
 
 ```text
 'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -80,7 +80,7 @@ python scripts/build_blueprint.py
 python scripts/build_site.py
 ```
 
-Expected headline output: `ALL TRACK VERIFICATIONS PASSED.` and `36 passed` in pytest, `2 pass` in Node, `PASS: Blueprint validated 13 nodes (48 Lean decl refs)`.
+Expected headline output: `ALL TRACK VERIFICATIONS PASSED.` and `36 passed` in pytest, `2 pass` in Node, `PASS: Blueprint validated 24 formal nodes (138 statically verified Lean declarations) (48 Lean decl refs)`.
 
 ### Full Lean 4.35.0 Verification & 6-Kernel Comparator
 

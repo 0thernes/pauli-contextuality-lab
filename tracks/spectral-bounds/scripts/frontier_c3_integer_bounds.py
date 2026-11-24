@@ -44,8 +44,8 @@ def integer_bounds(data):
     if multiply('MR',m,r)!=identity or multiply('RM',r,m)!=identity:
         raise ValueError('Scaled inverse failed')
     cubes=[]
-    for label,a in [('A',a),('B',b)]:
-        p=[row[:8] for row in a[:8]];m=[row[8:] for row in a[8:]]
+    for label,mat in [('A',a),('B',b)]:
+        p=[row[:8] for row in mat[:8]];m=[row[8:] for row in mat[8:]]
         p2=multiply(label+' p2',p,p);m2=multiply(label+' m2',m,m)
         p3=multiply(label+' p3',p,p2);m3=multiply(label+' m3',m,m2)
         tp=trace(label+' p',p);tm=trace(label+' m',m)

@@ -14,7 +14,7 @@ The question is operational: can a reader verify both a contextuality score and 
 
 The project studies the gap between a deterministic inequality and a stream of finite experimental records. Its central example is deliberately small enough that every hidden-value assignment can be inspected. The mathematical result is an exact contract: if a context-selection floor holds after conditioning on the information available to the classical device, and the device uses a context-independent value assignment within each trial, then a specified evidence process has a controlled threshold-crossing probability. The associated attack violates a stronger, incorrectly assumed selection floor while preserving the weaker declared one.
 
-The ingredients have substantial prior art. The Peres–Mermin construction is established quantum-foundations mathematics [1]. Prediction-based-ratio methods already handle dependence on past experimental data [2]. Contextuality-witness optimization by linear programming is established [3]. The threshold-crossing principle is a finite form of Ville's inequality [5]. Our contribution is a concrete formal and executable integration, including an exact counterexample to a misconfigured analysis. The bounded literature review in `research/PRIOR_ART.md` does not establish historical priority.
+The ingredients have substantial prior art. The Peres–Mermin construction is established quantum-foundations mathematics [1]. Prediction-based-ratio methods already handle dependence on past experimental data [2]. Contextuality-witness optimization by linear programming is established [3]. The threshold-crossing principle is a finite form of Ville's inequality [5]. Our contribution is a concrete formal and executable integration, including an exact counterexample to a misconfigured analysis. The bounded literature review in `papers/sequential-evidence/PRIOR_ART.md` does not establish historical priority.
 
 This is a methods paper with a critical literature synthesis. It is not a statistical meta-analysis: no collection of independent experimental studies is pooled, and no pooled effect size or heterogeneity estimate is reported.
 
@@ -237,7 +237,7 @@ A classical simulator that receives the selected context and freely chooses diff
 
 ### 6.2 Execution records
 
-The native stack record, `results/stack_report.json`, reports successful execution of all four components on Windows with Python 3.9.13, NumPy 2.0.2, Node v25.8.2, GCC 16.1.0, and Eshkol v1.3.6-evolve. The seed is 20261110. These are recorded build conditions, not requirements that those exact versions are scientifically necessary.
+The native stack record, `tracks/sequential-evidence/results/stack_report.json`, reports successful execution of all four components on Windows with Python 3.9.13, NumPy 2.0.2, Node v25.8.2, GCC 16.1.0, and Eshkol v1.3.6-evolve. The seed is 20261110. These are recorded build conditions, not requirements that those exact versions are scientifically necessary.
 
 | Check | Recorded result | Meaning |
 |---|---:|---|
@@ -258,7 +258,7 @@ The software mixer reproduced the same byte stream in a same-build repeat and pr
 
 ### 6.3 Exact false-rejection comparison and recorded traces
 
-The release's `results/experiment.json` stores the exact numerator and denominator of each finite-horizon probability. The dynamic program uses integer probability mass and exact threshold comparisons, absorbs each branch on its first crossing, and checks total mass conservation. With fixed factors, wealth depends only on the number of successes and failures, so surviving paths can be combined by their success count. This calculation is for the independent biased classical model (9); the formal guarantee is more general.
+The release's `tracks/sequential-evidence/results/experiment.json` stores the exact numerator and denominator of each finite-horizon probability. The dynamic program uses integer probability mass and exact threshold comparisons, absorbs each branch on its first crossing, and checks total mass conservation. With fixed factors, wealth depends only on the number of successes and failures, so surviving paths can be combined by their success count. This calculation is for the independent biased classical model (9); the formal guarantee is more general.
 
 | Analysis of the same classical null model | Horizon | Threshold | Probability of at least one crossing |
 |---|---:|---:|---:|
@@ -277,14 +277,15 @@ A separate context-leak control produces 600 successes by using information excl
 
 ### 6.4 Reproduction sequence
 
-From the repository root, with the dependencies described in `src/stack_README.md`, execute:
+From the repository root, with the dependencies described in `tracks/sequential-evidence/src/stack_README.md`, execute:
 
 ```sh
-python scripts/run_stack.py
-python scripts/run_experiment.py
-python scripts/verify_artifact.py
-python -m unittest discover -s tests -v
-node tests/demo.test.mjs
+python tracks/sequential-evidence/scripts/run_stack.py
+python tracks/sequential-evidence/scripts/run_experiment.py
+python tracks/sequential-evidence/scripts/verify_artifact.py
+python scripts/verify_all.py
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
 ```
 
 The full stack runner requires the actual four components and fails if one is unavailable. The published vendored inputs and provenance records identify the small Moonlab, QGTL, and quantum_rng components used; Eshkol is an external executable. Record bytes are reproducible in the reported build configuration; cross-platform floating-point and toolchain differences must be checked rather than assumed harmless.
@@ -293,15 +294,16 @@ The separate Lean project pins Lean 4.35.0 and mathlib v4.35.0. In `lean/`, run:
 
 ```sh
 lake exe cache get
-lake build
-lake env lean Verification.lean
+lake build Evidence Solution
+lake env lean VerifyAll.lean
+lake comparator --config comparator.json --paranoid
 ```
 
 The source, manifest, proof statements, generated records, and checks are all part of the reproducibility claim. A reader can independently alter a model parameter, rerun the pipeline, and test whether the claimed guarantee still follows.
 
 ## 7. Formal verification boundary
 
-The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. The final record in `lean/reports/axiom-audit.log` is `AXIOM_AUDIT_COUNT 61`; the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
+The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. The final record in `results/lean-axioms-all.log` is `AXIOM_AUDIT_COUNT 61`; the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
 
 | Mathematical claim | Selected accepted declarations |
 |---|---|

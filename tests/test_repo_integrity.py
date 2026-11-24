@@ -1,4 +1,4 @@
-"""Repository-wide integrity, version consistency, license, provenance, and Lean hygiene checks."""
+"""Repository-wide integrity, version consistency, license, link, CRLF, provenance, and Lean hygiene checks."""
 from __future__ import annotations
 
 import hashlib
@@ -8,6 +8,65 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def strip_lean_comments(src: str) -> str:
+    """Remove nested /- ... -/ block comments, -- line comments, and string literals from Lean source."""
+    out: list[str] = []
+    i, n, depth, in_str = 0, len(src), 0, False
+    while i < n:
+        if depth > 0:
+            if src[i : i + 2] == "/-":
+                depth += 1
+                i += 2
+            elif src[i : i + 2] == "-/":
+                depth -= 1
+                i += 2
+            else:
+                if src[i] == "\n":
+                    out.append("\n")
+                i += 1
+        elif in_str:
+            if src[i] == "\\" and i + 1 < n:
+                i += 2
+            elif src[i] == '"':
+                in_str = False
+                i += 1
+            else:
+                if src[i] == "\n":
+                    out.append("\n")
+                i += 1
+        else:
+            if src[i : i + 2] == "/-":
+                depth = 1
+                i += 2
+            elif src[i : i + 2] == "--":
+                while i < n and src[i] != "\n":
+                    i += 1
+            elif src[i] == '"':
+                in_str = True
+                i += 1
+            else:
+                out.append(src[i])
+                i += 1
+    return "".join(out)
+
+
+def path_exists_case_exact(root: Path, target: Path) -> bool:
+    """Return True iff target exists and every path component under root matches exact disk casing."""
+    if not target.exists():
+        return False
+    try:
+        rel_parts = target.resolve().relative_to(root.resolve()).parts
+    except ValueError:
+        return True
+    cur = root.resolve()
+    for part in rel_parts:
+        names = {entry.name for entry in cur.iterdir()}
+        if part not in names:
+            return False
+        cur = cur / part
+    return True
 
 
 class RepoIntegrityTests(unittest.TestCase):
@@ -20,6 +79,8 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertRegex(citation, re.compile(rf'^version:\s*"{re.escape(version)}"$', re.M))
         formal = (ROOT / "formalization.yaml").read_text(encoding="utf-8")
         self.assertRegex(formal, re.compile(rf'^version:\s*"{re.escape(version)}"$', re.M))
+        lakefile = (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
+        self.assertRegex(lakefile, re.compile(rf'^version\s*=\s*"{re.escape(version)}"$', re.M))
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(f"v{version}", readme)
 
@@ -32,9 +93,26 @@ class RepoIntegrityTests(unittest.TestCase):
                 cand = m.group(1).rstrip("/.")
                 if any(ch in cand for ch in ("*", "<", "{", "..")):
                     continue
-                if not (ROOT / cand).exists():
+                if not path_exists_case_exact(ROOT, ROOT / cand):
                     missing.append((rel, cand))
         self.assertEqual(missing, [], f"Dead repo paths referenced in root docs: {missing}")
+
+    def test_all_local_markdown_links_resolve_case_exact(self) -> None:
+        skip = {".git", ".lake", ".venv", "node_modules", "third_party", "build", "archive"}
+        md_link_re = re.compile(r"\[[^\]]*\]\(([^)#\s]+)")
+        broken: list[tuple[str, str]] = []
+        for md in sorted(ROOT.rglob("*.md")):
+            if any(part in skip for part in md.parts) or md.name == "build-standard.md":
+                continue
+            txt = re.sub(r"```.*?```", "", md.read_text(encoding="utf-8", errors="replace"), flags=re.S)
+            for m in md_link_re.finditer(txt):
+                target = m.group(1)
+                if target.startswith(("http://", "https://", "mailto:", "data:", "javascript:")):
+                    continue
+                cand = (md.parent / target).resolve()
+                if not path_exists_case_exact(ROOT, cand):
+                    broken.append((md.relative_to(ROOT).as_posix(), target))
+        self.assertEqual(broken, [], f"Broken or wrong-case local Markdown links: {broken}")
 
     def test_all_doc_lean_decl_refs_exist(self) -> None:
         decl_re = re.compile(
@@ -63,23 +141,38 @@ class RepoIntegrityTests(unittest.TestCase):
                     missing.append((rel, d))
         self.assertEqual(missing, [], f"Unresolved Lean decl refs in docs: {missing}")
 
-    def test_no_legacy_llc_in_active_papers_and_docs(self) -> None:
-        pat = re.compile(r"0thernes\s+LLC", re.I)
+    def test_no_legacy_llc_or_verification_licence_in_active_papers_and_docs(self) -> None:
+        pat = re.compile(r"0thernes\s+LLC|verification\s+licen[cs]e", re.I)
         active = [
             "README.md", "CLAIMS.md", "LIMITATIONS.md", "REPLICATION.md", "LEGAL.md",
             "papers/README.md",
             "papers/spectral-bounds/unified-contextuality.tex",
             "papers/spectral-bounds/unified-contextuality.md",
             "papers/spectral-bounds/unified-contextuality.html",
+            "papers/spectral-bounds/c3-spectral-counterexample.tex",
             "papers/spectral-bounds/unified-citation.bib",
             "papers/spectral-bounds/unified-metadata.json",
             "papers/disjoint-mermin/contextuality-tensor.tex",
             "papers/disjoint-mermin/contextuality-tensor.md",
             "papers/disjoint-mermin/contextuality-tensor.bib",
+            "papers/disjoint-mermin/STATUS.md",
+            "papers/disjoint-mermin/ARXIV-SOURCE.md",
+            "papers/sequential-evidence/whitepaper.tex",
             "papers/sequential-evidence/whitepaper.md",
         ]
         hits = [r for r in active if (ROOT / r).is_file() and pat.search((ROOT / r).read_text(encoding="utf-8"))]
-        self.assertEqual(hits, [], f"Legacy LLC reference found in active docs/papers: {hits}")
+        self.assertEqual(hits, [], f"Legacy LLC or verification-licence found in active docs/papers: {hits}")
+
+    def test_no_crlf_in_code_and_lean_sources(self) -> None:
+        skip = {".git", ".lake", ".venv", "node_modules", "third_party", "build"}
+        crlf: list[str] = []
+        for p in sorted(ROOT.rglob("*")):
+            if not p.is_file() or any(part in skip for part in p.parts):
+                continue
+            if p.suffix.lower() in {".lean", ".py", ".c", ".h", ".sh", ".yml", ".yaml", ".toml"}:
+                if b"\r\n" in p.read_bytes():
+                    crlf.append(p.relative_to(ROOT).as_posix())
+        self.assertEqual(crlf, [], f"CRLF line endings found in source/config files: {crlf}")
 
     def test_open_dual_license_and_independent_affiliation(self) -> None:
         lic = (ROOT / "LICENSE").read_text(encoding="utf-8")
@@ -124,7 +217,7 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertGreaterEqual(checked, 10)
 
     def test_no_forbidden_lean_tokens_in_proof_modules(self) -> None:
-        forbidden = re.compile(r"\b(sorry|admit|native_decide)\b|^\s*axiom\b|implemented_by|@\[extern")
+        forbidden = re.compile(r"\b(sorry|admit|native_decide|unsafe)\b|^\s*(?:private\s+|protected\s+)?axiom\b|implemented_by|@\[extern")
         roots = [
             ROOT / "lean" / "HoggarBound",
             ROOT / "lean" / "ContextualityTensor",
@@ -134,22 +227,14 @@ class RepoIntegrityTests(unittest.TestCase):
             ROOT / "lean" / "ContextualityTensor.lean",
             ROOT / "lean" / "Evidence.lean",
         ]
-        hits = []
+        hits: list[str] = []
         for item in roots:
             files = [item] if item.is_file() else sorted(item.rglob("*.lean"))
             for f in files:
-                in_block = False
-                for lineno, raw in enumerate(f.read_text(encoding="utf-8").splitlines(), 1):
-                    s = raw.strip()
-                    if s.startswith("/-"):
-                        in_block = True
-                    if in_block:
-                        if "-/" in s:
-                            in_block = False
-                        continue
-                    code = raw.split("--", 1)[0]
-                    if forbidden.search(code):
-                        hits.append(f"{f.relative_to(ROOT)}:{lineno}: {code.strip()}")
+                cleaned = strip_lean_comments(f.read_text(encoding="utf-8"))
+                for lineno, line in enumerate(cleaned.splitlines(), 1):
+                    if forbidden.search(line):
+                        hits.append(f"{f.relative_to(ROOT)}:{lineno}: {line.strip()}")
         self.assertEqual(hits, [], f"Forbidden Lean tokens found: {hits}")
 
     def test_no_template_placeholders(self) -> None:

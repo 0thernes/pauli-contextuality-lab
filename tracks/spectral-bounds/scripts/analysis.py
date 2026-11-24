@@ -13,7 +13,7 @@ Checks (each is a test that can fail; the script exits non-zero if any does):
   7. table of bounds.
 Writes results/analysis.json and the figures in paper/figures/.
 """
-import json, math, os, sys, collections, itertools
+import json, math, os, sys, collections
 import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

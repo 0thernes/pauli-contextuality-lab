@@ -83,10 +83,12 @@ int main(int argc, char **argv) {
     fseek(f, 0, SEEK_END); long sz = ftell(f); fseek(f, 0, SEEK_SET);
     ncodes = (size_t)sz / 8;
     codes = malloc(ncodes * 8);
-    if (fread(codes, 8, ncodes, f) != ncodes) return 2;
+    if (!codes) { fclose(f); return 2; }
+    if (fread(codes, 8, ncodes, f) != ncodes) { free(codes); fclose(f); return 2; }
     fclose(f);
     qsort(codes, ncodes, 8, cmp_u64);
     parent = malloc(ncodes * 4);
+    if (!parent) { free(codes); return 2; }
     for (size_t i = 0; i < ncodes; i++) parent[i] = (uint32_t)i;
     /* generators */
     uint32_t gu[32], gphi[32]; int ng = 0;
@@ -116,6 +118,7 @@ int main(int argc, char **argv) {
     /* orbit statistics */
     uint32_t *size = calloc(ncodes, 4);
     uint64_t *best = malloc(ncodes * 8);
+    if (!size || !best) { free(size); free(best); free(parent); free(codes); return 2; }
     for (size_t i = 0; i < ncodes; i++) best[i] = ~0ULL;
     for (size_t i = 0; i < ncodes; i++) {
         uint32_t r = find((uint32_t)i);
@@ -133,5 +136,9 @@ int main(int argc, char **argv) {
     printf("orbits %d\n", norb);
     int ok = ncodes == 13271040 && bad == 0 && norb == 1;
     printf(ok ? "ORBITS7-PASS\n" : "ORBITS7-FAIL\n");
+    free(best);
+    free(size);
+    free(parent);
+    free(codes);
     return ok ? 0 : 1;
 }

@@ -30,7 +30,7 @@
 \hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{24 November 2026\quad\textbullet\quad Version 2.2.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
+\date{24 November 2026\quad\textbullet\quad Version 2.3.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not peer reviewed. Substantive AI assistance disclosed in Section 9.\end{center}
@@ -262,7 +262,7 @@ The running four-qubit experiment uses pinned upstream components {[}7--10{]}, w
 
 The recorded local Moonlab run passed 5376 context trials spanning the stated preparations and 4096 seeded context-sampling trials. It executed 50,484 projective measurements. The maximum Pauli expectation discrepancy against an independent oracle was \(5.56\times10^{-16}\); repeat measurements had no discrepancies. All 5376 deliberately wrong context-sign predictions were rejected. These are finite implementation checks, not a replacement for state independence from (5).
 
-The QGTL metric and curvature comparison had maximum analytic error below \(1.2\times10^{-11}\), with a wrong-curvature-sign control rejected. Numerical errors, source hashes and platform information are preserved in \texttt{results/stack\_report.json}. Reproduction regenerates these records; exact floating-point timing and random-stream portability are not assumed across different compiler/libm platforms.
+The QGTL metric and curvature comparison had maximum analytic error below \(1.2\times10^{-11}\), with a wrong-curvature-sign control rejected. Numerical errors, source hashes and platform information are preserved in \texttt{tracks/disjoint-mermin/results/stack\_report.json}. Reproduction regenerates these records; exact floating-point timing and random-stream portability are not assumed across different compiler/libm platforms.
 
 \section{8. Literature search, limitations and reproducibility}\label{literature-search-limitations-and-reproducibility}
 
@@ -270,7 +270,7 @@ The literature audit searched the source question and combinations of contextual
 
 The decisive mathematical assumptions are distinct nonempty seed contexts, disjoint vertex alphabets, inclusion of every nonempty tuple in (2), and a single context-independent value for each observable. Violating those assumptions changes the problem. Large normalized gaps do not establish a quantum computational speedup, a hardware fault-tolerance threshold, or an optimum in a different contextuality measure.
 
-The project is maintained as Track~2 of \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from archived \texttt{contextuality-tensor-lab} v0.1.0), with \href{https://0thernes.github.io/pauli-contextuality-lab/}{a live demonstration and interactive Lean Blueprint}. Source, certificates, execution records, Lean dependencies and the manuscript are versioned together (code under Apache-2.0, manuscripts under CC-BY-4.0). The primary commands are:
+The project is maintained as Track~2 of \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from the archived \texttt{contextuality-tensor-lab} v0.1.0 snapshot), with a \href{https://0thernes.github.io/pauli-contextuality-lab/}{live browser demonstration and interactive Lean Blueprint}. Source, certificates, execution records, Lean dependencies and the manuscript are versioned together (code under Apache-2.0, manuscripts under CC-BY-4.0). The primary commands are:
 
 \begin{verbatim}
 python scripts/verify_all.py

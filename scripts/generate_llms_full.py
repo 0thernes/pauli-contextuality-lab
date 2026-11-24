@@ -16,8 +16,8 @@ PARTS = [
 
 def main() -> int:
     chunks = [
-        "# Pauli Contextuality Lab — Generated Bulk Context (`llms-full.txt`)\n\n"
-        "> Generated automatically by `scripts/generate_llms_full.py`. Do not hand-edit.\n"
+        ("# Pauli Contextuality Lab — Generated Bulk Context (`llms-full.txt`)\n\n"
+         "> Generated automatically by `scripts/generate_llms_full.py`. Do not hand-edit.\n")
     ]
     for title, path in PARTS:
         if path.is_file():

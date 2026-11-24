@@ -220,7 +220,7 @@ The running four-qubit experiment uses pinned upstream components [7–10], with
 
 The recorded local Moonlab run passed 5376 context trials spanning the stated preparations and 4096 seeded context-sampling trials. It executed 50,484 projective measurements. The maximum Pauli expectation discrepancy against an independent oracle was $5.56\times10^{-16}$; repeat measurements had no discrepancies. All 5376 deliberately wrong context-sign predictions were rejected. These are finite implementation checks, not a replacement for state independence from (5).
 
-The QGTL metric and curvature comparison had maximum analytic error below $1.2\times10^{-11}$, with a wrong-curvature-sign control rejected. Numerical errors, source hashes and platform information are preserved in `results/stack_report.json`. Reproduction regenerates these records; exact floating-point timing and random-stream portability are not assumed across different compiler/libm platforms.
+The QGTL metric and curvature comparison had maximum analytic error below $1.2\times10^{-11}$, with a wrong-curvature-sign control rejected. Numerical errors, source hashes and platform information are preserved in `tracks/disjoint-mermin/results/stack_report.json`. Reproduction regenerates these records; exact floating-point timing and random-stream portability are not assumed across different compiler/libm platforms.
 
 ## 8. Literature search, limitations and reproducibility
 

@@ -1,6 +1,5 @@
 """Rebuild exact certificate and adversarial checks. Run from any directory."""
 import copy
-import hashlib
 import json
 import sys
 from collections import Counter

@@ -14,12 +14,14 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Collect release artifacts and generate SHA256SUMS
         run: |
           mkdir -p release-dist
           cp papers/spectral-bounds/unified-contextuality.pdf release-dist/
+          cp papers/spectral-bounds/c3-spectral-counterexample.pdf release-dist/
           cp papers/disjoint-mermin/contextuality-tensor.pdf release-dist/
           cp papers/sequential-evidence/whitepaper.pdf release-dist/
           cp results/lean-axioms-all.log release-dist/

@@ -16,12 +16,12 @@
 \setlength{\parskip}{5pt}
 \setcounter{secnumdepth}{0}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\providecommand{\pandocbounded}[1]{#1}
+\providecommand{\pandocbounded}[1]{\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}}
 \emergencystretch=3em
 \hypersetup{pdftitle={Contextuality Evidence Lab: Exact Sequential Certificates and a Constructive Setting-Bias Attack},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-10mm}\sffamily\bfseries Contextuality Evidence Lab:\\Exact Sequential Certificates and a Constructive Setting-Bias Attack}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{24 November 2026\quad\textbullet\quad Pauli Contextuality Lab (Track 3), Version 2.2.0\quad\textbullet\quad CC-BY-4.0}
+\date{24 November 2026\quad\textbullet\quad Pauli Contextuality Lab (Track 3), Version 2.3.0\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not externally peer reviewed. Code: Apache-2.0; manuscript: CC-BY-4.0.\\Repository: \href{https://github.com/0thernes/pauli-contextuality-lab}{https://github.com/0thernes/pauli-contextuality-lab}\end{center}
@@ -78,7 +78,7 @@ programming is established {[}3{]}. The threshold-crossing principle is
 a finite form of Ville's inequality {[}5{]}. Our contribution is a
 concrete formal and executable integration, including an exact
 counterexample to a misconfigured analysis. The bounded literature
-review in \texttt{research/PRIOR\_ART.md} does not establish historical
+review in \texttt{papers/sequential-evidence/PRIOR\_ART.md} does not establish historical
 priority.
 
 This is a methods paper with a critical literature synthesis. It is not
@@ -486,7 +486,7 @@ omitted.
 
 \subsubsection{6.2 Execution records}\label{execution-records}
 
-The native stack record, \texttt{results/stack\_report.json}, reports
+The native stack record, \texttt{tracks/sequential-evidence/results/stack\_report.json}, reports
 successful execution of all four components on Windows with Python
 3.9.13, NumPy 2.0.2, Node v25.8.2, GCC 16.1.0, and Eshkol v1.3.6-evolve.
 The seed is 20261110. These are recorded build conditions, not
@@ -554,7 +554,7 @@ cryptographic security proof.
 \subsubsection{6.3 Exact false-rejection comparison and recorded
 traces}\label{exact-false-rejection-comparison-and-recorded-traces}
 
-The release's \texttt{results/experiment.json} stores the exact
+The release's \texttt{tracks/sequential-evidence/results/experiment.json} stores the exact
 numerator and denominator of each finite-horizon probability. The
 dynamic program uses integer probability mass and exact threshold
 comparisons, absorbs each branch on its first crossing, and checks total
@@ -634,14 +634,15 @@ on acquisition or measurement semantics.
 \subsubsection{6.4 Reproduction sequence}\label{reproduction-sequence}
 
 From the repository root, with the dependencies described in
-\texttt{src/stack\_README.md}, execute:
+\nolinkurl{tracks/sequential-evidence/src/stack_README.md}, execute:
 
 \begin{verbatim}
-python scripts/run_stack.py
-python scripts/run_experiment.py
-python scripts/verify_artifact.py
-python -m unittest discover -s tests -v
-node tests/demo.test.mjs
+python tracks/sequential-evidence/scripts/run_stack.py
+python tracks/sequential-evidence/scripts/run_experiment.py
+python tracks/sequential-evidence/scripts/verify_artifact.py
+python scripts/verify_all.py
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
 \end{verbatim}
 
 The full stack runner requires the actual four components and fails if
@@ -656,8 +657,9 @@ The separate Lean project pins Lean 4.35.0 and mathlib v4.35.0. In
 
 \begin{verbatim}
 lake exe cache get
-lake build
-lake env lean Verification.lean
+lake build Evidence Solution
+lake env lean VerifyAll.lean
+lake comparator --config comparator.json --paranoid
 \end{verbatim}
 
 The source, manifest, proof statements, generated records, and checks
@@ -671,7 +673,7 @@ boundary}\label{formal-verification-boundary}
 The Lean project successfully checked 39 authored theorems. Its
 exhaustive audit covered 61 proposition-valued declarations in the
 \texttt{Evidence} namespace, including generated equation lemmas. The
-final record in \texttt{lean/reports/axiom-audit.log} is
+final record in \texttt{results/lean-axioms-all.log} is
 \texttt{AXIOM\_AUDIT\_COUNT\ 61}; the only transitive axiom dependencies
 are the standard foundations \texttt{propext},
 \texttt{Classical.choice}, and \texttt{Quot.sound}. The proof source

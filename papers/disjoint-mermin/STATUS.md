@@ -1,102 +1,24 @@
-# Publication status
+# Publication Status (Track 2 — Disjoint Mermin Configurations)
 
-Research date: 9 November 2026, America/Los_Angeles. This is an AI-assisted
-mathematical research preprint, not a peer-reviewed article or statistical
-meta-analysis. A compiled Lean proof is evidence for its precise propositions,
-not for historical priority, human review or editorial acceptance.
+- **Author:** Alexander S. Donahue (Independent researcher, Spokane, WA, USA; ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648))
+- **Current release:** `v2.3.0` (24 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) from the archived [`contextuality-tensor-lab`](https://github.com/0thernes/contextuality-tensor-lab) `v0.1.0` snapshot (9 November 2026).
+- **Licences:** Code under **Apache-2.0** ([`LICENSE`](../../LICENSE)); manuscript and documentation under **CC-BY-4.0** ([`LICENSE-DOCS`](../../LICENSE-DOCS)).
+- **Peer-review & AI disclosure:** AI-assisted mathematical research preprint; **not externally peer reviewed**. A compiled Lean proof certifies its precise formal propositions, not historical priority, external human review, or editorial acceptance.
+
+## Observed Publication & Preservation Status
 
 | Destination | Observed status | Evidence |
 |---|---|---|
-| GitHub repository | Public; committed locally and pushed | [Repository](https://github.com/0thernes/contextuality-tensor-lab) |
-| Versioned research release | Published `v0.1.0`; 14 assets, 13 content checksums verified | [Release](https://github.com/0thernes/contextuality-tensor-lab/releases/tag/v0.1.0) |
-| Paper | Public eight-page PDF and scholarly landing page | [Paper record](https://0thernes.github.io/contextuality-tensor-lab/paper/) |
-| Working demonstration | Public; exhaustive check and 1536/1536 Moonlab context shots observed on the served site | [Live lab](https://0thernes.github.io/contextuality-tensor-lab/) |
-| arXiv | Source bundle prepared and independently recompiled; author review and declarations pending | [Source package](https://github.com/0thernes/contextuality-tensor-lab/releases/download/v0.1.0/contextuality-tensor-arxiv-source.zip) |
-| Journal of Physics A | Manuscript, evidence and cover-letter draft ready; author review/declarations pending | [Cover-letter draft](JPHYS-A-COVER-LETTER-DRAFT.md) |
-| Zenodo | Not deposited; current human-research-basis eligibility unresolved | Policy below |
-| Google Scholar | Public crawlable scholarly metadata provided; indexing not observed | [Paper record](https://0thernes.github.io/contextuality-tensor-lab/paper/) |
-| ORCID | Work metadata prepared; browser is at account sign-in | [BibTeX](contextuality-tensor.bib) |
-| OpenAIRE | No indexed record observed; repository ingestion route prepared | [Route audit](../research/publication-routes.md) |
-| Software Heritage | Ingestion succeeded; the frozen research revision and matching source directory are archived | [Archived revision](https://archive.softwareheritage.org/swh:1:rev:de48ed9002e930825f1cf5f140c8dc8cbfdc1ea0) |
-| Internet Archive / Wayback | Paper landing page and PDF captured; archived PDF matches the release byte-for-byte | [Paper record snapshot](https://web.archive.org/web/20261110040128/https://0thernes.github.io/contextuality-tensor-lab/paper/), [PDF snapshot](https://web.archive.org/web/20261110040209/https://0thernes.github.io/contextuality-tensor-lab/paper/contextuality-tensor.pdf) |
-| Internet Archive uploaded item | Separate item upload still requires account sign-in; no uploaded item identifier claimed | [Upload route](https://archive.org/upload) |
+| Canonical GitHub repository | Public (`v2.3.0`), unified 3-track monorepo | [Pauli Contextuality Lab](https://github.com/0thernes/pauli-contextuality-lab) |
+| Archived standalone snapshot | Read-only archive (`v0.1.0`, commit `de48ed9`) | [contextuality-tensor-lab](https://github.com/0thernes/contextuality-tensor-lab) |
+| Paper PDF & LaTeX source | Public 8-page PDF + XeLaTeX source (`CC-BY-4.0`) | [contextuality-tensor.pdf](contextuality-tensor.pdf) · [contextuality-tensor.tex](contextuality-tensor.tex) |
+| Interactive 4-qubit lab & Blueprint | Live on unified GitHub Pages | [Disjoint Mermin Lab](https://0thernes.github.io/pauli-contextuality-lab/disjoint-mermin/) · [Lean Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) |
+| Formal verification | Lean 4.35.0 + 6-kernel `lake comparator --paranoid` | [`lean/VerifyAll.lean`](../../lean/VerifyAll.lean) · [`results/lean-axioms-all.log`](../../results/lean-axioms-all.log) |
+| BibTeX & ORCID metadata | Ready for manual deposit | [contextuality-tensor.bib](contextuality-tensor.bib) · [`CITATION.cff`](../../CITATION.cff) |
+| arXiv | Source prepared ([`ARXIV-SOURCE.md`](ARXIV-SOURCE.md)); author submission pending | No arXiv ID claimed |
+| Software Heritage | Live unified snapshot + historical `v0.1.0` archived | `swh:1:rev:de48ed9002e930825f1cf5f140c8dc8cbfdc1ea0` (historical) + unified snapshot in [README](../../README.md) |
+| Internet Archive (Wayback) | Historical `v0.1.0` landing page & PDF captured (10 Nov 2026) | [PDF snapshot](https://web.archive.org/web/20261110040209/https://0thernes.github.io/contextuality-tensor-lab/paper/contextuality-tensor.pdf) |
 
-## Frozen research artifact and verification
+## Remaining Author-Controlled Requirements
 
-Release `v0.1.0` targets commit `de48ed9002e930825f1cf5f140c8dc8cbfdc1ea0`.
-The PDF is 100256 bytes and has SHA-256
-`2d0f0d2af4177a48d5691286b470b7b14d709646e1d1c4874ce04795408e8b6f`.
-Anonymous release downloading returned these exact bytes. The isolated arXiv
-source bundle produced eight pages with text identical to the released PDF.
-
-[Ubuntu verification run 42751584064](https://github.com/0thernes/contextuality-tensor-lab/actions/runs/42751584064)
-passed exact Python verification, 11 tests, independent JavaScript enumeration,
-the complete Lean build and the 153-declaration axiom allowlist audit. The Linux
-audit's formal-source hashes match the local Windows audit exactly. Generated
-auxiliary declarations are included in the count; it is not a count of independent
-scientific discoveries. All audited axioms are within `propext`, `Classical.choice`,
-and `Quot.sound`.
-
-[Pages deployment](https://github.com/0thernes/contextuality-tensor-lab/actions/runs/42751584035)
-succeeded after enabling Pages for the new repository. All 18 served files match
-the frozen `docs/` Git blobs byte-for-byte. The first deployment attempt preceded
-Pages enablement and failed; the successful rerun is the publication evidence.
-The [public-site audit](../results/public-site-verification.json),
-[CI comparison](../results/ci-verification.json) and
-[release/source-bundle check](../results/release-verification.json) preserve the details.
-
-The subsequent `c349b3c` push also passed both executable/formal verification and
-Pages deployment. [The follow-up CI record](../results/ci-publication-followup.json)
-links the actual completed runs. Subsequent evidence/status commits do not change
-the frozen mathematical sources or paper in the release.
-
-## Completed independent preservation
-
-Software Heritage's Save Code Now request now reports **succeeded**. Its visit at
-03:49:10 UTC on 10 November 2026 preserved the exact revision used by `v0.1.0`:
-
-- Revision: `swh:1:rev:de48ed9002e930825f1cf5f140c8dc8cbfdc1ea0`.
-- Directory: `swh:1:dir:f1cd98b1ec3f1e2fba4618f470d783e580dcd2ee`, matching the local
-  Git tree of that revision.
-- Snapshot: `swh:1:snp:22b7ffe3ef7bdf33dbc536333ed29b3e86ec2949`.
-
-The visit preceded creation of the release tag, so it contains the research
-revision and source tree, not the later GitHub release metadata or later status
-commits. [The archive evidence](../results/software-heritage-verification.json)
-records the observed permanent identifiers and this scope.
-
-Internet Archive captured the scholarly landing page at 04:01:28 UTC and the PDF
-at 04:02:09 UTC on 10 November 2026. Both timestamped replays were opened in the
-browser. The archived PDF payload returned HTTP 200, `application/pdf`, and
-100256 bytes identical to the released file and SHA-256 above. The HTML viewer
-wrapper was distinguished from the embedded PDF payload in the
-[byte-comparison evidence](../results/wayback-verification.json).
-
-These completed Wayback snapshots preserve the paper independently of GitHub.
-They are distinct from an Internet Archive uploaded item, a DOI deposit, or
-editorial acceptance. No DOI, arXiv identifier, journal submission, or
-Scholar/OpenAIRE indexing is claimed.
-
-## Remaining author-controlled requirements
-
-The manuscript, exact evidence, source bundle and journal cover-letter draft are
-prepared for concrete review. The record establishes human direction and extensive
-automated verification; it does not establish that the author personally reviewed
-the mathematical derivation, validated the scientific claims and approved the
-finished manuscript. Those factual declarations must come from the author.
-
-arXiv and Journal of Physics A also require applicable account, license and author
-declarations. The current verification license has been preserved; no additional
-CC-BY or other broad license grant is assumed. arXiv's nonexclusive distribution
-license is a possible author choice, not a choice already made in this project.
-
-Zenodo's [current depositor AI policy](https://support.zenodo.org/help/en-gb/13-policies/227-what-is-your-usage-policy-for-generative-ai-for-depositors)
-requires a verifiable basis in human-conducted research. Because AI agents supplied
-the core derivation in this run, eligibility cannot be asserted merely from the
-prompt or automated proof checks. A truthful author research account and, if
-needed, guidance from Zenodo are required before claiming eligibility or depositing.
-
-Google Scholar and OpenAIRE index published records; they are not direct paper
-submission destinations. ORCID records output metadata. Software Heritage and
-Internet Archive preserve artifacts. Their observed status is reported separately.
-See [the source-linked route audit](../research/publication-routes.md).
+External submission (e.g., arXiv `quant-ph` or journal review) requires direct human author review, endorsement/eligibility checks, and platform declarations (including Zenodo's depositor generative-AI policy if Zenodo deposit is ever pursued). No DOI, arXiv identifier, or journal acceptance is claimed.

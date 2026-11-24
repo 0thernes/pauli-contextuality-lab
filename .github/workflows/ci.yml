@@ -12,6 +12,7 @@ jobs:
   test-matrix:
     name: Tests (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -43,6 +44,7 @@ jobs:
   c11-sanitizers-and-lint:
     name: C11 ASan/UBSan, Linters & Build Standard Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -67,6 +69,8 @@ jobs:
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer -pthread \
             tracks/spectral-bounds/src/third_level.c -lm -o build/san/third_level_san
           ./build/san/third_level_san
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/orbits7.c -o build/san/orbits7_san
       - name: Report-only linters (ruff & mypy)
         continue-on-error: true
         run: |

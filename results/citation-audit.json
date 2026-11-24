@@ -1,7 +1,7 @@
 {
   "status": "pass",
-  "files_scanned": 15,
-  "arxiv_count": 20,
+  "files_scanned": 16,
+  "arxiv_count": 21,
   "doi_count": 23,
   "placeholder_hits": [],
   "arxiv_ids": [
@@ -23,6 +23,7 @@
     "2609.19862v1",
     "2610.07172",
     "2610.26465",
+    "2610.26465v1",
     "quant-ph/0511004",
     "quant-ph/0608146"
   ],

@@ -8,6 +8,16 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.3.0] — 2026-11-24
+
+### Pass 4 TOC Deep-Dive Hardening (Manuscripts, Lean, CI, C11, Site, & Security)
+
+- **Lean 4.35.0 & `HoggarBound.CarrierFamily` Integration:** Added `HoggarBound.CarrierFamily` (2,522 lines, proving Theorem 17 `HoggarBound.C3AllQubits.c3_strict_law_fails_general` and `c3_all_qubits_completion`) directly into `lean/VerifyAll.lean` and `.github/workflows/lean-verify.yml`, expanding our exhaustive `Lean.collectAxioms` audit from **1,920 → 2,206 theorems** (and **158 → 160 explicit `#print axioms`**) with strictly standard axioms `[propext, Classical.choice, Quot.sound]`, and expanding the interactive SVG DAG Blueprint to **24 nodes / 140 statically verified Lean declarations**.
+- **Zero-Overflow LaTeX Typesetting across ALL 4 Pauli PDFs:** Fixed a **257.18 pt** Figure 1 right-margin overflow in Track 3 `whitepaper.pdf` (`\pandocbounded` scaling), a **35.67 pt** overflow in Track 2 `contextuality-tensor.pdf`, and all **6** overfull hboxes (up to 38.64 pt) in Track 1 `unified-contextuality.pdf`. All 4 PDFs now compile via Tectonic with **0 overfull hboxes ≥ 5 pt**, 0 undefined refs/cites, and 0 missing glyphs.
+- **Companion C3 PDF Scrubbed & Recompiled:** Imported and cleaned `papers/spectral-bounds/c3-spectral-counterexample.tex` (removing the last `0thernes LLC` / `Hoggar Bound Lab` branding and adding ORCID + CC-BY-4.0 metadata) and recompiled `c3-spectral-counterexample.pdf` (`0` overfull hboxes ≥ 5 pt), now also attached to GitHub Releases.
+- **100% Live-Verified Paths, Reproduction Commands & Semantic Citations:** Fixed all remaining pre-consolidation reproduction commands and paths across Track 1 `unified-contextuality.tex/.html/.md`, Track 2 `contextuality-tensor.tex/.md`, Track 3 `whitepaper.tex/.md`, `papers/disjoint-mermin/STATUS.md`, `ARXIV-SOURCE.md`, `tracks/spectral-bounds/web/independent-review/README.md`, `render_paper.mjs`, `unified-citation.bib`, and `unified-metadata.json` (**14 broken local Markdown links → 0**). Live semantic API verification confirmed **69/69** citations (43 arXiv + 19 Crossref DOIs + 6 DataCite/Zenodo DOIs across both repos) match real authors, titles, and years.
+- **CI, C11, Python & Security Hardening:** Added `set -o pipefail`, a character-level nested-comment & string-aware Lean forbidden-token lexer, and live `results/lean-axioms-ci.log` verification (`--require-exhaustive`) to `lean-verify.yml`; added explicit `timeout-minutes:` to all workflows; fixed heap leaks & null checks in `tracks/spectral-bounds/src/orbits7.c` and added `orbits7` ASan/UBSan compilation to `ci.yml`; fixed `.NET CurrentDirectory` bug in `scripts/Audit-Repo.ps1`; normalized 5 CRLF `.lean` files to LF; fixed `.gitleaks.toml` with `regexTarget = "line"`; fixed Python `B020`/`F401`/`ISC004` findings; and expanded `tests/test_repo_integrity.py` with case-exact Markdown link, CRLF, `lakefile.toml` version, and legacy-licence regression gates.
+
 ## [2.2.0] - 2026-11-24
 
 ### Added & Upgraded
