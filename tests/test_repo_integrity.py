@@ -176,7 +176,7 @@ class RepoIntegrityTests(unittest.TestCase):
         for p in sorted(ROOT.rglob("*")):
             if not p.is_file() or any(part in skip for part in p.parts):
                 continue
-            if p.suffix.lower() in {".lean", ".py", ".c", ".h", ".sh", ".yml", ".yaml", ".toml"}:
+            if p.suffix.lower() in {".lean", ".py", ".c", ".h", ".sh", ".yml", ".yaml", ".toml", ".js", ".mjs", ".css", ".html"}:
                 if b"\r\n" in p.read_bytes():
                     crlf.append(p.relative_to(ROOT).as_posix())
         self.assertEqual(crlf, [], f"CRLF line endings found in source/config files: {crlf}")
@@ -331,6 +331,22 @@ class RepoIntegrityTests(unittest.TestCase):
         )
         self.assertEqual(res.returncode, 0, f"frontier_c3_certificate_audit failed: {res.stderr}\n{res.stdout}")
         self.assertIn('"status": "pass"', res.stdout)
+
+    def test_independent_review_theorem_links_exact(self) -> None:
+        explorer = (ROOT / "tracks" / "spectral-bounds" / "web" / "independent-review" / "explorer.js").read_text(encoding="utf-8")
+        pairs = re.findall(r"(\w+):\s*'([A-Za-z0-9_]+\.lean)#L(\d+)'", explorer)
+        self.assertGreaterEqual(len(pairs), 5, "Expected >=5 Lean theorem source links in independent-review/explorer.js")
+        for thm, fname, lineno_s in pairs:
+            lean_file = ROOT / "lean" / "HoggarBound" / fname
+            self.assertTrue(lean_file.is_file(), f"Missing Lean file {lean_file}")
+            lines = lean_file.read_text(encoding="utf-8").splitlines()
+            lineno = int(lineno_s)
+            self.assertTrue(1 <= lineno <= len(lines), f"Line {lineno} out of bounds in {fname}")
+            self.assertRegex(
+                lines[lineno - 1],
+                rf"^\s*(?:theorem|lemma|def)\s+{re.escape(thm)}\b",
+                f"{fname}#L{lineno} does not declare {thm}: {lines[lineno - 1]!r}",
+            )
 
 
 if __name__ == "__main__":

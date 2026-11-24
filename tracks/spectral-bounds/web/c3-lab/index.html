@@ -3,7 +3,7 @@
 <title>Same spectrum, different completions · Pauli Contextuality Lab (Track 1)</title>
 <link rel="stylesheet" href="style.css"></head>
 <body><main>
-<nav><a href="../">PAULI CONTEXTUALITY LAB · TRACK 1</a><a href="https://github.com/0thernes/pauli-contextuality-lab">Code &amp; proofs ↗</a></nav>
+<nav><a href="../">PAULI CONTEXTUALITY LAB · TRACK 1</a><a href="../blueprint/">Lean 4 Blueprint</a><a href="https://github.com/0thernes/pauli-contextuality-lab">Code &amp; proofs ↗</a></nav>
 <header><p class="eyebrow">FOUR QUBITS · EXACT INTEGER CERTIFICATE</p>
 <h1>Same spectrum.<br><span>Different completions.</span></h1>
 <p class="intro">Two assignments to the same 71 Pauli observables produce identical carrier spectra. Their 64-dimensional completion operators have different spectra. Rebuild the matrices and check the evidence here.</p>
@@ -20,7 +20,7 @@
 <details><summary>Edit any sign in assignment B</summary><p>Click an observable to flip its sign, then run verification. Most changes destroy carrier cospectrality.</p><div id="all-signs" class="all-signs"></div></details>
 </section>
 <section class="explanation"><h2>What does this settle?</h2><p>A carrier is the signed sum of the observables in a hyperplane section. Its spectrum records its eigenvalues. The completion matrix records signed contexts connecting points outside that section. Equal carrier spectra do not always determine equal completion spectra.</p>
-<p>This explicit pair establishes the <b>four-qubit C3 instance of Conjecture E</b> in B. W. Jonah’s <i>The reach of the section-square law</i>, v0.5, which listed that instance as open. It supports that conjecture, which predicts failure of the strict spectral law. The result does not settle the conjecture in every dimension.</p>
+<p>This explicit pair establishes the <b>four-qubit C3 instance of Conjecture E</b> in B. W. Jonah’s <i>The reach of the section-square law</i>, v0.5, which listed that instance as open. By itself this four-qubit witness does not settle every dimension; the companion unified Lean 4 formalization (<code>HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases</code> and <code>HoggarBound.C3AllQubits.c3_strict_law_fails_general</code>) now proves failure of the strict spectral law across all nine vertex cases for every N ≥ 4.</p>
 <p>The browser checks exact arithmetic. The linked research artifact provides independent Python constructions, a Lean formalization with its stated scope, and reproducibility instructions. This is a research preprint; historical priority and peer review are separate from mathematical verification.</p>
 <div class="links"><a href="../papers/spectral-bounds/c3-spectral-counterexample.pdf">Read the research paper (PDF) ↗</a><a href="../papers/spectral-bounds/unified-contextuality.html">Abstract &amp; citation ↗</a><a href="../results/frontier-c3-lean-audit.md">Checked Lean proof audit ↗</a><a href="../papers/spectral-bounds/unified-contextuality.md">Readable source ↗</a><a href="https://zenodo.org/records/23524332">Original conjecture ↗</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/main/lean">Lean source ↗</a></div>
 </section>

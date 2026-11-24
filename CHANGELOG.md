@@ -8,6 +8,15 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.5.0] — 2026-11-24
+
+### Pass 6 TOC Deep-Dive Hardening (Zero-Warning C11, Full Manuscript Path Sync, Active Web Explorer & Workflow Guards)
+
+- **Zero C11 Compiler Warnings (`-Wall -Wextra`):** Eliminated all 5 compiler warnings in `tracks/spectral-bounds/src/legacy-search/{wcheck.c,geom.h}` (`-Wcomment` nested `/*` inside comment and `-Wunused-function` via `static inline`), achieving zero warnings across all 8 ASan/UBSan C11 engines.
+- **Complete Post-Consolidation Manuscript & Live HTML Path Synchronization:** Replaced 163 pre-consolidation Track 1 paths across both `papers/spectral-bounds/unified-contextuality.md` and live GitHub Pages `unified-contextuality.html`, fixed all remaining pre-consolidation script/result paths and historical `hoggar-bound-lab` receipt qualifiers across `unified-contextuality.tex` (plus clickable `mailto:` and live consolidated CI links in Section 9.4), `c3-spectral-counterexample.tex` (plus fixing a grammatical affiliation typo in Section 8 and stale test command in Section 9), `contextuality-tensor.md`, `revtex-v1/main.tex`, `tracks/spectral-bounds/web/c3-lab/README.md`, and the 6 legacy paper-build scripts under `tracks/{spectral-bounds,disjoint-mermin}/scripts/`. Recompiled all 4 PDFs with Tectonic (0 overfull hboxes ≥ 5 pt).
+- **Interactive Web Apps & Active Explorer (`/independent-review/`) Upgrade:** Normalized `tracks/spectral-bounds/web/independent-review/data.js` from CRLF to LF; upgraded `independent-review/{index.html,explorer.js}` so every displayed `LEAN THEOREM` links directly to its exact verified line in `lean/HoggarBound/*.lean#L...` on GitHub alongside a direct `/blueprint/` link; updated `c3-lab/index.html` to reflect the all-$N \ge 4$ Lean 4 Conjecture E formalization; and added unified Lab Hub (`../`) and `/blueprint/` navigation links across `tracks/disjoint-mermin/web/index.html` and `tracks/sequential-evidence/web/index.html`.
+- **Zero Python Bugbear (`B`) Findings, CRLF Web Guard & CI Concurrency:** Fixed late-binding loop-variable closures (`B023`) in `tracks/spectral-bounds/scripts/{fix_github_math,phase_states}.py` and unused loop variables (`B007`) across `tracks/spectral-bounds/scripts/`; added `concurrency:` cancellation groups to `.github/workflows/{ci,lean-verify}.yml`; and expanded `tests/test_repo_integrity.py` to enforce LF line endings on `.js`/`.mjs`/`.css`/`.html` and verify every `independent-review/explorer.js` theorem `#L` source link against `lean/HoggarBound/*.lean`.
+
 ## [2.4.0] — 2026-11-24
 
 ### Pass 5 TOC Deep-Dive Hardening (Post-Consolidation Runtime Fixes, Blueprint UX, Web QA & C11)

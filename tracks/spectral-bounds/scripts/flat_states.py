@@ -183,10 +183,10 @@ def anneal(S, L, floor, trials, steps, seed):
     idx = {v: k for k, v in enumerate(S)}
     inc = [[] for _ in S]
     LL = [(idx[u], idx[v], idx[w], s) for u, v, w, s in L]
-    for li, (a, b, c, s) in enumerate(LL):
+    for li, (a, b, c, _s) in enumerate(LL):
         inc[a].append(li); inc[b].append(li); inc[c].append(li)
     best_all = None
-    for t in range(trials):
+    for _t in range(trials):
         f = [rng.choice((1, -1)) for _ in S]
         bad = [f[a] * f[b] * f[c] != s for a, b, c, s in LL]
         cur = sum(bad); best = cur
@@ -335,7 +335,7 @@ def main():
                  "when the observable with code `v = a + 2^N * c` belongs to the configuration (`a` the X-part, `c` the Z-part,",
                  "bit `k` for qubit `k`); bit `v` of a sign mask is set when the assignment takes the value `-1` there.", "-/",
                  "", "namespace HoggarBound.FlatData", ""]
-        for name, N, amp, expect in sts:
+        for name, N, _amp, _expect in sts:
             r = results[name]
             neg = [v for v in r["S"] if r["f"][v] < 0]
             lines.append("/-- %s: %d qubits, %d observables, %d contexts, degree %d. -/" % (name, N, r["points"], r["contexts"], r["degree"]))

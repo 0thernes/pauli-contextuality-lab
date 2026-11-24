@@ -59,7 +59,7 @@ pdfsubject={Exact four-qubit C3 certificate; research preprint, not peer reviewe
 {\large\color{Accent}An exact four-qubit C3 certificate}\par
 \vspace{0.8em}
 {\normalsize Alexander S. Donahue\\{\small\color{Muted}Independent researcher, Spokane, WA, USA \textbullet\ \href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648} \textbullet\ \href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}}\par
-{\small\color{Muted}2026-11-09 (consolidated into \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} v2.4.0, 2026-11-24) \textbullet\ Research preprint, not peer reviewed \textbullet\ CC-BY-4.0}\par
+{\small\color{Muted}2026-11-09 (consolidated into \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} v2.5.0, 2026-11-24) \textbullet\ Research preprint, not peer reviewed \textbullet\ CC-BY-4.0}\par
 \vspace{0.6em}
 {\color{Accent}\hrule height 0.65pt}
 \vspace{0.5em}
@@ -299,11 +299,11 @@ For a negative control, the context verifier flips one off-diagonal context coef
 
 The interactive model provides another executable implementation. It builds the integer Pauli matrices and context signs, computes characteristic polynomials using a BigInt Faddeev--LeVerrier recurrence, and evaluates cubic traces with BigInt arithmetic. Changing a sign assignment triggers a fresh computation. This makes the stated certificate directly falsifiable in the interface; a modified assignment is not required to retain cospectrality.
 
-\textbf{Eshkol execution.} A serial compiled arithmetic run uses the Tsotchke Eshkol compiler, version 1.3.6-evolve, through the command eshkol-run -r. Given the two integer carriers \(A,B\) and integer certificate matrices \(M,R\), it checks \(AM=MB\) and \(MR=RM=46656I\). Thus \(M\) is invertible over the rationals, providing another certificate of carrier similarity. The program separately evaluates the block moment formula and returns completion cubic traces 14976 and 15360. A Python arbitrary-precision replay bounds every input, product and ordered accumulation in this program by 408304 in absolute value, safely below \(2^{63}-1\). The recorded run exited with code zero and empty standard error, using process-local paths to the existing LLVM 21 and CUDA 12.9 installations. Its command, environment settings, outputs and hashes are recorded in results/frontier-c3-eshkol.json. This establishes the tested serial arithmetic execution; compiler correctness, GPU operations and parallel-worker behavior are outside its qualification.
+\textbf{Eshkol execution.} A serial compiled arithmetic run uses the Tsotchke Eshkol compiler, version 1.3.6-evolve, through the command \texttt{eshkol-run -r}. Given the two integer carriers \(A,B\) and integer certificate matrices \(M,R\), it checks \(AM=MB\) and \(MR=RM=46656I\). Thus \(M\) is invertible over the rationals, providing another certificate of carrier similarity. The program separately evaluates the block moment formula and returns completion cubic traces 14976 and 15360. A Python arbitrary-precision replay bounds every input, product and ordered accumulation in this program by 408304 in absolute value, safely below \(2^{63}-1\). The recorded run exited with code zero and empty standard error, using process-local paths to the existing LLVM 21 and CUDA 12.9 installations. Its command, environment settings, outputs and hashes are recorded in \nolinkurl{tracks/spectral-bounds/results/frontier-c3-eshkol.json}. This establishes the tested serial arithmetic execution; compiler correctness, GPU operations and parallel-worker behavior are outside its qualification.
 
 \textbf{Lean 4 verification.} The Lean 4.35.0 and Mathlib 4.35.0 development connects these explicit witnesses to the actual four-qubit Pauli configuration. It identifies the complete 71-point section and 64-point complement, verifies the sign assignments, and relates the integer certificate matrices to complex Pauli sums and real signed-context completion operators. It proves equality of the carrier characteristic polynomials and canonical eigenvalue lists, but inequality of the completion characteristic polynomials and real eigenvalue multisets, retaining multiplicities. The completion cubic traces are proved exactly as 14976 and 15360. The principal declarations in the HoggarBound.C3 namespace are \texttt{four\_qubit\_C3\_counterexample}, \texttt{pauli\_carrier\_eigenvalues\_eq}, \texttt{pauli\_completion\_eigenvalue\_multisets\_ne}, and \texttt{four\_qubit\_C3\_spectral\_counterexample}.
 
-All source checks completed successfully, and the axiom audit of 42 declarations found only \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. The finite arithmetic uses kernel reduction; no unproved project axiom, proof placeholder, or native-evaluation axiom is required. Source hashes, commands, successful build records and the axiom report are retained in results/frontier-c3-lean-audit.md and its linked evidence. The printed characteristic-polynomial factorization, the exact largest-eigenvalue gap 2, and the continuous-relaxation gap 32 are algebraic deductions in this paper and are not included in those Lean theorem statements.
+All source checks completed successfully, and the axiom audit of 42 declarations found only \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. The finite arithmetic uses kernel reduction; no unproved project axiom, proof placeholder, or native-evaluation axiom is required. Source hashes, commands, successful build records and the axiom report are retained in \nolinkurl{tracks/spectral-bounds/results/frontier-c3-lean-audit.md} and its linked evidence. The printed characteristic-polynomial factorization, the exact largest-eigenvalue gap 2, and the continuous-relaxation gap 32 are algebraic deductions in this paper and are not included in those Lean theorem statements.
 
 \section{7. Source comparison and scope}\label{source-comparison-and-scope}
 
@@ -319,18 +319,18 @@ Several limits are material. The result does not settle the remaining dimensions
 
 Alexander S. Donahue initiated and directed the project and specified the Tsotchke tool stack. OpenAI Codex research and coding agents performed the literature search, selected the finite C3 problem, discovered the witness pair, developed the algebraic arguments and Lean formalization, implemented the independent checks and demonstration, and drafted the manuscript and figures. The figures display computed matrix data. The numerical and formal evidence is provided for reproduction and external scrutiny; computational verification should not be mistaken for human peer review. AI tools are disclosed as tools, not listed as authors. Venue-specific author validation and accountability requirements apply to any scholarly submission of this artifact.
 
-\textbf{Funding and affiliation.} This research was self-funded by the author. The author is the sole operator of Independent researcher, with which this project is affiliated.
+\textbf{Funding and affiliation.} This research was self-funded by the author, working as an independent researcher in Spokane, WA, USA, with no external institutional or commercial funding.
 
 \section{9. Reproducibility}\label{reproducibility}
 
 The repository is \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab (Track 1)}. Run the following commands from its root with Python, NumPy, SymPy and Node.js installed:
 
 \Needspace{9\baselineskip}\begin{samepage}\begin{verbatim}
-python scripts/frontier_c3_verify.py
-python scripts/frontier_c3_context_verify.py
-node tests/frontier_c3_browser_test.cjs
-python scripts/frontier_c3_integer_bounds.py
-python scripts/frontier_c3_demo.py
+python tracks/spectral-bounds/scripts/frontier_c3_verify.py
+python tracks/spectral-bounds/scripts/frontier_c3_context_verify.py
+node --test tests/test_web_models.mjs
+python tracks/spectral-bounds/scripts/frontier_c3_integer_bounds.py
+python tracks/spectral-bounds/scripts/frontier_c3_demo.py
 \end{verbatim}\end{samepage}
 
 The last command requires Eshkol. Set the ESHKOL\_RUN environment variable to the executable when it is not on the system path. The wrapper generates build/frontier\_c3\_demo.esk and invokes eshkol-run -r on that file. On the recorded Windows installation, it supplies existing matching LLVM and CUDA library paths to the child process while respecting explicit environment settings. The complete command and process-local overrides are retained in the result record. Its checks use the published integer similarity certificate rather than a random search.
@@ -343,12 +343,12 @@ lake build HoggarBound.C3Certificate
 lake build HoggarBound.C3Geometry
 lake build HoggarBound.C3Theorem
 lake build HoggarBound.C3Spectra
-lake env lean C3Verification.lean
+lake env lean VerifyAll.lean
 \end{verbatim}\end{samepage}
 
 The recorded Windows finite-certificate check took approximately 61 minutes; its timing and memory counters are retained with the proof log. This cost concerns exact proof checking, not the interactive demonstration, and does not measure a physical quantum process.
 
-The principal records are results/frontier-c3-n4-pair.json, results/frontier-c3-n4-verification.json, results/frontier-c3-n4-completions.json, and results/frontier-c3-context-verification.json. The direct-context report records 135 configuration points, 71 section points, 64 outside points, 1120 contexts, both polynomials and traces, mutation results, dependency versions and SHA-256 hashes. Both raw-byte and LF-normalized input hashes distinguish local Windows line endings from Git-normalized text.
+The principal records are \nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-pair.json}, \nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-verification.json}, \nolinkurl{tracks/spectral-bounds/results/frontier-c3-n4-completions.json}, and \nolinkurl{tracks/spectral-bounds/results/frontier-c3-context-verification.json}. The direct-context report records 135 configuration points, 71 section points, 64 outside points, 1120 contexts, both polynomials and traces, mutation results, dependency versions and SHA-256 hashes. Both raw-byte and LF-normalized input hashes distinguish local Windows line endings from Git-normalized text.
 
 The independent context check was run with Python 3.9.13, NumPy 2.0.2 and SymPy 1.14.0. Reproduction requires a release containing the C3 artifacts; the theorem's complete assignments are also specified in Section 2, independently of repository state. The research preprint and code remain open to external mathematical and implementation review.
 

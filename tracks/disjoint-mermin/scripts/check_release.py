@@ -9,19 +9,23 @@ from urllib.request import urlopen
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
+REPO_ROOT=Path(__file__).resolve().parents[3]
+PAPER_DIR=REPO_ROOT/'papers'/'disjoint-mermin' if (REPO_ROOT/'papers'/'disjoint-mermin').is_dir() else ROOT/'paper'
+RELEASE_TAG='v2.5.0'
+REPO_URL='https://github.com/0thernes/pauli-contextuality-lab'
 
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--tectonic',required=True)
     args=parser.parse_args()
-    url='https://github.com/0thernes/contextuality-tensor-lab/releases/download/v0.1.0/contextuality-tensor.pdf'
+    url=f'{REPO_URL}/releases/download/{RELEASE_TAG}/contextuality-tensor.pdf'
     with urlopen(url,timeout=60) as response:
         published=response.read()
         status=response.status
-    local=(ROOT/'paper/contextuality-tensor.pdf').read_bytes()
+    local=(PAPER_DIR/'contextuality-tensor.pdf').read_bytes()
     if status != 200 or published != local:
         raise RuntimeError('Anonymous release PDF mismatch')
-    report={'status':'passed','release':'https://github.com/0thernes/contextuality-tensor-lab/releases/tag/v0.1.0',
+    report={'status':'passed','release':f'{REPO_URL}/releases/tag/{RELEASE_TAG}',
             'anonymous_pdf_status':status,'pdf_sha256':hashlib.sha256(published).hexdigest(),
             'downloaded_asset_checksums_verified_before_publication':13}
     with tempfile.TemporaryDirectory(prefix='contextuality-arxiv-') as tmp:

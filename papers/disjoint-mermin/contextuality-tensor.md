@@ -231,13 +231,13 @@ The decisive mathematical assumptions are distinct nonempty seed contexts, disjo
 The project is self-contained at [the repository](https://github.com/0thernes/pauli-contextuality-lab), with [a live demonstration](https://0thernes.github.io/pauli-contextuality-lab/). Source, certificates, execution records, Lean dependencies and the manuscript are versioned together. The primary commands are:
 
 ```text
-python scripts/verify_exact.py
-python -m unittest discover -s tests -v
-python scripts/run_stack.py
+python tracks/disjoint-mermin/scripts/verify_exact.py
+python -m pytest -v tests/
+python scripts/run_track_stack.py disjoint-mermin
 cd lean
 lake exe cache get
-lake build
-lake env lean Verification.lean
+lake build ContextualityTensor
+lake env lean VerifyAll.lean
 ```
 
 The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol installation. The independent exact verifier uses the Python standard library. See the repository for platform-specific paths and the exact distinction between rebuilt and pre-recorded components.

@@ -1,6 +1,14 @@
 (() => {
   const $ = id => document.getElementById(id);
   const profiles = globalThis.HOGGAR_DATA;
+  const THEOREM_BASE = 'https://github.com/0thernes/pauli-contextuality-lab/blob/main/lean/HoggarBound/';
+  const THEOREM_SOURCES = {
+    three_qubit_contexts: 'Corollaries.lean#L92',
+    four_qubit_hyperbolic_contexts: 'Quadric.lean#L207',
+    four_qubit_contexts: 'Counting.lean#L237',
+    five_qubit_hyperbolic_contexts: 'Quadric.lean#L239',
+    five_qubit_contexts: 'Corollaries.lean#L118'
+  };
   let model, positions=[], selected=null, running=false;
   profiles.forEach(p => {const o=document.createElement('option');o.value=p.id;o.textContent=p.name;$('profile').append(o);});
   const fmt=n=>n.toLocaleString('en-US');
@@ -15,7 +23,8 @@
     $('floor').textContent=fmt(p.lowerBound);$('witness').textContent=fmt(p.witnessViolations);
     $('success').textContent=(100*(1-d/L)).toFixed(1)+'%';
     $('gap').textContent=p.exact?'meets the bound exactly':`${fmt(p.witnessViolations-p.lowerBound)} above our proven floor`;
-    $('theorem').textContent='HoggarBound.'+p.theorem;
+    $('theorem').textContent='HoggarBound.'+p.theorem+' ↗';
+    if($('theorem-link'))$('theorem-link').href=THEOREM_BASE+(THEOREM_SOURCES[p.theorem]||'');
     $('point-count').textContent=`(${p.points.length})`;
     $('result-title').textContent=d===p.lowerBound?'The bound is saturated.':d<p.lowerBound?'Candidate counterexample.':'The obstruction persists.';
     $('result-copy').textContent=d===p.lowerBound?`This assignment violates exactly ${fmt(d)} contexts. The universal lower bound proves that no assignment can do better.`:d<p.lowerBound?'Export this assignment and check it with the independent verifier. An implementation error must be ruled out before challenging the formal theorem.':`Your assignment violates ${fmt(d)} contexts. Lean proves every assignment must violate at least ${fmt(p.lowerBound)}. `+(p.exact?`The stored witness attains that minimum.`:`The stored witness gives an upper bound of ${fmt(p.witnessViolations)}; a gap remains in this lab’s bound.`);

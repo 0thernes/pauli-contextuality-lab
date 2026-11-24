@@ -5,10 +5,10 @@ of the real four-qubit Pauli quadric commuting with `ZIII`. Each assignment is +
 except at four explicitly listed observables. The carriers have the same exact
 characteristic polynomial, while the completion cubic traces are 14976 and 15360.
 
-Run from the repository root:
+Run from the repository root after building the site (`python scripts/build_site.py`):
 
 ```sh
-python -m http.server 8769 --bind 127.0.0.1
+python -m http.server 8769 --bind 127.0.0.1 --directory build/site
 ```
 
 Open `http://127.0.0.1:8769/c3-lab/`. No package installation or remote script is
@@ -27,7 +27,7 @@ of the 71 signs in assignment B to be changed. `Download certificate` exports th
 current exact results, including failed checks.
 
 ```sh
-node tests/frontier_c3_browser_test.cjs
+node --test tests/test_web_models.mjs
 ```
 
 The test compares the browser implementation with the independent Python matrix

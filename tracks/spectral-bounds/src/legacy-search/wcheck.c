@@ -1,5 +1,5 @@
 /* wcheck.c - second independent witness checker (C, letter-table phases; shares no code with src/hoggar.c
- * or verify/*.py).  Usage: wcheck FILE...   exit 1 on any mismatch. */
+ * or the Python verifiers under verify/).  Usage: wcheck FILE...   exit 1 on any mismatch. */
 #include "geom.h"
 int main(int argc, char **argv) {
     int bad = 0;

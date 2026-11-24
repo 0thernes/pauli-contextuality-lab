@@ -7,26 +7,28 @@ import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+PAPER_DIR = REPO_ROOT / "papers" / "disjoint-mermin" if (REPO_ROOT / "papers" / "disjoint-mermin").is_dir() else ROOT / "paper"
 
 def main():
     target = ROOT / "build/release"
     target.mkdir(parents=True, exist_ok=True)
-    commit = subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
-    subprocess.run(["git","archive","--format=zip","--output",str(target/"contextuality-tensor-source.zip"),commit],cwd=ROOT,check=True)
+    commit = subprocess.check_output(["git","rev-parse","HEAD"],cwd=REPO_ROOT,text=True).strip()
+    subprocess.run(["git","archive","--format=zip","--output",str(target/"contextuality-tensor-source.zip"),commit],cwd=REPO_ROOT,check=True)
     with zipfile.ZipFile(target/"contextuality-tensor-arxiv-source.zip","w",zipfile.ZIP_DEFLATED) as archive:
         for rel in ["contextuality-tensor.tex", "figures/gap-and-noise.pdf"]:
-            archive.write(ROOT/"paper"/rel, rel)
-    sources = ["paper/contextuality-tensor.pdf", "CITATION.cff", "LICENSE",
-               "results/exact-certificate.json", "results/four-qubit-square.json",
-               "results/lean-axioms.json", "results/lean-axioms.log",
-               "results/stack_report.json", "results/stack_browser.json",
-               "results/manuscript-review.md"]
-    for rel in sources:
-        shutil.copyfile(ROOT/rel, target/Path(rel).name)
-    metadata = {"commit":commit,"version":"0.1.0","research_date":"2026-11-09",
+            archive.write(PAPER_DIR/rel, rel)
+    sources = [PAPER_DIR/"contextuality-tensor.pdf", REPO_ROOT/"CITATION.cff", REPO_ROOT/"LICENSE",
+               ROOT/"results/exact-certificate.json", ROOT/"results/four-qubit-square.json",
+               ROOT/"results/lean-axioms.json", ROOT/"results/lean-axioms.log",
+               ROOT/"results/stack_report.json", ROOT/"results/stack_browser.json",
+               ROOT/"results/manuscript-review.md"]
+    for src_path in sources:
+        shutil.copyfile(src_path, target/src_path.name)
+    metadata = {"commit":commit,"version":"2.5.0","research_date":"2026-11-09",
                 "title":"Exact contextuality degrees for disjoint Mermin configurations",
                 "status":"Research preprint; not peer reviewed",
-                "repository":"https://github.com/0thernes/contextuality-tensor-lab",
+                "repository":"https://github.com/0thernes/pauli-contextuality-lab",
                 "ai_disclosure":"Substantive AI assistance in research, derivation, coding, formalization, verification and drafting; human direction. Human author critical review and external submission declarations are tracked separately."}
     (target/"release-metadata.json").write_text(json.dumps(metadata,indent=2)+"\n",encoding="utf-8")
     hashes = {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(target.iterdir())

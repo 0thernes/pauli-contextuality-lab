@@ -11,6 +11,8 @@ import tempfile
 from independent_paper_build import PREAMBLE
 
 ROOT=Path(__file__).resolve().parents[1]
+REPO_ROOT=Path(__file__).resolve().parents[3]
+PAPER_DIR=REPO_ROOT/'papers'/'spectral-bounds' if (REPO_ROOT/'papers'/'spectral-bounds').is_dir() else ROOT/'paper'
 STEM='c3-spectral-counterexample'
 
 def main():
@@ -19,7 +21,7 @@ def main():
     parser.add_argument('--tectonic',default=shutil.which('tectonic'))
     args=parser.parse_args()
     if not args.pandoc or not args.tectonic:parser.error('Supply --pandoc and --tectonic executable paths')
-    source=ROOT/'paper'/(STEM+'.md')
+    source=PAPER_DIR/(STEM+'.md')
     markdown=source.read_text(encoding='utf-8')
     body='## Abstract'+markdown.split('## Abstract',1)[1]
     fragment=subprocess.run([args.pandoc,'--from=markdown+tex_math_dollars+tex_math_single_backslash',
@@ -44,15 +46,15 @@ def main():
     preamble=preamble.replace('Hoggar Bound Lab; AI-assisted research artifact',
                               r'Alexander S. Donahue · Independent researcher, Spokane, WA, USA\\{\small\color{Muted}Hoggar Bound Lab · \href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}')
     tex=preamble+fragment+'\n\\end{document}\n'
-    texpath=ROOT/'paper'/(STEM+'.tex');texpath.write_text(tex,encoding='utf-8')
+    texpath=PAPER_DIR/(STEM+'.tex');texpath.write_text(tex,encoding='utf-8')
     with tempfile.TemporaryDirectory(prefix='hoggar-c3-paper-') as tmp:
         stage=Path(tmp)/(STEM+'.tex');stage.write_text(tex,encoding='utf-8')
-        shutil.copytree(ROOT/'paper/c3-figures',Path(tmp)/'c3-figures')
+        shutil.copytree(PAPER_DIR/'c3-figures',Path(tmp)/'c3-figures')
         result=subprocess.run([args.tectonic,'--untrusted','--keep-logs','--print',str(stage)],cwd=tmp,
                               text=True,encoding='utf-8',errors='replace',capture_output=True)
         (ROOT/'results/frontier-c3-paper-build.log').write_text(result.stdout+result.stderr,encoding='utf-8')
         if result.returncode:raise RuntimeError('Typesetting failed; see results/frontier-c3-paper-build.log')
-        shutil.copyfile(Path(tmp)/(STEM+'.pdf'),ROOT/'paper'/(STEM+'.pdf'))
+        shutil.copyfile(Path(tmp)/(STEM+'.pdf'),PAPER_DIR/(STEM+'.pdf'))
         shutil.copyfile(Path(tmp)/(STEM+'.log'),ROOT/'results/frontier-c3-paper-tex.log')
     title=markdown.splitlines()[0].removeprefix('# ')
     abstract=markdown.split('## Abstract',1)[1].split('\n## ',1)[0].strip()
@@ -60,7 +62,7 @@ def main():
     # scholarly landing page readable without a client-side math renderer.
     abstract=re.sub(r'\$(\d+)\\times(\d+)\$',lambda m:m[1]+' × '+m[2],abstract)
     if '$' in abstract:raise RuntimeError('Add an HTML renderer for new abstract mathematics')
-    base='https://0thernes.github.io/hoggar-bound-lab/paper/'
+    base='https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/'
     record='''<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title>
@@ -74,15 +76,15 @@ def main():
 <body><article><h1 class="citation_title">{title}</h1>
 <p class="citation_author author">Alexander S. Donahue</p>
 <p class="meta">Independent researcher, Spokane, WA, USA · Hoggar Bound Lab · 9 November 2026<br>Research preprint; not peer reviewed. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a></p>
-<nav><a href="{stem}.pdf">Full paper (PDF)</a><a href="../c3-lab/">Run the exact demonstration</a><a href="https://github.com/0thernes/hoggar-bound-lab">Code and Lean proofs</a><a href="c3-citation.cff">Citation metadata</a></nav>
+<nav><a href="{stem}.pdf">Full paper (PDF)</a><a href="../../c3-lab/">Run the exact demonstration</a><a href="https://github.com/0thernes/pauli-contextuality-lab">Code and Lean proofs</a><a href="../../blueprint/">Lean 4 Blueprint</a></nav>
 <section><h2>Abstract</h2><p>{abstract}</p></section>
 <section><h2>Research and verification record</h2><p>The manuscript discloses substantive AI assistance in problem selection, discovery, formalization, computation and drafting. The repository contains exact witness assignments, independent integer checks, Lean sources, execution evidence and falsification controls. The original open case is stated in <a href="https://zenodo.org/records/23524332">Jonah’s section-square preprint, v0.5, Section 6</a>.</p></section>
 <footer><a href="../">All Hoggar Bound Lab research artifacts</a> · Public availability is distinct from journal acceptance or indexing.</footer>
 </article></body></html>'''.format(title=html.escape(title,quote=True),base=base,stem=STEM,abstract=html.escape(abstract))
-    (ROOT/'paper'/(STEM+'.html')).write_text(record,encoding='utf-8')
+    (PAPER_DIR/(STEM+'.html')).write_text(record,encoding='utf-8')
     report={}
     for extension in ['md','tex','pdf','html']:
-        data=(ROOT/'paper'/(STEM+'.'+extension)).read_bytes()
+        data=(PAPER_DIR/(STEM+'.'+extension)).read_bytes()
         report[extension+'_sha256']=hashlib.sha256(data).hexdigest()
         if extension!='pdf':report[extension+'_lf_sha256']=hashlib.sha256(data.replace(b'\r\n',b'\n')).hexdigest()
     report['pandoc']=subprocess.check_output([args.pandoc,'--version'],text=True).splitlines()[0]

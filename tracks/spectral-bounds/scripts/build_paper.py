@@ -14,14 +14,15 @@ import base64, html, os, re, shutil, subprocess, sys
 import commonmark
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "paper", "spectral-floor.md")
-OUT_HTML = os.path.join(ROOT, "paper", "spectral-floor.html")
-OUT_PDF = os.path.join(ROOT, "paper", "spectral-floor.pdf")
-DOCS = os.path.join(ROOT, "docs")
+REPO_ROOT = os.path.dirname(os.path.dirname(ROOT))
+SRC = os.path.join(REPO_ROOT, "papers", "spectral-bounds", "unified-contextuality.md")
+OUT_HTML = os.path.join(REPO_ROOT, "papers", "spectral-bounds", "unified-contextuality.html")
+OUT_PDF = os.path.join(REPO_ROOT, "papers", "spectral-bounds", "unified-contextuality.pdf")
+DOCS = os.path.join(REPO_ROOT, "build", "site")
 AUTHOR = "Donahue, Alexander S."
 INSTITUTION = "Independent researcher, Spokane, WA, USA"
 ORCID = "https://orcid.org/0009-0006-8168-9648"
-SITE = "https://0thernes.github.io/hoggar-bound-lab/"
+SITE = "https://0thernes.github.io/pauli-contextuality-lab/"
 
 CSS = """
 :root{--bg:#fbfaf7;--ink:#1b1f27;--muted:#5b6370;--rule:#d9d6cc;--accent:#0f7a62;--code:#f1efe8;--note:#f3f1e9}

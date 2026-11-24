@@ -190,7 +190,7 @@ def full_check(N, u, t, moved, out, quiet=False, expect_words=None, require_comp
     L_out = len(out_lines)
     # every outside point lies on the same number of outside contexts
     deg = np.zeros(len(O), dtype=np.int64)
-    for s, p, q in out_lines:
+    for _s, p, q in out_lines:
         deg[opos[p]] += 1
         deg[opos[q]] += 1
     chk("contexts", "%s: %d = n^2 |R| / 2 outside contexts, each with one section point; %d through every outside point"

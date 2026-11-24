@@ -67,7 +67,7 @@ static geom_t *geom_build(int N, char kind) {
     return g;
 }
 
-static void geom_free(geom_t *g) {
+static inline void geom_free(geom_t *g) {
     if (!g) return;
     free(g->pts);
     free(g->pos);
@@ -79,7 +79,7 @@ static void geom_free(geom_t *g) {
 }
 
 /* witness I/O: header "N type viol", then 4^N/4 hex chars, MS nibble first, bit v set <=> f(v) = -1 */
-static int witness_read(const char *path, int *N, char *kind, long long *claim, uint8_t **bits_out) {
+static inline int witness_read(const char *path, int *N, char *kind, long long *claim, uint8_t **bits_out) {
     FILE *fp = fopen(path, "r"); if (!fp) return -1;
     if (fscanf(fp, "%d %c %lld", N, kind, claim) != 3) { fclose(fp); return -2; }
     size_t len = (size_t)1 << (2 * *N - 2);
@@ -93,7 +93,7 @@ static int witness_read(const char *path, int *N, char *kind, long long *claim, 
     }
     free(hex); fclose(fp); *bits_out = bits; return 0;
 }
-static void witness_write(const char *path, const geom_t *g, const int8_t *f, long long viol) {
+static inline void witness_write(const char *path, const geom_t *g, const int8_t *f, long long viol) {
     char tmp[4096]; snprintf(tmp, sizeof tmp, "%s.tmp", path);
     FILE *fp = fopen(tmp, "w"); if (!fp) { perror(tmp); return; }
     fprintf(fp, "%d %c %lld\n", g->N, g->kind, viol);
@@ -104,7 +104,7 @@ static void witness_write(const char *path, const geom_t *g, const int8_t *f, lo
     }
     fputc('\n', fp); fclose(fp); rename(tmp, path);
 }
-static long long count_viol(const geom_t *g, const int8_t *f) {
+static inline long long count_viol(const geom_t *g, const int8_t *f) {
     long long v = 0;
     for (uint64_t l = 0; l < g->L; l++) v += f[g->line[l][0]] * f[g->line[l][1]] * f[g->line[l][2]] != g->sgn[l];
     return v;

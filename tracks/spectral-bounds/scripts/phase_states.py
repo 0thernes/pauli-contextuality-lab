@@ -99,8 +99,8 @@ def phase_amp(N, cs, ccz):
     """amplitudes i^{q(x)},  q = sum_cs x_j x_k + 2 sum_ccz x_j x_k x_l  (mod 4);  p = 2q."""
     amp = []
     for x in range(1 << N):
-        b = lambda j: (x >> j) & 1
-        q = sum(b(j) * b(k) for j, k in cs) + 2 * sum(b(j) * b(k) * b(l) for j, k, l in ccz)
+        q = (sum(((x >> j) & 1) * ((x >> k) & 1) for j, k in cs)
+             + 2 * sum(((x >> j) & 1) * ((x >> k) & 1) * ((x >> l) & 1) for j, k, l in ccz))
         amp.append(fs.I_POW[q % 4])
     return amp
 
@@ -141,7 +141,7 @@ def point_types(S, N):
     Sset = set(S)
     L = fs.lines_of(S, N)
     deg = collections.Counter()
-    for u, v, w, s in L:
+    for u, v, w, _s in L:
         deg[u] += 1; deg[v] += 1; deg[w] += 1
     typ = {}
     for w in range(1, 1 << (2 * N)):
@@ -356,7 +356,7 @@ def main():
     # ---- the six states of flat_states.py are two-character sets as well
     sts, _ = fs.states()
     old = {}
-    for name, N, amp, expect in sts:
+    for name, N, amp, _expect in sts:
         n, p = fs.expectations(amp, N)
         old[name] = sorted(v for v, x in p.items() if v and x)
         two_character(name, old[name], N)

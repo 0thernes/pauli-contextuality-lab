@@ -115,7 +115,7 @@ def run_case(case, n, X, d, e, c0, pairs, rng, out):
               ok, "tr Lambda^3 = %d" % t3L)
         rec[label] = {"tr_Lambda3": t3L, "tr_A3": t3}
     oks = []
-    for k in range(3):
+    for _k in range(3):
         sig = {u: rng.choice((1, -1)) for u in H}
         oks.append(formula_holds(n, H, O, sig, S)[0])
     check("%s, n = %d: the formula for three random sign carriers" % (case, n), all(oks))

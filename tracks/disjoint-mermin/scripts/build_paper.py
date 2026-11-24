@@ -9,6 +9,8 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+PAPER_DIR = REPO_ROOT / "papers" / "disjoint-mermin" if (REPO_ROOT / "papers" / "disjoint-mermin").is_dir() else ROOT / "paper"
 STEM = "contextuality-tensor"
 
 def figures():
@@ -37,7 +39,7 @@ def figures():
     for ax in axes:
         ax.grid(alpha=.18)
     fig.tight_layout(w_pad=3)
-    target = ROOT / "paper/figures"
+    target = PAPER_DIR / "figures"
     target.mkdir(exist_ok=True)
     for ext in ["pdf", "png"]:
         fig.savefig(target / ("gap-and-noise."+ext), dpi=180)
@@ -89,7 +91,7 @@ def main():
     if not args.pandoc or not args.tectonic:
         parser.error("Supply --pandoc and --tectonic executables")
     figures()
-    md = (ROOT / "paper" / (STEM+".md")).read_text(encoding="utf-8")
+    md = (PAPER_DIR / (STEM+".md")).read_text(encoding="utf-8")
     body = "## Abstract"+md.split("## Abstract", 1)[1]
     fragment = subprocess.run([args.pandoc, "--from=markdown+tex_math_dollars", "--to=latex", "--wrap=none",
                                "--shift-heading-level-by=-1", "--no-highlight"], input=body,
@@ -98,42 +100,42 @@ def main():
     fragment = fragment.replace("figures/gap-and-noise.png", "figures/gap-and-noise.pdf")
     fragment = fragment.replace(r"\includegraphics[", r"\includegraphics[width=\linewidth,")
     tex = PREAMBLE+fragment+"\n\\end{document}\n"
-    (ROOT / "paper" / (STEM+".tex")).write_bytes(tex.encode("utf-8"))
+    (PAPER_DIR / (STEM+".tex")).write_bytes(tex.encode("utf-8"))
     with tempfile.TemporaryDirectory(prefix="contextuality-paper-") as tmp:
         stage = Path(tmp)
         (stage / (STEM+".tex")).write_text(tex, encoding="utf-8")
-        shutil.copytree(ROOT / "paper/figures", stage / "figures")
+        shutil.copytree(PAPER_DIR / "figures", stage / "figures")
         result = subprocess.run([args.tectonic, "--untrusted", "--keep-logs", "--print", str(stage/(STEM+".tex"))],
                                 cwd=tmp, capture_output=True, text=True, encoding="utf-8", errors="replace")
         (ROOT / "results/paper-build.log").write_text(result.stdout+result.stderr, encoding="utf-8")
         if result.returncode:
             raise RuntimeError("PDF build failed; see results/paper-build.log")
-        shutil.copyfile(stage/(STEM+".pdf"), ROOT/"paper"/(STEM+".pdf"))
-    target = ROOT / "docs/paper"
+        shutil.copyfile(stage/(STEM+".pdf"), PAPER_DIR/(STEM+".pdf"))
+    target = REPO_ROOT / "build/site/papers/disjoint-mermin"
     target.mkdir(exist_ok=True, parents=True)
     for ext in ["pdf", "tex", "md"]:
-        shutil.copyfile(ROOT/"paper"/(STEM+"."+ext), target/(STEM+"."+ext))
+        shutil.copyfile(PAPER_DIR/(STEM+"."+ext), target/(STEM+"."+ext))
     abstract = body.split("\n## ", 1)[0].removeprefix("## Abstract").strip()
     record = f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Exact contextuality degrees for disjoint Mermin configurations</title>
 <meta name="citation_title" content="Exact contextuality degrees for disjoint Mermin configurations">
 <meta name="citation_author" content="Donahue, Alexander S."><meta name="citation_publication_date" content="2026/11/09">
 <meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
-<meta name="citation_pdf_url" content="https://0thernes.github.io/contextuality-tensor-lab/paper/{STEM}.pdf">
-<link rel="canonical" href="https://0thernes.github.io/contextuality-tensor-lab/paper/">
+<meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/disjoint-mermin/{STEM}.pdf">
+<link rel="canonical" href="https://0thernes.github.io/pauli-contextuality-lab/papers/disjoint-mermin/">
 <style>body{{max-width:850px;margin:60px auto;padding:0 24px;font:18px/1.7 system-ui;color:#183c48;background:#f8faf9}}h1{{line-height:1.18;font-size:36px}}a{{color:#146b81}}.meta{{font-size:15px;color:#536d76}}nav{{display:flex;gap:24px;flex-wrap:wrap}}section{{margin-top:36px}}</style>
 <script>MathJax={{tex:{{inlineMath:[['$','$']]}}}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
-<body><article><p class="meta">CONTEXTUALITY TENSOR LAB / RESEARCH PREPRINT</p><h1>Exact contextuality degrees for disjoint Mermin configurations</h1>
-<p>Alexander S. Donahue · Independent researcher, Spokane, WA, USA</p><p class="meta">9 November 2026 · Version 0.1.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
-<nav><a href="{STEM}.pdf">Read PDF</a><a href="../">Run the lab</a><a href="https://github.com/0thernes/contextuality-tensor-lab">Code and Lean proofs</a></nav>
+<body><article><p class="meta">PAULI CONTEXTUALITY LAB (TRACK 2) / RESEARCH PREPRINT</p><h1>Exact contextuality degrees for disjoint Mermin configurations</h1>
+<p>Alexander S. Donahue · Independent researcher, Spokane, WA, USA</p><p class="meta">24 November 2026 · Version 2.5.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
+<nav><a href="{STEM}.pdf">Read PDF</a><a href="../../disjoint-mermin/">Run the lab</a><a href="https://github.com/0thernes/pauli-contextuality-lab">Code and Lean proofs</a></nav>
 <section><h2>Abstract</h2><p>{html.escape(abstract)}</p></section>
 <section><h2>Verification and disclosure</h2><p>The repository provides the precise Lean theorem boundary, exact certificates, falsification controls and Tsotchke-stack execution records. The manuscript discloses substantive AI contributions. Public hosting is separate from external peer review, repository deposit and indexing.</p></section>
 </article></body></html>'''
     (target / "index.html").write_text(record, encoding="utf-8")
     report = {"status": "passed", "pandoc": subprocess.check_output([args.pandoc,"--version"],text=True).splitlines()[0],
               "tectonic": subprocess.check_output([args.tectonic,"--version"],text=True).strip(),
-              "files": {str(p.relative_to(ROOT)): {"bytes":p.stat().st_size,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()}
-                        for p in sorted((ROOT/"paper").glob(STEM+".*"))}}
+              "files": {str(p.relative_to(REPO_ROOT)): {"bytes":p.stat().st_size,"sha256":hashlib.sha256(p.read_bytes()).hexdigest()}
+                        for p in sorted(PAPER_DIR.glob(STEM+".*"))}}
     (ROOT/"results/paper-build.json").write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
     print(json.dumps(report,indent=2))
 

@@ -47,7 +47,7 @@ def fix_text(text):
             for pi, piece in enumerate(pieces):
                 if piece.startswith("`") or piece.startswith("$`"):
                     continue
-                def repl(m, piece=piece):
+                def repl(m, piece=piece, is_table=is_table, in_emph=in_emph):
                     tex = m.group(1)
                     new = tex
                     if is_table and "|" in new:

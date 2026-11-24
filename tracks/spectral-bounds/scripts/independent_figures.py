@@ -24,7 +24,7 @@ ax.legend(fontsize=8,loc='lower right',frameon=False)
 ax.grid(axis='y',alpha=.17)
 cases=[('Full 3',63,315,63),('Real 4',315,1575,315),('Full 4',1451,5355,1575),
        ('Real 5',6426,23715,6975),('Full 5',28786,86955,31479)]
-for i,(name,lower,L,upper) in enumerate(cases):
+for i,(_name,lower,L,upper) in enumerate(cases):
     lo,hi=lower/L,upper/L
     bx.plot([lo,hi],[i,i],color='#8f493a',lw=4,solid_capstyle='round')
     bx.plot(lo,i,'|',color='#116755',ms=15,mew=2)

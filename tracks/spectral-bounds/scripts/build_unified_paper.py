@@ -28,14 +28,16 @@ import zipfile
 from build_latex import PREAMBLE, fit_tables
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
+PAPER_DIR = REPO_ROOT / 'papers' / 'spectral-bounds' if (REPO_ROOT / 'papers' / 'spectral-bounds').is_dir() else ROOT / 'paper'
 STEM = 'unified-contextuality'
-SOURCE = ROOT / 'paper' / (STEM + '.md')
-PUBLICATION = ROOT / 'publication' / STEM
-VERSION = '1.9.0'
+SOURCE = PAPER_DIR / (STEM + '.md')
+PUBLICATION = PAPER_DIR
+VERSION = '2.5.0'
 RELEASE = 'v' + VERSION
 TITLE = "Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E"
-SITE = 'https://0thernes.github.io/hoggar-bound-lab/'
-REPOSITORY = 'https://github.com/0thernes/hoggar-bound-lab'
+SITE = 'https://0thernes.github.io/pauli-contextuality-lab/'
+REPOSITORY = 'https://github.com/0thernes/pauli-contextuality-lab'
 READER = 'gfm+tex_math_gfm+tex_math_dollars'
 MARKER = '<!-- journal:supplement -->'
 JOURNAL_ACKNOWLEDGMENTS = '''## Acknowledgments
