@@ -152,12 +152,12 @@ def main():
     record['analysis_source_sha256'] = {
         name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
         for name in ('src/evidence.py', 'scripts/run_experiment.py', 'scripts/verify_artifact.py')}
-    (results / 'experiment.json').write_text(json.dumps(record, indent=2, allow_nan=False) + '\n', encoding='utf-8')
-    (results / 'classical_attack_trials.json').write_text(json.dumps(attack, separators=(',', ':')) + '\n', encoding='utf-8')
+    (results / 'experiment.json').write_text(json.dumps(record, indent=2, allow_nan=False) + '\n', encoding='utf-8', newline='\n')
+    (results / 'classical_attack_trials.json').write_text(json.dumps(attack, separators=(',', ':')) + '\n', encoding='utf-8', newline='\n')
     # The web demo consumes the same result, not invented chart values.
     web = ROOT / 'web'
     web.mkdir(exist_ok=True)
-    (web / 'experiment.json').write_text(json.dumps(record, separators=(',', ':'), allow_nan=False) + '\n', encoding='utf-8')
+    (web / 'experiment.json').write_text(json.dumps(record, separators=(',', ':'), allow_nan=False) + '\n', encoding='utf-8', newline='\n')
     print(json.dumps({
         'exact_horizon': args.horizon,
         'naive_false_rejection_probability': exact['naive']['decimal'],
