@@ -8,6 +8,14 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.7.3] — 2026-11-25
+
+### Round-3 Exhaustive Metadata, Abstract Parity & Regression-Guard Hardening
+
+- **Fixed Dead Paths & Stale Abstract Count in `papers/spectral-bounds/unified-metadata.json`:** Replaced nonexistent `"author_declarations_record": "ETHICS.md"` with `"LIMITATIONS.md"` and nonexistent `"distribution_record": "results/verification-summary.json"` with `"results/lean-axioms-all.log"` (plus `"verification_records"` listing all four root audit files), fixed `"scripts/conjecture_e_trace_formula.py"` → `"tracks/spectral-bounds/scripts/conjecture_e_trace_formula.py"` in `ai_provenance`, scoped historical `previous_release` records to archived `hoggar-bound-lab@v1.x.0:` prefixes, and removed GitHub-only backtick-math `` $`|\Psi_{3m}\rangle`$ `` from the TeX `abstract` field.
+- **Synchronized Abstract Theorem Counts Across All 5 Track 1 Formats:** Updated the Abstract in `unified-contextuality.{tex,md,html}`, `unified-abstract.txt`, and `unified-metadata.json` (`abstract` and `abstract_plain_text`) from the stale `"110 newly audited declarations plus retained audits"` to `"110 audited Track 1 declarations within 160 explicit cross-track and 2,206 exhaustively audited declarations"`, harmonized with the `v2.7.2` green CI runs (`45693255547`, `45693255565`) and recompiled all 4 Pauli PDFs with Tectonic (`0` overfull hboxes ≥ 5 pt).
+- **Permanent Metadata Path & Abstract Parity Regression Tests:** Added `test_unified_metadata_paths_and_abstract_parity` to `tests/test_repo_integrity.py` enforcing case-exact existence of every local path in `unified-metadata.json` and guarding against stale `ETHICS.md`, stale `110 newly audited` abstract drift, and backtick-inside-math regressions.
+
 ## [2.7.2] — 2026-11-25
 
 ### Second 3-Cycle × 1,000-Pass Deep-Dive: 12 Fixed 404 HTML CI Links, Abstract Typography, Full Section 9.4–Appendix A Parity & Clean CSV/JSON Export Labels

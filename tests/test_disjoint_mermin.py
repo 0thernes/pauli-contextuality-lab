@@ -135,7 +135,7 @@ class DisjointMerminTests(unittest.TestCase):
             production.compose([production.SQUARE, production.SQUARE]),
         ]:
             ops = [_operator(w) for w in config["observables"]]
-            for context, sign in zip(config["contexts"], config["signs"]):
+            for context, sign in zip(config["contexts"], config["signs"], strict=True):
                 result = _identity(2 ** config["qubits"])
                 for i in context:
                     for j in context:
@@ -154,11 +154,11 @@ class DisjointMerminTests(unittest.TestCase):
 
     def test_direct_seed_assignment_counts(self):
         expected = [{4: 96, 0: 320, -4: 96}, {3: 320, -1: 640, -5: 64}]
-        for seed, wanted in zip([production.SQUARE, production.PENTAGRAM], expected):
+        for seed, wanted in zip([production.SQUARE, production.PENTAGRAM], expected, strict=True):
             histogram = Counter()
             for assignment in itertools.product([-1, 1], repeat=len(seed["observables"])):
                 score = 0
-                for context, sign in zip(seed["contexts"], seed["signs"]):
+                for context, sign in zip(seed["contexts"], seed["signs"], strict=True):
                     value = sign
                     for v in context:
                         value *= assignment[v]

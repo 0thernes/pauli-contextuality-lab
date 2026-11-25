@@ -45,7 +45,7 @@ class SequentialEvidenceTests(unittest.TestCase):
             p = [bet.beta] * 6
             p[vertex] += 1 - 6 * bet.beta
             for assignment in range(512):
-                mean = sum(pi * bet.factor(win) for pi, win in zip(p, outcomes(assignment)))
+                mean = sum(pi * bet.factor(win) for pi, win in zip(p, outcomes(assignment), strict=True))
                 self.assertLessEqual(mean, 1)
 
     def test_exceptional_mixture_budget(self):

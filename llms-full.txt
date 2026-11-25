@@ -144,7 +144,7 @@ The following items are **not** certified by the Lean 4 kernel and are explicitl
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
 repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "2.7.2"
+version: "2.7.3"
 date: "2026-11-25"
 license:
   code: "Apache-2.0"

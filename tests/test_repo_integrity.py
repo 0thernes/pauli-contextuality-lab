@@ -270,7 +270,47 @@ class RepoIntegrityTests(unittest.TestCase):
                 vis = re.sub(r"<!--.*?-->", "", vis, flags=re.DOTALL)
                 if "---" in vis:
                     bad.append(f"{p.relative_to(ROOT)}: raw ASCII --- in visible HTML prose")
-        self.assertEqual(bad, [], f"Malformed paper URLs/headers/typography: {bad}")
+        self.assertEqual(
+            bad, [], f"Malformed paper URLs/headers/typography: {bad}"
+        )
+
+    def test_unified_metadata_paths_and_abstract_parity(self) -> None:
+        meta_path = ROOT / "papers" / "spectral-bounds" / "unified-metadata.json"
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        for key in ("canonical_source", "author_declarations_record", "distribution_record"):
+            val = meta.get(key)
+            self.assertIsInstance(val, str, f"Missing string field {key} in unified-metadata.json")
+            self.assertTrue(
+                path_exists_case_exact(ROOT, ROOT / val),
+                f"Dead repo path in unified-metadata.json[{key}]: {val}",
+            )
+        ver_recs = meta.get("verification_records", [])
+        self.assertGreaterEqual(len(ver_recs), 3)
+        for rec in ver_recs:
+            self.assertTrue(
+                path_exists_case_exact(ROOT, ROOT / rec),
+                f"Dead repo path in unified-metadata.json[verification_records]: {rec}",
+            )
+        self.assertNotIn("ETHICS.md", meta_path.read_text(encoding="utf-8"))
+        self.assertNotRegex(meta["abstract"], r"\$`[^`]+`\$")
+        for rel in (
+            "papers/spectral-bounds/unified-metadata.json",
+            "papers/spectral-bounds/unified-abstract.txt",
+            "papers/spectral-bounds/unified-contextuality.md",
+            "papers/spectral-bounds/unified-contextuality.tex",
+            "papers/spectral-bounds/unified-contextuality.html",
+        ):
+            txt = (ROOT / rel).read_text(encoding="utf-8")
+            self.assertNotIn(
+                "110 newly audited declarations plus retained audits",
+                txt,
+                f"Stale 110-declaration abstract phrasing found in {rel}",
+            )
+            self.assertIn(
+                "2,206 exhaustively audited",
+                txt,
+                f"Missing synchronized 2,206-theorem count in {rel}",
+            )
 
     def test_track_scripts_resolve_shared_monorepo_roots(self) -> None:
         import subprocess
