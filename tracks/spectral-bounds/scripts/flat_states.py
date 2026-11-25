@@ -242,7 +242,7 @@ def main():
     check("pivot: S and the quadric differ in 80 points (40 removed, 40 added), all with a in E",
           len(Sset ^ set(Qstd)) == 80 and all((v & 15) in E for v in Sset ^ set(Qstd)))
     Bf = lambda x, y: (((x >> 0) & 1) * ((y >> 1) & 1) + ((x >> 1) & 1) * ((y >> 0) & 1) + ((x >> 2) & 1) * ((y >> 3) & 1) + ((x >> 3) & 1) * ((y >> 2) & 1)) % 2
-    check("pivot: the five vectors of E are pairwise non-orthogonal for the form of the bent function (an ovoid of the doily)",
+    check("pivot: the five vectors of E are pairwise non-orthogonal for the form of the bent function (an ovoid of the diagonal abstract doily)",
           all(Bf(x, y) == 1 for x in E for y in E if x != y))
     bad = [(u, v, w) for u, v, w, s in rb["lines"] if f[u] * f[v] * f[w] != s]
     zt = lambda v: (v & 15) == 0
@@ -250,7 +250,7 @@ def main():
     check("pivot: the 75 violated contexts are 15 Z-type contexts and 60 with exactly one Z-type point", dict(kinds) == {3: 15, 1: 60}, str(dict(kinds)))
     zl = sorted(tuple(sorted(t >> 4 for t in l)) for l in bad if all(zt(t) for t in l))
     doily = sorted(tuple(sorted((x, y, x ^ y))) for x in range(1, 16) for y in range(x + 1, 16) if (x ^ y) > y and Bf(x, y) == 0)
-    check("pivot: the 15 violated Z-type contexts are the 15 lines of the doily W(3,2) of that form", zl == doily)
+    check("pivot: the 15 violated Z-type contexts are the 15 lines of the abstract doily GQ(2,2) inside the totally isotropic PG(3,2)", zl == doily)
     check("pivot: degree histogram (contexts through a point, violated ones): 120 points (23,1), 15 points (35,7)",
           rb["degree_histogram"] == [[[23, 1], 120], [[35, 7], 15]], str(rb["degree_histogram"]))
 

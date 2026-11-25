@@ -261,7 +261,16 @@ class RepoIntegrityTests(unittest.TestCase):
                 bad.append(f"{p.relative_to(ROOT)}: double consolidated-from string")
             if re.search(r'href="[^"]*\s+[^"]*"', txt):
                 bad.append(f"{p.relative_to(ROOT)}: whitespace inside href URL")
-        self.assertEqual(bad, [], f"Malformed paper URLs/headers: {bad}")
+            if re.search(r"https://github\.com/0thernes/pauli-contextuality-lab/actions/runs/(?:42|44)\d+", txt):
+                bad.append(f"{p.relative_to(ROOT)}: historical hoggar-bound-lab run ID pointing to pauli-contextuality-lab (404)")
+            if p.suffix.lower() == ".tex" and r"-\/-\/-" in txt:
+                bad.append(f"{p.relative_to(ROOT)}: pandoc-mangled em-dash -\\/-\\/-")
+            if p.suffix.lower() == ".html":
+                vis = re.sub(r"<(script|style|pre|code)\b[^>]*>.*?</\1>", "", txt, flags=re.DOTALL | re.IGNORECASE)
+                vis = re.sub(r"<!--.*?-->", "", vis, flags=re.DOTALL)
+                if "---" in vis:
+                    bad.append(f"{p.relative_to(ROOT)}: raw ASCII --- in visible HTML prose")
+        self.assertEqual(bad, [], f"Malformed paper URLs/headers/typography: {bad}")
 
     def test_track_scripts_resolve_shared_monorepo_roots(self) -> None:
         import subprocess

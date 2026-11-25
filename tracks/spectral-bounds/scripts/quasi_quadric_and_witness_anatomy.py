@@ -758,11 +758,11 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
         neg_in_p = sum(1 for _, _, _, s in lines_p if s == -1)
         generators_summary.append(
             {
-                "central_doily_anchor": fmt_pauli(4, p),
+                "diagonal_pg32_anchor": fmt_pauli(4, p),
                 "x_support": fmt_pauli(4, a_x),
                 "fiber_y_parity": y_par,
                 "negative_external_violated_lines": neg_in_p,
-                "fano_plane_in_doily": [fmt_pauli(4, z) for z in fano7],
+                "fano_plane_in_diag_pg32": [fmt_pauli(4, z) for z in fano7],
                 "external_8_observables": [fmt_pauli(4, x) for x in ext8],
                 "four_external_violated_lines": [
                     {"observables": [fmt_pauli(4, anc), fmt_pauli(4, e1), fmt_pauli(4, e2)], "sign": s}
@@ -771,11 +771,11 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
             }
         )
 
-    # Verify the 5 flipped-parity poles form an exact 5-point ovoid of the central doily W(3,2)!
+    # Verify the 5 flipped-parity poles form an exact 5-point ovoid of the diagonal abstract doily GQ(2,2)!
     assert len(ovoid_poles) == 5
     for i, p1 in enumerate(ovoid_poles):
         for p2 in ovoid_poles[i + 1 :]:
-            assert p2 not in adj_d[p1], "Ovoid poles must be pairwise non-collinear in central doily"
+            assert p2 not in adj_d[p1], "Ovoid poles must be pairwise non-collinear in diagonal abstract doily"
     ovoid_set = set(ovoid_poles)
     assert all(sum(x in ovoid_set for x in (u, v, w)) == 1 for u, v, w, _ in doily_viol)
 
@@ -797,7 +797,7 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
         "\n".join(qa_all_lines) + "\n", encoding="utf-8", newline="\n"
     )
 
-    # 2. Qontextium-ready assignment file for the 75 violated contexts (15 central doily + 60 external generator stars)
+    # 2. Qontextium-ready assignment file for the 75 violated contexts (15 diagonal abstract-doily + 60 external generator stars)
     doily_viol_sorted = sorted(doily_viol, key=lambda t: (fmt_pauli(4, t[0]), fmt_pauli(4, t[1]), fmt_pauli(4, t[2])))
     ext_viol_ordered: list[tuple[int, int, int, int]] = []
     for p in doily_pts:
@@ -815,6 +815,8 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
     obs_lines = [
         "# Hyperbolic quasi-quadric S_B in W(7,2) (135 observables, 1,095 contexts, exact degree 75)",
         "# Source: data/flat/n4_pivot.txt (Lean 4 certified in HoggarBound.pivot_degree = 75, pivot_contexts = 1095)",
+        "# Note: The 15 pure-Z observables (role=diagonal_pg32) form a maximal totally isotropic PG(3,2) in W(7,2);",
+        "#       their 15 violated lines form an abstract doily GQ(2,2), NOT a symplectic four-qubit doily.",
         "# Columns: index  pauli  witness_sign  role  ambient_line_deg  violated_line_deg  generator_anchor",
         "",
     ]
@@ -828,32 +830,32 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
     ]
     assert len(ordered_obs) == 135 and set(ordered_obs) == ptset
     for idx, p in enumerate(ordered_obs, 1):
-        role = "central_doily" if p in doily_set else "external_fiber"
+        role = "diagonal_pg32" if p in doily_set else "external_fiber"
         anc = fmt_pauli(4, p) if p in doily_set else fmt_pauli(4, anchor_of_ext[p])
         sgn_str = "+1" if f_sign[p] == 1 else "-1"
         obs_lines.append(f"{idx:3d}  {fmt_pauli(4, p)}  {sgn_str}  {role:14s}  {amb_deg[p]:2d}  {viol_deg[p]}  {anc}")
     (OUT_DIR / "observables_135.txt").write_text("\n".join(obs_lines) + "\n", encoding="utf-8", newline="\n")
 
-    # 4. contexts_1095.csv
+    # 4. contexts_1095.csv (explicitly separating the 15 violated abstract-doily lines from the 20 satisfied lines of D_15!)
     with (OUT_DIR / "contexts_1095.csv").open("w", encoding="utf-8", newline="\n") as fh:
         writer = csv.writer(fh, lineterminator="\n")
-        writer.writerow(["index", "obs1", "obs2", "obs3", "sign", "violated", "doily_points_on_line", "central_doily_anchor"])
+        writer.writerow(["index", "obs1", "obs2", "obs3", "sign", "violated", "diag_pg32_points_on_line", "diag_subspace_role"])
         for idx, (u, v, w, s, is_viol) in enumerate(ctx_sorted, 1):
             d_cnt = sum(x in doily_set for x in (u, v, w))
             anc = ""
             if d_cnt == 1:
                 anc = fmt_pauli(4, next(x for x in (u, v, w) if x in doily_set))
             elif d_cnt == 3:
-                anc = "DOILY"
+                anc = "DIAG_ABSTRACT_DOILY_VIOL" if is_viol else "DIAG_PG32_NONDOILY_SAT"
             writer.writerow([idx, fmt_pauli(4, u), fmt_pauli(4, v), fmt_pauli(4, w), "+1" if s == 1 else "-1", int(is_viol), d_cnt, anc])
 
     # 5. violated_75.csv
     with (OUT_DIR / "violated_75.csv").open("w", encoding="utf-8", newline="\n") as fh:
         writer = csv.writer(fh, lineterminator="\n")
-        writer.writerow(["index", "group", "central_doily_anchor", "x_support", "obs1", "obs2", "obs3", "sign"])
+        writer.writerow(["index", "group", "diagonal_anchor", "x_support", "obs1", "obs2", "obs3", "sign"])
         idx = 1
         for u, v, w, s in doily_viol_sorted:
-            writer.writerow([idx, "central_doily", "DOILY", "IIII", fmt_pauli(4, u), fmt_pauli(4, v), fmt_pauli(4, w), "+1" if s == 1 else "-1"])
+            writer.writerow([idx, "diagonal_abstract_doily", "DIAG_PG32_DOILY", "IIII", fmt_pauli(4, u), fmt_pauli(4, v), fmt_pauli(4, w), "+1" if s == 1 else "-1"])
             idx += 1
         for anc, e1, e2, s in ext_viol_ordered:
             writer.writerow([
@@ -881,7 +883,7 @@ Both `qa_*.txt` files use Qontextium's native `--import assignment` format (`P1,
 # Compute the contextuality degree of the full 135-observable / 1,095-context quasi-quadric:
 ./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_contexts.txt --solver sat --no-interaction
 
-# Inspect / filter the 75-violated-context subgeometry (15 central doily + 60 external star lines):
+# Inspect / filter the 75-violated-context subgeometry (15 diagonal abstract-doily + 60 external star lines):
 ./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_violated_75.txt
 ```
 
@@ -890,10 +892,10 @@ Both `qa_*.txt` files use Qontextium's native `--import assignment` format (`P1,
 | File | Description |
 |---|---|
 | `qa_hyperbolic_quasi_quadric_135_contexts.txt` | All `1,095` contexts in native Qontextium `--import assignment` format (`735` positive, `360` negative). |
-| `qa_hyperbolic_quasi_quadric_135_violated_75.txt` | All `75` violated contexts in native Qontextium format (`15` central doily lines followed by `60` external lines grouped by central-doily anchor). |
-| `observables_135.txt` | All `135` four-qubit Pauli observables with optimal $\\pm 1$ witness signs, ambient line degrees (`35` or `23`), violated degrees (`7` or `1`), and generator anchors. |
-| `contexts_1095.csv` | Annotated CSV of all `1,095` contexts with operator-product sign, violation status, and central-doily incidence count. |
-| `violated_75.csv` | Annotated CSV of all `75` violated contexts grouped into the `15` central doily lines and the `15` four-line external generator stars. |
+| `qa_hyperbolic_quasi_quadric_135_violated_75.txt` | All `75` violated contexts in native Qontextium format (`15` diagonal abstract-doily lines followed by `60` external lines grouped by diagonal anchor). |
+| `observables_135.txt` | All `135` four-qubit Pauli observables with optimal $\\pm 1$ witness signs, ambient line degrees (`35` or `23`), violated degrees (`7` or `1`), and generator anchors (`diagonal_pg32` vs `external_fiber`). |
+| `contexts_1095.csv` | Annotated CSV of all `1,095` contexts with operator-product sign, violation status, and diagonal-$PG(3,2)$ incidence role (`DIAG_ABSTRACT_DOILY_VIOL` for the `15` violated abstract-doily lines vs `DIAG_PG32_NONDOILY_SAT` for the `20` satisfied diagonal lines). |
+| `violated_75.csv` | Annotated CSV of all `75` violated contexts grouped into the `15` diagonal abstract-doily lines and the `15` four-line external generator stars. |
 | `hyperbolic_quasi_quadric_135.json` | Complete machine-readable JSON bundle including the full `135 / 1,095 / 75` dataset, ovoid relation to $Q^+(7,2)$, and exact $Sp(2N,2)$ witness isomorphism certificates for $Q^-(7,2)$, $W(7,2)$, and $Q^+(9,2)$. |
 
 ## Geometric Summary of the `75 = 15 + 60` Violated Contexts
@@ -919,7 +921,7 @@ Regenerated deterministically by `python tracks/spectral-bounds/scripts/quasi_qu
         "ambient_line_degrees": {"35": 15, "23": 120},
         "violated_contexts": 75,
         "violated_point_degrees": {"7": 15, "1": 120},
-        "central_doily": {
+        "diagonal_abstract_doily": {
             "geometry_note": (
                 "D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2) "
                 "(105/105 commuting pairs, 35/35 +I ambient lines); its 15 violated lines "
@@ -937,10 +939,10 @@ Regenerated deterministically by `python tracks/spectral-bounds/scripts/quasi_qu
             "collinearity_distance_profile": {"0": 1, "1": 6, "2": 8},
         },
         "ovoid_relation_to_Q7plus": {
-            "ovoid_poles_in_central_doily": [fmt_pauli(4, p) for p in ovoid_poles],
+            "ovoid_poles_in_diagonal_abstract_doily": [fmt_pauli(4, p) for p in ovoid_poles],
             "flipped_x_supports": [fmt_pauli(4, x) for x in ovoid_x_supports],
-            "pairwise_noncollinear_in_doily": True,
-            "hits_every_doily_line_once": True,
+            "pairwise_noncollinear_in_abstract_doily": True,
+            "hits_every_abstract_doily_line_once": True,
         },
         "remaining_60_violated_lines": {
             "count": 60,

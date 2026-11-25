@@ -10,7 +10,7 @@ Both `qa_*.txt` files use Qontextium's native `--import assignment` format (`P1,
 # Compute the contextuality degree of the full 135-observable / 1,095-context quasi-quadric:
 ./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_contexts.txt --solver sat --no-interaction
 
-# Inspect / filter the 75-violated-context subgeometry (15 central doily + 60 external star lines):
+# Inspect / filter the 75-violated-context subgeometry (15 diagonal abstract-doily + 60 external star lines):
 ./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_violated_75.txt
 ```
 
@@ -19,10 +19,10 @@ Both `qa_*.txt` files use Qontextium's native `--import assignment` format (`P1,
 | File | Description |
 |---|---|
 | `qa_hyperbolic_quasi_quadric_135_contexts.txt` | All `1,095` contexts in native Qontextium `--import assignment` format (`735` positive, `360` negative). |
-| `qa_hyperbolic_quasi_quadric_135_violated_75.txt` | All `75` violated contexts in native Qontextium format (`15` central doily lines followed by `60` external lines grouped by central-doily anchor). |
-| `observables_135.txt` | All `135` four-qubit Pauli observables with optimal $\pm 1$ witness signs, ambient line degrees (`35` or `23`), violated degrees (`7` or `1`), and generator anchors. |
-| `contexts_1095.csv` | Annotated CSV of all `1,095` contexts with operator-product sign, violation status, and central-doily incidence count. |
-| `violated_75.csv` | Annotated CSV of all `75` violated contexts grouped into the `15` central doily lines and the `15` four-line external generator stars. |
+| `qa_hyperbolic_quasi_quadric_135_violated_75.txt` | All `75` violated contexts in native Qontextium format (`15` diagonal abstract-doily lines followed by `60` external lines grouped by diagonal anchor). |
+| `observables_135.txt` | All `135` four-qubit Pauli observables with optimal $\pm 1$ witness signs, ambient line degrees (`35` or `23`), violated degrees (`7` or `1`), and generator anchors (`diagonal_pg32` vs `external_fiber`). |
+| `contexts_1095.csv` | Annotated CSV of all `1,095` contexts with operator-product sign, violation status, and diagonal-$PG(3,2)$ incidence role (`DIAG_ABSTRACT_DOILY_VIOL` for the `15` violated abstract-doily lines vs `DIAG_PG32_NONDOILY_SAT` for the `20` satisfied diagonal lines). |
+| `violated_75.csv` | Annotated CSV of all `75` violated contexts grouped into the `15` diagonal abstract-doily lines and the `15` four-line external generator stars. |
 | `hyperbolic_quasi_quadric_135.json` | Complete machine-readable JSON bundle including the full `135 / 1,095 / 75` dataset, ovoid relation to $Q^+(7,2)$, and exact $Sp(2N,2)$ witness isomorphism certificates for $Q^-(7,2)$, $W(7,2)$, and $Q^+(9,2)$. |
 
 ## Geometric Summary of the `75 = 15 + 60` Violated Contexts

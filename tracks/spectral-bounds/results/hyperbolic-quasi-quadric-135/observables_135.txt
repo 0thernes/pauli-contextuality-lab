@@ -1,22 +1,24 @@
 # Hyperbolic quasi-quadric S_B in W(7,2) (135 observables, 1,095 contexts, exact degree 75)
 # Source: data/flat/n4_pivot.txt (Lean 4 certified in HoggarBound.pivot_degree = 75, pivot_contexts = 1095)
+# Note: The 15 pure-Z observables (role=diagonal_pg32) form a maximal totally isotropic PG(3,2) in W(7,2);
+#       their 15 violated lines form an abstract doily GQ(2,2), NOT a symplectic four-qubit doily.
 # Columns: index  pauli  witness_sign  role  ambient_line_deg  violated_line_deg  generator_anchor
 
-  1  ZIII  -1  central_doily   35  7  ZIII
-  2  IZII  -1  central_doily   35  7  IZII
-  3  ZZII  +1  central_doily   35  7  ZZII
-  4  IIZI  -1  central_doily   35  7  IIZI
-  5  ZIZI  -1  central_doily   35  7  ZIZI
-  6  IZZI  -1  central_doily   35  7  IZZI
-  7  ZZZI  +1  central_doily   35  7  ZZZI
-  8  IIIZ  -1  central_doily   35  7  IIIZ
-  9  ZIIZ  -1  central_doily   35  7  ZIIZ
- 10  IZIZ  -1  central_doily   35  7  IZIZ
- 11  ZZIZ  +1  central_doily   35  7  ZZIZ
- 12  IIZZ  +1  central_doily   35  7  IIZZ
- 13  ZIZZ  +1  central_doily   35  7  ZIZZ
- 14  IZZZ  +1  central_doily   35  7  IZZZ
- 15  ZZZZ  -1  central_doily   35  7  ZZZZ
+  1  ZIII  -1  diagonal_pg32   35  7  ZIII
+  2  IZII  -1  diagonal_pg32   35  7  IZII
+  3  ZZII  +1  diagonal_pg32   35  7  ZZII
+  4  IIZI  -1  diagonal_pg32   35  7  IIZI
+  5  ZIZI  -1  diagonal_pg32   35  7  ZIZI
+  6  IZZI  -1  diagonal_pg32   35  7  IZZI
+  7  ZZZI  +1  diagonal_pg32   35  7  ZZZI
+  8  IIIZ  -1  diagonal_pg32   35  7  IIIZ
+  9  ZIIZ  -1  diagonal_pg32   35  7  ZIIZ
+ 10  IZIZ  -1  diagonal_pg32   35  7  IZIZ
+ 11  ZZIZ  +1  diagonal_pg32   35  7  ZZIZ
+ 12  IIZZ  +1  diagonal_pg32   35  7  IIZZ
+ 13  ZIZZ  +1  diagonal_pg32   35  7  ZIZZ
+ 14  IZZZ  +1  diagonal_pg32   35  7  IZZZ
+ 15  ZZZZ  -1  diagonal_pg32   35  7  ZZZZ
  16  IYII  +1  external_fiber  23  1  ZIII
  17  IYIZ  -1  external_fiber  23  1  ZIII
  18  IYZI  -1  external_fiber  23  1  ZIII

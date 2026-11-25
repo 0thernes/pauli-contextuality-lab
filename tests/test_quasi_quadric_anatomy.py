@@ -47,16 +47,18 @@ class QuasiQuadricAndWitnessAnatomyTests(unittest.TestCase):
             for p in parts:
                 self.assertRegex(p, PAULI4_RE)
 
-        # Verify CSV files have exact row counts
+        # Verify CSV files have exact row counts and unambiguous diagonal PG(3,2) vs abstract-doily labels
         with (EXP_DIR / "contexts_1095.csv").open(encoding="utf-8") as fh:
             ctx_rows = list(csv.DictReader(fh))
         self.assertEqual(len(ctx_rows), 1095)
         self.assertEqual(sum(1 for r in ctx_rows if r["violated"] == "1"), 75)
+        self.assertEqual(sum(1 for r in ctx_rows if r["diag_subspace_role"] == "DIAG_ABSTRACT_DOILY_VIOL"), 15)
+        self.assertEqual(sum(1 for r in ctx_rows if r["diag_subspace_role"] == "DIAG_PG32_NONDOILY_SAT"), 20)
 
         with (EXP_DIR / "violated_75.csv").open(encoding="utf-8") as fh:
             v_rows = list(csv.DictReader(fh))
         self.assertEqual(len(v_rows), 75)
-        self.assertEqual(sum(1 for r in v_rows if r["group"] == "central_doily"), 15)
+        self.assertEqual(sum(1 for r in v_rows if r["group"] == "diagonal_abstract_doily"), 15)
         self.assertEqual(sum(1 for r in v_rows if r["group"] == "external_generator_star"), 60)
 
         # Verify JSON bundle invariants and Sp(2N,2) isomorphism flags
@@ -73,14 +75,14 @@ class QuasiQuadricAndWitnessAnatomyTests(unittest.TestCase):
         self.assertEqual(q4["regular_commutation_degree"], 70)
         self.assertEqual(q4["ambient_contexts"], 1095)
         self.assertEqual(q4["violated_contexts"], 75)
-        cd = q4["central_doily"]
+        cd = q4["diagonal_abstract_doily"]
         self.assertTrue(cd["ambient_subspace_is_maximal_totally_isotropic_PG32"])
         self.assertFalse(cd["is_symplectic_four_qubit_doily"])
         self.assertTrue(cd["all_105_pairs_commute"])
         self.assertTrue(cd["all_35_ambient_lines_positive"])
         self.assertTrue(cd["prop6_512_odd_imaginary_states_share_exact_15_doily_lines"])
-        self.assertTrue(q4["ovoid_relation_to_Q7plus"]["pairwise_noncollinear_in_doily"])
-        self.assertTrue(q4["ovoid_relation_to_Q7plus"]["hits_every_doily_line_once"])
+        self.assertTrue(q4["ovoid_relation_to_Q7plus"]["pairwise_noncollinear_in_abstract_doily"])
+        self.assertTrue(q4["ovoid_relation_to_Q7plus"]["hits_every_abstract_doily_line_once"])
         self.assertTrue(q4["remaining_60_violated_lines"]["all_15_generators_maximal_totally_isotropic_PG32"])
 
 

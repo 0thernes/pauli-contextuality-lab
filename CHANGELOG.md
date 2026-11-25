@@ -8,6 +8,14 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.7.2] — 2026-11-25
+
+### Second 3-Cycle × 1,000-Pass Deep-Dive: 12 Fixed 404 HTML CI Links, Abstract Typography, Full Section 9.4–Appendix A Parity & Clean CSV/JSON Export Labels
+
+- **Fixed 12 Broken HTTP-404 Historical CI Links & Abstract Typography in `unified-contextuality.{tex,html}`:** Restored all 12 historical `hoggar-bound-lab` Actions run URLs (`42741638647`–`44959312365`) in live `papers/spectral-bounds/unified-contextuality.html` that had pointed to `/pauli-contextuality-lab/actions/runs/` (404); fixed raw ASCII `---` in the HTML Abstract (`&mdash;`) and pandoc-mangled `-\/-\/-` in `unified-contextuality.tex` L80–81 (`---`); added permanent regression guards in `tests/test_repo_integrity.py` against all three bug classes.
+- **Complete Section 9.4, Table 10, Section 12, Section 13 & Appendix A Parity Across `.tex`/`.md`/`.html`:** Synchronized `unified-contextuality.{tex,md,html}` so all three formats report `160 explicit #print axioms + 2,206 exhaustively audited theorems`, the `27-node / 162-declaration` Blueprint with MathJax SRI, all `14` C11 ASan/UBSan engines, and live `pauli-contextuality-lab` CI runs (`45675338026`, `45675338061`), while cleaning all remaining nonexistent pre-consolidation local paths (`results/ci-run-...`, `results/publication-v1.*.0-distribution.json`, `results/review-lemmas-20-21/`, `publication/`).
+- **Unambiguous Export Labels for `S_B` (`135 / 1,095 / 75`):** Updated `tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py`, `tracks/spectral-bounds/scripts/flat_states.py`, and `tests/test_quasi_quadric_anatomy.py` so `contexts_1095.csv` explicitly separates the `15` violated abstract-doily lines (`DIAG_ABSTRACT_DOILY_VIOL`) from the `20` satisfied lines inside the maximal totally isotropic $PG(3,2)$ $D_{15}$ (`DIAG_PG32_NONDOILY_SAT`), and renamed misleading `central_doily` keys/columns in `observables_135.txt`, `violated_75.csv`, and `hyperbolic_quasi_quadric_135.json` to `diagonal_pg32` / `diagonal_abstract_doily`. Recompiled all 4 Pauli PDFs with Tectonic (`0` overfull hboxes ≥ 5 pt).
+
 ## [2.7.1] — 2026-11-25
 
 ### 3-Cycle × 1,000-Pass Deep-Dive Hardening, Diagonal Abstract-Doily Precision & Manuscript Parity

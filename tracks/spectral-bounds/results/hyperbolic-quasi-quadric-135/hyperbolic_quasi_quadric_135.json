@@ -332,7 +332,7 @@
       "7": 15,
       "1": 120
     },
-    "central_doily": {
+    "diagonal_abstract_doily": {
       "geometry_note": "D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2) (105/105 commuting pairs, 35/35 +I ambient lines); its 15 violated lines form an abstract doily GQ(2,2) (symplectic linear line complex in PG(3,2)), NOT a symplectic four-qubit doily.",
       "ambient_subspace_is_maximal_totally_isotropic_PG32": true,
       "is_symplectic_four_qubit_doily": false,
@@ -444,7 +444,7 @@
       }
     },
     "ovoid_relation_to_Q7plus": {
-      "ovoid_poles_in_central_doily": [
+      "ovoid_poles_in_diagonal_abstract_doily": [
         "ZIII",
         "ZZII",
         "IZZI",
@@ -458,8 +458,8 @@
         "XIXI",
         "XIXX"
       ],
-      "pairwise_noncollinear_in_doily": true,
-      "hits_every_doily_line_once": true
+      "pairwise_noncollinear_in_abstract_doily": true,
+      "hits_every_abstract_doily_line_once": true
     },
     "remaining_60_violated_lines": {
       "count": 60,
@@ -473,11 +473,11 @@
       "each_generator_violated_lines_equal_7_line_star_of_anchor": true,
       "generators": [
         {
-          "central_doily_anchor": "ZIII",
+          "diagonal_pg32_anchor": "ZIII",
           "x_support": "IXII",
           "fiber_y_parity": 1,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IIZI",
             "ZIZI",
@@ -532,11 +532,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IZII",
+          "diagonal_pg32_anchor": "IZII",
           "x_support": "XIII",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "IZII",
             "IIZI",
             "IZZI",
@@ -591,11 +591,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZZII",
+          "diagonal_pg32_anchor": "ZZII",
           "x_support": "XXII",
           "fiber_y_parity": 1,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZZII",
             "IIZI",
             "ZZZI",
@@ -650,11 +650,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IIZI",
+          "diagonal_pg32_anchor": "IIZI",
           "x_support": "IIIX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IZII",
             "ZZII",
@@ -709,11 +709,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZIZI",
+          "diagonal_pg32_anchor": "ZIZI",
           "x_support": "IXIX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IIZI",
             "ZIZI",
@@ -768,11 +768,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IZZI",
+          "diagonal_pg32_anchor": "IZZI",
           "x_support": "XIIX",
           "fiber_y_parity": 1,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "IZII",
             "IIZI",
             "IZZI",
@@ -827,11 +827,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZZZI",
+          "diagonal_pg32_anchor": "ZZZI",
           "x_support": "XXIX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 2,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZZII",
             "IIZI",
             "ZZZI",
@@ -886,11 +886,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IIIZ",
+          "diagonal_pg32_anchor": "IIIZ",
           "x_support": "IIXI",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IZII",
             "ZZII",
@@ -945,11 +945,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZIIZ",
+          "diagonal_pg32_anchor": "ZIIZ",
           "x_support": "IXXI",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IZZI",
             "ZZZI",
@@ -1004,11 +1004,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IZIZ",
+          "diagonal_pg32_anchor": "IZIZ",
           "x_support": "XIXI",
           "fiber_y_parity": 1,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "IZII",
             "ZIZI",
             "ZZZI",
@@ -1063,11 +1063,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZZIZ",
+          "diagonal_pg32_anchor": "ZZIZ",
           "x_support": "XXXI",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 2,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZZII",
             "ZIZI",
             "IZZI",
@@ -1122,11 +1122,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IIZZ",
+          "diagonal_pg32_anchor": "IIZZ",
           "x_support": "IIXX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 4,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IZII",
             "ZZII",
@@ -1181,11 +1181,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZIZZ",
+          "diagonal_pg32_anchor": "ZIZZ",
           "x_support": "IXXX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 2,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZIII",
             "IZZI",
             "ZZZI",
@@ -1240,11 +1240,11 @@
           ]
         },
         {
-          "central_doily_anchor": "IZZZ",
+          "diagonal_pg32_anchor": "IZZZ",
           "x_support": "XIXX",
           "fiber_y_parity": 1,
           "negative_external_violated_lines": 2,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "IZII",
             "ZIZI",
             "ZZZI",
@@ -1299,11 +1299,11 @@
           ]
         },
         {
-          "central_doily_anchor": "ZZZZ",
+          "diagonal_pg32_anchor": "ZZZZ",
           "x_support": "XXXX",
           "fiber_y_parity": 0,
           "negative_external_violated_lines": 0,
-          "fano_plane_in_doily": [
+          "fano_plane_in_diag_pg32": [
             "ZZII",
             "ZIZI",
             "IZZI",
