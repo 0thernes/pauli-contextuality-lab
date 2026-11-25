@@ -16,23 +16,23 @@ permissions:
 
 jobs:
   lean-verify:
-    name: Build, Axiom Audit, Batteries Linter & 6-Kernel Comparator
+    name: Build, Axiom Audit, Adversarial Test, Batteries Linter & 6-Kernel Comparator
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install elan & Lean 4.35.0
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Install bubblewrap for sandboxed lake comparator
         run: sudo apt-get update && sudo apt-get install -y bubblewrap
-      - name: Fetch pinned Mathlib cache & build all 3 libraries + VerifyAll
+      - name: Fetch pinned Mathlib cache & build all 3 libraries + Solution + VerifyAll
         working-directory: lean
         run: |
           lake exe cache get
           lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll
-      - name: Forbidden-token scan (comment- and string-aware nested lexer)
+      - name: Forbidden-token scan (comment- and string-aware nested lexer; Playbook v1.3 H46)
         run: |
           python3 - <<'PY'
           import re, sys
@@ -68,7 +68,11 @@ jobs:
                           out.append(src[i]); i += 1
               return "".join(out)
 
-          forbidden = re.compile(r"\b(sorry|admit|native_decide|unsafe)\b|^\s*(?:private\s+|protected\s+)?axiom\b|implemented_by|@\[extern")
+          forbidden = re.compile(
+              r"\b(sorry|admit|native_decide|unsafe)\b|"
+              r"^\s*(?:(?:private|protected|noncomputable|scoped|local)\s+)*axiom\b|"
+              r"implemented_by|@\[extern"
+          )
           roots = [
               Path("lean/HoggarBound"),
               Path("lean/ContextualityTensor"),
@@ -82,6 +86,8 @@ jobs:
           for item in roots:
               files = [item] if item.is_file() else sorted(item.rglob("*.lean"))
               for f in files:
+                  if ".lake" in f.parts:
+                      continue
                   cleaned = strip_lean_comments(f.read_text(encoding="utf-8"))
                   for lineno, line in enumerate(cleaned.splitlines(), 1):
                       if forbidden.search(line):
@@ -93,16 +99,58 @@ jobs:
               sys.exit(1)
           print("PASS: 0 forbidden Lean tokens across all proof modules (nested-comment & string-aware scan).")
           PY
-      - name: Run unified exhaustive #print axioms audit (VerifyAll.lean)
+      - name: Run unified exhaustive #print axioms audit (VerifyAll.lean; full output retained)
         working-directory: lean
         shell: bash
         run: |
           set -o pipefail
-          lake env lean VerifyAll.lean | tee ../results/lean-axioms-ci.log
+          lake env lean VerifyAll.lean 2>&1 | tee ../results/lean-axioms-ci.log
       - name: Verify live CI axiom log & committed README sync
         run: |
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-ci.log --require-exhaustive
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-all.log --require-exhaustive
+      - name: Adversarial false-variant definition test (Playbook v1.3 Checklist #12)
+        working-directory: lean
+        shell: bash
+        run: |
+          set +e
+          out1=$(lake env lean --stdin 2>&1 <<'LEAN'
+          import ContextualityTensor
+          theorem adversarial_false_square_degree :
+              ContextualityTensor.violations (fun _ : Fin 1 => ContextualityTensor.squareResponse (fun _ => false)) = 0 := by
+            decide
+          LEAN
+          ); rc1=$?
+          out2=$(lake env lean --stdin 2>&1 <<'LEAN'
+          import Evidence.Square
+          theorem adversarial_false_concrete_win :
+              Evidence.loses (fun _ => false) 5 = false := by
+            decide
+          LEAN
+          ); rc2=$?
+          out3=$(lake env lean --stdin 2>&1 <<'LEAN'
+          import HoggarBound.Quadric
+          theorem adversarial_false_qform_zero :
+              HoggarBound.qform (0 : HoggarBound.Pt 2) = 1 := by
+            decide
+          LEAN
+          ); rc3=$?
+          set -e
+          for pair in "1:$rc1:$out1" "2:$rc2:$out2" "3:$rc3:$out3"; do
+            idx="${pair%%:*}"
+            rest="${pair#*:}"
+            rc="${rest%%:*}"
+            msg="${rest#*:}"
+            if [ "$rc" -eq 0 ] || ! printf '%s' "$msg" | grep -q "proved that the proposition"; then
+              echo "ERROR: Adversarial test $idx did not cleanly refute false proposition (rc=$rc): $msg" >&2
+              exit 1
+            fi
+          done
+          echo "PASS: All 3 cross-track adversarial false-variant Lean theorems were cleanly refuted by kernel decide."
+      - name: Run independent leanchecker --fresh (Playbook v1.3 H04, time-bounded report-only)
+        working-directory: lean
+        continue-on-error: true
+        run: timeout 300 lake env leanchecker --fresh Evidence || true
       - name: Run Batteries linter (report-only)
         working-directory: lean
         continue-on-error: true
@@ -113,7 +161,7 @@ jobs:
           sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0 || true
           lake comparator --config comparator.json --paranoid
       - name: Attest Lean axiom audit report (SLSA / Sigstore)
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@v4
         continue-on-error: true
         with:
           subject-path: results/lean-axioms-ci.log

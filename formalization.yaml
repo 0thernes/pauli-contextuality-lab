@@ -2,7 +2,7 @@
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
 repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "2.7.3"
+version: "2.8.0"
 date: "2026-11-25"
 license:
   code: "Apache-2.0"
@@ -52,7 +52,7 @@ automation:
   models_used:
     - "Anthropic Claude: spectral-floor & saturation study, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs & verifiers"
     - "OpenAI Codex: independent validation, four-qubit C3 counterexample & manuscript audits"
-    - "Google Gemini / Antigravity: Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family |Psi_{3m}>, N=4..5 ladders, NonVacuity, unified monorepo consolidation, Build Standard v1.1.0 & Playbook v1.1 verification stack)"
+    - "Google Gemini / Antigravity: Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family |Psi_{3m}>, N=4..5 ladders, NonVacuity, unified monorepo consolidation, Build Standard v1.2.0 & Playbook v1.3 verification stack)"
   human_line_by_line_review_recorded: false
   statement_fidelity_table: "docs/statement-fidelity.md"
 review_status: "Research preprints; NOT externally peer reviewed; NOT yet registered on Palomar Registry, arXiv, or Zenodo."

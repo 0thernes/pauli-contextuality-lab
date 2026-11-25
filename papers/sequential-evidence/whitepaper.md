@@ -2,7 +2,7 @@
 
 Alexander S. Donahue · Independent researcher, Spokane, WA, USA · ORCID 0009-0006-8168-9648 · CC-BY-4.0  
 AI-assisted research software and methods preprint · 25 November 2026 · https://github.com/0thernes/pauli-contextuality-lab  
-Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 2.7.3 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
+Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 2.8.0 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
 
 ## Abstract
 
@@ -303,7 +303,7 @@ The source, manifest, proof statements, generated records, and checks are all pa
 
 ## 7. Formal verification boundary
 
-The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. The final record in `results/lean-axioms-all.log` is `AXIOM_AUDIT_COUNT 61`; the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
+The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. In the unified repository, these declarations are audited inside `lean/VerifyAll.lean` alongside Tracks 1 and 2 (`results/lean-axioms-all.log` sentinel `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2206 theorems ... — 0 disallowed axioms`); the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
 
 | Mathematical claim | Selected accepted declarations |
 |---|---|
@@ -351,6 +351,10 @@ The paper is an AI-assisted preprint. Its mathematical proofs and executable cer
 
 6. Kexing Ying, Rémy Degenne. *A Formalization of Doob's Martingale Convergence Theorems in mathlib* (2022). [arXiv:2212.05578](https://arxiv.org/abs/2212.05578).
 
-## Authorship and tool disclosure
+## Authorship, CRediT roles, and tool disclosure
 
-The user requested and directed the research task. OpenAI Codex agents generated the mathematical derivations, implementation, tests, Lean proof scripts, literature review, and manuscript text. No human review or independent referee approval is asserted. Tsotchke component authors retain credit for their respective tools; the source repository records third-party provenance and licensing. The project byline identifies the releasing account and does not imply that a human personally authored or verified every statement.
+**CRediT author contributions.** Alexander S. Donahue: Conceptualization; Methodology; Project administration; Resources (self-funded); Supervision; Validation direction and publication decisions.
+
+**AI disclosure and review status.** The user requested and directed the research task. OpenAI Codex agents generated the mathematical derivations, implementation, tests, Lean proof scripts, literature review, and manuscript text; Google Gemini / Antigravity agents integrated Track 3 into the unified `pauli-contextuality-lab` verification stack. AI systems are disclosed as tools, not listed as authors. No human line-by-line review or independent referee approval is asserted. Tsotchke component authors retain credit for their respective tools; the source repository records third-party provenance and licensing. The project byline identifies the releasing account and does not imply that a human personally authored or verified every statement.
+
+**Funding, competing interests, and errata.** This research was self-funded by Alexander S. Donahue as an independent researcher. The author declares no competing interests. Corrections across releases and the formal withdrawal plan are maintained in `ERRATA.md` at the repository root.

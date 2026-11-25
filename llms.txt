@@ -8,8 +8,10 @@
 - [AGENTS.md](AGENTS.md): Canonical instructions, commands, hard rules, and known traps for coding agents
 - [CLAIMS.md](CLAIMS.md): Tagged claims ledger with explicit falsification criteria
 - [LIMITATIONS.md](LIMITATIONS.md): Honest scope, verification boundaries, AI-contribution & CRediT disclosure
+- [ERRATA.md](ERRATA.md): Corrections log, version-vs-concept DOI convention, and formal withdrawal plan
 - [REPLICATION.md](REPLICATION.md): Clean-clone replication protocol and run log
 - [docs/statement-fidelity.md](docs/statement-fidelity.md): Line-by-line mapping between Lean 4 declarations and mathematical definitions
+- [docs/mega-atlas-cross-reference.md](docs/mega-atlas-cross-reference.md): Exhaustive cross-reference against the 1,900-problem Unsolved Problems Mega-Atlas V2
 
 ## Formal proofs & papers
 
@@ -24,4 +26,4 @@
 - [tracks/disjoint-mermin/README.md](tracks/disjoint-mermin/README.md): Track 2 — Disjoint Mermin squares & pentagrams (Muller & Saniga Sec. 6)
 - [tracks/sequential-evidence/README.md](tracks/sequential-evidence/README.md): Track 3 — Exact sequential certificates & setting-bias attack
 - [docs/architecture.md](docs/architecture.md): Repository architecture and verification stack
-- [docs/build-standard.md](docs/build-standard.md): Build Standard for LLMs v1.1.0
+- [docs/build-standard.md](docs/build-standard.md): Build Standard for LLMs v1.2.0

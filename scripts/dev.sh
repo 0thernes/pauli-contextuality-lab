@@ -105,9 +105,12 @@ case "$cmd" in
     ;;
 
   verify-lean)
-    (cd lean && lake build HoggarBound ContextualityTensor Evidence Solution)
+    (cd lean && lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll)
     (cd lean && lake env lean VerifyAll.lean)
     "$PY" -m pytest -v -k test_no_forbidden_lean_tokens_in_proof_modules tests/test_repo_integrity.py
+    (cd lean && lake env leanchecker --fresh Evidence || true)
+    (cd lean && lake env leanchecker --fresh ContextualityTensor || true)
+    (cd lean && lake env leanchecker --fresh Solution || true)
     (cd lean && lake comparator --config comparator.json --paranoid)
     ;;
 
@@ -132,9 +135,12 @@ case "$cmd" in
 
   release)
     ver="${1:?Usage: dev.sh release X.Y.Z}"
+    [[ "$ver" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]] || { echo "Usage: dev.sh release X.Y.Z" >&2; exit 2; }
+    if git rev-parse "v$ver" >/dev/null 2>&1; then echo "tag v$ver already exists" >&2; exit 2; fi
+    grep -Eq "^## \[$ver\]" CHANGELOG.md || { echo "CHANGELOG.md has no '## [$ver]' section" >&2; exit 2; }
     printf '%s\n' "$ver" > VERSION
-    git add VERSION
-    git commit -m "release: v$ver"
+    for f in VERSION CITATION.cff CHANGELOG.md; do [ -f "$f" ] && git add "$f"; done
+    git commit -m "release: v$ver" || true
     git tag -a "v$ver" -m "Release v$ver"
     git push origin main --follow-tags
     ;;

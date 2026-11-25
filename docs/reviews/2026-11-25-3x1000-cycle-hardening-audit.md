@@ -1,7 +1,8 @@
 # 3-Cycle × 1,000-Pass Deep-Dive Hardening Audit (`v2.7.1`–`v2.7.2`)
 
 **Date:** 2026-11-25  
-**Scope:** Two full 3-cycle × 1,000-pass forensic audits (`v2.7.1` and `v2.7.2`) covering all 1,362 tracked non-vendor files across `pauli-contextuality-lab`, `kochen-specker-extremal-lab`, and `0thernes-research-archive`.
+**Scope:** Historical 3-cycle thematic forensic audits (`v2.7.1` and `v2.7.2`) covering all 1,362 tracked non-vendor files across `pauli-contextuality-lab`, `kochen-specker-extremal-lab`, and `0thernes-research-archive`.  
+**Methodology note (Playbook v1.3 H48):** The labels `P0001`–`P3000` denote thematic index checkpoints grouped into three distinct audit cycles rather than 3,000 separate full-repository sweeps; see `docs/reviews/2026-11-25-v280-3cycle-v12-v13-audit.md` for strictly literal per-cycle finding counts under the 10-class Build Standard v1.2.0 taxonomy.
 
 ## Cycle & Domain Summary
 

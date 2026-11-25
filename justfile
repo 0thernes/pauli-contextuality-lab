@@ -1,4 +1,4 @@
-# Task runner for pauli-contextuality-lab (Build Standard v1.1.0, item A31)
+# Task runner for pauli-contextuality-lab (Build Standard v1.2.0, item A31)
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
 # List available recipes
@@ -43,7 +43,7 @@ site:
 reproduce:
     bash scripts/dev.sh reproduce
 
-# Score repository against Build Standard for LLMs v1.1.0 (90 items)
+# Score repository against Build Standard for LLMs v1.2.0 (90 items)
 audit:
     bash scripts/audit-repo.sh .
 

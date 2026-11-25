@@ -2,10 +2,10 @@
   "status": "pass",
   "total_python_files": 70,
   "counts": {
-    "exact_integer_or_symbolic": 33,
+    "exact_integer_or_symbolic": 32,
     "exact_integer_with_math_helpers": 2,
     "hybrid_exact_core_with_numerical_approximation": 8,
-    "numerical_approximation": 27
+    "numerical_approximation": 28
   },
   "note": "All headline mathematical theorems are certified in Lean 4.35.0 or exact integer/rational arithmetic; any file classified as numerical_approximation is explicitly non-proof.",
   "files": [
@@ -35,11 +35,11 @@
     },
     {
       "path": "scripts/check_citations.py",
-      "classification": "exact_integer_or_symbolic",
+      "classification": "numerical_approximation",
       "float_imports": [],
       "exact_imports": [],
       "has_float_call": false,
-      "has_float_literal": false
+      "has_float_literal": true
     },
     {
       "path": "scripts/check_readme_axioms.py",

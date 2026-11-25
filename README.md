@@ -6,13 +6,13 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 [![Lean 4.35.0 Verification](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml)
 [![Pages & Blueprint](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/pauli-contextuality-lab/)
 [![License: Apache-2.0 / CC-BY-4.0](https://img.shields.io/badge/license-Apache--2.0%20%2F%20CC--BY--4.0-green)](LICENSE)
-[![Version 2.7.3](https://img.shields.io/badge/version-2.7.3-informational)](CHANGELOG.md)
+[![Version 2.8.0](https://img.shields.io/badge/version-2.8.0-informational)](CHANGELOG.md)
 
 ![Pauli Contextuality Lab overview](docs/media/social-preview.svg)
 
-**Status:** Active research preprints (`v2.7.3`, 25 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
+**Status:** Active research preprints (`v2.8.0`, 25 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
 **Author:** Alexander S. Donahue, independent researcher ([ORCID 0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648) · `0_0@0thernes.art`).  
-**Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Replication Protocol](REPLICATION.md)
+**Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Errata & Withdrawal](ERRATA.md) · [Mega-Atlas Audit](docs/mega-atlas-cross-reference.md) · [Replication Protocol](REPLICATION.md)
 
 > **Consolidation note:** This repository consolidates four earlier standalone Pauli repositories (`0thernes/hoggar-bound-lab`, `0thernes/hoggar-bound`, `0thernes/contextuality-tensor-lab`, and `0thernes/contextuality-evidence-lab`, all archived read-only with redirects) into one Lean 4.35.0 + Mathlib `v4.35.0` workspace with a single deduplicated `third_party/` stack and open `Apache-2.0` / `CC-BY-4.0` licensing. The zero-Mathlib ray-pool Kochen–Specker repository remains separate at [`0thernes/kochen-specker-extremal-lab`](https://github.com/0thernes/kochen-specker-extremal-lab) to preserve its minimal Mathlib-free trust base.
 
@@ -80,7 +80,7 @@ python scripts/build_blueprint.py
 python scripts/build_site.py
 ```
 
-Expected headline output: `ALL TRACK VERIFICATIONS PASSED.`, `47 passed` in pytest, `2 pass` in Node, and `PASS: Blueprint validated 27 nodes (162 Lean decls with exact GitHub #L links)`.
+Expected headline output: `ALL TRACK VERIFICATIONS PASSED.`, `50 passed` in pytest, `2 pass` in Node, and `PASS: Blueprint validated 27 nodes (162 Lean decls with exact GitHub #L links)`.
 
 ### Full Lean 4.35.0 Verification & 6-Kernel Comparator
 
@@ -103,7 +103,7 @@ lake comparator --config comparator.json --paranoid
   just sanitizers    # Compile & run C11 engines under ASan/UBSan (Linux/macOS)
   just blueprint     # Check every \lean{...} declaration and rebuild dependency graph
   just reproduce     # Clean-clone full exact reproduction
-  just audit         # Score repo against Build Standard for LLMs v1.1.0 (90 items)
+  just audit         # Score repo against Build Standard for LLMs v1.2.0 (90 items)
   ```
 - **Failure / negative-control example:** Running Track 2 verification under Python `-O` deliberately fails rather than silently skipping `assert` checks (`python -O -c "import sys; sys.path.insert(0, 'tracks/disjoint-mermin/src'); import certificates"` exits non-zero with `RuntimeError`). Similarly, mutating any single entry in `data/c3_exact_optima_certs.json` or `tracks/sequential-evidence/results/stack_trials.json` is rejected by `tests/test_mutation_and_fuzz.py` and `tests/test_sequential_evidence.py`.
 

@@ -25,6 +25,6 @@ Without `just`, run `bash scripts/dev.sh <setup|build|test|lint>` directly.
 - Every number or claim in the README has a row in [CLAIMS.md](CLAIMS.md).
 - Update [CHANGELOG.md](CHANGELOG.md) under Unreleased in the same commit.
 - Commit messages are short and imperative (for example `fix: reject empty config`).
-- Classify each finding as exactly one of bug, error, issue, problem, dilemma or conflict (definitions in [AGENTS.md](AGENTS.md)).
+- Classify each finding as exactly one of `bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, or `blindspot` (definitions in [AGENTS.md](AGENTS.md) and [docs/glossary.md](docs/glossary.md)).
 
 AI agents: read [AGENTS.md](AGENTS.md) first.

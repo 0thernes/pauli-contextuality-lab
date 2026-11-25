@@ -9,7 +9,7 @@ date: "25 November 2026"
 **Alexander S. Donahue — Independent researcher, Spokane, WA, USA**  
 ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)  
 Correspondence: [0_0@0thernes.art](mailto:0_0@0thernes.art)  
-Research preprint, version 2.7.3 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
+Research preprint, version 2.8.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
 
 ## Abstract
 
@@ -242,9 +242,13 @@ lake env lean VerifyAll.lean
 
 The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol installation. The independent exact verifier uses the Python standard library. See the repository for platform-specific paths and the exact distinction between rebuilt and pre-recorded components.
 
-## 9. AI contribution and author review status
+## 9. AI contribution, CRediT roles, and author review status
 
-AI agents under human direction contributed problem selection, literature search, derivation, formalization, code, adversarial tests and manuscript drafting. The mathematical and executable checks described above are available for independent scrutiny. Internal agent review is not independent external peer review. Public preprint availability and formal verification do not establish that the named human author has personally completed the critical review or declarations required by a journal; those steps are recorded separately in the publication-status file before any journal submission. No scientific award, institutional endorsement or journal acceptance is claimed.
+**CRediT author contributions.** Alexander S. Donahue: Conceptualization; Methodology; Project administration; Resources (self-funded); Supervision; Validation direction and publication decisions.
+
+**AI disclosure and review status.** AI agents under human direction contributed problem selection, literature search, derivation, formalization, code, adversarial tests and manuscript drafting. AI systems are disclosed as tools, not listed as authors. The mathematical and executable checks described above are available for independent scrutiny. Internal agent review is not independent external peer review. Public preprint availability and formal verification do not establish that the named human author has personally completed the critical review or declarations required by a journal; those steps are recorded separately in the publication-status file before any journal submission. No scientific award, institutional endorsement or journal acceptance is claimed.
+
+**Funding, competing interests, and errata.** This research was self-funded by Alexander S. Donahue as an independent researcher. The author declares no competing interests. Corrections across versions and the formal withdrawal plan are maintained in `ERRATA.md` at the repository root.
 
 ## References
 

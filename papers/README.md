@@ -18,4 +18,4 @@ If you are reviewing this work following correspondence regarding symplectic Pau
 2. **Line-by-line statement audit:** [`docs/statement-fidelity.md`](../docs/statement-fidelity.md) maps every Lean declaration to its mathematical definition in the papers so you can check for definition drift or hidden hypotheses without reading proof scripts.
 3. **Interactive theorem dependency graph:** Browse the Lean Blueprint at [`/blueprint/`](https://0thernes.github.io/pauli-contextuality-lab/blueprint/).
 4. **Honest scope & limitations:** See [`CLAIMS.md`](../CLAIMS.md) (every claim tagged `kernel-checked`, `certificate-checked`, `paper proof`, `numerical_approximation`, or `open`, with explicit falsifiers) and [`LIMITATIONS.md`](../LIMITATIONS.md) (explicit CRediT & AI-contribution disclosure).
-5. **Corrections:** Please open an issue or email `0_0@0thernes.art`.
+5. **Corrections, errata & Mega-Atlas scope:** See [`ERRATA.md`](../ERRATA.md) (corrections log and withdrawal plan) and [`docs/mega-atlas-cross-reference.md`](../docs/mega-atlas-cross-reference.md) (honest 1,900-problem cross-reference). To report an error, open an issue or email `0_0@0thernes.art`.

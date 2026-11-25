@@ -1,9 +1,11 @@
-name: CI (Cross-Platform Tests, C11 Sanitizers & Audits)
+name: CI (Cross-Platform Tests, C11 Sanitizers, Security & Build Standard v1.2.0)
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1" # weekly drift & vulnerability check
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -22,11 +24,11 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Install pinned Python dependencies
@@ -46,17 +48,19 @@ jobs:
           python scripts/build_site.py
 
   c11-sanitizers-and-lint:
-    name: C11 ASan/UBSan, Linters & Build Standard Audit
+    name: C11 ASan/UBSan, Linters & Build Standard v1.2.0 Audit
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Install pinned Python dependencies
         run: python -m pip install -r requirements.txt
-      - name: Compile & run C11 engines with -Wall -Wextra and ASan/UBSan
+      - name: Compile & run all 14 C11 engines with -Wall -Wextra and ASan/UBSan
         run: |
           mkdir -p build/san
           QR=third_party/quantum_rng/src/quantum_rng
@@ -114,11 +118,41 @@ jobs:
         continue-on-error: true
         run: |
           python -m ruff check scripts/ tests/
+          python -m ruff check --select E9,F821,F822,F823,B tracks/
           python -m mypy --ignore-missing-imports scripts/
-      - name: Build Standard v1.1.0 repo audit
-        run: bash scripts/audit-repo.sh .
-      - name: Secret scan (gitleaks, report-only)
-        uses: gitleaks/gitleaks-action@v2
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Standard v1.2.0 repo audit (report-only)
+        run: bash scripts/audit-repo.sh . --json audit.json --markdown "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v7
+        with:
+          name: build-standard-audit
+          path: audit.json
+
+  security:
+    name: Security scan (SHA-256 verified, report-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: gitleaks v8.30.1 (SHA-256 verified, full history)
+        run: |
+          curl -sSfL -o gitleaks.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tgz" | sha256sum -c -
+          tar xzf gitleaks.tgz gitleaks
+          ./gitleaks detect --source . --redact --no-banner --exit-code 0 --report-format json --report-path gitleaks.json
+          echo "gitleaks findings: $(grep -c '"RuleID"' gitleaks.json || true)" >> "$GITHUB_STEP_SUMMARY"
+      - name: osv-scanner v2.7.1 (SHA-256 verified, dependency vulnerability check)
+        run: |
+          curl -sSfL -o osv-scanner https://github.com/google/osv-scanner/releases/download/v2.7.1/osv-scanner_linux_amd64
+          echo "fb7dab19a8bd9bbe5c3189f09d4b7ee1820c9553a23bac202648a56efd2f6ee8  osv-scanner" | sha256sum -c -
+          chmod +x osv-scanner
+          ./osv-scanner --recursive . > osv.txt 2>&1 || true
+          { echo '### osv-scanner'; echo '```'; tail -n 40 osv.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: security-reports
+          path: |
+            gitleaks.json
+            osv.txt

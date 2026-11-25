@@ -2,7 +2,7 @@
 
 Canonical instructions for every coding agent working in `pauli-contextuality-lab` (Codex, OpenCode, Claude Code, Gemini CLI, Antigravity, Cursor, Grok Build, Grok Bot, and others).
 `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/build-standard.mdc`, and `llms.txt` only point here. Edit this file, never the pointers.
-Full standard: `docs/build-standard.md` (Build Standard for LLMs v1.1.0, 90 items).
+Full standard: `docs/build-standard.md` (Build Standard for LLMs v1.2.0, 90 items).
 
 ## Project
 
@@ -24,7 +24,7 @@ Full standard: `docs/build-standard.md` (Build Standard for LLMs v1.1.0, 90 item
 - `data/`: Witness hex masks, flat-state supports, and `data/MANIFEST.sha256`.
 - `third_party/`: Single deduplicated vendored Tsotchke stack (`moonlab/`, `qgtl/`, `quantum_rng/`, `SHA256SUMS.json`).
 - `blueprint/`: Lean Blueprint LaTeX (`blueprint/src/content.tex`) + declaration-checked dependency graph builder.
-- `scripts/`: Unified verification (`verify_all.py`), Blueprint builder (`build_blueprint.py`), static site builder (`build_site.py`), citation/axiom/arithmetic audits, and Build Standard v1.1.0 auditors (`audit-repo.sh`, `Audit-Repo.ps1`).
+- `scripts/`: Unified verification (`verify_all.py`), Blueprint builder (`build_blueprint.py`), static site builder (`build_site.py`), citation/axiom/arithmetic audits, and Build Standard v1.2.0 auditors (`audit-repo.sh`, `Audit-Repo.ps1`).
 - `tests/`: Automated Python (exact, Hypothesis property, negative, mutation/fuzz, integrity) and Node.js test suites.
 - `docs/`: Architecture, ADRs, statement-fidelity table, threat model, operations, FAQ, glossary, run log, and 10-pass review logs.
 
@@ -41,18 +41,18 @@ Run via `just <recipe>` or `bash scripts/dev.sh <recipe>`:
 - `just blueprint`: Validate every `\lean{...}` declaration in `blueprint/src/content.tex` and build the dependency graph.
 - `just site`: Assemble the unified GitHub Pages portal (`build/site/`) including all 3 browser labs, papers, and `/blueprint/`.
 - `just reproduce`: Clean-clone end-to-end exact verification + audits + blueprint + site assembly.
-- `just audit`: Score this repository against Build Standard v1.1.0 (`scripts/audit-repo.sh` / `scripts/Audit-Repo.ps1`).
+- `just audit`: Score this repository against Build Standard v1.2.0 (`scripts/audit-repo.sh` / `scripts/Audit-Repo.ps1`).
 - `just release X.Y.Z`: Bump `VERSION`, update `CHANGELOG.md`/`CITATION.cff`, tag `vX.Y.Z`, and push straight to `main`.
 
-## Hard Rules (Build Standard v1.1.0)
+## Hard Rules (Build Standard v1.2.0)
 
-- **R1.** Nothing may gate, block, or slow a commit or push. No branch protection, no required status checks, no commit/tag signing requirements, no git hooks, no push protection, no merge queues.
+- **R1.** Nothing may gate, block, or slow a commit or push. No branch protection, no required status checks, no commit/tag signing requirements, no git hooks, no push protection, no merge queues, no coverage/lint/SAST/SBOM gates.
 - **R2.** Commit and push straight to `main`. No pull requests and no feature branches.
 - **R3.** CI is informational. Failures are findings fixed in follow-up commits to `main`.
 - **R4.** Banned tools/files: no Dependabot/Renovate, no PR templates, no CodeRabbit, no Copilot review or `.github/copilot-instructions.md`, no `FUNDING.yml`.
 - **R5.** One-person lean, not corporate. Prefer one file over a framework, one command over a checklist.
 - **R6.** Never fabricate. Every number, claim, axiom output, badge, and test result must come from a real run of current code.
-- **R7.** Classify every finding as exactly one of: `bug`, `error`, `issue`, `problem`, `dilemma`, `conflict`.
+- **R7.** Classify every finding as exactly one of the 10 classes: `bug`, `error`, `issue`, `problem`, `concern`, `dilemma`, `conflict`, `gap`, `hole`, `blindspot` (definitions in `docs/glossary.md`).
 - **R8.** Precedence: Owner's explicit instruction > Hard Rules > Build Standard items > ecosystem conventions.
 
 ## Known Traps

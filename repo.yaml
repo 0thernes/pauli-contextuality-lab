@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./repo-standard.schema.json
-# Project manifest for Build Standard for LLMs v1.1.0.
-standard: "1.1.0"
+# Project manifest for Build Standard for LLMs v1.2.0.
+standard: "1.2.0"
 name: "pauli-contextuality-lab"
 description: "Unified Lean 4.35.0 and exact-verification laboratory for Pauli contextuality: spectral bounds, floor-saturating states, Jonah Conjecture E, disjoint Mermin tensor degrees, and sequential contextuality evidence."
 owner: "Alexander S. Donahue (0thernes)"
 year: "2026"
 project_type: research
-stack: [lean, python, c-cpp, node]
+stack: [python, c-cpp, node, other]
 flags:
   public: true
   package: false

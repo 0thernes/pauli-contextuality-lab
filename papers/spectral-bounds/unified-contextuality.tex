@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.7.3 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 2.8.0 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -2379,7 +2379,7 @@ independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, added Batt
 editable modules, added a declaration-checked Lean Blueprint (\texttt{blueprint/}, mounted at \texttt{/blueprint/}),
 enforced the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.7.3; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255547}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255565}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
+provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.8.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255547}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255565}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 
@@ -2880,7 +2880,9 @@ arithmetic precision audit labeling exploratory floating-point scripts as \nolin
 which detected and fixed a stale 404 GitHub Actions run URL in Section 9.4), property/mutation/fuzz tests
 (\nolinkurl{tests/test_properties.py}, \nolinkurl{tests/test_mutation_and_fuzz.py}), cross-platform CI with C ASan/UBSan
 sanitizers and Sigstore SLSA release provenance attestations, and transparent \texttt{LIMITATIONS.md} /
-\nolinkurl{formalization.yaml} / Build Standard v1.1.0 documentation.
+\nolinkurl{formalization.yaml} / Build Standard v1.2.0 and Playbook v1.3 documentation.
+
+\textbf{CRediT author contributions.} Alexander S. Donahue: Conceptualization; Methodology; Project administration; Resources (self-funded); Supervision; Validation direction and publication decisions.
 
 \textbf{AI disclosure statement.} Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity were
 used for substantive research, software, formalization and writing, not merely language correction. The
@@ -2892,6 +2894,8 @@ tools, not listed as authors.
 
 \textbf{Funding and competing interests.} This research was self-funded by Alexander S. Donahue as an independent researcher.
 The author declares no competing interests.
+
+\textbf{Errata and versioning.} Corrections across releases, the version-vs-concept DOI citation convention, and the formal withdrawal plan are maintained in \texttt{ERRATA.md} at the repository root.
 
 \textbf{Data availability statement.} Source, data, formal proofs, test results and the earlier manuscripts
 are available in \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (consolidated from the archived \texttt{hoggar-bound-lab} v1.9.0 snapshot; Track~1 scripts, C~sources, and JSON receipts live under \texttt{tracks/spectral-bounds/}). Release and workflow
@@ -2990,7 +2994,7 @@ cd .. && bash tracks/spectral-bounds/scripts/run_family7.sh
 
 The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0--v2.7.3 verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0--v2.8.0 verification audits, from
 the repository root:
 
 \begin{verbatim}
@@ -3018,7 +3022,7 @@ python tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py
 
 Their exact-verifier last lines read \texttt{30\ of\ 30}, \texttt{14\ of\ 14}, \texttt{43\ of\ 43}, \texttt{18\ of\ 18}, \texttt{21\ of\ 21},
 \texttt{81\ of\ 81}, \texttt{36\ of\ 36}, \texttt{115\ of\ 115}, \texttt{46\ of\ 46}, \texttt{97\ of\ 97}, \texttt{39\ of\ 39}, \texttt{15\ of\ 15}, \texttt{10\ of\ 10},
-\texttt{32\ of\ 32} and \texttt{9\ of\ 9\ checks\ passed}; the search prints its class counts; and the v1.9.0--v2.7.3 verification
+\texttt{32\ of\ 32} and \texttt{9\ of\ 9\ checks\ passed}; the search prints its class counts; and the v1.9.0--v2.8.0 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 \nolinkurl{c3_sdp_dual_check.py}).
 

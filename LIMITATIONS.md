@@ -28,6 +28,6 @@ The following items are **not** certified by the Lean 4 kernel and are explicitl
 - **AI tools used:**
   - **Anthropic Claude:** Initial spectral-floor and saturation studies, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs and verifiers.
   - **OpenAI Codex:** Independent validation, four-qubit C3 counterexample, manuscript review.
-  - **Google Gemini / Antigravity:** Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family $|\Psi_{3m}\rangle$, $N=4,5$ ladders, `NonVacuity`, unified monorepo consolidation, Build Standard v1.1.0 & verification stack).
+  - **Google Gemini / Antigravity:** Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family $|\Psi_{3m}\rangle$, $N=4,5$ ladders, `NonVacuity`, unified monorepo consolidation, Build Standard v1.2.0 & Playbook v1.3 verification stack).
 - **Responsibility:** No AI system is listed as an author. Alexander S. Donahue takes full responsibility for all claims, errors, and corrections (`0_0@0thernes.art`).
 - **Conflict of interest:** None declared (self-funded independent research).

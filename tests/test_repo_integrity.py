@@ -151,7 +151,9 @@ class RepoIntegrityTests(unittest.TestCase):
     def test_no_legacy_llc_or_verification_licence_in_active_papers_and_docs(self) -> None:
         pat = re.compile(r"0thernes\s+LLC|verification\s+licen[cs]e", re.I)
         active = [
-            "README.md", "CLAIMS.md", "LIMITATIONS.md", "REPLICATION.md", "LEGAL.md",
+            "README.md", "CLAIMS.md", "LIMITATIONS.md", "REPLICATION.md", "ERRATA.md", "NOTICE",
+            "CITATION.cff", "formalization.yaml", "repo.yaml", "AGENTS.md",
+            "docs/mega-atlas-cross-reference.md", "docs/statement-fidelity.md", "docs/threat-model.md",
             "papers/README.md",
             "papers/spectral-bounds/unified-contextuality.tex",
             "papers/spectral-bounds/unified-contextuality.md",
@@ -224,7 +226,11 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertGreaterEqual(checked, 10)
 
     def test_no_forbidden_lean_tokens_in_proof_modules(self) -> None:
-        forbidden = re.compile(r"\b(sorry|admit|native_decide|unsafe)\b|^\s*(?:private\s+|protected\s+)?axiom\b|implemented_by|@\[extern")
+        forbidden = re.compile(
+            r"\b(sorry|admit|native_decide|unsafe)\b|"
+            r"^\s*(?:(?:private|protected|noncomputable|scoped|local)\s+)*axiom\b|"
+            r"implemented_by|@\[extern"
+        )
         roots = [
             ROOT / "lean" / "HoggarBound",
             ROOT / "lean" / "ContextualityTensor",
@@ -238,11 +244,84 @@ class RepoIntegrityTests(unittest.TestCase):
         for item in roots:
             files = [item] if item.is_file() else sorted(item.rglob("*.lean"))
             for f in files:
+                if ".lake" in f.parts:
+                    continue
                 cleaned = strip_lean_comments(f.read_text(encoding="utf-8"))
                 for lineno, line in enumerate(cleaned.splitlines(), 1):
                     if forbidden.search(line):
                         hits.append(f"{f.relative_to(ROOT)}:{lineno}: {line.strip()}")
         self.assertEqual(hits, [], f"Forbidden Lean tokens found: {hits}")
+
+    def test_build_standard_v12_manifest_and_ten_finding_classes(self) -> None:
+        import yaml
+
+        schema = json.loads((ROOT / "repo-standard.schema.json").read_text(encoding="utf-8"))
+        self.assertEqual(schema["$id"], "urn:0thernes:build-standard:repo-manifest-schema:1.2.0")
+        manifest = yaml.safe_load((ROOT / "repo.yaml").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["standard"], "1.2.0")
+        allowed_stacks = set(schema["properties"]["stack"]["items"]["enum"])
+        for entry in manifest["stack"]:
+            self.assertIn(entry, allowed_stacks, f"Invalid stack value in repo.yaml: {entry!r}")
+        allowed_types = set(schema["properties"]["project_type"]["enum"])
+        self.assertIn(manifest["project_type"], allowed_types)
+        try:
+            import jsonschema
+
+            jsonschema.validate(instance=manifest, schema=schema)
+        except ImportError:
+            pass
+
+        ten_classes = [
+            "bug", "error", "issue", "problem", "concern",
+            "dilemma", "conflict", "gap", "hole", "blindspot",
+        ]
+        labels_txt = (ROOT / ".github" / "labels.tsv").read_text(encoding="utf-8")
+        bug_form_txt = (ROOT / ".github" / "ISSUE_TEMPLATE" / "bug.yml").read_text(encoding="utf-8")
+        glossary_txt = (ROOT / "docs" / "glossary.md").read_text(encoding="utf-8")
+        for cls in ten_classes:
+            self.assertRegex(labels_txt, re.compile(rf"^{cls}\t", re.M), f"Missing label '{cls}' in .github/labels.tsv")
+            self.assertIn(f'"{cls}:', bug_form_txt, f"Missing finding class '{cls}' in .github/ISSUE_TEMPLATE/bug.yml")
+            self.assertIn(f"**{cls}**", glossary_txt, f"Missing finding class '{cls}' in docs/glossary.md")
+
+    def test_playbook_v13_errata_mega_atlas_and_native_axiom_rejection(self) -> None:
+        import importlib.util
+
+        errata = (ROOT / "ERRATA.md").read_text(encoding="utf-8")
+        self.assertIn("Withdrawal Plan", errata)
+        self.assertIn("version-specific DOI", errata)
+        mega = (ROOT / "docs" / "mega-atlas-cross-reference.md").read_text(encoding="utf-8")
+        self.assertIn("0 / 1,900", mega)
+        self.assertIn("QM-011", mega)
+
+        # Verify check_readme_axioms.py rejects Lean 4.35 _native.*, ofReduceBool, trustCompiler, sorryAx
+        spec = importlib.util.spec_from_file_location("check_readme_axioms", ROOT / "scripts" / "check_readme_axioms.py")
+        assert spec is not None and spec.loader is not None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        sample = (
+            "'A.clean' does not depend on any axioms\n"
+            "'A.wrapped' depends on axioms: [propext,\n"
+            "  Classical.choice, Quot.sound]\n"
+            "'A.bad_native' depends on axioms: [propext, A.bad_native._native.native_decide.ax_1]\n"
+            "'A.bad_bool' depends on axioms: [Lean.ofReduceBool]\n"
+            "'A.bad_sorry' depends on axioms: [sorryAx]\n"
+        )
+        parsed = mod.parse_log(sample)
+        self.assertEqual(parsed["A.clean"], set())
+        self.assertEqual(parsed["A.wrapped"], {"propext", "Classical.choice", "Quot.sound"})
+        self.assertFalse(parsed["A.bad_native"] <= mod.ALLOWED)
+        self.assertFalse(parsed["A.bad_bool"] <= mod.ALLOWED)
+        self.assertFalse(parsed["A.bad_sorry"] <= mod.ALLOWED)
+
+        # Verify Palomar size caps on Challenge.lean and all Lean modules (Playbook v1.3 H14)
+        ch = ROOT / "lean" / "Challenge.lean"
+        self.assertLessEqual(len(ch.read_text(encoding="utf-8").splitlines()), 1000)
+        self.assertLessEqual(ch.stat().st_size, 102400)
+        for lf in (ROOT / "lean").rglob("*.lean"):
+            if ".lake" in lf.parts:
+                continue
+            self.assertFalse(lf.is_symlink(), f"Lean file must not be a symlink: {lf}")
+            self.assertLessEqual(len(lf.read_text(encoding="utf-8").splitlines()), 10000)
 
     def test_no_template_placeholders(self) -> None:
         pat = re.compile(r"\{\{(PROJECT_NAME|DESCRIPTION|OWNER|YEAR|DATE)\}\}")

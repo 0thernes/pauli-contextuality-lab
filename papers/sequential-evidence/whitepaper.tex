@@ -21,7 +21,7 @@
 \hypersetup{pdftitle={Contextuality Evidence Lab: Exact Sequential Certificates and a Constructive Setting-Bias Attack},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-10mm}\sffamily\bfseries Contextuality Evidence Lab:\\Exact Sequential Certificates and a Constructive Setting-Bias Attack}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{25 November 2026\quad\textbullet\quad Pauli Contextuality Lab (Track 3), Version 2.7.3\quad\textbullet\quad CC-BY-4.0}
+\date{25 November 2026\quad\textbullet\quad Pauli Contextuality Lab (Track 3), Version 2.8.0\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not externally peer reviewed. Code: Apache-2.0; manuscript: CC-BY-4.0.\\Repository: \href{https://github.com/0thernes/pauli-contextuality-lab}{https://github.com/0thernes/pauli-contextuality-lab}\end{center}
@@ -672,9 +672,12 @@ boundary}\label{formal-verification-boundary}
 
 The Lean project successfully checked 39 authored theorems. Its
 exhaustive audit covered 61 proposition-valued declarations in the
-\texttt{Evidence} namespace, including generated equation lemmas. The
-final record in \texttt{results/lean-axioms-all.log} is
-\texttt{AXIOM\_AUDIT\_COUNT\ 61}; the only transitive axiom dependencies
+\texttt{Evidence} namespace, including generated equation lemmas. In the
+unified repository, these declarations are audited inside
+\texttt{lean/VerifyAll.lean} alongside Tracks~1 and~2
+(\texttt{results/lean-axioms-all.log} sentinel
+\texttt{ALL\_THEOREMS\_AXIOM\_AUDIT\_PASS: checked 2206 theorems ... --- 0 disallowed axioms});
+the only transitive axiom dependencies
 are the standard foundations \texttt{propext},
 \texttt{Classical.choice}, and \texttt{Quot.sound}. The proof source
 contains no admitted proofs, added project axioms, or
@@ -827,16 +830,30 @@ public availability is not journal acceptance.
   \href{https://arxiv.org/abs/2212.05578}{arXiv:2212.05578}.
 \end{enumerate}
 
-\subsection{Authorship and tool
+\subsection{Authorship, CRediT roles, and tool
 disclosure}\label{authorship-and-tool-disclosure}
 
-The user requested and directed the research task. OpenAI Codex agents
-generated the mathematical derivations, implementation, tests, Lean
-proof scripts, literature review, and manuscript text. No human review
-or independent referee approval is asserted. Tsotchke component authors
-retain credit for their respective tools; the source repository records
-third-party provenance and licensing. The project byline identifies the
-releasing account and does not imply that a human personally authored or
-verified every statement.
+\textbf{CRediT author contributions.} Alexander S. Donahue:
+Conceptualization; Methodology; Project administration; Resources
+(self-funded); Supervision; Validation direction and publication
+decisions.
+
+\textbf{AI disclosure and review status.} The user requested and
+directed the research task. OpenAI Codex agents generated the
+mathematical derivations, implementation, tests, Lean proof scripts,
+literature review, and manuscript text; Google Gemini / Antigravity
+agents integrated Track~3 into the unified \texttt{pauli-contextuality-lab}
+verification stack. AI systems are disclosed as tools, not listed as
+authors. No human line-by-line review or independent referee approval is
+asserted. Tsotchke component authors retain credit for their respective
+tools; the source repository records third-party provenance and
+licensing. The project byline identifies the releasing account and does
+not imply that a human personally authored or verified every statement.
+
+\textbf{Funding, competing interests, and errata.} This research was
+self-funded by Alexander S. Donahue as an independent researcher. The
+author declares no competing interests. Corrections across releases and
+the formal withdrawal plan are maintained in \texttt{ERRATA.md} at the
+repository root.
 
 \end{document}

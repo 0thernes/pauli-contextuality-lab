@@ -145,7 +145,7 @@ def main():
               'source_sha256': {name: hashlib.sha256(data).hexdigest() for name, data in sources.items()},
               'script_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
               'arithmetic': 'Python arbitrary-precision integers for every certificate product; exact literal entries 0,+/-1,+/-i during tensor construction'}
-    (ROOT / 'results/frontier-c3-certificate-audit.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
+    (ROOT / 'results/frontier-c3-certificate-audit.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8', newline='\n')
     print(json.dumps(report, indent=2))
 
 
