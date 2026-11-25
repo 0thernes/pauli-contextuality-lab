@@ -73,6 +73,12 @@ class QuasiQuadricAndWitnessAnatomyTests(unittest.TestCase):
         self.assertEqual(q4["regular_commutation_degree"], 70)
         self.assertEqual(q4["ambient_contexts"], 1095)
         self.assertEqual(q4["violated_contexts"], 75)
+        cd = q4["central_doily"]
+        self.assertTrue(cd["ambient_subspace_is_maximal_totally_isotropic_PG32"])
+        self.assertFalse(cd["is_symplectic_four_qubit_doily"])
+        self.assertTrue(cd["all_105_pairs_commute"])
+        self.assertTrue(cd["all_35_ambient_lines_positive"])
+        self.assertTrue(cd["prop6_512_odd_imaginary_states_share_exact_15_doily_lines"])
         self.assertTrue(q4["ovoid_relation_to_Q7plus"]["pairwise_noncollinear_in_doily"])
         self.assertTrue(q4["ovoid_relation_to_Q7plus"]["hits_every_doily_line_once"])
         self.assertTrue(q4["remaining_60_violated_lines"]["all_15_generators_maximal_totally_isotropic_PG32"])

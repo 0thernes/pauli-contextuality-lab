@@ -30,15 +30,24 @@ Pure exact integer arithmetic (zero floating point). Verifies:
        and commutation regularity as Q^+(7,2)), ambient line counts
        1,095 = 735 (+I) + 360 (-I), ambient line-degree split {35: 15, 23: 120}.
      - Obtained from Q^+(7,2) by flipping the Y-parity of the 5 affine AG(3,2)
-       fibers whose unique central-doily poles form a 5-point ovoid of the
-       central doily (0 collinear pairs; hitting all 15 doily lines once each).
+       fibers whose unique poles form a 5-point ovoid of the diagonal abstract
+       doily (0 collinear pairs; hitting all 15 abstract doily lines once each).
      - Violated-context decomposition (75 = 15 + 60):
-       * Central doily (15 lines, all +I, degree-triple (7,7,7)) on the 15 pure-Z
-         observables D_15 ~= PG(3,2), forming an exact doily W(3,2) = GQ(2,2).
+       * Diagonal abstract doily (15 lines, all +I, degree-triple (7,7,7)) on
+         the 15 pure-Z observables D_15 ~= PG(3,2). Because all 15 observables
+         in D_15 pairwise commute (105/105 pairs, 35/35 +I ambient lines),
+         D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2); its
+         15 violated lines form an abstract doily GQ(2,2) as a point-line
+         incidence structure (a symplectic linear line complex in PG(3,2)),
+         NOT a symplectic four-qubit doily (where collinearity = commutation
+         and an odd number of lines are negative). Alone, these 15 +I lines
+         are noncontextual and are forced into violation by the 120 external
+         observables; all 512 projective odd-imaginary flat states of
+         Proposition 6 violate the exact same 15 diagonal lines.
        * Remaining 60 violated lines (48 +I, 12 -I, all degree-triple (1,1,7)):
          pairwise disjoint on all 120 external observables (60 * 2 = 120),
          partitioning into 15 four-line pencils -- exactly 4 external violated
-         lines through each central-doily point p in D_15. At each p, the 8
+         lines through each diagonal point p in D_15. At each p, the 8
          external points on its 4 lines share a single nonzero X-part a(p),
          pairwise commute (28/28 pairs), and together with the 7-point Fano
          plane p^perp_doily form a maximal totally isotropic PG(3,2) generator
@@ -317,13 +326,13 @@ def find_explicit_symplectic_iso(
                 assert symp(n, f_vecs[i], f_vecs[j]) == 0
                 assert symp(n, e_vecs[i], f_vecs[j]) == (1 if i == j else 0)
 
-        def apply_t(u: int) -> int:
+        def apply_t(u: int, e_basis: list[int] = e_vecs, f_basis: list[int] = f_vecs) -> int:
             xv = 0
             zv = 0
             for i in range(n):
-                if symp(n, u, f_vecs[i]):
+                if symp(n, u, f_basis[i]):
                     xv |= 1 << i
-                if symp(n, e_vecs[i], u):
+                if symp(n, e_basis[i], u):
                     zv |= 1 << i
             return xv | (zv << n)
 
@@ -386,7 +395,7 @@ def analyze_q7minus(label: str, pts: list[int], viol: list[tuple[int, int, int, 
     assert sorted(len(v) for v in shells.values()) == [28, 28, 28]
 
     hexagons = []
-    for sig, s28 in sorted(shells.items()):
+    for _sig, s28 in sorted(shells.items()):
         h_pts = set(p3) | set(p7) | set(s28)
         h_lines = [line for line in viol if line[0] in h_pts and line[1] in h_pts and line[2] in h_pts]
         assert len(h_pts) == 63 and len(h_lines) == 63
@@ -619,12 +628,26 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
     viol = [(u, v, w, s) for u, v, w, s, iv in contexts if iv]
     assert len(viol) == 75
 
-    # Central doily D_15 = 15 pure-Z observables (violated degree 7, ambient degree 35)
+    # Diagonal subspace D_15 = 15 pure-Z observables (violated degree 7, ambient degree 35).
+    # Verify explicitly that D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2)
+    # (105/105 commuting pairs, 35/35 +I ambient lines), so the 15 violated lines form an
+    # abstract doily GQ(2,2) (symplectic linear line complex in PG(3,2)), NOT a symplectic
+    # four-qubit doily.
     doily_pts = sorted(p for p in pts if viol_deg[p] == 7)
     ext_pts = sorted(p for p in pts if viol_deg[p] == 1)
     assert len(doily_pts) == 15 and len(ext_pts) == 120
-    assert all((p & 15) == 0 for p in doily_pts), "Central doily points are the 15 pure-Z observables"
+    assert all((p & 15) == 0 for p in doily_pts), "Diagonal points are the 15 pure-Z observables"
     doily_set = set(doily_pts)
+    assert all(
+        symp(4, x, y) == 0 for i, x in enumerate(doily_pts) for y in doily_pts[i + 1 :]
+    ), "All 105 pairs in D_15 must commute (totally isotropic PG(3,2))"
+    assert f2_rank(doily_pts) == 4
+    doily_ambient = [
+        (u, v, w, s)
+        for u, v, w, s, _ in contexts
+        if u in doily_set and v in doily_set and w in doily_set
+    ]
+    assert len(doily_ambient) == 35 and all(s == 1 for _, _, _, s in doily_ambient)
 
     doily_viol = [line for line in viol if line[0] in doily_set and line[1] in doily_set and line[2] in doily_set]
     ext_viol = [line for line in viol if not (line[0] in doily_set and line[1] in doily_set and line[2] in doily_set)]
@@ -633,7 +656,7 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
     assert sum(1 for _, _, _, s in ext_viol if s == 1) == 48
     assert sum(1 for _, _, _, s in ext_viol if s == -1) == 12
 
-    # Verify the 15 central doily violated lines form W(3,2) = GQ(2,2): distance-regular {6,4;1,3}
+    # Verify the 15 diagonal violated lines form an abstract doily GQ(2,2): distance-regular {6,4;1,3}
     adj_d = {p: set() for p in doily_pts}
     for u, v, w, _ in doily_viol:
         adj_d[u] |= {v, w}
@@ -641,6 +664,26 @@ def analyze_and_export_hyperbolic_quasi_quadric() -> dict:
         adj_d[w] |= {u, v}
     d_profs = Counter(tuple(sorted(Counter(bfs_dist(adj_d, p).values()).items())) for p in doily_pts)
     assert d_profs == {((0, 1), (1, 6), (2, 8)): 15}
+
+    # Verify Proposition 6 invariance: across all 512 projective odd-imaginary bent-support
+    # flat states on T = {x in F_2^4 : x_0 x_1 + x_2 x_3 = 1} (6 basis states with |phi(x)|=1,
+    # phi(x) in {1,-1,i,-i}, odd count of +-i, quotiented by global phase), <Z^c> = (1/6) sum_{x in T} (-1)^(c.x)
+    # is invariant and matches n4_pivot.txt on all 15 pure-Z observables, so every state violates
+    # the exact same 15-line abstract doily inside D_15.
+    bent_support_t = [x for x in range(16) if (((x & 1) & ((x >> 1) & 1)) ^ (((x >> 2) & 1) & ((x >> 3) & 1))) == 1]
+    assert bent_support_t == [3, 7, 11, 12, 13, 14]
+    diag_signs_t = {
+        (c << 4): (1 if sum((-1) ** ((c & x).bit_count()) for x in bent_support_t) > 0 else -1)
+        for c in range(1, 16)
+    }
+    assert all(diag_signs_t[p] == f_sign[p] for p in doily_pts)
+    # Count projective odd-imaginary phase patterns phi: T -> {0,1,2,3} with phi(t_0) = 0 (fixing global phase)
+    odd_proj_count = 0
+    for code in range(4**5):
+        ks = [0] + [(code >> (2 * j)) & 3 for j in range(5)]
+        if sum(k & 1 for k in ks) % 2 == 1:
+            odd_proj_count += 1
+    assert odd_proj_count == 512
 
     # Verify the 60 remaining lines:
     #  - Every line meets D_15 in 1 point p and carries 2 external points of violated degree 1.
@@ -855,13 +898,13 @@ Both `qa_*.txt` files use Qontextium's native `--import assignment` format (`P1,
 
 ## Geometric Summary of the `75 = 15 + 60` Violated Contexts
 
-1. **Ambient hyperbolic quasi-quadric ($135$ points, $1,095$ contexts):** Every observable commutes with exactly `70` other observables in $S_B$ (matching the point count `135` and commutation regularity `70` of $Q^+(7,2)$). $S_B$ is obtained from the hyperbolic quadric $Q^+(7,2)$ by flipping the $Y$-parity of the five affine $AG(3,2)$ fibers (`IXII, XXII, XIXI, XIIX, XIXX`) whose unique symplectic poles in the central doily (`ZIII, ZZII, IZZI, IZIZ, IZZZ`) form a **5-point ovoid** of the central doily.
-2. **Central doily (`15` points, `15` violated lines, all `+I`, degree-triple `(7,7,7)`):** The `15` pure-$Z$ observables $D_{15} \\cong PG(3,2)$ carry `35` ambient lines in $S_B$, of which `15` are violated and `20` are satisfied. Those `15` violated lines form an exact doily $W(3,2) = GQ(2,2)$ embedded as a linear symplectic line complex inside $D_{15}$.
+1. **Ambient hyperbolic quasi-quadric ($135$ points, $1,095$ contexts):** Every observable commutes with exactly `70` other observables in $S_B$ (matching the point count `135` and commutation regularity `70` of $Q^+(7,2)$). $S_B$ is obtained from the hyperbolic quadric $Q^+(7,2)$ by flipping the $Y$-parity of the five affine $AG(3,2)$ fibers (`IXII, XXII, XIXI, XIIX, XIXX`) whose unique poles in $D_{15}$ (`ZIII, ZZII, IZZI, IZIZ, IZZZ`) form a **5-point ovoid** of the diagonal abstract doily.
+2. **Diagonal abstract doily (`15` points, `15` violated lines, all `+I`, degree-triple `(7,7,7)`):** The `15` pure-$Z$ observables $D_{15} \\cong PG(3,2)$ pairwise commute (`105/105` commuting pairs; all `35` ambient lines in $D_{15}$ are `+I`), so $D_{15}$ is a **maximal totally isotropic $PG(3,2)$ subspace** of $W(7,2)$. Of its `35` ambient lines, `15` are violated and `20` are satisfied. Those `15` violated lines form an **abstract doily $GQ(2,2)$** as a point-line incidence structure (a symplectic linear line complex inside $PG(3,2)$), **not** a symplectic four-qubit doily (in which collinearity coincides with commutation and an odd number of lines are negative). Alone, those `15` positive lines are noncontextual and are forced into violation by the `120` external observables (`360` negative ambient lines); all `512` projective odd-imaginary bent-support flat states of Proposition 6 violate the exact same `15` diagonal lines.
 3. **Arrangement of the remaining `60` violated lines (`48` `+I`, `12` `-I`, all degree-triple `(1,1,7)`):**
-   - Every external violated line meets the central doily $D_{15}$ in **exactly one point** $p \\in D_{15}$ and carries **two external observables of violated degree `1`** (`60 * 2 = 120`, zero overlaps among external points).
-   - Through **each** of the `15` central-doily points $p \\in D_{15}$ pass **exactly `4`** of the `60` external violated lines (`15 * 4 = 60`).
-   - The `8` external observables on the `4` violated lines through $p$ all share a single constant nonzero $X$-support $a(p)$, pairwise commute (`28/28` pairs), and together with the 7-point Fano plane $p^\\perp_{\\text{doily}}$ (the three central-doily lines through $p$) form a **maximal totally isotropic $PG(3,2)$ generator $G_p \\subset S_B$** (`15` points, `35` ambient lines).
-   - Inside each generator $G_p$, the `7` violated lines (`3` central-doily lines + `4` external lines) are literally the **complete 7-line star of $p$ in $G_p$** — equivalently, the `4` external lines partition $G_p \\setminus D_{15} \\cong AG(3,2)$ into its `4` parallel affine lines concurring at the point at infinity $p$.
+   - Every external violated line meets $D_{15}$ in **exactly one point** $p \\in D_{15}$ and carries **two external observables of violated degree `1`** (`60 * 2 = 120`, zero overlaps among external points).
+   - Through **each** of the `15` diagonal points $p \\in D_{15}$ pass **exactly `4`** of the `60` external violated lines (`15 * 4 = 60`).
+   - The `8` external observables on the `4` violated lines through $p$ all share a single constant nonzero $X$-support $a(p)$, pairwise commute (`28/28` pairs), and together with the 7-point Fano plane $p^\\perp_{\\text{doily}}$ (the three diagonal violated lines through $p$) form a **maximal totally isotropic $PG(3,2)$ generator $G_p \\subset S_B$** (`15` points, `35` ambient lines).
+   - Inside each generator $G_p$, the `7` violated lines (`3` diagonal lines + `4` external lines) are literally the **complete 7-line star of $p$ in $G_p$** — equivalently, the `4` external lines partition $G_p \\setminus D_{15} \\cong AG(3,2)$ into its `4` parallel affine lines concurring at the point at infinity $p$.
 
 Regenerated deterministically by `python tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py`.
 """
@@ -877,6 +920,17 @@ Regenerated deterministically by `python tracks/spectral-bounds/scripts/quasi_qu
         "violated_contexts": 75,
         "violated_point_degrees": {"7": 15, "1": 120},
         "central_doily": {
+            "geometry_note": (
+                "D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2) "
+                "(105/105 commuting pairs, 35/35 +I ambient lines); its 15 violated lines "
+                "form an abstract doily GQ(2,2) (symplectic linear line complex in PG(3,2)), "
+                "NOT a symplectic four-qubit doily."
+            ),
+            "ambient_subspace_is_maximal_totally_isotropic_PG32": True,
+            "is_symplectic_four_qubit_doily": False,
+            "all_105_pairs_commute": True,
+            "all_35_ambient_lines_positive": True,
+            "prop6_512_odd_imaginary_states_share_exact_15_doily_lines": True,
             "points": [fmt_pauli(4, p) for p in doily_pts],
             "lines": [[fmt_pauli(4, u), fmt_pauli(4, v), fmt_pauli(4, w)] for u, v, w, _ in doily_viol_sorted],
             "signs": {"positive": 15, "negative": 0},

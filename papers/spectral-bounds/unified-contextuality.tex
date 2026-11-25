@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.7.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 2.7.1 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -582,11 +582,12 @@ value in \(\psi_B\).
   120. It is not closed and it is not a quadric, but every hyperplane \(w^\perp\) meets it in 71 points if
   \(w \in S_B\) and in 63 points otherwise, as for \(Q^+(7,2)\): it is a quasi-quadric in the sense of
   {[}DHOP{]}. It differs from the quadric \(a \cdot c = 0\) in 80 points, those with \(a \in E\), and \(E\)
-  consists of five pairwise non-orthogonal vectors (an ovoid) of the doily \(W(3,2)\) defined by the form
-  \(x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2\).
+  consists of five pairwise non-orthogonal vectors (an ovoid) of the abstract doily \(W(3,2) = GQ(2,2)\) defined
+  on \(\mathbb{F}_2^4 \setminus \{0\}\) by the alternating form \(x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2\).
 \item
   \(d(S_B) = 75\). The assignment given by the signs of the expectation values violates the 15 lines of
-  that doily, read among the diagonal observables, and 60 further contexts, each with exactly one
+  that abstract doily, realized as a symplectic linear line complex inside the maximal totally isotropic
+  \(PG(3,2)\) subspace of diagonal observables, and 60 further contexts, each with exactly one
   diagonal observable. Every non-diagonal observable of \(S_B\) lies on exactly one violated context and
   every diagonal one on seven.
 \end{enumerate}
@@ -600,17 +601,26 @@ The noncontextuality inequality of this configuration has classical bound \(945\
 \(1095\) in every state. The quadric \(Q^+(7,2)\) has the same number of observables and the same classical
 bound, with quantum value \(1575\).
 
-\textbf{Arrangement of the 60 external violated contexts relative to the central doily.} Let
-\(\omega(a_0,a_1,a_2,a_3)=(a_1,a_0,a_3,a_2)\) be the symplectic polarity of the central doily \(W(3,2)\) on
-the 15 diagonal observables \(D_{15}\cong PG(3,2)\). For each \(a\in\mathbb{F}_2^4\setminus\{0\}\), the
-8-point affine fiber \(F_a=\{X^a Z^c : a\cdot c=\epsilon(a)\}\cong AG(3,2)\) is pairwise commuting and,
-together with the 7-point Fano plane \(p^\perp_{\text{doily}}=\{Z^z : a\cdot z=0\}\) at the doily pole
-\(p=Z^{\omega(a)}\in D_{15}\), forms a maximal totally isotropic \(PG(3,2)\) generator
-\(G_p=p^\perp_{\text{doily}}\cup F_a\subset S_B\) (15 points, 35 ambient contexts). The 60 external violated
-contexts (48 positive, 12 negative) partition into 15 four-line pencils---one per doily point \(p\)---namely
-the 4 parallel affine lines \(\{Z^{\omega(a)},\,X^a Z^c,\,X^a Z^{c+\omega(a)}\}\) partitioning \(F_a\) and
-concurring at \(p\); together with the 3 central-doily lines through \(p\), they form the complete 7-line
-star of \(p\) inside \(G_p\). Explicit lists of all 135 observables, 1095 contexts, and 75 violated contexts
+\textbf{Arrangement of the 60 external violated contexts relative to the diagonal abstract doily.} Let
+\(D_{15}=\{Z^c : c\in\mathbb{F}_2^4\setminus\{0\}\}\cong PG(3,2)\) be the 15 diagonal observables of \(S_B\).
+Because all 15 observables in \(D_{15}\) pairwise commute (\(105/105\) commuting pairs; all 35 ambient lines
+in \(D_{15}\) are positive), \(D_{15}\) is a maximal totally isotropic \(PG(3,2)\) subspace of \(W(7,2)\);
+the 15 violated lines inside \(D_{15}\) therefore form an \emph{abstract doily} \(GQ(2,2)\) as a point-line
+incidence structure (a symplectic linear line complex in \(PG(3,2)\) with polarity
+\(\omega(a_0,a_1,a_2,a_3)=(a_1,a_0,a_3,a_2)\)), rather than a symplectic four-qubit doily (in which
+collinearity coincides with commutation and an odd number of lines are negative). Alone, those 15 positive
+lines are noncontextual; they are forced into violation by the 120 external observables (360 negative ambient
+lines). For each \(a\in\mathbb{F}_2^4\setminus\{0\}\), the 8-point affine fiber
+\(F_a=\{X^a Z^c : a\cdot c=\epsilon(a)\}\cong AG(3,2)\) is pairwise commuting and, together with the 7-point
+Fano plane \(p^\perp_{\text{doily}}=\{Z^z : a\cdot z=0\}\) at the doily pole \(p=Z^{\omega(a)}\in D_{15}\),
+forms a maximal totally isotropic \(PG(3,2)\) generator \(G_p=p^\perp_{\text{doily}}\cup F_a\subset S_B\)
+(15 points, 35 ambient contexts). The 60 external violated contexts (48 positive, 12 negative) partition into
+15 four-line pencils---one per point \(p\in D_{15}\)---namely the 4 parallel affine lines
+\(\{Z^{\omega(a)},\,X^a Z^c,\,X^a Z^{c+\omega(a)}\}\) partitioning \(F_a\) and concurring at \(p\); together
+with the 3 diagonal violated lines through \(p\), they form the complete 7-line star of \(p\) inside \(G_p\).
+Across all 512 projective odd-imaginary bent-support flat states of Proposition~6, the diagonal expectations
+\(\langle Z^c\rangle\) are identical, so every state in that family violates the exact same 15-line abstract
+doily inside \(D_{15}\). Explicit lists of all 135 observables, 1095 contexts, and 75 violated contexts
 (including Qontextium \texttt{-\/-import\ assignment} files) are exported by
 \nolinkurl{tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py}.
 

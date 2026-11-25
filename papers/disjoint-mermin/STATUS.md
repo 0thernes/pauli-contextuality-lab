@@ -1,7 +1,7 @@
 # Publication Status (Track 2 — Disjoint Mermin Configurations)
 
 - **Author:** Alexander S. Donahue (Independent researcher, Spokane, WA, USA; ORCID [`0009-0006-8168-9648`](https://orcid.org/0009-0006-8168-9648))
-- **Current release:** `v2.7.0` (24 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) from the archived [`contextuality-tensor-lab`](https://github.com/0thernes/contextuality-tensor-lab) `v0.1.0` snapshot (9 November 2026).
+- **Current release:** `v2.7.1` (25 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) from the archived [`contextuality-tensor-lab`](https://github.com/0thernes/contextuality-tensor-lab) `v0.1.0` snapshot (9 November 2026).
 - **Licences:** Code under **Apache-2.0** ([`LICENSE`](../../LICENSE)); manuscript and documentation under **CC-BY-4.0** ([`LICENSE-DOCS`](../../LICENSE-DOCS)).
 - **Peer-review & AI disclosure:** AI-assisted mathematical research preprint; **not externally peer reviewed**. A compiled Lean proof certifies its precise formal propositions, not historical priority, external human review, or editorial acceptance.
 
@@ -9,7 +9,7 @@
 
 | Destination | Observed status | Evidence |
 |---|---|---|
-| Canonical GitHub repository | Public (`v2.7.0`), unified 3-track monorepo | [Pauli Contextuality Lab](https://github.com/0thernes/pauli-contextuality-lab) |
+| Canonical GitHub repository | Public (`v2.7.1`), unified 3-track monorepo | [Pauli Contextuality Lab](https://github.com/0thernes/pauli-contextuality-lab) |
 | Archived standalone snapshot | Read-only archive (`v0.1.0`, commit `de48ed9`) | [contextuality-tensor-lab](https://github.com/0thernes/contextuality-tensor-lab) |
 | Paper PDF & LaTeX source | Public 8-page PDF + XeLaTeX source (`CC-BY-4.0`) | [contextuality-tensor.pdf](contextuality-tensor.pdf) · [contextuality-tensor.tex](contextuality-tensor.tex) |
 | Interactive 4-qubit lab & Blueprint | Live on unified GitHub Pages | [Disjoint Mermin Lab](https://0thernes.github.io/pauli-contextuality-lab/disjoint-mermin/) · [Lean Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) |

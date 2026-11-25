@@ -3,7 +3,7 @@
 **A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case**
 
 Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648). Correspondence: 0_0@0thernes.art<br>
-Pauli Contextuality Lab (Track 1), version 2.7.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed.<br>
+Pauli Contextuality Lab (Track 1), version 2.7.1 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.
 
 > **Prior work and scope.** The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -25,10 +25,11 @@ Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and G
 > 24; Theorem 14, Corollary 16, Proposition 16' and Theorem 16''), the all-qubit C3 and cone-lift C11
 > constructions (Theorem 17, Corollary 18), Lemmas 20–21, Theorem 22, signed-Clifford orbit transport,
 > Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every $N\ge4$, and ten
-> existential non-vacuity witnesses (`NonVacuity.lean`), all strictly within the standard axioms (110
-> audited declarations in `VerifyAll.lean` alongside the retained baseline, saturation and C3
-> audits, checked across multiple Lean kernels via `lake comparator --paranoid`, Batteries linted, and
-> cross-checked in a declaration-verified Lean Blueprint). None of this invalidates the spectral floor.
+> existential non-vacuity witnesses (`NonVacuity.lean`), all strictly within the standard axioms---110
+> audited Track 1 declarations folded into the unified `lean/VerifyAll.lean` audit (160 explicit
+> `#print axioms` lines plus an exhaustive 2,206-theorem `Lean.collectAxioms` check across all
+> three tracks), replayed across six independent Lean kernels via `lake comparator --paranoid`, Batteries
+> linted with zero errors, and mapped in a 27-node (162-declaration) interactive Lean Blueprint at `/blueprint/`. None of this invalidates the spectral floor.
 
 ## Abstract
 
@@ -505,10 +506,11 @@ value in $\psi_B$.
    120. It is not closed and it is not a quadric, but every hyperplane $w^\perp$ meets it in 71 points if
    $w \in S_B$ and in 63 points otherwise, as for $Q^+(7,2)$: it is a quasi-quadric in the sense of
    [DHOP]. It differs from the quadric $a \cdot c = 0$ in 80 points, those with $a \in E$, and $E$
-   consists of five pairwise non-orthogonal vectors (an ovoid) of the doily $W(3,2)$ defined by the form
-   $x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2$.
+   consists of five pairwise non-orthogonal vectors (an ovoid) of the abstract doily $W(3,2) = GQ(2,2)$ defined
+   on $\mathbb{F}_2^4 \setminus \{0\}$ by the alternating form $x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2$.
 3. $d(S_B) = 75$. The assignment given by the signs of the expectation values violates the 15 lines of
-   that doily, read among the diagonal observables, and 60 further contexts, each with exactly one
+   that abstract doily, realized as a symplectic linear line complex inside the maximal totally isotropic
+   $PG(3,2)$ subspace of diagonal observables, and 60 further contexts, each with exactly one
    diagonal observable. Every non-diagonal observable of $S_B$ lies on exactly one violated context and
    every diagonal one on seven.
 
@@ -520,6 +522,29 @@ is `pivot_degree`. $\qquad\blacksquare$
 The noncontextuality inequality of this configuration has classical bound $945$ and quantum value
 $1095$ in every state. The quadric $Q^+(7,2)$ has the same number of observables and the same classical
 bound, with quantum value $1575$.
+
+**Arrangement of the 60 external violated contexts relative to the diagonal abstract doily.** Let
+$`D_{15}=\{Z^c : c\in\mathbb{F}_2^4\setminus\{0\}\}\cong PG(3,2)`$ be the 15 diagonal observables of $S_B$.
+Because all 15 observables in $D_{15}$ pairwise commute ($105/105$ commuting pairs; all 35 ambient lines
+in $D_{15}$ are positive), $D_{15}$ is a maximal totally isotropic $PG(3,2)$ subspace of $W(7,2)$;
+the 15 violated lines inside $D_{15}$ therefore form an *abstract doily* $GQ(2,2)$ as a point-line
+incidence structure (a symplectic linear line complex in $PG(3,2)$ with polarity
+$`\omega(a_0,a_1,a_2,a_3)=(a_1,a_0,a_3,a_2)`$), rather than a symplectic four-qubit doily (in which
+collinearity coincides with commutation and an odd number of lines are negative). Alone, those 15 positive
+lines are noncontextual; they are forced into violation by the 120 external observables (360 negative ambient
+lines). For each $`a\in\mathbb{F}_2^4\setminus\{0\}`$, the 8-point affine fiber
+$`F_a=\{X^a Z^c : a\cdot c=\epsilon(a)\}\cong AG(3,2)`$ is pairwise commuting and, together with the 7-point
+Fano plane $`p^\perp_{\text{doily}}=\{Z^z : a\cdot z=0\}`$ at the doily pole $`p=Z^{\omega(a)}\in D_{15}`$,
+forms a maximal totally isotropic $PG(3,2)$ generator $`G_p=p^\perp_{\text{doily}}\cup F_a\subset S_B`$
+(15 points, 35 ambient contexts). The 60 external violated contexts (48 positive, 12 negative) partition into
+15 four-line pencils---one per point $`p\in D_{15}`$---namely the 4 parallel affine lines
+$`\{Z^{\omega(a)},\,X^a Z^c,\,X^a Z^{c+\omega(a)}\}`$ partitioning $F_a$ and concurring at $p$; together
+with the 3 diagonal violated lines through $p$, they form the complete 7-line star of $p$ inside $G_p$.
+Across all 512 projective odd-imaginary bent-support flat states of Proposition 6, the diagonal expectations
+$\langle Z^c\rangle$ are identical, so every state in that family violates the exact same 15-line abstract
+doily inside $D_{15}$. Explicit lists of all 135 observables, 1095 contexts, and 75 violated contexts
+(including Qontextium `--import assignment` files) are exported by
+`tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py`.
 
 **Proposition 6 (flat states on a bent support).** Let $T$ be the set of the six $`x \in \mathbb{F}_2^4`$ with
 $x_0x_1 + x_2x_3 = 1$, the support of a bent function, and let $\phi : T \to \mathbb{C}$ with $|\phi| = 1$.
@@ -936,7 +961,15 @@ themselves remain outside the Lean kernel (Table 10).
 Table 2 confronts every published or pre-printed value we know for the classical families with the
 floor. "Floor" is the integer bound of Theorem 1 (Theorem 2 for elliptic quadrics), computed in exact
 integer arithmetic. "Best assignment" is the smallest number of violated contexts known; all entries up
-to five qubits were reproduced by our own search (Section 11).
+to five qubits were reproduced by our own search (Section 11). Furthermore,
+`tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py` verifies in exact integer
+arithmetic that our search witnesses (`data/witness/n4_e.txt`, `n4_f.txt`, `n5_h.txt`) and our
+Lean 4 CSS witnesses (`ExactDegreesN4N5.lean`) are linked by explicit linear symplectic isomorphisms
+in $Sp(2N,2)$ matching every violated line ($315/315$, $1575/1575$, $6975/6975$) and realizing the
+exact geometries of [M2]: the Heawood core shared by three classical split Cayley hexagons $H(2)$
+plus 168 transversal lines in $Q^-(7,2)$ ([M2, Sec. 5.1.1]), the distinguished $DW(5,2)$ core plus
+1260 external lines in $W(7,2)$ ([M2, Sec. 5.1.3]), and the $PG(4,2)$ point-hyperplane incidence
+core plus 6510 outer lines in $Q^+(9,2)$ ([M2]).
 
 **Table 2. Classical configurations compared with the spectral floor.**
 

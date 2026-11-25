@@ -55,7 +55,7 @@ case "$cmd" in
   sanitizers)
     mkdir -p build/san
     QR=third_party/quantum_rng/src/quantum_rng
-    QG="-Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c"
+    QG=(-Ithird_party/qgtl/include -Ithird_party/qgtl/stub third_party/qgtl/src/quantum_geometric/distributed/differential_geometry.c)
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/spectral-bounds/src/hoggar.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/hoggar_san
     ./build/san/hoggar_san table 4 >/dev/null
@@ -81,10 +81,10 @@ case "$cmd" in
       tracks/spectral-bounds/src/legacy-search/tabu.c -lm -o build/san/tabu_san
     ./build/san/tabu_san 2 f 42 0.05 build/san/tabu_out.txt >/dev/null
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
-      $QG tracks/spectral-bounds/src/qgt_hoggar.c -lm -o build/san/qgt_hoggar_san
+      "${QG[@]}" tracks/spectral-bounds/src/qgt_hoggar.c -lm -o build/san/qgt_hoggar_san
     ./build/san/qgt_hoggar_san data/witness/n3_f_hoggar_moonlab.txt data/witness/n4_h_hoggar_moonlab.txt >/dev/null
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
-      $QG tracks/spectral-bounds/src/qgt_flat.c -lm -o build/san/qgt_flat_san
+      "${QG[@]}" tracks/spectral-bounds/src/qgt_flat.c -lm -o build/san/qgt_flat_san
     ./build/san/qgt_flat_san --no-seven >/dev/null
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/disjoint-mermin/src/stack_qrng.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/dm_qrng_san

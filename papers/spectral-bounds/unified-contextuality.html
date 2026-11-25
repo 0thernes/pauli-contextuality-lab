@@ -4,10 +4,10 @@
 <meta name="citation_author" content="Donahue, Alexander S.">
 <meta name="citation_author_institution" content="Independent researcher, Spokane, WA, USA">
 <meta name="citation_author_orcid" content="https://orcid.org/0009-0006-8168-9648">
-<meta name="citation_publication_date" content="2026/11/24">
-<meta name="citation_online_date" content="2026/11/24">
+<meta name="citation_publication_date" content="2026/11/25">
+<meta name="citation_online_date" content="2026/11/25">
 <meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
-<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 2.7.0">
+<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 2.7.1">
 <meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.pdf">
 <meta name="citation_abstract_html_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html">
 <meta name="citation_language" content="en">
@@ -38,7 +38,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font:14
 </style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>{document.documentElement.setAttribute('data-math','ready')})}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head><body><main><nav aria-label="Research links"><a href="../../">Research index</a><a href="unified-contextuality.pdf">Full paper PDF</a><a href="../../c3-lab/">C3 demonstration</a><a href="../../blueprint/">Lean 4 Blueprint</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/main/lean">Lean proofs</a></nav><h1 id="spectral-bounds-and-their-limits-in-pauli-contextuality-exact-configurations-and-a-proof-of-jonahs-conjecture-e">Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E</h1>
 <p><strong>A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case</strong></p>
 <p>Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a>. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a><br>
-Pauli Contextuality Lab (Track 1), version 2.7.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed.<br>
+Pauli Contextuality Lab (Track 1), version 2.7.1 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.</p>
 <blockquote>
 <p><strong>Prior work and scope.</strong> The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -60,10 +60,11 @@ four-qubit C3 spectral certificate and <strong>exact global binary completion op
 24; Theorem 14, Corollary 16, Proposition 16' and Theorem 16''), the all-qubit C3 and cone-lift C11
 constructions (Theorem 17, Corollary 18), Lemmas 20–21, Theorem 22, signed-Clifford orbit transport,
 Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every <span class="math inline">\(N\ge4\)</span>, and ten
-existential non-vacuity witnesses (<code>NonVacuity.lean</code>), all strictly within the standard axioms (110
-audited declarations in <code>VerifyAll.lean</code> alongside the retained baseline, saturation and C3
-audits, checked across multiple Lean kernels via <code>lake comparator --paranoid</code>, Batteries linted, and
-cross-checked in a declaration-verified Lean Blueprint). None of this invalidates the spectral floor.</p>
+existential non-vacuity witnesses (<code>NonVacuity.lean</code>), all strictly within the standard axioms&mdash;110
+audited Track 1 declarations folded into the unified <code>lean/VerifyAll.lean</code> audit (160 explicit
+<code>#print axioms</code> lines plus an exhaustive 2,206-theorem <code>Lean.collectAxioms</code> check across all
+three tracks), replayed across six independent Lean kernels via <code>lake comparator --paranoid</code>, Batteries
+linted with zero errors, and mapped in a 27-node (162-declaration) interactive Lean Blueprint at <code>/blueprint/</code>. None of this invalidates the spectral floor.</p>
 </blockquote>
 <h2 id="abstract">Abstract</h2>
 <p>Spectral methods give rigorous bounds on Pauli contextuality, yet a spectrum need not retain the
@@ -629,10 +630,11 @@ otherwise.</li>
 120. It is not closed and it is not a quadric, but every hyperplane <span class="math inline">\(w^\perp\)</span> meets it in 71 points if
 <span class="math inline">\(w \in S_B\)</span> and in 63 points otherwise, as for <span class="math inline">\(Q^+(7,2)\)</span>: it is a quasi-quadric in the sense of
 [DHOP]. It differs from the quadric <span class="math inline">\(a \cdot c = 0\)</span> in 80 points, those with <span class="math inline">\(a \in E\)</span>, and <span class="math inline">\(E\)</span>
-consists of five pairwise non-orthogonal vectors (an ovoid) of the doily <span class="math inline">\(W(3,2)\)</span> defined by the form
-<span class="math inline">\(x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2\)</span>.</li>
+consists of five pairwise non-orthogonal vectors (an ovoid) of the abstract doily <span class="math inline">\(W(3,2) = GQ(2,2)\)</span> defined on
+<span class="math inline">\(\mathbb{F}_2^4 \setminus \{0\}\)</span> by the alternating form <span class="math inline">\(x_0y_1 + x_1y_0 + x_2y_3 + x_3y_2\)</span>.</li>
 <li><span class="math inline">\(d(S_B) = 75\)</span>. The assignment given by the signs of the expectation values violates the 15 lines of
-that doily, read among the diagonal observables, and 60 further contexts, each with exactly one
+that abstract doily, realized as a symplectic linear line complex inside the maximal totally isotropic
+<span class="math inline">\(PG(3,2)\)</span> subspace of diagonal observables, and 60 further contexts, each with exactly one
 diagonal observable. Every non-diagonal observable of <span class="math inline">\(S_B\)</span> lies on exactly one violated context and
 every diagonal one on seven.</li>
 </ol>
@@ -643,6 +645,28 @@ is <code>pivot_degree</code>. <span class="math inline">\(\qquad\blacksquare\)</
 <p>The noncontextuality inequality of this configuration has classical bound <span class="math inline">\(945\)</span> and quantum value
 <span class="math inline">\(1095\)</span> in every state. The quadric <span class="math inline">\(Q^+(7,2)\)</span> has the same number of observables and the same classical
 bound, with quantum value <span class="math inline">\(1575\)</span>.</p>
+<p><strong>Arrangement of the 60 external violated contexts relative to the diagonal abstract doily.</strong> Let
+<span class="math inline">\(D_{15}=\{Z^c : c\in\mathbb{F}_2^4\setminus\{0\}\}\cong PG(3,2)\)</span> be the 15 diagonal observables of <span class="math inline">\(S_B\)</span>.
+Because all 15 observables in <span class="math inline">\(D_{15}\)</span> pairwise commute (105/105 commuting pairs; all 35 ambient lines
+in <span class="math inline">\(D_{15}\)</span> are positive), <span class="math inline">\(D_{15}\)</span> is a maximal totally isotropic <span class="math inline">\(PG(3,2)\)</span> subspace of <span class="math inline">\(W(7,2)\)</span>;
+the 15 violated lines inside <span class="math inline">\(D_{15}\)</span> therefore form an <em>abstract doily</em> <span class="math inline">\(GQ(2,2)\)</span> as a point-line
+incidence structure (a symplectic linear line complex in <span class="math inline">\(PG(3,2)\)</span> with polarity
+<span class="math inline">\(\omega(a_0,a_1,a_2,a_3)=(a_1,a_0,a_3,a_2)\)</span>), rather than a symplectic four-qubit doily (in which
+collinearity coincides with commutation and an odd number of lines are negative). Alone, those 15 positive
+lines are noncontextual; they are forced into violation by the 120 external observables (360 negative ambient
+lines). For each <span class="math inline">\(a\in\mathbb{F}_2^4\setminus\{0\}\)</span>, the 8-point affine fiber
+<span class="math inline">\(F_a=\{X^a Z^c : a\cdot c=\epsilon(a)\}\cong AG(3,2)\)</span> is pairwise commuting and, together with the 7-point
+Fano plane <span class="math inline">\(p^\perp_{\text{doily}}=\{Z^z : a\cdot z=0\}\)</span> at the doily pole <span class="math inline">\(p=Z^{\omega(a)}\in D_{15}\)</span>,
+forms a maximal totally isotropic <span class="math inline">\(PG(3,2)\)</span> generator <span class="math inline">\(G_p=p^\perp_{\text{doily}}\cup F_a\subset S_B\)</span>
+(15 points, 35 ambient contexts). The 60 external violated contexts (48 positive, 12 negative) partition into
+15 four-line pencils&mdash;one per point <span class="math inline">\(p\in D_{15}\)</span>&mdash;namely the 4 parallel affine lines
+<span class="math inline">\(\{Z^{\omega(a)},\,X^a Z^c,\,X^a Z^{c+\omega(a)}\}\)</span> partitioning <span class="math inline">\(F_a\)</span> and concurring at <span class="math inline">\(p\)</span>; together
+with the 3 diagonal violated lines through <span class="math inline">\(p\)</span>, they form the complete 7-line star of <span class="math inline">\(p\)</span> inside <span class="math inline">\(G_p\)</span>.
+Across all 512 projective odd-imaginary bent-support flat states of Proposition 6, the diagonal expectations
+<span class="math inline">\(\langle Z^c\rangle\)</span> are identical, so every state in that family violates the exact same 15-line abstract
+doily inside <span class="math inline">\(D_{15}\)</span>. Explicit lists of all 135 observables, 1095 contexts, and 75 violated contexts
+(including Qontextium <code>--import assignment</code> files) are exported by
+<code>tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py</code>.</p>
 <p><strong>Proposition 6 (flat states on a bent support).</strong> Let <span class="math inline">\(T\)</span> be the set of the six <span class="math inline">\(x \in \mathbb{F}_2^4\)</span> with
 <span class="math inline">\(x_0x_1 + x_2x_3 = 1\)</span>, the support of a bent function, and let <span class="math inline">\(\phi : T \to \mathbb{C}\)</span> with <span class="math inline">\(|\phi| = 1\)</span>.
 The state <span class="math inline">\(\psi_\phi = 6^{-1/2}\sum_{x \in T}\phi(x)|x\rangle\)</span> is flat on its Pauli support if and only if, up
@@ -1029,7 +1053,15 @@ themselves remain outside the Lean kernel (Table 10).</p>
 <p>Table 2 confronts every published or pre-printed value we know for the classical families with the
 floor. "Floor" is the integer bound of Theorem 1 (Theorem 2 for elliptic quadrics), computed in exact
 integer arithmetic. "Best assignment" is the smallest number of violated contexts known; all entries up
-to five qubits were reproduced by our own search (Section 11).</p>
+to five qubits were reproduced by our own search (Section 11). Furthermore,
+<code>tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py</code> verifies in exact integer
+arithmetic that our search witnesses (<code>data/witness/n4_e.txt</code>, <code>n4_f.txt</code>,
+<code>n5_h.txt</code>) and our Lean 4 CSS witnesses (<code>ExactDegreesN4N5.lean</code>) are linked by explicit
+linear symplectic isomorphisms in <span class="math inline">\(Sp(2N,2)\)</span> matching every violated line (315/315, 1575/1575,
+6975/6975) and realizing the exact geometries of [M2]: the Heawood core shared by three classical
+split Cayley hexagons <span class="math inline">\(H(2)\)</span> plus 168 transversal lines in <span class="math inline">\(Q^-(7,2)\)</span> ([M2, Sec. 5.1.1]), the
+distinguished <span class="math inline">\(DW(5,2)\)</span> core plus 1260 external lines in <span class="math inline">\(W(7,2)\)</span> ([M2, Sec. 5.1.3]), and the
+<span class="math inline">\(PG(4,2)\)</span> point-hyperplane incidence core plus 6510 outer lines in <span class="math inline">\(Q^+(9,2)\)</span> ([M2]).</p>
 <p><strong>Table 2. Classical configurations compared with the spectral floor.</strong></p>
 <table>
 <thead>
@@ -3313,7 +3345,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># case C3 for every number of qubits from four on (Theorem 17)</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Bound HoggarBound.Quadric</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean HoggarBound/CarrierFamily.lean</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v2.7.0 Lean formalizations (160 explicit axioms + exhaustive 2,206-theorem audit), Batteries linter, and multi-kernel comparator</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v2.7.1 Lean formalizations (160 explicit axioms + exhaustive 2,206-theorem audit), Batteries linter, and multi-kernel comparator</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Kramers HoggarBound.SaturationTheory HoggarBound.ConjectureE <span class="dt">\</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  HoggarBound.ConjectureEExtras HoggarBound.AuditUpgrades HoggarBound.C3ExactOptima <span class="dt">\</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  HoggarBound.SaturatedPhaseSix HoggarBound.NormPhaseFamily HoggarBound.ExactDegreesN4N5 <span class="dt">\</span></span>
@@ -3324,7 +3356,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> tracks/spectral-bounds/scripts/run_family7.sh</span></code></pre></div>
 <p>The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v2.7.0 verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v2.7.1 verification audits, from
 the repository root:</p>
 <pre class="text"><code>python tracks/spectral-bounds/scripts/cospectral_pair.py
 python tracks/spectral-bounds/scripts/phase_seven_lean.py
@@ -3349,7 +3381,7 @@ python scripts/check_citations.py
 python -m unittest tests/test_properties.py tests/test_mutation_and_fuzz.py</code></pre>
 <p>Their exact-verifier last lines read <code>30 of 30</code>, <code>14 of 14</code>, <code>43 of 43</code>, <code>18 of 18</code>, <code>21 of 21</code>,
 <code>81 of 81</code>, <code>36 of 36</code>, <code>115 of 115</code>, <code>46 of 46</code>, <code>97 of 97</code>, <code>39 of 39</code>, <code>15 of 15</code>, <code>10 of 10</code>,
-<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v2.7.0 verification
+<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v2.7.1 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 <code>c3_sdp_dual_check.py</code>).</p>
 <p>The C3 verification programs require Python, NumPy, SymPy and Node.js. From the repository root:</p>
@@ -3405,4 +3437,4 @@ versions. The theorem's assignments are fully defined in Section 8.2 independent
 <code>tracks/spectral-bounds/results/cospectral_family.json</code>, <code>tracks/spectral-bounds/results/cospectral_family_cone_lift.json</code>,
 <code>tracks/spectral-bounds/results/conjecture_e.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_n6.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_lemmas.json</code> and
 <code>tracks/spectral-bounds/results/conjecture_e_lemmas_n6.json</code>.</p>
-<footer>Pauli Contextuality Lab (Track 1), version 2.7.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>
+<footer>Pauli Contextuality Lab (Track 1), version 2.7.1 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>

@@ -8,6 +8,14 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.7.1] — 2026-11-25
+
+### 3-Cycle × 1,000-Pass Deep-Dive Hardening, Diagonal Abstract-Doily Precision & Manuscript Parity
+
+- **Diagonal Abstract-Doily Geometric Precision (`S_B` in $W(7,2)$):** Clarified across `papers/spectral-bounds/unified-contextuality.{tex,md,html}`, `tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py`, `tracks/spectral-bounds/results/hyperbolic-quasi-quadric-135/`, `scripts/build_site.py`, and `docs/reviews/` that the 15 pure-$Z$ observables $D_{15} \cong PG(3,2)$ pairwise commute (`105/105` commuting pairs; `35/35` `+I` ambient lines) and therefore form a **maximal totally isotropic $PG(3,2)$ subspace** of $W(7,2)$; its 15 violated lines form an **abstract doily $GQ(2,2)$** as a point-line incidence structure (a symplectic linear line complex inside $PG(3,2)$), *not* a symplectic four-qubit doily (in which collinearity coincides with commutation and an odd number of lines are negative). Added exact assertions in `quasi_quadric_and_witness_anatomy.py` and `tests/test_quasi_quadric_anatomy.py` verifying $D_{15}$ total isotropy and verifying that all `512` projective odd-imaginary bent-support flat states of Proposition 6 violate the exact same 15 diagonal lines.
+- **Full `.tex`/`.md`/`.html` Manuscript Parity:** Synchronized `papers/spectral-bounds/unified-contextuality.{md,html}` with `unified-contextuality.tex` (adding the `27-node / 162-declaration` Blueprint summary, the 60-line external generator-star remark, and the explicit $Sp(2N,2)$ witness isomorphism remark) and updated `papers/disjoint-mermin/contextuality-tensor.md` header metadata (`v2.7.1`, `25 November 2026`); recompiled all 4 Pauli PDFs with Tectonic (`0` overfull hboxes ≥ 5 pt).
+- **Shell Hygiene & 3-Cycle × 1,000-Pass Audit Record:** Replaced unquoted `$QG` (`SC2086`) in `scripts/dev.sh` with a bash array `QG=(...)` / `"${QG[@]}"` and added the permanent audit record `docs/reviews/2026-11-25-3x1000-cycle-hardening-audit.md`.
+
 ## [2.7.0] — 2026-11-24
 
 ### 200-Pass Elite TOC Hardening, Explicit $Sp(2N,2)$ Witness Isomorphisms & Hyperbolic Quasi-Quadric Qontextium Exports

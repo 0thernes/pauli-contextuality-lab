@@ -333,6 +333,12 @@
       "1": 120
     },
     "central_doily": {
+      "geometry_note": "D_15 is a maximal totally isotropic PG(3,2) subspace of W(7,2) (105/105 commuting pairs, 35/35 +I ambient lines); its 15 violated lines form an abstract doily GQ(2,2) (symplectic linear line complex in PG(3,2)), NOT a symplectic four-qubit doily.",
+      "ambient_subspace_is_maximal_totally_isotropic_PG32": true,
+      "is_symplectic_four_qubit_doily": false,
+      "all_105_pairs_commute": true,
+      "all_35_ambient_lines_positive": true,
+      "prop6_512_odd_imaginary_states_share_exact_15_doily_lines": true,
       "points": [
         "ZIII",
         "IZII",
