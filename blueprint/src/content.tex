@@ -1,4 +1,4 @@
-% Pauli Contextuality Lab — Unified Lean 4.35.0 Blueprint (24 Formal Nodes, Tracks 1–3 + 6-Kernel Bridge)
+% Pauli Contextuality Lab — Unified Lean 4.35.0 Blueprint (27 Formal Nodes, Tracks 1–3 + 6-Kernel Bridge)
 % Every \lean{...} declaration is statically verified against lean/ by scripts/build_blueprint.py.
 
 \section{Track 1: Spectral Floor, Saturating States, Ladders \& Conjecture E}
@@ -40,6 +40,14 @@ As $N \to \infty$, the guaranteed violated-context fraction $d/L$ tends to $1/2$
 \uses{thm:spectral-floor}
 \leanok
 Saturation of the spectral floor is equivalent to existence of a pure flat quantum state supported on $S$, forcing $(2^N - 1)|S|$ to be a perfect square.
+\end{theorem}
+
+\begin{theorem}[Table 1: Exact Finite Floor-Saturating Degrees (N=4,5,7)]
+\label{thm:finite-saturated-degrees}
+\lean{HoggarBound.lly_degree, HoggarBound.ccz_degree, HoggarBound.hoggar_degree, HoggarBound.quadric_degree, HoggarBound.pivot_card, HoggarBound.pivot_contexts, HoggarBound.pivot_degree, HoggarBound.cieslinski5_degree, HoggarBound.phase5_degree, HoggarBound.phase5_contexts, HoggarBound.phase7_degree, HoggarBound.phase7_contexts}
+\uses{thm:saturation-tfae}
+\leanok
+Kernel-checked saturation proofs certify exact contextuality degrees outside classical families: $d(S_B)=75$ on the 135-observable / 1,095-context hyperbolic quasi-quadric in $W(7,2)$, $d=480$ on five qubits, and $d=729{,}344$ on seven qubits.
 \end{theorem}
 
 \begin{proposition}[Props 3, 8, 10: Quantum Metric, Flat-State QGT \& Two-Character Sums]
@@ -108,10 +116,18 @@ In all nine vertex cases and for every $N \ge 4$, explicit sign carriers share i
 General cone-lift preserves carrier spectra while transporting completion separation (yielding C11 from C3 for every $N \ge 4$), and signed-Clifford conjugation transports strict-law counterexamples across orbits.
 \end{corollary}
 
+\begin{theorem}[Thm 16: Four-Qubit Case C3 Spectral Counterexample]
+\label{thm:c3-four-qubit-spectra}
+\lean{HoggarBound.C3.pauli_carrier_eigenvalues_eq, HoggarBound.C3.pauli_completion_charpoly_ne, HoggarBound.C3.pauli_completion_eigenvalues_ne, HoggarBound.C3.pauli_completion_eigenvalue_multisets_ne, HoggarBound.C3.four_qubit_C3_spectral_counterexample}
+\uses{thm:conjecture-e}
+\leanok
+On the 71-point four-qubit case C3 hyperplane section, two cospectral $16\times 16$ signed carriers have $64\times 64$ Hermitian completions with distinct characteristic polynomials and canonical eigenvalue multisets.
+\end{theorem}
+
 \begin{theorem}[Thm 16'': Exact Four-Qubit Case C3 Binary Completion Optima]
 \label{thm:c3-exact-optima}
 \lean{HoggarBound.ConjectureE.corollary16_binary_minima_differ, HoggarBound.AuditUpgrades.corollary16_binary_minima_tightened, HoggarBound.C3ExactOptima.corollary16_sigmaA_exact_lower, HoggarBound.C3ExactOptima.corollary16_sigmaB_exact_lower, HoggarBound.C3ExactOptima.corollary16_exact_binary_optima}
-\uses{thm:conjecture-e}
+\uses{thm:c3-four-qubit-spectra}
 \leanok
 Pure-integer MET-SDP dual certificates inside Lean 4 establish exact global binary completion minima $\min_y F(\sigma_0, y) = 368$ and $\min_y F(\sigma_1, y) = 344$ (exact separation gap $24$).
 \end{theorem}
@@ -148,6 +164,14 @@ Answering Section 6 of Muller \& Saniga (arXiv:2609.19862v1), the exact contextu
 \leanok
 Transports the exact closed-form minima onto actual distinct sets of tagged observable vertices under unrestricted global assignments, linked to block-diagonal hypergraph supports and four-qubit Pauli matrices.
 \end{theorem}
+
+\begin{proposition}[Block-Diagonal Hypergraph Support \& 4-Qubit Pauli Matrix Bridge]
+\label{thm:track2-physical-bridge}
+\lean{ContextualityTensor.block_kernel_sum, ContextualityTensor.graph_support_nonempty_disjoint_iff, ContextualityTensor.four_qubit_vertex_list_matches, ContextualityTensor.four_qubit_matrix_list_matches, ContextualityTensor.actual_four_qubit_operator_sign}
+\uses{thm:actual-union-model}
+\leanok
+Certifies block-diagonal support disjointness and binds the abstract two-square tagged union directly to explicit four-qubit tensor-product Pauli matrices and operator-product signs.
+\end{proposition}
 
 \begin{corollary}[Asymptotic Normalized Gap Limit]
 \label{thm:disjoint-asymptotics}

@@ -1,0 +1,139 @@
+# Hyperbolic quasi-quadric S_B in W(7,2) (135 observables, 1,095 contexts, exact degree 75)
+# Source: data/flat/n4_pivot.txt (Lean 4 certified in HoggarBound.pivot_degree = 75, pivot_contexts = 1095)
+# Columns: index  pauli  witness_sign  role  ambient_line_deg  violated_line_deg  generator_anchor
+
+  1  ZIII  -1  central_doily   35  7  ZIII
+  2  IZII  -1  central_doily   35  7  IZII
+  3  ZZII  +1  central_doily   35  7  ZZII
+  4  IIZI  -1  central_doily   35  7  IIZI
+  5  ZIZI  -1  central_doily   35  7  ZIZI
+  6  IZZI  -1  central_doily   35  7  IZZI
+  7  ZZZI  +1  central_doily   35  7  ZZZI
+  8  IIIZ  -1  central_doily   35  7  IIIZ
+  9  ZIIZ  -1  central_doily   35  7  ZIIZ
+ 10  IZIZ  -1  central_doily   35  7  IZIZ
+ 11  ZZIZ  +1  central_doily   35  7  ZZIZ
+ 12  IIZZ  +1  central_doily   35  7  IIZZ
+ 13  ZIZZ  +1  central_doily   35  7  ZIZZ
+ 14  IZZZ  +1  central_doily   35  7  IZZZ
+ 15  ZZZZ  -1  central_doily   35  7  ZZZZ
+ 16  IYII  +1  external_fiber  23  1  ZIII
+ 17  IYIZ  -1  external_fiber  23  1  ZIII
+ 18  IYZI  -1  external_fiber  23  1  ZIII
+ 19  IYZZ  +1  external_fiber  23  1  ZIII
+ 20  ZYII  +1  external_fiber  23  1  ZIII
+ 21  ZYIZ  -1  external_fiber  23  1  ZIII
+ 22  ZYZI  -1  external_fiber  23  1  ZIII
+ 23  ZYZZ  +1  external_fiber  23  1  ZIII
+ 24  XIII  +1  external_fiber  23  1  IZII
+ 25  XIIZ  -1  external_fiber  23  1  IZII
+ 26  XIZI  -1  external_fiber  23  1  IZII
+ 27  XIZZ  +1  external_fiber  23  1  IZII
+ 28  XZII  +1  external_fiber  23  1  IZII
+ 29  XZIZ  -1  external_fiber  23  1  IZII
+ 30  XZZI  -1  external_fiber  23  1  IZII
+ 31  XZZZ  +1  external_fiber  23  1  IZII
+ 32  XYII  +1  external_fiber  23  1  ZZII
+ 33  XYIZ  -1  external_fiber  23  1  ZZII
+ 34  XYZI  -1  external_fiber  23  1  ZZII
+ 35  XYZZ  +1  external_fiber  23  1  ZZII
+ 36  YXII  -1  external_fiber  23  1  ZZII
+ 37  YXIZ  +1  external_fiber  23  1  ZZII
+ 38  YXZI  +1  external_fiber  23  1  ZZII
+ 39  YXZZ  -1  external_fiber  23  1  ZZII
+ 40  IIIX  +1  external_fiber  23  1  IIZI
+ 41  IIZX  +1  external_fiber  23  1  IIZI
+ 42  IZIX  -1  external_fiber  23  1  IIZI
+ 43  IZZX  -1  external_fiber  23  1  IIZI
+ 44  ZIIX  -1  external_fiber  23  1  IIZI
+ 45  ZIZX  -1  external_fiber  23  1  IIZI
+ 46  ZZIX  +1  external_fiber  23  1  IIZI
+ 47  ZZZX  +1  external_fiber  23  1  IIZI
+ 48  IXIX  +1  external_fiber  23  1  ZIZI
+ 49  IXZX  -1  external_fiber  23  1  ZIZI
+ 50  IYIY  +1  external_fiber  23  1  ZIZI
+ 51  IYZY  -1  external_fiber  23  1  ZIZI
+ 52  ZXIX  -1  external_fiber  23  1  ZIZI
+ 53  ZXZX  +1  external_fiber  23  1  ZIZI
+ 54  ZYIY  -1  external_fiber  23  1  ZIZI
+ 55  ZYZY  +1  external_fiber  23  1  ZIZI
+ 56  XIIY  +1  external_fiber  23  1  IZZI
+ 57  XIZY  -1  external_fiber  23  1  IZZI
+ 58  XZIY  -1  external_fiber  23  1  IZZI
+ 59  XZZY  +1  external_fiber  23  1  IZZI
+ 60  YIIX  -1  external_fiber  23  1  IZZI
+ 61  YIZX  +1  external_fiber  23  1  IZZI
+ 62  YZIX  +1  external_fiber  23  1  IZZI
+ 63  YZZX  -1  external_fiber  23  1  IZZI
+ 64  XXIX  +1  external_fiber  23  1  ZZZI
+ 65  XXZX  -1  external_fiber  23  1  ZZZI
+ 66  XYIY  +1  external_fiber  23  1  ZZZI
+ 67  XYZY  -1  external_fiber  23  1  ZZZI
+ 68  YXIY  +1  external_fiber  23  1  ZZZI
+ 69  YXZY  -1  external_fiber  23  1  ZZZI
+ 70  YYIX  -1  external_fiber  23  1  ZZZI
+ 71  YYZX  +1  external_fiber  23  1  ZZZI
+ 72  IIXI  +1  external_fiber  23  1  IIIZ
+ 73  IIXZ  +1  external_fiber  23  1  IIIZ
+ 74  IZXI  -1  external_fiber  23  1  IIIZ
+ 75  IZXZ  -1  external_fiber  23  1  IIIZ
+ 76  ZIXI  -1  external_fiber  23  1  IIIZ
+ 77  ZIXZ  -1  external_fiber  23  1  IIIZ
+ 78  ZZXI  +1  external_fiber  23  1  IIIZ
+ 79  ZZXZ  +1  external_fiber  23  1  IIIZ
+ 80  IXXI  +1  external_fiber  23  1  ZIIZ
+ 81  IXXZ  -1  external_fiber  23  1  ZIIZ
+ 82  IYYI  +1  external_fiber  23  1  ZIIZ
+ 83  IYYZ  -1  external_fiber  23  1  ZIIZ
+ 84  ZXXI  -1  external_fiber  23  1  ZIIZ
+ 85  ZXXZ  +1  external_fiber  23  1  ZIIZ
+ 86  ZYYI  -1  external_fiber  23  1  ZIIZ
+ 87  ZYYZ  +1  external_fiber  23  1  ZIIZ
+ 88  XIYI  +1  external_fiber  23  1  IZIZ
+ 89  XIYZ  -1  external_fiber  23  1  IZIZ
+ 90  XZYI  -1  external_fiber  23  1  IZIZ
+ 91  XZYZ  +1  external_fiber  23  1  IZIZ
+ 92  YIXI  -1  external_fiber  23  1  IZIZ
+ 93  YIXZ  +1  external_fiber  23  1  IZIZ
+ 94  YZXI  +1  external_fiber  23  1  IZIZ
+ 95  YZXZ  -1  external_fiber  23  1  IZIZ
+ 96  XXXI  +1  external_fiber  23  1  ZZIZ
+ 97  XXXZ  -1  external_fiber  23  1  ZZIZ
+ 98  XYYI  +1  external_fiber  23  1  ZZIZ
+ 99  XYYZ  -1  external_fiber  23  1  ZZIZ
+100  YXYI  +1  external_fiber  23  1  ZZIZ
+101  YXYZ  -1  external_fiber  23  1  ZZIZ
+102  YYXI  -1  external_fiber  23  1  ZZIZ
+103  YYXZ  +1  external_fiber  23  1  ZZIZ
+104  IIXX  +1  external_fiber  23  1  IIZZ
+105  IIYY  +1  external_fiber  23  1  IIZZ
+106  IZXX  -1  external_fiber  23  1  IIZZ
+107  IZYY  -1  external_fiber  23  1  IIZZ
+108  ZIXX  -1  external_fiber  23  1  IIZZ
+109  ZIYY  -1  external_fiber  23  1  IIZZ
+110  ZZXX  +1  external_fiber  23  1  IIZZ
+111  ZZYY  +1  external_fiber  23  1  IIZZ
+112  IXXX  +1  external_fiber  23  1  ZIZZ
+113  IXYY  -1  external_fiber  23  1  ZIZZ
+114  IYXY  +1  external_fiber  23  1  ZIZZ
+115  IYYX  +1  external_fiber  23  1  ZIZZ
+116  ZXXX  -1  external_fiber  23  1  ZIZZ
+117  ZXYY  +1  external_fiber  23  1  ZIZZ
+118  ZYXY  -1  external_fiber  23  1  ZIZZ
+119  ZYYX  -1  external_fiber  23  1  ZIZZ
+120  XIXY  +1  external_fiber  23  1  IZZZ
+121  XIYX  +1  external_fiber  23  1  IZZZ
+122  XZXY  -1  external_fiber  23  1  IZZZ
+123  XZYX  -1  external_fiber  23  1  IZZZ
+124  YIXX  -1  external_fiber  23  1  IZZZ
+125  YIYY  +1  external_fiber  23  1  IZZZ
+126  YZXX  +1  external_fiber  23  1  IZZZ
+127  YZYY  -1  external_fiber  23  1  IZZZ
+128  XXXX  +1  external_fiber  23  1  ZZZZ
+129  XXYY  -1  external_fiber  23  1  ZZZZ
+130  XYXY  +1  external_fiber  23  1  ZZZZ
+131  XYYX  +1  external_fiber  23  1  ZZZZ
+132  YXXY  +1  external_fiber  23  1  ZZZZ
+133  YXYX  +1  external_fiber  23  1  ZZZZ
+134  YYXX  -1  external_fiber  23  1  ZZZZ
+135  YYYY  +1  external_fiber  23  1  ZZZZ

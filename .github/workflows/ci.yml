@@ -98,6 +98,18 @@ jobs:
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
             tracks/disjoint-mermin/src/stack_qrng.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/dm_qrng_san
           ./build/san/dm_qrng_san 20261109 64 >/dev/null
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/family7.c -o build/san/family7_san
+          ./build/san/family7_san 0 2 >/dev/null
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/sample7.c -o build/san/sample7_san
+          ./build/san/sample7_san 0 3 200 42 >/dev/null
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/n9_rank8_search.c -o build/san/n9_rank8_san
+          ./build/san/n9_rank8_san --smoke >/dev/null
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/qrng_stream.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/qrng_stream_san
+          ./build/san/qrng_stream_san 42 64 >/dev/null
       - name: Report-only linters (ruff & mypy)
         continue-on-error: true
         run: |

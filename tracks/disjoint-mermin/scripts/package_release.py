@@ -25,7 +25,7 @@ def main():
                ROOT/"results/manuscript-review.md"]
     for src_path in sources:
         shutil.copyfile(src_path, target/src_path.name)
-    metadata = {"commit":commit,"version":"2.6.0","research_date":"2026-11-09",
+    metadata = {"commit":commit,"version":"2.7.0","research_date":"2026-11-09",
                 "title":"Exact contextuality degrees for disjoint Mermin configurations",
                 "status":"Research preprint; not peer reviewed",
                 "repository":"https://github.com/0thernes/pauli-contextuality-lab",

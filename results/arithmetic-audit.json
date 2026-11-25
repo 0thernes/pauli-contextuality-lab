@@ -1,8 +1,8 @@
 {
   "status": "pass",
-  "total_python_files": 68,
+  "total_python_files": 70,
   "counts": {
-    "exact_integer_or_symbolic": 31,
+    "exact_integer_or_symbolic": 33,
     "exact_integer_with_math_helpers": 2,
     "hybrid_exact_core_with_numerical_approximation": 8,
     "numerical_approximation": 27
@@ -586,6 +586,14 @@
       "has_float_literal": false
     },
     {
+      "path": "tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
       "path": "tracks/spectral-bounds/scripts/stack_audit.py",
       "classification": "numerical_approximation",
       "float_imports": [
@@ -628,6 +636,14 @@
       "exact_imports": [],
       "has_float_call": true,
       "has_float_literal": true
+    },
+    {
+      "path": "tests/test_quasi_quadric_anatomy.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
     },
     {
       "path": "tests/test_repo_integrity.py",

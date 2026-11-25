@@ -48,7 +48,7 @@ def render_portal() -> str:
   <title>Pauli Contextuality Lab · v{version}</title>
   <meta name="description" content="Machine-checked Lean 4.35.0 &amp; 6-kernel verified research laboratory for Pauli contextuality: spectral floor, |Psi_{{3m}}&gt;, Jonah Conjecture E, disjoint Mermin degrees, and sequential contextuality evidence."/>
   <meta property="og:title" content="Pauli Contextuality Lab"/>
-  <meta property="og:description" content="2,206 exhaustively audited Lean 4.35.0 theorems, 6-kernel comparator, 24-node interactive SVG Blueprint, and 4 browser labs."/>
+  <meta property="og:description" content="2,206 exhaustively audited Lean 4.35.0 theorems, 6-kernel comparator, 27-node interactive SVG Blueprint, and 4 browser labs."/>
   <meta property="og:type" content="website"/>
   <style>
     :root {{ color-scheme: dark; }}
@@ -103,6 +103,7 @@ def render_portal() -> str:
           <a href="papers/spectral-bounds/c3-spectral-counterexample.pdf">C3 Note PDF</a>
           <a href="c3-lab/">C3 Exact Lab</a>
           <a href="independent-review/">Independent Explorer</a>
+          <a href="exports/hyperbolic-quasi-quadric-135/">Quasi-Quadric 135 (Qontextium Export)</a>
         </div>
       </article>
 
@@ -196,6 +197,51 @@ def main() -> int:
         "literature-audit.md",
     ):
         copy_if_file(ROOT / "tracks" / "spectral-bounds" / "results" / fname, SITE / "results" / fname)
+
+    # Mount hyperbolic quasi-quadric 135 / 1,095 / 75 Qontextium export bundle
+    exp_src = ROOT / "tracks" / "spectral-bounds" / "results" / "hyperbolic-quasi-quadric-135"
+    exp_dst = SITE / "exports" / "hyperbolic-quasi-quadric-135"
+    if exp_src.is_dir():
+        copy_if_dir(exp_src, exp_dst)
+        exp_index = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hyperbolic Quasi-Quadric in W(7,2) · 135 / 1,095 / 75 Qontextium Export</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1020;color:#e2e8f0;margin:0;padding:2rem;line-height:1.6}
+main{max-width:920px;margin:0 auto}
+h1,h2{color:#f8fafc}
+a{color:#38bdf8;text-decoration:none}
+a:hover{text-decoration:underline}
+code,pre{background:#0f172a;border:1px solid #1e293b;border-radius:8px;color:#7dd3fc}
+code{padding:.12rem .35rem}
+pre{padding:.85rem 1rem;overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{border-bottom:1px solid #1e293b;padding:.55rem .7rem;text-align:left}
+th{color:#94a3b8;font-weight:700}
+</style></head><body><main>
+<p><a href="../../">&larr; Back to Pauli Contextuality Lab</a></p>
+<h1>Hyperbolic Quasi-Quadric in W(7,2): 135 Observables, 1,095 Contexts, 75 Violated Contexts</h1>
+<p>Exact, machine-verified dataset for the four-qubit floor-saturating hyperbolic quasi-quadric S<sub>B</sub> &sub; W(7,2) (<code>data/flat/n4_pivot.txt</code>, kernel-certified in Lean 4 via <code>HoggarBound.pivot_card</code>, <code>HoggarBound.pivot_contexts</code>, and <code>HoggarBound.pivot_degree</code>).</p>
+<h2>Direct Download (Qontextium-Ready &amp; Annotated Formats)</h2>
+<table>
+<thead><tr><th>File</th><th>Format &amp; Contents</th></tr></thead>
+<tbody>
+<tr><td><a href="qa_hyperbolic_quasi_quadric_135_contexts.txt">qa_hyperbolic_quasi_quadric_135_contexts.txt</a></td><td>All 1,095 contexts (735 positive, 360 negative) in native Qontextium <code>--import assignment</code> format (<code>P1,P2,P3</code>, no header).</td></tr>
+<tr><td><a href="qa_hyperbolic_quasi_quadric_135_violated_75.txt">qa_hyperbolic_quasi_quadric_135_violated_75.txt</a></td><td>All 75 violated contexts (15 central doily + 60 external generator-star lines) in native Qontextium format.</td></tr>
+<tr><td><a href="observables_135.txt">observables_135.txt</a></td><td>All 135 four-qubit Pauli observables with optimal &plusmn;1 witness signs, ambient degrees (35 / 23), violated degrees (7 / 1), and central-doily generator anchors.</td></tr>
+<tr><td><a href="contexts_1095.csv">contexts_1095.csv</a></td><td>Annotated CSV of all 1,095 commuting triples with operator-product sign, violation flag, and central-doily incidence count.</td></tr>
+<tr><td><a href="violated_75.csv">violated_75.csv</a></td><td>Annotated CSV of all 75 violated triples grouped into the 15 central-doily lines and 15 four-line external generator stars.</td></tr>
+<tr><td><a href="hyperbolic_quasi_quadric_135.json">hyperbolic_quasi_quadric_135.json</a></td><td>Complete structured JSON bundle including the ovoid construction from Q<sup>+</sup>(7,2) and explicit Sp(2N,2) witness isomorphism certificates for Q<sup>&minus;</sup>(7,2), W(7,2), and Q<sup>+</sup>(9,2).</td></tr>
+</tbody>
+</table>
+<h2>Qontextium Commands</h2>
+<pre>./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_contexts.txt --solver sat --no-interaction
+./qontextium --import assignment qa_hyperbolic_quasi_quadric_135_violated_75.txt</pre>
+<h2>75 = 15 + 60 Violated-Context Geometry</h2>
+<p>The 15 pure-Z observables D<sub>15</sub> &cong; PG(3,2) carry 15 violated lines (all +I) forming an exact central doily W(3,2) = GQ(2,2). Each of the remaining 60 violated lines (48 +I, 12 &minus;I) meets D<sub>15</sub> in exactly one point p and carries two external observables of violated degree 1 (60 &times; 2 = 120, pairwise disjoint on external points). Through each central-doily point p pass exactly 4 external violated lines whose 8 external points share a single nonzero X-support a(p), pairwise commute (28/28 pairs), and together with the 7-point Fano plane p<sup>&perp;</sup><sub>doily</sub> form a maximal totally isotropic PG(3,2) generator G<sub>p</sub> &sub; S<sub>B</sub> in which the 7 violated lines through p are literally the complete 7-line star of p in G<sub>p</sub>.</p>
+</main></body></html>
+"""
+        (exp_dst / "index.html").write_text(exp_index, encoding="utf-8", newline="\n")
 
     # Copy PDF, HTML, and figure directories for all 3 tracks
     for track in ("spectral-bounds", "disjoint-mermin", "sequential-evidence"):

@@ -8,6 +8,17 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.7.0] — 2026-11-24
+
+### 200-Pass Elite TOC Hardening, Explicit $Sp(2N,2)$ Witness Isomorphisms & Hyperbolic Quasi-Quadric Qontextium Exports
+
+- **Explicit $Sp(2N,2)$ Witness Isomorphisms & Hyperbolic Quasi-Quadric (`135 / 1,095 / 75`) Qontextium Export Suite:** Added exact integer verifier `tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py`, automated regression suite `tests/test_quasi_quadric_anatomy.py`, and reproducible exports in `tracks/spectral-bounds/results/hyperbolic-quasi-quadric-135/` (also published at `/exports/hyperbolic-quasi-quadric-135/` on GitHub Pages):
+  - Constructs explicit linear symplectic isomorphisms $T \in Sp(2N,2)$ mapping search witnesses (`data/witness/{n4_e,n4_f,n5_h}.txt`) line-for-line onto Lean 4 CSS witnesses (`315/315`, `1,575/1,575`, `6,975/6,975`) and certifies exact structural isomorphism with Muller et al. `[M2]` (`Q^-(7,2)` Heawood + 3 classical $H(2)$ + 168 transversals; `W(7,2)` $DW(5,2)$ `{14,12,8;1,3,7}` + 1,260 external lines; `Q^+(9,2)` $PG(4,2)$ point-hyperplane core + 6,510 outer lines).
+  - Exports all `135` observables, `1,095` contexts, and `75` violated contexts of the hyperbolic quasi-quadric $S_B \subset W(7,2)$ (`data/flat/n4_pivot.txt`) in both annotated CSV/JSON/text formats and native Qontextium `--import assignment` format (`qa_hyperbolic_quasi_quadric_135_contexts.txt`, `qa_hyperbolic_quasi_quadric_135_violated_75.txt`), proving the exact `75 = 15 + 60` central-doily + 15 maximal totally isotropic $PG(3,2)$ generator 4-line star decomposition $\bigl\{Z^{\omega(a)}, X^a Z^c, X^a Z^{c+\omega(a)}\bigr\}$.
+- **C11 Heap Buffer Overflow Fix & 14-Engine ASan/UBSan CI Expansion:** Replaced unbounded `fscanf(fp, "%s", hex)` in `tracks/spectral-bounds/src/legacy-search/geom.h:witness_read` with a strict exact-length bounded hex reader; added `--smoke` mode to `tracks/spectral-bounds/src/n9_rank8_search.c`; expanded `.github/workflows/ci.yml` and `scripts/dev.sh sanitizers` from 10 to **14 C11 ASan/UBSan engines** (adding `family7.c`, `sample7.c`, `n9_rank8_search.c`, and `qrng_stream.c`, zero repo warnings).
+- **27-Node / 162-Declaration Lean Blueprint + MathJax SRI:** Added Subresource Integrity (`integrity="sha384-..." crossorigin="anonymous"`) to MathJax CDN in `scripts/build_blueprint.py` and expanded `blueprint/src/content.tex` from 24 nodes (140 decls) to **27 nodes (162 statically verified Lean declarations)** by adding `thm:finite-saturated-degrees`, `thm:c3-four-qubit-spectra`, and `thm:track2-physical-bridge`.
+- **Metadata, LF Hygiene & Permanent 200-Pass Audit Record:** Cleaned stale `v1.9.0` metadata fields in `papers/spectral-bounds/unified-metadata.json`, enforced LF output in `scripts/{arithmetic_audit,check_citations}.py` and `papers/spectral-bounds/unified-abstract.txt`, resolved `ruff` `RUF005` notices in `scripts/build_blueprint.py`, added the permanent 200-pass audit report (`docs/reviews/2026-11-24-200-pass-elite-hardening-audit.md`), and recompiled all 4 Pauli PDFs with Tectonic (0 overfull hboxes ≥ 5 pt).
+
 ## [2.6.0] — 2026-11-24
 
 ### Pass 7 TOC Deep-Dive Hardening (Track 1 Shell/C11 Path Fixes, 10-Engine ASan/UBSan, OOM & Security Guards)

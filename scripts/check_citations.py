@@ -87,7 +87,7 @@ def main() -> int:
     }
     out = ROOT / "results" / "citation-audit.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(
         f"Citation audit ({report['status']}): {scan['files_scanned']} files, "
         f"{len(scan['arxiv_ids'])} arXiv IDs, {len(scan['dois'])} DOIs, "

@@ -315,9 +315,12 @@ class RepoIntegrityTests(unittest.TestCase):
             text=True,
             check=True,
         )
-        self.assertIn("PASS: Blueprint validated 24 nodes (140 Lean decls", res.stdout)
+        self.assertIn("PASS: Blueprint validated 27 nodes (162 Lean decls", res.stdout)
         bp = json.loads((ROOT / "build" / "site" / "blueprint" / "blueprint.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(bp), 24)
+        self.assertEqual(len(bp), 27)
+        bp_html = (ROOT / "build" / "site" / "blueprint" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('integrity="sha384-', bp_html)
+        self.assertIn('crossorigin="anonymous"', bp_html)
         total = 0
         for node in bp:
             self.assertEqual(len(node["lean"]), len(node["lean_links"]))
@@ -325,7 +328,7 @@ class RepoIntegrityTests(unittest.TestCase):
                 self.assertRegex(link["url"], r"^https://github\.com/0thernes/pauli-contextuality-lab/blob/main/lean/.+\.lean#L\d+$")
                 self.assertTrue((ROOT / link["file"]).is_file(), f"Missing file {link['file']}")
                 total += 1
-        self.assertEqual(total, 140)
+        self.assertEqual(total, 162)
 
     def test_phase_seven_and_c3_audit_paths_live(self) -> None:
         import subprocess

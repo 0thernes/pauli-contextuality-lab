@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.6.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 2.7.0 (consolidated from Hoggar Bound Lab v1.9.0), 24 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -68,7 +68,7 @@ existential non-vacuity witnesses (\texttt{NonVacuity.lean}), all strictly withi
 audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (160 explicit
 \texttt{\#print\ axioms} lines plus an exhaustive 2,206-theorem \texttt{Lean.collectAxioms} check across all
 three tracks), replayed across six independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, Batteries
-linted with zero errors, and mapped in a 24-node interactive Lean Blueprint at \texttt{/blueprint/}. None of this
+linted with zero errors, and mapped in a 27-node (162-declaration) interactive Lean Blueprint at \texttt{/blueprint/}. None of this
 invalidates the spectral floor.
 \end{quote}
 
@@ -600,6 +600,20 @@ The noncontextuality inequality of this configuration has classical bound \(945\
 \(1095\) in every state. The quadric \(Q^+(7,2)\) has the same number of observables and the same classical
 bound, with quantum value \(1575\).
 
+\textbf{Arrangement of the 60 external violated contexts relative to the central doily.} Let
+\(\omega(a_0,a_1,a_2,a_3)=(a_1,a_0,a_3,a_2)\) be the symplectic polarity of the central doily \(W(3,2)\) on
+the 15 diagonal observables \(D_{15}\cong PG(3,2)\). For each \(a\in\mathbb{F}_2^4\setminus\{0\}\), the
+8-point affine fiber \(F_a=\{X^a Z^c : a\cdot c=\epsilon(a)\}\cong AG(3,2)\) is pairwise commuting and,
+together with the 7-point Fano plane \(p^\perp_{\text{doily}}=\{Z^z : a\cdot z=0\}\) at the doily pole
+\(p=Z^{\omega(a)}\in D_{15}\), forms a maximal totally isotropic \(PG(3,2)\) generator
+\(G_p=p^\perp_{\text{doily}}\cup F_a\subset S_B\) (15 points, 35 ambient contexts). The 60 external violated
+contexts (48 positive, 12 negative) partition into 15 four-line pencils---one per doily point \(p\)---namely
+the 4 parallel affine lines \(\{Z^{\omega(a)},\,X^a Z^c,\,X^a Z^{c+\omega(a)}\}\) partitioning \(F_a\) and
+concurring at \(p\); together with the 3 central-doily lines through \(p\), they form the complete 7-line
+star of \(p\) inside \(G_p\). Explicit lists of all 135 observables, 1095 contexts, and 75 violated contexts
+(including Qontextium \texttt{-\/-import\ assignment} files) are exported by
+\nolinkurl{tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py}.
+
 \textbf{Proposition 6 (flat states on a bent support).} Let \(T\) be the set of the six \(x \in \mathbb{F}_2^4\) with
 \(x_0x_1 + x_2x_3 = 1\), the support of a bent function, and let \(\phi : T \to \mathbb{C}\) with \(|\phi| = 1\).
 The state \(\psi_\phi = 6^{-1/2}\sum_{x \in T}\phi(x)|x\rangle\) is flat on its Pauli support if and only if, up
@@ -1020,7 +1034,15 @@ themselves remain outside the Lean kernel (Table 10).
 Table 2 confronts every published or pre-printed value we know for the classical families with the
 floor. "Floor" is the integer bound of Theorem 1 (Theorem 2 for elliptic quadrics), computed in exact
 integer arithmetic. "Best assignment" is the smallest number of violated contexts known; all entries up
-to five qubits were reproduced by our own search (Section 11).
+to five qubits were reproduced by our own search (Section 11). Furthermore,
+\nolinkurl{tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py} verifies in exact integer
+arithmetic that our search witnesses (\nolinkurl{data/witness/n4_e.txt}, \nolinkurl{n4_f.txt},
+\nolinkurl{n5_h.txt}) and our Lean~4 CSS witnesses (\nolinkurl{ExactDegreesN4N5.lean}) are linked by explicit
+linear symplectic isomorphisms in \(Sp(2N,2)\) matching every violated line (\(315/315\), \(1575/1575\),
+\(6975/6975\)) and realizing the exact geometries of {[}M2{]}: the Heawood core shared by three classical
+split Cayley hexagons \(H(2)\) plus 168 transversal lines in \(Q^-(7,2)\) ({[}M2, Sec.~5.1.1{]}), the
+distinguished \(DW(5,2)\) core plus 1260 external lines in \(W(7,2)\) ({[}M2, Sec.~5.1.3{]}), and the
+\(PG(4,2)\) point-hyperplane incidence core plus 6510 outer lines in \(Q^+(9,2)\) ({[}M2{]}).
 
 \textbf{Table 2. Classical configurations compared with the spectral floor.}
 

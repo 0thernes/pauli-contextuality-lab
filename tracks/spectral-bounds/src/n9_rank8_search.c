@@ -205,7 +205,9 @@ static uint32_t ppow(uint32_t a, int e, uint32_t mod, int m) {
 }
 
 int main(int argc, char **argv) {
-    int max_dim = (argc > 1 && strcmp(argv[1], "--quick") == 0) ? 21 : 27;
+    int max_dim = 27;
+    if (argc > 1 && strcmp(argv[1], "--smoke") == 0) max_dim = 12;
+    else if (argc > 1 && strcmp(argv[1], "--quick") == 0) max_dim = 21;
     init_tables();
     uint16_t G[9];
 

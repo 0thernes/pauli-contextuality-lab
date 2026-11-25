@@ -91,7 +91,7 @@ def main() -> int:
     }
     out = ROOT / "results" / "arithmetic-audit.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(f"Arithmetic audit complete: {len(entries)} Python files classified -> {counts}")
     return 0
 

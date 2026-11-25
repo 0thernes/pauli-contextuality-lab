@@ -69,11 +69,11 @@ def index_lean_declarations() -> tuple[dict[str, tuple[str, int]], dict[str, tup
                 short = dm.group(1)
                 loc = (rel, lineno)
                 flat_ns = [p for frame in ns_stack for p in frame]
-                full = ".".join(flat_ns + [short]) if flat_ns else short
+                full = ".".join([*flat_ns, short]) if flat_ns else short
                 exact.setdefault(full, loc)
                 # Also index suffix matches for nested namespaces (e.g. `HoggarBound.foo`)
                 for i in range(1, len(flat_ns)):
-                    exact.setdefault(".".join(flat_ns[i:] + [short]), loc)
+                    exact.setdefault(".".join([*flat_ns[i:], short]), loc)
                 short_map.setdefault(short, loc)
     return exact, short_map
 
@@ -311,7 +311,7 @@ def render_html(nodes: list[dict[str, Any]]) -> str:
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Pauli Contextuality Lab · Lean 4 Dependency Blueprint</title>
 <script>window.MathJax={{tex:{{inlineMath:[["$","$"]]}}}};</script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script>
 <style>
 body{{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1020;color:#e2e8f0;margin:0;padding:1.75rem;line-height:1.5}}
 main{{max-width:1240px;margin:0 auto}}

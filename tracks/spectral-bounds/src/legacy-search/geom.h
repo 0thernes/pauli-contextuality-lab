@@ -98,12 +98,24 @@ static inline void geom_free(geom_t *g) {
 static inline int witness_read(const char *path, int *N, char *kind, long long *claim, uint8_t **bits_out) {
     FILE *fp = fopen(path, "r"); if (!fp) return -1;
     if (fscanf(fp, "%d %c %lld", N, kind, claim) != 3) { fclose(fp); return -2; }
+    if (*N < 1 || *N > 12) { fclose(fp); return -2; }
     size_t len = (size_t)1 << (2 * *N - 2);
-    char *hex = xmalloc(len + 8);
-    if (fscanf(fp, "%s", hex) != 1 || strlen(hex) != len) { fclose(fp); free(hex); return -3; }
+    char *hex = xmalloc(len + 1);
+    int ch;
+    while ((ch = fgetc(fp)) != EOF && (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n')) {}
+    size_t got = 0;
+    while (ch != EOF && !(ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n')) {
+        if (got >= len) { fclose(fp); free(hex); return -3; }
+        int is_hex = (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
+        if (!is_hex) { fclose(fp); free(hex); return -3; }
+        hex[got++] = (char)((ch >= 'A' && ch <= 'F') ? (ch - 'A' + 'a') : ch);
+        ch = fgetc(fp);
+    }
+    if (got != len) { fclose(fp); free(hex); return -3; }
+    hex[len] = '\0';
     uint8_t *bits = xcalloc((size_t)1 << (2 * *N), 1);
     for (size_t k = 0; k < len; k++) {
-        char ch = hex[k]; unsigned x = (ch <= '9') ? (unsigned)(ch - '0') : (unsigned)(ch - 'a' + 10);
+        char c = hex[k]; unsigned x = (c <= '9') ? (unsigned)(c - '0') : (unsigned)(c - 'a' + 10);
         size_t nib = len - 1 - k;
         for (int b = 0; b < 4; b++) bits[nib * 4 + b] = (x >> b) & 1;
     }
