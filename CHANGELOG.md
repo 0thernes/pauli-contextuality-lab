@@ -4,6 +4,7 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 
 ## [Unreleased]
 
+- **Claims corrected to match the 2026-11-26 statement audit** ([audit log](https://github.com/0thernes/0thernes-research-archive/blob/main/docs/reviews/2026-11-26-statement-audit.md)): `README.md`, `CLAIMS.md`, `LIMITATIONS.md`, `CITATION.cff`, `formalization.yaml` and `docs/` now limit six-kernel coverage to the 12 comparator targets; state Conjecture E as strict-law failure for one representative per vertex case (C1 and C6 proved by Jonah; Theorem B4 outside Lean); limit the Muller–Saniga Sec. 6 answer to squares and pentagrams (unreviewed arXiv v1 source; identification with $HS(kG)$ outside Lean); label Jonah's floors as prior work and note his earlier claim of the exact values 1575 and 6975; narrow C04 to the proved lower direction and C06 to "contextual for $m \ge 2$"; mark 75, 480, 729344 and the C3 cospectral certificate as not compiled at `v3.0.0`; fix the Lean build command in `README.md`; correct the author list for `arXiv:2609.19862`; cite Cabello (`arXiv:1002.3135`) and the concurrent Zenodo deposit `doi:10.5281/zenodo.24567331`. Items in frozen papers, logs and Lean code are recorded in `ERRATA.md`.
 - External mathematician review and correspondence feedback (M. Saniga, A. Muller, F. Holweck, C. Kelleher, A. Giorgetti).
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Zenodo/HAL DOI and Palomar Registry registration (draft payloads in `docs/submission-packet.md`).
