@@ -22,7 +22,7 @@
     <text x="96" y="322" font-size="18" font-weight="700" fill="#38bdf8">TRACK 1 · SPECTRAL BOUNDS</text>
     <text x="96" y="358" font-size="16" fill="#e2e8f0">Hoggar / Kramers spectral floor</text>
     <text x="96" y="388" font-size="16" fill="#e2e8f0">Infinite CCZ family |Psi_{3m}&gt;</text>
-    <text x="96" y="418" font-size="16" fill="#e2e8f0">Conjecture E (all 9 cases, N &gt;= 4)</text>
+    <text x="96" y="418" font-size="12" fill="#e2e8f0">Conjecture E (one representative per case, N &gt;= 4)</text>
     <text x="96" y="448" font-size="16" fill="#34d399">Exact C3 optima: 368 vs 344</text>
     <text x="96" y="478" font-size="15" fill="#94a3b8">HoggarBound.* · 0 sorry</text>
 
