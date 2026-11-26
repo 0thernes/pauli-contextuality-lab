@@ -1,11 +1,136 @@
-# Pauli Contextuality Lab — Generated Bulk Context (`llms-full.txt`)
+# FILE: README.md
 
-> Generated automatically by `scripts/generate_llms_full.py`. Do not hand-edit.
+# Pauli Contextuality Lab
 
+Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research preprints, and reproducible interactive labs unifying three Pauli contextuality research tracks: spectral bounds and Jonah's Conjecture E, exact disjoint Mermin configuration degrees, and finite-horizon sequential contextuality certificates.
+
+[![CI](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/ci.yml)
+[![Lean 4.35.0 Verification](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml)
+[![Pages & Blueprint](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/pauli-contextuality-lab/)
+[![License: Apache-2.0 / CC-BY-4.0](https://img.shields.io/badge/license-Apache--2.0%20%2F%20CC--BY--4.0-green)](LICENSE)
+[![Version 2.9.0](https://img.shields.io/badge/version-2.9.0-informational)](CHANGELOG.md)
+
+![Pauli Contextuality Lab overview](docs/media/social-preview.svg)
+
+**Status:** Active research preprints (`v2.9.0`, 25 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
+**Author:** Alexander S. Donahue, independent researcher ([ORCID 0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648) · `0_0@0thernes.art`).  
+**Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Errata & Withdrawal](ERRATA.md) · [Mega-Atlas Audit](docs/mega-atlas-cross-reference.md) · [Replication Protocol](REPLICATION.md)
+
+> **Consolidation note:** This repository consolidates four earlier standalone Pauli repositories (`0thernes/hoggar-bound-lab`, `0thernes/hoggar-bound`, `0thernes/contextuality-tensor-lab`, and `0thernes/contextuality-evidence-lab`, all archived read-only with redirects) into one Lean 4.35.0 + Mathlib `v4.35.0` workspace with a single deduplicated `third_party/` stack and open `Apache-2.0` / `CC-BY-4.0` licensing. The zero-Mathlib ray-pool Kochen–Specker repository remains separate at [`0thernes/kochen-specker-extremal-lab`](https://github.com/0thernes/kochen-specker-extremal-lab) to preserve its minimal Mathlib-free trust base.
 
 ---
 
-## File: `AGENTS.md`
+## Five-Second Formal Proof Check (`#print axioms`)
+
+Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 160-declaration + 2,206-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
+
+```text
+'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.hoggar_bound_quaternionic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.mermin_peres' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.degree_three_qubit' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.degree_three_qubit_elliptic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.saturation_tfae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.C3ExactOptima.corollary16_exact_binary_optima' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.w72_ge_1455' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.ExactDegreesN4N5.q9plus_ge_6444' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.square_minimum_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.pentagram_minimum_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.global_actual_square_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.global_actual_pentagram_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.sharp_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.BetTree.finite_hitting_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Evidence.concrete_classical_false_positive' depends on axioms: [propext, Classical.choice, Quot.sound]
+```
+
+---
+
+## Three Unified Research Tracks
+
+| Track | Path & Lean Library | Headline Results | Preprint & Interactive Lab |
+|---|---|---|---|
+| **1 · Spectral Bounds & Conjecture E** | [`tracks/spectral-bounds/`](tracks/spectral-bounds/README.md) · `lean/HoggarBound/` | Universal & Kramers spectral floors; exact small degrees ($d(Q^+(3,2))=1$, $d(W(5,2))=63$, $d(Q^-(5,2))=9$); infinite pure-CCZ determinant family $|\Psi_{3m}\rangle$ ($m \ge 1$, $N=6$ degree $2{,}016$); $N=4,5$ ladders & unconditional bounds ($1455$, $6444$); **Jonah's Conjecture E** across all 9 vertex cases for all $N \ge 4$; exact four-qubit C3 binary optima (**368 vs 344**, gap 24) via pure-integer MET-SDP certificates. | [Unified PDF](papers/spectral-bounds/unified-contextuality.pdf) · [C3 Lab](https://0thernes.github.io/pauli-contextuality-lab/c3-lab/) · [Explorer](https://0thernes.github.io/pauli-contextuality-lab/independent-review/) |
+| **2 · Disjoint Mermin Configurations** | [`tracks/disjoint-mermin/`](tracks/disjoint-mermin/README.md) · `lean/ContextualityTensor/` | Exact closed-form contextuality degrees $d_k = (7^k - 5^k)/2$ ($k$ disjoint Peres–Mermin squares) and $(6^k - 4^k)/2$ ($k$ Mermin pentagrams) with $2d_k/L_k \to 1$, directly answering **Section 6 of Muller & Saniga (`arXiv:2609.19862v1`)**. | [Paper PDF](papers/disjoint-mermin/contextuality-tensor.pdf) · [4-Qubit Lab](https://0thernes.github.io/pauli-contextuality-lab/disjoint-mermin/) |
+| **3 · Sequential Contextuality Evidence** | [`tracks/sequential-evidence/`](tracks/sequential-evidence/README.md) · `lean/Evidence/` | Sharp Peres–Mermin setting-bias bound $\min_c p(c)$, finite adaptive-tree supermartingale bound $\le z/T$, and constructive miscalibration counterexample (**97.24%** naive vs **0.89%** bias-aware false rejection at nominal 1%). | [Paper PDF](papers/sequential-evidence/whitepaper.pdf) · [Evidence Lab](https://0thernes.github.io/pauli-contextuality-lab/sequential-evidence/) |
+
+---
+
+## Quickstart
+
+From a clean clone (Python 3.11–3.13, Node 22+, optional Lean 4 `elan` & GCC/Clang):
+
+```bash
+git clone https://github.com/0thernes/pauli-contextuality-lab.git
+cd pauli-contextuality-lab
+python -m pip install -r requirements.txt
+
+# 1. Exact verification across all 3 tracks + dataset & third_party SHA-256 checksums
+python scripts/verify_all.py
+
+# 2. Automated Python (exact, Hypothesis property, mutation/fuzz, integrity) & Node suites
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
+
+# 3. Audits, Blueprint declaration check & unified Pages build
+python scripts/arithmetic_audit.py
+python scripts/check_citations.py
+python scripts/check_readme_axioms.py
+python scripts/build_blueprint.py
+python scripts/build_site.py
+```
+
+Expected headline output: `ALL TRACK VERIFICATIONS PASSED.`, `50 passed` in pytest, `2 pass` in Node, and `PASS: Blueprint validated 27 nodes (162 Lean decls with exact GitHub #L links)`.
+
+### Full Lean 4.35.0 Verification & 6-Kernel Comparator
+
+```bash
+cd lean
+lake exe cache get
+lake build HoggarBound ContextualityTensor Evidence Solution
+lake env lean VerifyAll.lean
+lake comparator --config comparator.json --paranoid
+```
+
+---
+
+## Usage Examples
+
+- **One-word task runner (`justfile` / `scripts/dev.sh`):**
+  ```bash
+  just test          # Run all Python + Node tests
+  just verify-lean   # Build all 3 Lean libraries + VerifyAll + 6-kernel comparator
+  just sanitizers    # Compile & run C11 engines under ASan/UBSan (Linux/macOS)
+  just blueprint     # Check every \lean{...} declaration and rebuild dependency graph
+  just reproduce     # Clean-clone full exact reproduction
+  just audit         # Score repo against Build Standard for LLMs v1.2.0 (90 items)
+  ```
+- **Failure / negative-control example:** Running Track 2 verification under Python `-O` deliberately fails rather than silently skipping `assert` checks (`python -O -c "import sys; sys.path.insert(0, 'tracks/disjoint-mermin/src'); import certificates"` exits non-zero with `RuntimeError`). Similarly, mutating any single entry in `data/c3_exact_optima_certs.json` or `tracks/sequential-evidence/results/stack_trials.json` is rejected by `tests/test_mutation_and_fuzz.py` and `tests/test_sequential_evidence.py`.
+
+---
+
+## Architecture & Key Documents
+
+| Path | Purpose |
+|---|---|
+| `lean/` | Unified Lean 4.35.0 + Mathlib `v4.35.0` package (`HoggarBound`, `ContextualityTensor`, `Evidence`, `Challenge`, `Solution`, `VerifyAll`) |
+| `tracks/` | Self-contained code, C11 engines, exact Python verifiers, interactive web labs, and JSON receipts for Tracks 1–3 |
+| `papers/` | Preprint PDFs, LaTeX sources, BibTeX, and external-reviewer correspondence guide ([papers/README.md](papers/README.md)) |
+| `data/` & `third_party/` | SHA-256-pinned witness/flat datasets (`data/MANIFEST.sha256`) and single deduplicated Tsotchke stack (`third_party/SHA256SUMS.json`) |
+| `docs/` | [Architecture](docs/architecture.md), [ADRs](docs/adr/), [Statement Fidelity](docs/statement-fidelity.md), [Threat Model](docs/threat-model.md), [FAQ](docs/faq.md), [Glossary](docs/glossary.md), [10-Pass Audit](docs/reviews/2026-11-24-consolidation-and-ten-pass-audit.md) |
+
+---
+
+## Limitations & Licensing
+
+- **Epistemic boundary:** See [CLAIMS.md](CLAIMS.md) and [LIMITATIONS.md](LIMITATIONS.md). Nothing here is externally peer reviewed or measured on physical quantum hardware; human line-by-line statement fidelity sign-off remains open.
+- **Dual open license:** All source code (`lean/`, `tracks/`, `scripts/`, `tests/`, `.github/`) is licensed under **[Apache-2.0](LICENSE)**. All manuscripts, figures, blueprints, and documentation (`papers/`, `docs/`, `blueprint/`, `README.md`) are licensed under **[CC-BY-4.0](LICENSE-DOCS)**. Vendored components under `third_party/` retain their original MIT licenses ([NOTICE](NOTICE)).
+
+---
+
+# FILE: AGENTS.md
 
 # AGENTS.md
 
@@ -71,10 +196,9 @@ Run via `just <recipe>` or `bash scripts/dev.sh <recipe>`:
 - **PowerShell bracket safety on Windows:** On the author's ReFS Dev Drive (`Z:\[Vibe Coded (AI)]\...`), always use `-LiteralPath` in PowerShell file cmdlets.
 - **Honest affiliation & scope:** Always use `Alexander S. Donahue (independent researcher)` (never assert an unformed LLC). Never claim external peer review, journal acceptance, arXiv submission, or Palomar registration unless genuinely completed.
 
-
 ---
 
-## File: `CLAIMS.md`
+# FILE: CLAIMS.md
 
 # Claims & Falsification Ledger (`CLAIMS.md`)
 
@@ -96,10 +220,9 @@ Every headline claim in `pauli-contextuality-lab` is tagged with its exact verif
 | **C12** | Track 3 | Sharp Peres-Mermin setting-bias failure floor $\min_c p(c)$, finite adaptive-tree hitting bound $\le z/T$, and miscalibrated 1% test false-rejection probability $97.2443815\%$ vs $0.8907211\%$ at horizon 1,000 | `kernel-checked` (bounds & 36-step counterexample) + `certificate-checked` (exact rational 1,000-step DP & 18,000-trial replay) | `lean/Evidence/{Square,Sequential}.lean`, `tracks/sequential-evidence/scripts/verify_artifact.py`, `tests/test_sequential_evidence.py`, Targets 11–12 | A valid finite tree exceeding $z/T$ hitting probability, or a rational DP discrepancy against exhaustive path enumeration. |
 | **C13** | All | Browser labs and Moonlab / QGTL / `quantum_rng` runs | `numerical_approximation` (classical simulation) | `third_party/`, `results/arithmetic-audit.json` | Not a hardware quantum claim; falsified if simulator disagrees with exact analytical Pauli expectations beyond stated tolerance. |
 
-
 ---
 
-## File: `LIMITATIONS.md`
+# FILE: LIMITATIONS.md
 
 # Limitations, Epistemic Boundaries, and AI-Contribution Disclosure
 
@@ -135,75 +258,137 @@ The following items are **not** certified by the Lean 4 kernel and are explicitl
 - **Responsibility:** No AI system is listed as an author. Alexander S. Donahue takes full responsibility for all claims, errors, and corrections (`0_0@0thernes.art`).
 - **Conflict of interest:** None declared (self-funded independent research).
 
+---
+
+# FILE: ERRATA.md
+
+# Errata, Versioning Policy, and Withdrawal Plan (`ERRATA.md`)
+
+This ledger records substantive mathematical, formalization, bibliographic, and metadata corrections across all releases of `pauli-contextuality-lab` (Defensible Independent AI Research Playbook v1.3, Checklist #39 & H28).
+
+## 1. Versioning and DOI Policy
+
+- **Single version source:** The canonical version lives in `VERSION` (SemVer `MAJOR.MINOR.PATCH`) and is synchronized across `CHANGELOG.md`, `CITATION.cff`, `formalization.yaml`, `lean/lakefile.toml`, `README.md`, and all manuscript headers via automated regression tests (`tests/test_repo_integrity.py`).
+- **Preprint revision convention:** Each tagged GitHub release (`vX.Y.Z`) freezes a specific PDF, `lean-axioms-all.log`, `data-MANIFEST.sha256`, `SHA256SUMS`, and source archive. If deposited to Zenodo or HAL, **cite the version-specific DOI** when referencing exact proof line numbers, theorem counts, or artifact hashes, and the **concept/all-versions DOI** only when citing the ongoing repository generically.
+- **No fabricated identifiers:** Currently `doi: null`, `arxiv_identifier: null`, and `journal_submission_identifier: null` in `papers/spectral-bounds/unified-metadata.json`. No external DOI or arXiv identifier will be asserted until an actual deposit completes.
+
+## 2. Recorded Corrections Log
+
+| Release | Date | Affected Artifact(s) | Class | Summary of Correction |
+|---|---|---|---|---|
+| **v2.9.0** | 2026-11-25 | `tracks/disjoint-mermin/scripts/{build_paper,check_release}.py`, `tracks/spectral-bounds/scripts/*.py`, `papers/spectral-bounds/unified-contextuality.{tex,md,html}`, `papers/disjoint-mermin/contextuality-tensor.tex`, `tests/test_repo_integrity.py`, `lean/README.md` | `hole` / `issue` | Pinned MathJax 3.2.2 with `sha384` Subresource Integrity & `crossorigin="anonymous"` in Track 2 `build_paper.py` (replacing floating `@3` jsDelivr script) and added repo-wide CDN SRI regression test in `tests/test_repo_integrity.py`; added explicit `https://`/`http://` URL scheme guard (`S310`) in Track 2 `check_release.py`; eliminated all 14 non-SHA256-pinned `ruff F401/F841/F541` findings across Track 1 scripts (closing the Windows `add_dll_directory` handle cleanly in `stack_audit.py` while keeping SHA-256-pinned Track 2/3 `run_stack.py` byte-identical to provenance receipts); updated Section 9.4 CI run links to verified `v2.8.0` runs (`45722562212` / `45722562213`); eliminated all 5 remaining sub-5pt overfull hboxes so all 4 Pauli PDFs compile with literal `0` overfull hboxes (`0.00 pt` max); documented the complete 60-module `VerifyAll.lean` vs. standalone finite-certificate map in `lean/README.md`. |
+| **v2.8.0** | 2026-11-25 | `repo.yaml`, `docs/threat-model.md`, `papers/spectral-bounds/unified-metadata.json`, `papers/**/*.{tex,md,html}`, `.github/workflows/*` | `error` / `gap` / `hole` | Fixed JSON Schema violation in `repo.yaml` (`stack: [lean, ...]` → `[python, c-cpp, node, other]`); fixed non-existent `VerifyAllExhaustive.lean` reference in `unified-metadata.json` (`VerifyAll.lean`); corrected `docs/threat-model.md` C11 flag description (`-Wall -Wextra`, not `-Werror`); added explicit CRediT author-contribution and COI/funding sections across all 4 active manuscripts; upgraded repo to Build Standard v1.2.0 (10 finding classes) and Playbook v1.3 (adversarial false-variant Lean tests, `leanchecker --fresh`, hardened `noncomputable`/`scoped`/`local` `axiom` lexer, Crossref retraction checks, SHA-256-verified `gitleaks`+`osv-scanner`, `ERRATA.md`, and exhaustive 1,900-problem Mega-Atlas cross-reference). Clarified audit-pass nomenclature on historical v2.7.0–v2.7.2 logs so pass counts reflect literal check categories without overstatement. |
+| **v2.7.3** (folded into **v2.8.0**) | 2026-11-25 | `papers/spectral-bounds/unified-metadata.json`, `unified-contextuality.{tex,md,html}`, `unified-abstract.txt` | `error` | Replaced nonexistent `"ETHICS.md"` and `"results/verification-summary.json"` paths in `unified-metadata.json` with `"LIMITATIONS.md"` and `"results/lean-axioms-all.log"`; removed GitHub backtick-math from TeX abstract; synchronized abstract theorem counts to `110` Track 1 / `160` explicit / `2,206` exhaustively audited declarations. |
+| **v2.7.2** | 2026-11-25 | `papers/spectral-bounds/unified-contextuality.{tex,md,html}`, `tracks/spectral-bounds/results/hyperbolic-quasi-quadric-135/*` | `error` / `issue` | Fixed 12 broken HTTP-404 historical `hoggar-bound-lab` CI run URLs in live HTML; fixed raw ASCII `---` in HTML abstract and pandoc-mangled `-\/-\/-` in TeX; renamed `central_doily` CSV/JSON keys to `diagonal_pg32` / `diagonal_abstract_doily`; separated `DIAG_ABSTRACT_DOILY_VIOL` (15) from `DIAG_PG32_NONDOILY_SAT` (20). |
+| **v2.7.1** | 2026-11-25 | `papers/spectral-bounds/unified-contextuality.{tex,md,html}`, `quasi_quadric_and_witness_anatomy.py`, `scripts/build_site.py` | `error` | Corrected geometric terminology for the 15-point pure-$Z$ diagonal subspace $D_{15}$ of the four-qubit hyperbolic quasi-quadric $S_B$: $D_{15}$ is a maximal totally isotropic $PG(3,2)$ subspace (`105/105` commuting pairs, `35/35` $+I$ lines) whose 15 violated lines form an *abstract doily* $GQ(2,2)$ incidence structure rather than a symplectic four-qubit doily. |
+| **v2.7.0** | 2026-11-24 | `tracks/spectral-bounds/src/legacy-search/geom.h` | `bug` / `hole` | Fixed unbounded `fscanf(fp, "%s", hex)` heap buffer overflow risk in `witness_read`; added MathJax CDN Subresource Integrity (`sha384-...`) to `scripts/build_blueprint.py`. |
+| **v2.0.0** | 2026-11-24 | Root `LICENSE`, `LICENSE-DOCS`, `CITATION.cff`, `LIMITATIONS.md`, all manuscripts | `error` / `concern` | Replaced unformed corporate LLC affiliation reference with accurate independent-researcher affiliation (`Alexander S. Donahue, Independent researcher, Spokane, WA, USA`), replaced bespoke verification-only license with standard dual open licensing (`Apache-2.0` code / `CC-BY-4.0` manuscripts & docs), and consolidated four archived standalone Pauli repos into one Lean 4.35.0 monorepo. |
+
+## 3. Correction & Withdrawal Plan
+
+If a mathematical error, statement-fidelity mismatch (definition drift or vacuity between a paper claim and its Lean formalization), soundness flaw in a verifier, or undisclosed prior art is discovered:
+
+1. **Report intake:** Open a GitHub issue (tagged `error`, `bug`, or `hole`) or email `0_0@0thernes.art` with the exact commit/version, theorem/file path, and counterexample or discrepancy.
+2. **Triage & reproduction (target: within 72 hours):** Reproduce the counterexample or discrepancy, classify it under the 10-class Build Standard v1.2.0 taxonomy, and record an explicit entry in this `ERRATA.md` table and in `CLAIMS.md` / `docs/statement-fidelity.md`.
+3. **Correction release (non-fatal errors):** Publish a new SemVer release (`vX.Y.(Z+1)`) fixing the proof, code, and manuscripts, never force-pushing or rewriting tagged history so older citations remain verifiable.
+4. **Formal withdrawal (fatal theorem failure):** If a headline theorem fails due to an unrepairable mathematical or definition-fidelity defect:
+   - Immediately add a prominent `[WITHDRAWN]` banner at the top of `README.md`, `CLAIMS.md`, the affected manuscript PDF/HTML/TeX, and this `ERRATA.md` explaining the exact failure mechanism and crediting whoever found it.
+   - Publish a superseding withdrawal version on GitHub Releases and any external preprint server where the paper has been deposited (e.g., arXiv withdrawal comment, Zenodo new version with withdrawal notice, HAL update, or `ai.viXra.org` replacement notice). Never silently delete prior versions.
 
 ---
 
-## File: `formalization.yaml`
+# FILE: REPLICATION.md
 
-# Palomar-compatible formalization metadata & epistemic disclosure
-# Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
-title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
-repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "2.8.0"
-date: "2026-11-25"
-license:
-  code: "Apache-2.0"
-  documentation_and_papers: "CC-BY-4.0"
-authors:
-  - name: "Alexander S. Donahue"
-    orcid: "0009-0006-8168-9648"
-    affiliation: "Independent researcher"
-    credit_roles:
-      - "Conceptualization"
-      - "Methodology"
-      - "Project administration"
-      - "Resources"
-      - "Supervision"
-      - "Validation (direction & audit oversight)"
-lean_toolchain: "leanprover/lean4:v4.35.0"
-mathlib_rev: "56a005855ea1"
-batteries_rev: "66e469188fe0"
-lake_package_dir: "lean"
-libraries:
-  - name: "HoggarBound"
-    track: "tracks/spectral-bounds"
-    summary: "Spectral floor (real/complex/quaternionic), saturation equivalences, infinite CCZ family |Psi_{3m}>, exact C3 binary optima (368 vs 344), N=4..5 ladders, TwoQubit & Hoggar witnesses, Jonah's Conjecture E (all 9 cases, N >= 4), and NonVacuity."
-  - name: "ContextualityTensor"
-    track: "tracks/disjoint-mermin"
-    summary: "Exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares) and (6^k - 4^k)/2 (k Mermin pentagrams), answering Section 6 of Muller & Saniga (arXiv:2609.19862v1)."
-  - name: "Evidence"
-    track: "tracks/sequential-evidence"
-    summary: "Peres-Mermin setting-bias bound, finite adaptive-tree wealth supermartingale bound, and exact counterexample to naive calibration."
-challenge_module: "Challenge"
-solution_module: "Solution"
-comparator_config: "lean/comparator.json"
-axiom_audit_file: "lean/VerifyAll.lean"
-permitted_axioms:
-  - "propext"
-  - "Classical.choice"
-  - "Quot.sound"
-kernels_configured:
-  - "Lean 4.35.0 official C++ kernel"
-  - "leanchecker-paranoid (v4.35.0)"
-  - "lean4lean (v4.35.0)"
-  - "nanoda (0.4.19)"
-  - "con-leche (v4.35.0)"
-  - "con-ron (v4.35.0)"
-automation:
-  origin: "AI-assisted mathematical formalization, exact computation, and manuscript drafting under human direction"
-  models_used:
-    - "Anthropic Claude: spectral-floor & saturation study, Conjecture E paper proofs, disjoint Mermin formulas, sequential evidence proofs & verifiers"
-    - "OpenAI Codex: independent validation, four-qubit C3 counterexample & manuscript audits"
-    - "Google Gemini / Antigravity: Lean 4.35.0 formalizations (Conjecture E all 9 cases, exact C3 optima 368/344, infinite family |Psi_{3m}>, N=4..5 ladders, NonVacuity, unified monorepo consolidation, Build Standard v1.2.0 & Playbook v1.3 verification stack)"
-  human_line_by_line_review_recorded: false
-  statement_fidelity_table: "docs/statement-fidelity.md"
-review_status: "Research preprints; NOT externally peer reviewed; NOT yet registered on Palomar Registry, arXiv, or Zenodo."
-limitations: "See LIMITATIONS.md and CLAIMS.md. In particular: the 42-orbit W(5,2) C census reproducing Jonah [J1]'s (315, 1575, 6975), the 540.3M-form N=9 cyclic-symmetry rank-8 census, Jonah [J3, Theorem B4]'s single-orbit group transitivity classification, and external simulator/browser code lie outside the Lean 4 kernel boundary."
+# Replication Protocol (`REPLICATION.md`)
 
+This document gives the exact, clean-clone commands to reproduce every automated test, exact verifier, C11 sanitizer check, Lean 4.35.0 proof, 6-kernel comparator replay, Blueprint build, and GitHub Pages assembly.
+
+## 1. Prerequisites
+
+- **Git**
+- **Python 3.11–3.13** (`pip install -r requirements.txt`)
+- **Node.js 22+** (for browser-model unit tests and Moonlab WASM checks)
+- **GCC or Clang** (C11, optional `-fsanitize=address,undefined` on Linux/macOS)
+- **Lean 4 (`elan`)** — automatically selects `leanprover/lean4:v4.35.0` from `lean/lean-toolchain`
+- **Bubblewrap (`bwrap`)** on Linux for sandboxed `lake comparator --paranoid`
+
+## 2. Clean-Clone Replication Commands
+
+```bash
+git clone https://github.com/0thernes/pauli-contextuality-lab.git
+cd pauli-contextuality-lab
+
+# 1. Python & Node verification suites + exact verifiers + audits + Blueprint + site
+python -m pip install -r requirements.txt
+python scripts/verify_all.py
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
+python scripts/arithmetic_audit.py
+python scripts/check_citations.py
+python scripts/check_readme_axioms.py
+python scripts/build_blueprint.py
+python scripts/build_site.py
+
+# 2. C11 engines with AddressSanitizer + UndefinedBehaviorSanitizer (Linux/macOS)
+bash scripts/dev.sh sanitizers
+
+# 3. Full Lean 4.35.0 build, exhaustive axiom audit & 6-kernel comparator
+cd lean
+lake exe cache get
+lake build HoggarBound ContextualityTensor Evidence Solution
+lake env lean VerifyAll.lean
+lake comparator --config comparator.json --paranoid
+```
+
+## 3. Replication Log
+
+External independent replications are welcomed — open an issue or email `0_0@0thernes.art` with your OS, tool versions, commit SHA, and command output to add a row below.
+
+| Date | Replicator | Environment | Scope Verified | Result |
+|---|---|---|---|---|
+| 2026-11-24 | Alexander S. Donahue (author / local & CI) | Windows 11 + Ubuntu 24.04 GitHub Actions, Python 3.12/3.13, Node 22, Lean 4.35.0 | Unified 3-track Lean build, `VerifyAll.lean`, `verify_all.py`, `pytest`, Node tests, Blueprint, site, Build Standard v1.1.0 audit | Pass (author-run; independent external replication still open) |
+| 2026-11-25 | Alexander S. Donahue (author / local & CI) | Windows 11 + WSL2 + Ubuntu 24.04/macOS/Windows CI, Python 3.12, Node 22, Lean 4.35.0 | `v2.9.0` Build Standard v1.2.0 (`100.0%`, `68/68`), Playbook v1.3 checks (adversarial false-variant Lean tests, Crossref retraction audit, 14-engine C11 ASan/UBSan, 6-kernel `lake comparator --paranoid`) | Pass (author-run; independent external replication still open) |
 
 ---
 
-## File: `docs/statement-fidelity.md`
+# FILE: docs/mega-atlas-cross-reference.md
+
+# Cross-Reference Against the Unsolved Problems Mega-Atlas V2 (`1,900` Problems)
+
+**Audit date:** 2026-11-25  
+**Source catalog:** [`0thernes/unsolved-problems-mega-atlas`](https://github.com/0thernes/unsolved-problems-mega-atlas) (`outputs/MegaAtlas_Unsolved_Problems_V2.json`, `1,900` curated open problems across 28 superdomains)  
+**Scope audited:** All three tracks of `pauli-contextuality-lab` (`v2.9.0`) plus cross-check across all 12 registered papers (`0TH-2026-001`–`0TH-2026-012`) in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive).
+
+## Executive Verdict (Strictly Honest, Zero Overclaiming)
+
+- **Grand Mega-Atlas problems completely solved:** **`0 / 1,900`**.
+  None of the 1,900 civilizational / grand-challenge open problems in the Mega-Atlas V2 is completely resolved by `pauli-contextuality-lab` or any paper in `0thernes-research-archive`.
+- **Concrete finite-dimensional / domain subproblems genuinely settled inside Lean 4.35.0 (`pauli-contextuality-lab`):**
+  Our verified theorems resolve **specific, bounded open conjectures in finite-dimensional Pauli contextuality** directly situated under Mega-Atlas entry **`QM-011`** (*Quantum Contextuality, Ontological Models & Psi-Ontic vs. Psi-Epistemic Realism*), while leaving the broader `QM-011` grand problem (Spekkens generalized contextuality across continuous variables and full resource characterization) **OPEN**:
+  1. **Jonah's Conjecture E (all 9 hyperplane-carrier vertex cases for all $N \ge 4$):** Proved in Lean 4.35.0 (`HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases`, `AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra`), plus exact four-qubit Case C3 global binary completion optima (`368` vs `344`, exact gap `24`, `C3ExactOptima.corollary16_exact_binary_optima`). *(Caveat: transport to arbitrary hyperplane classes relies on cited Theorem B4 of Jonah [J3] outside Lean.)*
+  2. **Muller & Saniga (`arXiv:2609.19862v1`, Section 6) repeated disjoint Mermin copies:** Proved exact closed-form degrees $d_k = (7^k - 5^k)/2$ for $k$ disjoint Peres–Mermin squares and $(6^k - 4^k)/2$ for $k$ disjoint Mermin pentagrams, with normalized degree $2d_k/L_k \to 1$, in Lean 4.35.0 (`ContextualityTensor.square_minimum_closed_form`, `pentagram_minimum_closed_form`, `global_actual_*`).
+  3. **Infinite non-closed floor-saturating pure-CCZ determinant family $|\Psi_{3m}\rangle$ ($m \ge 1$):** Proved in Lean 4.35.0 (`HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family`), alongside exact kernel-checked finite degrees `75`, `480`, `2016`, `729344`.
+  4. **Sequential Peres–Mermin setting-bias floor & finite adaptive-tree supermartingale bound:** Proved in Lean 4.35.0 (`Evidence.sharp_minimum`, `BetTree.finite_hitting_bound`, `concrete_classical_false_positive`).
+
+## Detailed Mapping of Closest Mega-Atlas V2 Entries
+
+| Mega-Atlas ID | Problem Title (Mega-Atlas Status) | Repo / Archive Paper | Honest Verdict | What Is Proved vs. What Remains Open |
+|---|---|---|---|---|
+| **`QM-011`** | Quantum Contextuality, Ontological Models & Psi-Ontic vs. Psi-Epistemic Realism (`Partially Solved / Special Cases`) | `pauli-contextuality-lab` (`0TH-2026-009`), `kochen-specker-extremal-lab` (`0TH-2026-004`) | **`PARTIAL / BOUNDED SUBCASE`** | **Proved (Lean 4.35.0):** Universal/Kramers spectral floors, Jonah's Conjecture E (all 9 cases, $N \ge 4$), exact C3 binary optima (`368` vs `344`), infinite $|\Psi_{3m}\rangle$ family, Muller–Saniga Sec. 6 arbitrary-$k$ disjoint Mermin degrees, exact sequential adaptive-tree bounds; plus certified coordinate-pool KS ray minima (`31/33` in 3D, `18` in 4D, `29` in 5D) in `0TH-2026-004`. **Still Open:** General Spekkens contextuality, continuous-variable characterization, universal resource theory for quantum advantage. |
+| **`QC-037`** | SIC-POVM Existence in All Finite Hilbert-Space Dimensions — Zauner's Conjecture (`Partially Solved / Special Cases`) | `pauli-contextuality-lab` (`0TH-2026-009`, Track 1) | **`RELATED / NOT SOLVED`** | **Used:** Known $d=8$ Hoggar SIC fiducial state saturates $d(W(5,2))=63$; `saturation_tfae` characterizes Pauli floor-saturating flat states. **Still Open:** Existence of $d^2$ equiangular lines in $\mathbb{C}^d$ for all $d \in \mathbb{N}$ and Stark-unit link to Hilbert's 12th Problem. |
+| **`QM-007`**, **`ANL-049`** | Physical Principle Selecting Tsirelson Bound $2\sqrt{2}$; Exact Grothendieck Constants $K_G^{\mathbb{R}}, K_G^{\mathbb{C}}$ (`Completely Open` / `Partially Solved`) | `pauli-contextuality-lab` (tangential spectral/SDP methods) | **`NOT SOLVED`** | Our MET-SDP duals certify finite four-qubit Pauli QUBO instances (`368`, `344`) and do not address the Almost-Quantum set or exact Grothendieck constants. |
+| **`QC-013`** | Ultra-Low-Overhead Magic-State Distillation & Transversal Non-Clifford Gate Synthesis (`Active Breakthroughs / Frontier`) | `pauli-contextuality-lab` (Track 1 non-Clifford CCZ states) | **`RELATED / NOT SOLVED`** | $|\Psi_{3m}\rangle$ are pure-CCZ flat states on $3m$ qubits demonstrating maximal Pauli-contextuality saturation, not low-overhead fault-tolerant distillation factories. |
+| **`CS-053`** | Exact Capacity Region of Colluding, Coded & Byzantine PIR (`Partially Solved / Special Cases`) | Archive `0TH-2026-012` (`coded-pir-mlwe-complexity-lab`, outside this repo) | **`PARTIAL / BOUNDED CONSTRUCTION`** | `0TH-2026-012` analyzes Koszul–Veronese Byzantine PIR schemes and complexity-barrier bridges; the general information-theoretic capacity $C_{\text{PIR}}(N,K,T,B,M)$ for arbitrary $(K>1, T>1, B)$ remains **OPEN**. |
+| **`CS-026`**, **`QC-042`** | Exact Quantum & Classical Hardness of Post-Quantum Lattice Problems — LWE, MLWE, SVP (`Active Breakthroughs / Frontier`) | Archive `0TH-2026-011` (`secmesh-pqsi`), `0TH-2026-012` (`coded-pir-mlwe-complexity-lab`) | **`RELATED / NOT SOLVED`** | Reduction tightness bounds and protocol-level formalization do not prove unconditional exponential classical or quantum lower bounds for LWE/MLWE/SVP. |
+| **`CS-005`** | P vs. PSPACE, L vs. P & NC vs. P (notes Cook–Mertz catalytic memory) (`Active Breakthroughs / Frontier`) | Archive `0TH-2026-010` (`catalytic-register-frontiers`, outside this repo) | **`RELATED / BOUNDED MODEL`** | Proves positive-characteristic dichotomy and optimal 3-register exponents in passive catalytic register programs; separates no complexity class in $L \subseteq NL \subseteq NC \subseteq P \subseteq NP \subseteq PSPACE$. |
+| **`NEURO-001`**, **`NEURO-003`**, **`NEURO-004`**, **`AI-055`** | Hard Problem of Consciousness, Sentience Detection, NCCs, AI Moral Status (`Completely Open` / `Active Frontier`) | Archive `0TH-2026-007`, `0TH-2026-008` (outside this repo) | **`NOT SOLVED`** | `0TH-2026-007` verifies biophysical synaptic-bouton invariants; `0TH-2026-008` is a frontier survey and forensic audit. None resolves phenomenal consciousness or objective sentience detection. |
+| **`LOG-002`**, **`NT-005`** | Busy Beaver `BB(6)` & Antihydra / Collatz (`Active Breakthroughs` / `Independent Suspected`) | None in `0thernes-research-archive` | **`NOT SOLVED`** | No formal resolution exists in any repository in the archive. |
+
+*Note on non-Mega-Atlas theorems:* Archive paper `0TH-2026-006` (`multinomial-tv-conjecture`) resolves a specific domain conjecture (**Conjecture 7.7 on the second-order variance of multinomial discrete total variation**) that is outside the 1,900 Mega-Atlas grand-problem catalog.
+
+---
+
+# FILE: docs/statement-fidelity.md
 
 # Statement-Fidelity Audit Table (`docs/statement-fidelity.md`)
 

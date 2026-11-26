@@ -486,6 +486,21 @@ class RepoIntegrityTests(unittest.TestCase):
                 f"{fname}#L{lineno} does not declare {thm}: {lines[lineno - 1]!r}",
             )
 
+    def test_all_cdn_scripts_have_sri_and_crossorigin(self) -> None:
+        skip = {".git", ".lake", ".venv", "node_modules", "third_party", "build", ".mypy_cache"}
+        cdn_re = re.compile(r"<script[^>]+src=[\"'](https?://[^\"']*(?:cdn\.|jsdelivr|cdnjs|unpkg)[^\"']*)[\"'][^>]*>", re.I)
+        missing_sri: list[str] = []
+        for ext in ("*.html", "*.py", "*.js", "*.mjs"):
+            for fp in sorted(ROOT.rglob(ext)):
+                if any(part in skip for part in fp.parts):
+                    continue
+                txt = fp.read_text(encoding="utf-8", errors="ignore")
+                for m in cdn_re.finditer(txt):
+                    tag = m.group(0)
+                    if 'integrity="sha384-' not in tag or 'crossorigin="anonymous"' not in tag:
+                        missing_sri.append(f"{fp.relative_to(ROOT).as_posix()}: {m.group(1)}")
+        self.assertEqual(missing_sri, [], f"External CDN <script> missing sha384 SRI or crossorigin: {missing_sri}")
+
 
 if __name__ == "__main__":
     unittest.main()

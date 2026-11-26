@@ -8,7 +8,7 @@
 \usepackage{unicode-math}
 \setmathfont{texgyrepagella-math.otf}
 \AtBeginDocument{\let\setminus\smallsetminus}
-\usepackage{microtype,graphicx,longtable,booktabs,array,calc}
+\usepackage{microtype,graphicx,longtable,booktabs,array,calc,xurl}
 \usepackage{xcolor}
 \definecolor{Accent}{HTML}{146B81}
 \usepackage[colorlinks=true,linkcolor=Accent,urlcolor=Accent,citecolor=Accent]{hyperref}
@@ -30,7 +30,7 @@
 \hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{25 November 2026\quad\textbullet\quad Version 2.8.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
+\date{25 November 2026\quad\textbullet\quad Version 2.9.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not peer reviewed. Substantive AI assistance disclosed in Section 9.\end{center}
@@ -293,14 +293,14 @@ The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol insta
 \textbf{Funding, competing interests, and errata.} This research was self-funded by Alexander S. Donahue as an independent researcher. The author declares no competing interests. Corrections across versions and the formal withdrawal plan are maintained in \texttt{ERRATA.md} at the repository root.
 
 \section{References}\label{references}
-
+{\sloppy
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  A. Muller and M. Saniga, \emph{Automated search for highly contextual Kochen-Specker proofs}, arXiv:2609.19862v1 (2026), especially Definitions 11--13 and Section 6. \href{https://doi.org/10.48550/arXiv.2609.19862}{doi:10.48550/arXiv.2609.19862}.
+  A. Muller and M. Saniga, \emph{Automated search for highly contextual Kochen-Specker proofs}, arXiv:2609.19862v1 (2026), especially Definitions 11--13 and Section 6. \href{https://doi.org/10.48550/arXiv.2609.19862}{\nolinkurl{doi:10.48550/arXiv.2609.19862}}.
 \item
-  S. Abramsky, R. S. Barbosa and S. Mansfield, \emph{The contextual fraction as a measure of contextuality}, Physical Review Letters \textbf{119}, 050504 (2017). \href{https://doi.org/10.1103/PhysRevLett.119.050504}{doi:10.1103/PhysRevLett.119.050504}; \href{https://arxiv.org/abs/1705.07918}{arXiv:1705.07918}.
+  S. Abramsky, R. S. Barbosa and S. Mansfield, \emph{The contextual fraction as a measure of contextuality}, Physical Review Letters \textbf{119}, 050504 (2017). \href{https://doi.org/10.1103/PhysRevLett.119.050504}{\nolinkurl{doi:10.1103/PhysRevLett.119.050504}}; \href{https://arxiv.org/abs/1705.07918}{\nolinkurl{arXiv:1705.07918}}.
 \item
   R. Cleve, W. Slofstra, F. Unger and S. Upadhyay, \emph{Perfect Parallel Repetition Theorem for Quantum XOR Proof Systems}, Computational Complexity \textbf{17}, 282--299 (2008). \href{https://doi.org/10.1007/s00037-008-0250-4}{doi:10.1007/s00037-008-0250-4}; \href{https://arxiv.org/abs/quant-ph/0608146}{arXiv:quant-ph/0608146}.
 \item
@@ -320,5 +320,6 @@ The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol insta
 \item
   The Lean community, \emph{Lean 4} and \emph{Mathlib}. This artifact pins Lean 4.35.0 and Mathlib v4.35.0. \href{https://github.com/leanprover/lean4}{Lean}; \href{https://github.com/leanprover-community/mathlib4}{Mathlib}.
 \end{enumerate}
+}
 
 \end{document}

@@ -55,7 +55,7 @@ PREAMBLE = r"""\documentclass[10pt,a4paper]{article}
 \usepackage{unicode-math}
 \setmathfont{texgyrepagella-math.otf}
 \AtBeginDocument{\let\setminus\smallsetminus}
-\usepackage{microtype,graphicx,longtable,booktabs,array,calc}
+\usepackage{microtype,graphicx,longtable,booktabs,array,calc,xurl}
 \usepackage{xcolor}
 \definecolor{Accent}{HTML}{146B81}
 \usepackage[colorlinks=true,linkcolor=Accent,urlcolor=Accent,citecolor=Accent]{hyperref}
@@ -77,7 +77,7 @@ PREAMBLE = r"""\documentclass[10pt,a4paper]{article}
 \hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{9 November 2026\quad\textbullet\quad Version 0.1.0}
+\date{25 November 2026\quad\textbullet\quad Version 2.9.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not peer reviewed. Substantive AI assistance disclosed in Section 9.\end{center}
@@ -124,9 +124,9 @@ def main():
 <meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/disjoint-mermin/{STEM}.pdf">
 <link rel="canonical" href="https://0thernes.github.io/pauli-contextuality-lab/papers/disjoint-mermin/">
 <style>body{{max-width:850px;margin:60px auto;padding:0 24px;font:18px/1.7 system-ui;color:#183c48;background:#f8faf9}}h1{{line-height:1.18;font-size:36px}}a{{color:#146b81}}.meta{{font-size:15px;color:#536d76}}nav{{display:flex;gap:24px;flex-wrap:wrap}}section{{margin-top:36px}}</style>
-<script>MathJax={{tex:{{inlineMath:[['$','$']]}}}};</script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script></head>
+<script>MathJax={{tex:{{inlineMath:[['$','$']]}}}};</script><script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head>
 <body><article><p class="meta">PAULI CONTEXTUALITY LAB (TRACK 2) / RESEARCH PREPRINT</p><h1>Exact contextuality degrees for disjoint Mermin configurations</h1>
-<p>Alexander S. Donahue · Independent researcher, Spokane, WA, USA</p><p class="meta">25 November 2026 · Version 2.8.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
+<p>Alexander S. Donahue · Independent researcher, Spokane, WA, USA</p><p class="meta">25 November 2026 · Version 2.9.0 · Not peer reviewed<br>ORCID <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a></p>
 <nav><a href="{STEM}.pdf">Read PDF</a><a href="../../disjoint-mermin/">Run the lab</a><a href="https://github.com/0thernes/pauli-contextuality-lab">Code and Lean proofs</a></nav>
 <section><h2>Abstract</h2><p>{html.escape(abstract)}</p></section>
 <section><h2>Verification and disclosure</h2><p>The repository provides the precise Lean theorem boundary, exact certificates, falsification controls and Tsotchke-stack execution records. The manuscript discloses substantive AI contributions. Public hosting is separate from external peer review, repository deposit and indexing.</p></section>

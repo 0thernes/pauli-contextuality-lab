@@ -26,7 +26,7 @@ Writes results/conjecture_e.json for the default sizes and results/conjecture_e_
 (for example conjecture_e_n6.json) for any other list, so that a run at other sizes never
 overwrites the default record.
 """
-import itertools, json, os, sys
+import json, os, sys
 import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

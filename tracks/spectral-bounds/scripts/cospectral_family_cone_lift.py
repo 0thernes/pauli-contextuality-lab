@@ -25,7 +25,7 @@ their completion cubic traces differ, by 8 times the base difference; the struct
   python scripts/cospectral_family_cone_lift.py            (about two minutes)
 Writes results/cospectral_family_cone_lift.json.
 """
-import itertools, json, os, sys
+import json, os, sys
 import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -126,7 +126,7 @@ def tr3(L):
 
 
 def run(N, rec, out):
-    m, top, full = N - 1, 1 << (N - 1), 1 << N
+    top, full = 1 << (N - 1), 1 << N
     Q = [(a, c) for a in range(full) for c in range(full) if (a, c) != (0, 0) and pc(a & c) % 2 == 0]
     d = (0, top)
     mats = {p: matrix(p[0], p[1], N) for p in Q}
@@ -136,7 +136,7 @@ def run(N, rec, out):
         car = {p: (-1 if p[0] + (p[1] << N) in neg else 1) for p in Q if commute(p, d)}
         assert sum(1 for v in car.values() if v < 0) == len(neg)
         base[name] = (car, analyse(Q, d, car, N, mats, N <= 4))
-    bA, bB = base["A"][1], base["B"][1]
+    bA = base["A"][1]
     t3 = {k: tr3(base[k][1]["L"]) for k in base}
     t2 = {k: int((base[k][1]["L"] ** 2).sum()) for k in base}
     check("base C3 pair, N = %d: %d section points, %d outside points, %d outside contexts; cubic traces %d and %d as recorded"

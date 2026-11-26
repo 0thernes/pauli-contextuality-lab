@@ -48,6 +48,7 @@ def qgtl_audit():
            str(THIRD_PARTY / "qgtl/src/quantum_geometric/distributed/differential_geometry.c"),
            "-o", dll, "-lm"]
     run(cmd)
+    dll_search = None
     if os.name == "nt" and hasattr(os, "add_dll_directory"):
         # MinGW's runtime may be adjacent to gcc, not on the Python DLL path.
         dll_search = os.add_dll_directory(str(Path(shutil.which("gcc")).parent))
@@ -143,6 +144,8 @@ def qgtl_audit():
                            float(np.max(np.abs(qf-df))))
     require(random_error < 1e-12, "QGTL random-state mismatch")
     lib.diffgeo_engine_destroy(engine)
+    if dll_search is not None:
+        dll_search.close()
     return {"status": "pass", "kernels": ["diffgeo_compute_fubini_study",
               "diffgeo_compute_berry_curvature"], "dimension": 8, "parameters": 63,
             "metric_diagonal": float(g[0, 0]), "metric_rank_tolerance_1e_10": int(sum(eig>1e-10)),

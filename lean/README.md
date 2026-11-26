@@ -19,6 +19,12 @@ lake env lean VerifyAll.lean
 lake comparator --config comparator.json --paranoid
 ```
 
+## Module Audit Coverage (60 `.lean` Files)
+
+- **Unified exhaustive audit (`VerifyAll.lean`, 44 transitive modules + `VerifyAll.lean`):** Imports all active headline libraries across `HoggarBound`, `ContextualityTensor`, `Evidence` (including `Evidence.{Square,Sequential,Physical,Bridge}` via Lean 4.35 `module` / `public import`), and `Solution.lean`. Audits `160` explicit `#print axioms` lines plus all `2,206` project theorems via `Lean.collectAxioms`.
+- **Isolated specification (`Challenge.lean`, 1 file):** Contains the 12 intentional `sorry` target declarations checked against sorry-free `Solution.lean` by six independent Lean kernels (`lake comparator --config comparator.json --paranoid`).
+- **Root umbrella & heavy finite-certificate modules (14 files):** `HoggarBound.lean` (root aggregator) plus standalone finite-certificate proof modules (`HoggarBound.{C3Certificate,C3Spectra,C3Theorem,FlatData,PhaseData,Saturated,SaturatedFive,SaturatedPhaseFive,SaturatedPhaseSeven}`) and dedicated standalone audit scripts (`C3Verification.lean`, `IndependentVerification.lean`, `SaturatedVerification.lean`, `SaturatedSevenVerification.lean`, `StabilityVerification.lean`, `VerifyNewFormalizations.lean`). All 59 non-`Challenge` `.lean` files are scanned for zero forbidden tokens (`sorry`, `admit`, `native_decide`, `unsafe`, `axiom`, `implemented_by`, `@[extern`) in CI and `tests/test_repo_integrity.py`.
+
 ## Verification Boundary
 
 - **Zero forbidden tokens:** No `sorry`, `admit`, `native_decide`, `@[extern]`, `implemented_by`, or custom `axiom` in any proof module or `Solution.lean`. (`Challenge.lean` contains intentional `sorry` stubs as the comparator specification.)

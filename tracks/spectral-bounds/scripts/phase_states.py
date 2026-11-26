@@ -293,7 +293,7 @@ def study(name, N, cs, ccz, expect):
     r = max(prof)
     check("%s: the rank of T(a,.,.) is the same for every a != 0" % name, len(prof) == 1, "ranks %s" % dict(prof))
     res = fs.analyse(name, phase_amp(N, cs, ccz), N, expect)
-    S, Sset = res["S"], set(res["S"])
+    S = res["S"]
     num, den = (int(x) for x in res["mu"].split("/"))
     check("%s: |S| = (D-1) 2^r and mu = 2^(-r/2)" % name, len(S) == (D - 1) << r and num * num << r == den * den,
           "r = %d, |S| = %d, mu = %s" % (r, len(S), res["mu"]))

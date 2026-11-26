@@ -2,7 +2,7 @@
 
 This roadmap follows the release discipline in the Defensible Independent AI Research Playbook v1.3: each milestone ships only after the previous milestone passes mechanical and editorial checks.
 
-## Completed in `v2.3.0`–`v2.8.0` (2026-11-24 – 2026-11-25)
+## Completed in `v2.3.0`–`v2.9.0` (2026-11-24 – 2026-11-25)
 
 - Unified four scattered Pauli/Hoggar/Mermin repositories (`hoggar-bound-lab`, `hoggar-bound`, `contextuality-tensor-lab`, `contextuality-evidence-lab`) into one Lean 4.35.0 + Mathlib v4.35.0 workspace with deduplicated `third_party/` stack.
 - Adopted open licensing (`Apache-2.0` code + `CC-BY-4.0` papers/docs) and accurate independent-researcher attribution (`Alexander S. Donahue`, ORCID `0009-0006-8168-9648`), removing premature LLC claims.

@@ -5,7 +5,6 @@ existence reported in Jonah J3; a found pair is a reproducible witness only.
 """
 from pathlib import Path
 import json
-import itertools
 import numpy as np
 import sympy as sp
 

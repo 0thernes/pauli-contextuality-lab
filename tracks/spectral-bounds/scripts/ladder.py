@@ -43,7 +43,7 @@ def symp_with(g, a):
 
 def operator(g, f, mask):
     """A = sum_{v in mask} f_v P_v as a dense matrix, built column by column."""
-    D, n = g["D"], g["n"]
+    D = g["D"]
     M = np.zeros((D, D), dtype=complex)
     xs = np.arange(D)
     for v in np.nonzero(mask)[0]:

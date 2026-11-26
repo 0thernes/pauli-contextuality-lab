@@ -16,7 +16,6 @@ Facts checked here by brute force (bit-level symplectic code + verify/paulis.py 
 """
 import sys
 import numpy as np
-from math import gcd
 from bounds import counts, n_eff, lower_bound
 from brute_counts import popparity
 

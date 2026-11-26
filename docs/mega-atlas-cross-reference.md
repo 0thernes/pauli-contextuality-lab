@@ -2,7 +2,7 @@
 
 **Audit date:** 2026-11-25  
 **Source catalog:** [`0thernes/unsolved-problems-mega-atlas`](https://github.com/0thernes/unsolved-problems-mega-atlas) (`outputs/MegaAtlas_Unsolved_Problems_V2.json`, `1,900` curated open problems across 28 superdomains)  
-**Scope audited:** All three tracks of `pauli-contextuality-lab` (`v2.8.0`) plus cross-check across all 12 registered papers (`0TH-2026-001`–`0TH-2026-012`) in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive).
+**Scope audited:** All three tracks of `pauli-contextuality-lab` (`v2.9.0`) plus cross-check across all 12 registered papers (`0TH-2026-001`–`0TH-2026-012`) in [`0thernes/0thernes-research-archive`](https://github.com/0thernes/0thernes-research-archive).
 
 ## Executive Verdict (Strictly Honest, Zero Overclaiming)
 

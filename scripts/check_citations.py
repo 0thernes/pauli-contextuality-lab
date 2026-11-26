@@ -132,10 +132,10 @@ def check_crossref_retractions(dois: list[str]) -> list[dict]:
             findings.append({"doi": doi, "source": "datacite_preprint", "retracted": False, "status": "skipped_non_crossref"})
             continue
         url = f"https://api.crossref.org/works/{urllib.parse.quote(doi, safe='')}"
-        req = urllib.request.Request(
+        req = urllib.request.Request(  # noqa: S310
             url,
-            headers={"User-Agent": "pauli-contextuality-lab-audit/2.8 (mailto:0_0@0thernes.art)"},
-        )  # noqa: S310
+            headers={"User-Agent": "pauli-contextuality-lab-audit/2.9 (mailto:0_0@0thernes.art)"},
+        )
         last_err: Exception | None = None
         payload = None
         for attempt in range(3):

@@ -11,7 +11,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 REPO_ROOT=Path(__file__).resolve().parents[3]
 PAPER_DIR=REPO_ROOT/'papers'/'disjoint-mermin' if (REPO_ROOT/'papers'/'disjoint-mermin').is_dir() else ROOT/'paper'
-RELEASE_TAG='v2.8.0'
+RELEASE_TAG='v2.9.0'
 REPO_URL='https://github.com/0thernes/pauli-contextuality-lab'
 
 def main():
@@ -19,7 +19,9 @@ def main():
     parser.add_argument('--tectonic',required=True)
     args=parser.parse_args()
     url=f'{REPO_URL}/releases/download/{RELEASE_TAG}/contextuality-tensor.pdf'
-    with urlopen(url,timeout=60) as response:
+    if not url.startswith(('https://', 'http://')):
+        raise ValueError(f'Unsupported URL scheme: {url!r}')
+    with urlopen(url,timeout=60) as response:  # noqa: S310
         published=response.read()
         status=response.status
     local=(PAPER_DIR/'contextuality-tensor.pdf').read_bytes()

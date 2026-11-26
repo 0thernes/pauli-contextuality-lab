@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.8.0 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 2.9.0 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -528,7 +528,7 @@ attains the floor has \(|S| = (D-1)k^2\) and excess \((D-2)k/2\): \(|S| \in \{3,
 
 {\def\LTcaptype{none} % do not increment counter
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1718}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0415}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1059}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1269}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1452}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0821}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0969}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0756}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1541}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1818}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0365}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1149}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1219}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1392}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0841}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0919}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.0756}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1541}}@{}}
 \toprule\noalign{}
 state & \(N\) & observables & contexts & degree & modulus & excess & closed & state from \\
 \midrule\noalign{}
@@ -1058,7 +1058,7 @@ distinguished \(DW(5,2)\) core plus 1260 external lines in \(W(7,2)\) ({[}M2, Se
 
 {\def\LTcaptype{none} % do not increment counter
 {\footnotesize
-\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1158}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0496}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0664}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0816}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2313}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1579}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1283}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1691}}@{}}
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1258}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0346}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0724}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0926}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2193}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1579}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1283}}>{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1691}}@{}}
 \toprule\noalign{}
 configuration & \(N\) & points & contexts & averaging bound \(\lceil L/5\rceil\) {[}M2, LGG{]} & floor & best assignment & exact value \\
 \midrule\noalign{}
@@ -2379,7 +2379,7 @@ independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, added Batt
 editable modules, added a declaration-checked Lean Blueprint (\texttt{blueprint/}, mounted at \texttt{/blueprint/}),
 enforced the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.8.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255547}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45693255565}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
+provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.9.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 

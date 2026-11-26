@@ -8,6 +8,14 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
 - Software Heritage SWHID and Zenodo/HAL DOI registration.
 
+## [2.9.0] — 2026-11-25
+
+### Second-Round 3-Cycle Forensic Hardening: CDN SRI Closure, `0.00 pt` Overfull Hboxes Across All 4 PDFs, `S310`/`ruff` Cleanup & 60-Module Lean Map
+
+- **Supply-Chain CDN SRI & URL Scheme Hardening (`hole`):** Replaced the last unpinned floating `@3` MathJax CDN tag (missing SRI) in `tracks/disjoint-mermin/scripts/build_paper.py` with pinned MathJax `3.2.2` + `sha384` Subresource Integrity & `crossorigin="anonymous"`, added a permanent repo-wide CDN SRI regression test (`test_all_cdn_scripts_have_sri_and_crossorigin`) in `tests/test_repo_integrity.py`, and added explicit `https://`/`http://` scheme validation (`S310`) in `tracks/disjoint-mermin/scripts/check_release.py`.
+- **Literal `0.00 pt` Overfull Hboxes Across All 4 Pauli PDFs (`issue`):** Eliminated all 5 remaining sub-5 pt overfull hboxes (`unified-contextuality.tex` Tables 1 & 2, `contextuality-tensor.tex` Reference 2 via `\usepackage{xurl}`), updated Section 9.4 CI run links across `.tex`/`.md`/`.html` to verified `v2.8.0` runs (`45722562212`, `45722562213`), and recompiled all 4 PDFs cleanly with Tectonic (`0` overfull hboxes of any size, `0` undefined refs, verified PDF `/Info` `/Title` & `/Author` metadata).
+- **Track 1 Script & Lean Documentation Hygiene (`issue` / `hole`):** Resolved all 14 non-SHA256-pinned `ruff F401`/`F841`/`F541` findings across 10 `tracks/spectral-bounds/scripts/` modules (including cleanly closing the Windows `os.add_dll_directory` handle in `stack_audit.py` while preserving byte-exact SHA-256 provenance on Track 2 & 3 `run_stack.py`); documented the exact 60-file Lean module audit coverage in `lean/README.md`; recorded the full literal audit in `docs/reviews/2026-11-25-v290-deep-hardening-audit.md` and `ERRATA.md`.
+
 ## [2.8.0] — 2026-11-25
 
 ### Build Standard v1.2.0, Playbook v1.3, 1,900-Problem Mega-Atlas Audit & 3-Cycle Forensic Hardening

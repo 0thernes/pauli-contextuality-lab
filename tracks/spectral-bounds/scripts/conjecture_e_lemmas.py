@@ -199,7 +199,6 @@ def lemma20(name, n, S, O, sig, label):
 def base_hypotheses(name, n, X, d, c):
     """X on n qubits, d = Z on the top qubit n - 1; c = None for W, else X = Q_c with c on qubit 0."""
     k = 1 << (n - 1)
-    D = 1 << n
     Xs = set(X)
     O = [v for v in X if ce.B(v, d) == 1]
     top = 1 << (n - 1)
@@ -453,7 +452,6 @@ def run(n, out):
         low = (1 << (n - 1)) - 1
         X1 = ce.W(n - 1)
         S1 = [v for v in X1 if ce.B(v, r) == 0]
-        O1 = [v for v in X1 if ce.B(v, r) == 1]
         F1 = ce.units(m1, u1, mv1, ("r", "i"))
         phi = {v: (v[0] & low, v[1] & low) for v in X}
         bij = len(set(phi.values())) == len(X) == len(X1) and set(phi.values()) == set(X1)

@@ -32,7 +32,7 @@ def main(limit, ub):
         for b, p in zip(basis, piv):
             if r >> p & 1: r ^= b
         if r:
-            basis.append(r); piv.append(r.bit_length() - 1); piv_i = i
+            basis.append(r); piv.append(r.bit_length() - 1)
             basis_idx.append(i)
     lb = np.zeros(nv); ubv = np.ones(nv); ubv[n + L:] = 2
     for i in basis_idx: ubv[i] = 0
