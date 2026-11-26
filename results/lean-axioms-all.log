@@ -202,4 +202,10 @@ warning: batteries: repository has local changes:
  Quot.sound]
 'HoggarBound.C3AllQubits.c3_strict_law_fails_general' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.C3AllQubits.c3_all_qubits_completion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.moment_entry_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.shifted_square_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.cubic_residual_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.cubic_deficit_controls_top' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.spectrum_distance_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.exists_near_extremal_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
 ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2206 theorems across HoggarBound, ContextualityTensor, Evidence, PauliContextualityLab — 0 disallowed axioms.

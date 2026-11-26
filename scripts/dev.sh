@@ -48,7 +48,7 @@ case "$cmd" in
     "$PY" -m ruff check --select E9,F821,F822,F823,B tracks/ || true
     "$PY" -m mypy --ignore-missing-imports scripts/ || true
     if command -v lake >/dev/null 2>&1; then
-      (cd lean && lake exe runLinter ContextualityTensor Evidence || true)
+      (cd lean && lake exe runLinter HoggarBound.Bound HoggarBound.Stability ContextualityTensor Evidence || true)
     fi
     ;;
 
@@ -129,6 +129,7 @@ case "$cmd" in
     "$PY" scripts/arithmetic_audit.py
     "$PY" scripts/check_citations.py
     "$PY" scripts/check_readme_axioms.py
+    "$PY" scripts/stamp_timestamps.py --verify
     "$PY" scripts/build_blueprint.py
     "$PY" scripts/build_site.py
     ;;

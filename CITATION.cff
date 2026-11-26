@@ -2,11 +2,15 @@ cff-version: 1.2.0
 title: "Pauli Contextuality Lab: Lean 4.35.0 Proofs and Exact Verifiers for Spectral Bounds, Conjecture E, Disjoint Mermin Configurations, and Sequential Contextuality Evidence"
 message: "If you use this software, formal proofs, or manuscripts, please cite this repository. Note that all manuscripts are unreviewed research preprints produced with AI assistance under human direction."
 type: software
-version: "2.9.0"
-date-released: "2026-11-25"
+version: "3.0.0"
+date-released: "2026-11-26"
 license: Apache-2.0
 repository-code: "https://github.com/0thernes/pauli-contextuality-lab"
 url: "https://0thernes.github.io/pauli-contextuality-lab/"
+identifiers:
+  - type: swh
+    value: "swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d"
+    description: "Software Heritage archival snapshot (v2.9.0; v3.0.0 Save Code Now triggered on release)"
 authors:
   - family-names: Donahue
     given-names: Alexander S.

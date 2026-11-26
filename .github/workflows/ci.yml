@@ -39,11 +39,12 @@ jobs:
         run: node --test tests/test_web_models.mjs
       - name: Run all-track exact verification
         run: python scripts/verify_all.py
-      - name: Run arithmetic, citation, axiom-sync, blueprint, and site-link audits
+      - name: Run arithmetic, citation, axiom-sync, timestamp, blueprint, and site-link audits
         run: |
           python scripts/arithmetic_audit.py
           python scripts/check_citations.py
           python scripts/check_readme_axioms.py
+          python scripts/stamp_timestamps.py --verify
           python scripts/build_blueprint.py
           python scripts/build_site.py
 

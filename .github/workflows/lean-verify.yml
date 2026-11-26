@@ -154,7 +154,7 @@ jobs:
       - name: Run Batteries linter (report-only)
         working-directory: lean
         continue-on-error: true
-        run: lake exe runLinter ContextualityTensor Evidence
+        run: lake exe runLinter HoggarBound.Bound HoggarBound.Stability ContextualityTensor Evidence
       - name: Run 6-kernel lake comparator --paranoid
         working-directory: lean
         run: |

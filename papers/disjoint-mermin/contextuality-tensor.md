@@ -1,7 +1,7 @@
 ---
 title: "Exact contextuality degrees for disjoint Mermin configurations"
 author: "Alexander S. Donahue"
-date: "25 November 2026"
+date: "26 November 2026"
 ---
 
 # Exact contextuality degrees for disjoint Mermin configurations
@@ -9,7 +9,7 @@ date: "25 November 2026"
 **Alexander S. Donahue — Independent researcher, Spokane, WA, USA**  
 ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)  
 Correspondence: [0_0@0thernes.art](mailto:0_0@0thernes.art)  
-Research preprint, version 2.9.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
+Research preprint, version 3.0.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
 
 ## Abstract
 

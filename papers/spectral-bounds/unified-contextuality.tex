@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 2.9.0 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 3.0.0 (consolidated from Hoggar Bound Lab v1.9.0), 26 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -65,7 +65,7 @@ four-qubit C3 spectral certificate and \textbf{exact global binary completion op
 constructions (Theorem 17, Corollary 18), Lemmas 20--21, Theorem 22, signed-Clifford orbit transport,
 Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every \(N\ge4\), and ten
 existential non-vacuity witnesses (\texttt{NonVacuity.lean}), all strictly within the standard axioms---110
-audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (160 explicit
+audited Track~1 declarations folded into the unified \nolinkurl{lean/VerifyAll.lean} audit (166 explicit
 \texttt{\#print\ axioms} lines plus an exhaustive 2,206-theorem \texttt{Lean.collectAxioms} check across all
 three tracks), replayed across six independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, Batteries
 linted with zero errors, and mapped in a 27-node (162-declaration) interactive Lean Blueprint at \texttt{/blueprint/}. None of this
@@ -93,7 +93,7 @@ binary completion minima 368 and 344 (exact gap 24, kernel-certified via pure-in
 Graph constructions over \(\mathbb R\), \(\mathbb C\) and \(\mathbb H\), a cone pair swap and a universal
 cubic-trace identity give cospectral carriers with distinct completion eigenvalue multisets in all nine
 vertex cases for every \(N\ge4\), proving Jonah\textquotesingle s Conjecture E. All main theorems (110 audited Track 1
-declarations within 160 explicit cross-track and 2,206 exhaustively audited declarations) are proved in Lean 4 with standard axioms only, with exact checks
+declarations within 166 explicit cross-track and 2,206 exhaustively audited declarations) are proved in Lean 4 with standard axioms only, with exact checks
 through six qubits and Tsotchke demonstrations. The work is AI-assisted and is neither externally peer
 reviewed nor a quantum-hardware experiment.
 
@@ -2287,7 +2287,7 @@ source, changing no previously audited Lean file) together with the 100-declarat
   \nolinkurl{lemma_L4_w52_hyperplane_le_21}), and the exact master reduction (\nolinkurl{exact_degrees_n4_n5_of_q7minus_315}).
 \end{itemize}
 
-All audited declarations in \nolinkurl{lean/VerifyAll.lean} (160 explicit \texttt{\#print axioms} declarations plus the exhaustive 2,206-theorem metaprogram across all four namespaces) depend strictly on
+All audited declarations in \nolinkurl{lean/VerifyAll.lean} (166 explicit \texttt{\#print axioms} declarations plus the exhaustive 2,206-theorem metaprogram across all four namespaces) depend strictly on
 \texttt{{[}propext,\ Classical.choice,\ Quot.sound{]}}, with zero \texttt{sorry}, \texttt{admit}, \texttt{native\_decide}, \texttt{unsafe}, or
 custom \texttt{axiom} declarations across all twelve modules (\nolinkurl{tracks/spectral-bounds/results/new-formalizations-lean-axioms.log};
 \texttt{set\_option\ maxRecDepth} / \texttt{maxHeartbeats} appears only on kernel \texttt{decide\ +kernel} evaluation lemmas in
@@ -2318,7 +2318,7 @@ Probabilistic upper bound, phase-state enumerations (Propositions 4, 6, 9, 11, T
 Four-qubit C3 carrier cospectrality, unequal completion spectra and cube traces (Theorem 14) & Complete 42-declaration Lean audit (\texttt{C3Spectra.lean}), including original Pauli and context-sign bridges \\
 Four-qubit C3 \textbf{exact global binary completion optima} (\(\min_y F(\sigma_0,y)=368\), \(\min_y F(\sigma_1,y)=344\), gap 24; Corollary 16, Proposition 16\textquotesingle, Theorem 16\textquotesingle\textquotesingle) & Complete Lean kernel proof in \nolinkurl{C3ExactOptima.lean} (plus \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean}) via pure-integer MET-SDP triangle-cut duals and integer Cholesky certificates + \nolinkurl{tracks/spectral-bounds/scripts/c3_exact_optima_check.py} (10 checks); printed C3 factorizations and spherical gap 32 remain separately checked algebraic/executable results \\
 Case C3 for every \(N\ge4\) (Theorem 17) & Lean theorem \nolinkurl{c3_strict_law_fails_general} (\nolinkurl{CarrierFamily.lean}, 74 audited declarations) and \nolinkurl{c3_strict_law_fails} (\texttt{ConjectureE.lean}, \(N\ge3\)) \\
-General cone lift and case C11 (Corollary 18), Lemmas 20--21, Theorem 22, Table 8, Clifford transport, and eigenvalue-multiset Conjecture E across all nine vertex cases for every \(N\ge4\) (Theorem 19) & Lean theorems in \nolinkurl{ConjectureECore.lean}, \nolinkurl{ConjectureECones.lean}, \texttt{ConjectureE.lean}, \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean} (part of the 160 explicit declarations and 2,206 exhaustively audited theorems in \nolinkurl{lean/VerifyAll.lean}, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites {[}J3, Theorem B4{]} \\
+General cone lift and case C11 (Corollary 18), Lemmas 20--21, Theorem 22, Table 8, Clifford transport, and eigenvalue-multiset Conjecture E across all nine vertex cases for every \(N\ge4\) (Theorem 19) & Lean theorems in \nolinkurl{ConjectureECore.lean}, \nolinkurl{ConjectureECones.lean}, \texttt{ConjectureE.lean}, \nolinkurl{ConjectureEExtras.lean}, \nolinkurl{AuditUpgrades.lean} (part of the 166 explicit declarations and 2,206 exhaustively audited theorems in \nolinkurl{lean/VerifyAll.lean}, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites {[}J3, Theorem B4{]} \\
 Physical hardware, compiler correctness, historical priority or external peer review & Not established by these theorem checks \\
 \end{longtable}
 }
@@ -2379,7 +2379,7 @@ independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, added Batt
 editable modules, added a declaration-checked Lean Blueprint (\texttt{blueprint/}, mounted at \texttt{/blueprint/}),
 enforced the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--2.9.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 160 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
+provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--3.0.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 166 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 
@@ -2775,7 +2775,7 @@ enters a comparison of characteristic polynomials or any integer dual certificat
   Theorem 22, signed-Clifford orbit transport, eigenvalue-multiset Theorem 19 across all nine vertex
   cases for every \(N\ge4\), the \(Q^-(7,2)\), \(W(7,2)\) and \(Q^+(9,2)\) witnesses, ladders and unconditional
   Kramers-lifted bounds, and ten existential non-vacuity witnesses (\texttt{NonVacuity.lean}) are all formalized
-  in Lean 4 (160 explicit declarations and 2,206 exhaustively audited theorems in \nolinkurl{lean/VerifyAll.lean}, Section 9.4, independently
+  in Lean 4 (166 explicit declarations and 2,206 exhaustively audited theorems in \nolinkurl{lean/VerifyAll.lean}, Section 9.4, independently
   replayed via \texttt{lake\ comparator\ -\/-paranoid}). Remaining formalization boundaries include the
   state-to-mask identifications of the finite Table 1 rows (other than \(|\Psi_{3m}\rangle\), which is
   proved directly from the state vector), Propositions 4, 6, 9 and 11, the enumerations of Theorems 12
@@ -2980,7 +2980,7 @@ bash tracks/spectral-bounds/scripts/run_all.sh
 cd lean && lake exe cache get
 # Build all three libraries plus the isolated 12-target comparator bridge
 lake build HoggarBound ContextualityTensor Evidence Solution
-# Exhaustive axiom audit (160 explicit #print axioms + all 2,206 project theorems)
+# Exhaustive axiom audit (166 explicit #print axioms + all 2,206 project theorems)
 lake env lean VerifyAll.lean
 # Batteries linter (0 errors) and 6-kernel independent replay
 lake exe runLinter ContextualityTensor Evidence

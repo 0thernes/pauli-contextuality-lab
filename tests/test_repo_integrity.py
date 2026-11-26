@@ -501,6 +501,22 @@ class RepoIntegrityTests(unittest.TestCase):
                         missing_sri.append(f"{fp.relative_to(ROOT).as_posix()}: {m.group(1)}")
         self.assertEqual(missing_sri, [], f"External CDN <script> missing sha384 SRI or crossorigin: {missing_sri}")
 
+    def test_rfc3161_opentimestamps_swhid_and_submission_packet(self) -> None:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("stamp_timestamps", ROOT / "scripts" / "stamp_timestamps.py")
+        assert spec is not None and spec.loader is not None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        self.assertEqual(mod.verify_timestamps(), 0, "RFC 3161 TSA or OpenTimestamps proof verification failed")
+        self.assertTrue((ROOT / "data" / "MANIFEST.sha256.tsr").is_file())
+        self.assertTrue((ROOT / "data" / "MANIFEST.sha256.ots").is_file())
+        self.assertIn("swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d", (ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+        self.assertIn("swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d", (ROOT / "formalization.yaml").read_text(encoding="utf-8"))
+        packet = ROOT / "docs" / "submission-packet.md"
+        self.assertTrue(packet.is_file(), "Missing docs/submission-packet.md")
+        self.assertIn("DRAFT", packet.read_text(encoding="utf-8").upper())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -25,6 +25,7 @@ node --test tests/test_web_models.mjs
 python scripts/arithmetic_audit.py
 python scripts/check_citations.py
 python scripts/check_readme_axioms.py
+python scripts/stamp_timestamps.py --verify
 python scripts/build_blueprint.py
 python scripts/build_site.py
 
@@ -47,3 +48,4 @@ External independent replications are welcomed — open an issue or email `0_0@0
 |---|---|---|---|---|
 | 2026-11-24 | Alexander S. Donahue (author / local & CI) | Windows 11 + Ubuntu 24.04 GitHub Actions, Python 3.12/3.13, Node 22, Lean 4.35.0 | Unified 3-track Lean build, `VerifyAll.lean`, `verify_all.py`, `pytest`, Node tests, Blueprint, site, Build Standard v1.1.0 audit | Pass (author-run; independent external replication still open) |
 | 2026-11-25 | Alexander S. Donahue (author / local & CI) | Windows 11 + WSL2 + Ubuntu 24.04/macOS/Windows CI, Python 3.12, Node 22, Lean 4.35.0 | `v2.9.0` Build Standard v1.2.0 (`100.0%`, `68/68`), Playbook v1.3 checks (adversarial false-variant Lean tests, Crossref retraction audit, 14-engine C11 ASan/UBSan, 6-kernel `lake comparator --paranoid`) | Pass (author-run; independent external replication still open) |
+| 2026-11-26 | Alexander S. Donahue (automated clean-clone check, fresh `git clone --depth 1`) | Windows 11 + WSL2, Python 3.12, Node 22 | Fresh clean clone into isolated temp directory: `verify_all.py`, `pytest -q tests/` (`51 passed, 6 subtests` on `v2.9.0` HEAD), `node --test tests/test_web_models.mjs` (`2/2`), `arithmetic_audit.py`, `check_citations.py`, `check_readme_axioms.py --require-exhaustive` (`2,206` theorems), `build_blueprint.py` (`27` nodes / `162` decls), `build_site.py` (`0` broken links) in `17.7s` | Pass (author-automated clean-clone; independent external human replication still open) |

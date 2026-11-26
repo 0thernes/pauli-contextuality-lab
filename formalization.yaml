@@ -2,8 +2,14 @@
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
 repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "2.9.0"
-date: "2026-11-25"
+version: "3.0.0"
+date: "2026-11-26"
+swhid: "swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d"
+timestamps:
+  manifest: "data/MANIFEST.sha256"
+  rfc3161_tsr: "data/MANIFEST.sha256.tsr"
+  opentimestamps_ots: "data/MANIFEST.sha256.ots"
+  verifier: "scripts/stamp_timestamps.py"
 license:
   code: "Apache-2.0"
   documentation_and_papers: "CC-BY-4.0"
@@ -25,7 +31,7 @@ lake_package_dir: "lean"
 libraries:
   - name: "HoggarBound"
     track: "tracks/spectral-bounds"
-    summary: "Spectral floor (real/complex/quaternionic), saturation equivalences, infinite CCZ family |Psi_{3m}>, exact C3 binary optima (368 vs 344), N=4..5 ladders, TwoQubit & Hoggar witnesses, Jonah's Conjecture E (all 9 cases, N >= 4), and NonVacuity."
+    summary: "Spectral floor (real/complex/quaternionic), saturation equivalences, quantitative third-moment stability (`HoggarBound.Stability`), infinite CCZ family |Psi_{3m}>, exact C3 binary optima (368 vs 344), N=4..5 ladders, TwoQubit & Hoggar witnesses, Jonah's Conjecture E (all 9 cases, N >= 4), and NonVacuity."
   - name: "ContextualityTensor"
     track: "tracks/disjoint-mermin"
     summary: "Exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares) and (6^k - 4^k)/2 (k Mermin pentagrams), answering Section 6 of Muller & Saniga (arXiv:2609.19862v1)."

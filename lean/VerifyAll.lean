@@ -2,8 +2,9 @@
 Pauli Contextuality Lab — Unified Exhaustive Axiom Audit across ALL THREE Tracks:
   Track 1 (`HoggarBound`): spectral floor, Kramers floor, saturation theory, infinite CCZ family,
     exact C3 optima (368/344), Jonah's Conjecture E (all 9 cases + spectra), N=4..5 ladders,
-    TwoQubit & Hoggar witnesses (`d(W(5,2))=63`, `d(Q⁻(5,2))=9`), and all 10 NonVacuity witnesses
-    (116 explicit Track 1 declarations covering 100% of historical `VerifyNewFormalizations.lean` + legacy witnesses).
+    TwoQubit & Hoggar witnesses (`d(W(5,2))=63`, `d(Q⁻(5,2))=9`), quantitative third-moment stability,
+    and all 10 NonVacuity witnesses (122 explicit Track 1 declarations covering 100% of historical
+    `VerifyNewFormalizations.lean`, `HoggarBound.Stability`, and legacy witnesses).
   Track 2 (`ContextualityTensor`): exact degrees `(7^k-5^k)/2` and `(6^k-4^k)/2`, Pauli bridge,
     actual union model, asymptotics (16 explicit declarations covering 100% of historical `Verification.lean`).
   Track 3 (`Evidence`): Peres-Mermin sharp setting-bias bound, finite adaptive-tree supermartingale
@@ -34,6 +35,7 @@ import HoggarBound.CarrierFamily
 import HoggarBound.SaturatedPhaseSix
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import HoggarBound.Stability
 import HoggarBound.NonVacuity
 import ContextualityTensor
 import ContextualityTensor.ActualModel
@@ -246,6 +248,14 @@ import Solution
 -- All-qubit C3 explicit carrier-family construction (Theorem 17, CarrierFamily.lean)
 #print axioms HoggarBound.C3AllQubits.c3_strict_law_fails_general
 #print axioms HoggarBound.C3AllQubits.c3_all_qubits_completion
+
+-- Quantitative third-moment stability (HoggarBound.Stability, 6 decls)
+#print axioms HoggarBound.moment_entry_le
+#print axioms HoggarBound.shifted_square_sum
+#print axioms HoggarBound.cubic_residual_identity
+#print axioms HoggarBound.cubic_deficit_controls_top
+#print axioms HoggarBound.spectrum_distance_identity
+#print axioms HoggarBound.exists_near_extremal_spectrum
 
 -- ============================================================================
 -- Exhaustive Metaprogram Audit: EVERY theorem across all four project namespaces

@@ -7,7 +7,7 @@
 <meta name="citation_publication_date" content="2026/11/25">
 <meta name="citation_online_date" content="2026/11/25">
 <meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
-<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 2.9.0">
+<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 3.0.0">
 <meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.pdf">
 <meta name="citation_abstract_html_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html">
 <meta name="citation_language" content="en">
@@ -38,7 +38,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font:14
 </style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>{document.documentElement.setAttribute('data-math','ready')})}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head><body><main><nav aria-label="Research links"><a href="../../">Research index</a><a href="unified-contextuality.pdf">Full paper PDF</a><a href="../../c3-lab/">C3 demonstration</a><a href="../../blueprint/">Lean 4 Blueprint</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/main/lean">Lean proofs</a></nav><h1 id="spectral-bounds-and-their-limits-in-pauli-contextuality-exact-configurations-and-a-proof-of-jonahs-conjecture-e">Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E</h1>
 <p><strong>A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case</strong></p>
 <p>Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a>. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a><br>
-Pauli Contextuality Lab (Track 1), version 2.9.0 (consolidated from Hoggar Bound Lab v1.9.0), 25 November 2026. Research preprint. Not peer reviewed.<br>
+Pauli Contextuality Lab (Track 1), version 3.0.0 (consolidated from Hoggar Bound Lab v1.9.0), 26 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.</p>
 <blockquote>
 <p><strong>Prior work and scope.</strong> The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -61,7 +61,7 @@ four-qubit C3 spectral certificate and <strong>exact global binary completion op
 constructions (Theorem 17, Corollary 18), Lemmas 20–21, Theorem 22, signed-Clifford orbit transport,
 Theorem 19 at the eigenvalue-multiset level across all nine vertex cases for every <span class="math inline">\(N\ge4\)</span>, and ten
 existential non-vacuity witnesses (<code>NonVacuity.lean</code>), all strictly within the standard axioms&mdash;110
-audited Track 1 declarations folded into the unified <code>lean/VerifyAll.lean</code> audit (160 explicit
+audited Track 1 declarations folded into the unified <code>lean/VerifyAll.lean</code> audit (166 explicit
 <code>#print axioms</code> lines plus an exhaustive 2,206-theorem <code>Lean.collectAxioms</code> check across all
 three tracks), replayed across six independent Lean kernels via <code>lake comparator --paranoid</code>, Batteries
 linted with zero errors, and mapped in a 27-node (162-declaration) interactive Lean Blueprint at <code>/blueprint/</code>. None of this invalidates the spectral floor.</p>
@@ -85,7 +85,7 @@ binary completion minima 368 and 344 (exact gap 24, kernel-certified via pure-in
 Graph constructions over <span class="math inline">\(\mathbb R\)</span>, <span class="math inline">\(\mathbb C\)</span> and <span class="math inline">\(\mathbb H\)</span>, a cone pair swap and a universal
 cubic-trace identity give cospectral carriers with distinct completion eigenvalue multisets in all nine
 vertex cases for every <span class="math inline">\(N\ge4\)</span>, proving Jonah's Conjecture E. All main theorems (110 audited Track 1
-declarations within 160 explicit cross-track and 2,206 exhaustively audited declarations) are proved in Lean 4 with standard axioms only, with exact checks
+declarations within 166 explicit cross-track and 2,206 exhaustively audited declarations) are proved in Lean 4 with standard axioms only, with exact checks
 through six qubits and Tsotchke demonstrations. The work is AI-assisted and is neither externally peer
 reviewed nor a quantum-hardware experiment.</p>
 <details class="contents"><summary>Contents</summary><ul><li><a href="#1-scope-and-common-question">1. Scope and common question</a></li><li><a href="#2-setting">2. Setting</a></li><li><a href="#3-the-spectral-floor">3. The spectral floor</a></li><li><a href="#4-saturation-in-the-classical-families">4. Saturation in the classical families</a></li><li><a href="#5-saturation-outside-the-classical-families">5. Saturation outside the classical families</a></li><li><a href="#6-consequences-for-all-n">6. Consequences for all N</a></li><li><a href="#7-the-data-against-the-floor">7. The data against the floor</a></li><li><a href="#8-what-a-carrier-spectrum-does-not-determine">8. What a carrier spectrum does not determine</a></li><li><a href="#9-formal-verification-and-its-boundary">9. Formal verification and its boundary</a></li><li><a href="#10-a-running-example-on-the-tsotchke-stack">10. A running example on the Tsotchke stack</a></li><li><a href="#11-falsifiability-and-replication">11. Falsifiability and replication</a></li><li><a href="#12-limitations-and-open-problems">12. Limitations and open problems</a></li><li><a href="#13-research-provenance-disclosure-and-availability">13. Research provenance, disclosure and availability</a></li><li><a href="#references">References</a></li><li><a href="#appendix-a-reproduction">Appendix A. Reproduction</a></li><li><a href="#appendix-b-witness-assignments">Appendix B. Witness assignments</a></li></ul></details><h2 id="1-scope-and-common-question">1. Scope and common question</h2>
@@ -2619,7 +2619,7 @@ floor-saturating family, together with the concrete six-qubit kernel mask certif
 <code>q9plus_ge_6444</code>), pigeonhole Lemmas L1 and L4 (<code>lemma_L1_q7minus_section_le_92</code>,
 <code>lemma_L4_w52_hyperplane_le_21</code>), and the exact master reduction (<code>exact_degrees_n4_n5_of_q7minus_315</code>).</li>
 </ul>
-<p>All audited declarations in <code>lean/VerifyAll.lean</code> (160 explicit <code>#print axioms</code> declarations plus the exhaustive 2,206-theorem metaprogram across all four namespaces) depend strictly on
+<p>All audited declarations in <code>lean/VerifyAll.lean</code> (166 explicit <code>#print axioms</code> declarations plus the exhaustive 2,206-theorem metaprogram across all four namespaces) depend strictly on
 <code>[propext, Classical.choice, Quot.sound]</code>, with zero <code>sorry</code>, <code>admit</code>, <code>native_decide</code>, <code>unsafe</code>, or
 custom <code>axiom</code> declarations across all twelve modules (<code>tracks/spectral-bounds/results/new-formalizations-lean-axioms.log</code>;
 <code>set_option maxRecDepth</code> / <code>maxHeartbeats</code> appears only on kernel <code>decide +kernel</code> evaluation lemmas in
@@ -2676,7 +2676,7 @@ to every Clifford image <span class="math inline">\((g(X), g(d))\)</span>; only 
 </tr>
 <tr>
 <td>General cone lift and case C11 (Corollary 18), Lemmas 20–21, Theorem 22, Table 8, Clifford transport, and eigenvalue-multiset Conjecture E across all nine vertex cases for every <span class="math inline">\(N\ge4\)</span> (Theorem 19)</td>
-<td>Lean theorems in <code>ConjectureECore.lean</code>, <code>ConjectureECones.lean</code>, <code>ConjectureE.lean</code>, <code>ConjectureEExtras.lean</code>, <code>AuditUpgrades.lean</code> (part of the 160 explicit declarations and 2,206 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites [J3, Theorem B4]</td>
+<td>Lean theorems in <code>ConjectureECore.lean</code>, <code>ConjectureECones.lean</code>, <code>ConjectureE.lean</code>, <code>ConjectureEExtras.lean</code>, <code>AuditUpgrades.lean</code> (part of the 166 explicit declarations and 2,206 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites [J3, Theorem B4]</td>
 </tr>
 <tr>
 <td>Physical hardware, compiler correctness, historical priority or external peer review</td>
@@ -2737,7 +2737,7 @@ independent Lean kernels via <code>lake comparator --paranoid</code>, added Batt
 editable modules, added a declaration-checked Lean Blueprint (<code>blueprint/</code>, mounted at <code>/blueprint/</code>),
 enforced the verbatim <code>#print axioms</code> README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (versions 2.0.0&ndash;2.9.0; <a href="https://github.com/0thernes/pauli-contextuality-lab/actions">GitHub Actions CI</a>), all Track 1 Lean modules live under <code>lean/HoggarBound/</code> alongside Track 2 (<code>ContextualityTensor</code>) and Track 3 (<code>Evidence</code>); <code>lean/VerifyAll.lean</code> audits 160 explicit headline declarations plus all 2,206 project theorems strictly within <code>[propext, Classical.choice, Quot.sound]</code>, all 12 cross-track targets in <code>Challenge.lean</code>/<code>Solution.lean</code> pass all six independent Lean 4.35.0 kernels (<code>lean-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>, <code>lean-default</code>) in Ubuntu 24.04 CI (<a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212">6-kernel Lean run</a>, <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213">3-OS &amp; 14-engine C11 ASan/UBSan run</a>), and the unified <a href="https://0thernes.github.io/pauli-contextuality-lab/blueprint/">GitHub Pages Blueprint</a> mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.</p>
+provenance attestations. In the consolidated <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (versions 2.0.0&ndash;3.0.0; <a href="https://github.com/0thernes/pauli-contextuality-lab/actions">GitHub Actions CI</a>), all Track 1 Lean modules live under <code>lean/HoggarBound/</code> alongside Track 2 (<code>ContextualityTensor</code>) and Track 3 (<code>Evidence</code>); <code>lean/VerifyAll.lean</code> audits 166 explicit headline declarations plus all 2,206 project theorems strictly within <code>[propext, Classical.choice, Quot.sound]</code>, all 12 cross-track targets in <code>Challenge.lean</code>/<code>Solution.lean</code> pass all six independent Lean 4.35.0 kernels (<code>lean-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>, <code>lean-default</code>) in Ubuntu 24.04 CI (<a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212">6-kernel Lean run</a>, <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213">3-OS &amp; 14-engine C11 ASan/UBSan run</a>), and the unified <a href="https://0thernes.github.io/pauli-contextuality-lab/blueprint/">GitHub Pages Blueprint</a> mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.</p>
 <h2 id="10-a-running-example-on-the-tsotchke-stack">10. A running example on the Tsotchke stack</h2>
 <h3 id="101-state-preparation-simulated-contexts-and-quantum-geometry">10.1 State preparation, simulated contexts and quantum geometry</h3>
 <p>All four components are used for what they are.</p>
@@ -3180,7 +3180,7 @@ Corollary 16 / Theorem 16'' (exact global binary optima 368 and 344), Corollary 
 Theorem 22, signed-Clifford orbit transport, eigenvalue-multiset Theorem 19 across all nine vertex
 cases for every <span class="math inline">\(N\ge4\)</span>, the <span class="math inline">\(Q^-(7,2)\)</span>, <span class="math inline">\(W(7,2)\)</span> and <span class="math inline">\(Q^+(9,2)\)</span> witnesses, ladders and unconditional
 Kramers-lifted bounds, and ten existential non-vacuity witnesses (<code>NonVacuity.lean</code>) are all formalized
-in Lean 4 (160 explicit declarations and 2,206 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, Section 9.4, independently
+in Lean 4 (166 explicit declarations and 2,206 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, Section 9.4, independently
 replayed via <code>lake comparator --paranoid</code>). Remaining formalization boundaries include the
 state-to-mask identifications of the finite Table 1 rows (other than <span class="math inline">\(|\Psi_{3m}\rangle\)</span>, which is
 proved directly from the state vector), Propositions 4, 6, 9 and 11, the enumerations of Theorems 12
@@ -3342,7 +3342,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># case C3 for every number of qubits from four on (Theorem 17)</span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Bound HoggarBound.Quadric</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean HoggarBound/CarrierFamily.lean</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v2.9.0 Lean formalizations (160 explicit #print axioms + exhaustive 2,206-theorem audit), Batteries linter, and multi-kernel comparator</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v3.0.0 Lean formalizations (166 explicit #print axioms + exhaustive 2,206-theorem audit), Batteries linter, and multi-kernel comparator</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Kramers HoggarBound.SaturationTheory HoggarBound.ConjectureE <span class="dt">\</span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  HoggarBound.ConjectureEExtras HoggarBound.AuditUpgrades HoggarBound.C3ExactOptima <span class="dt">\</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  HoggarBound.SaturatedPhaseSix HoggarBound.NormPhaseFamily HoggarBound.ExactDegreesN4N5 <span class="dt">\</span></span>
@@ -3353,7 +3353,7 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> tracks/spectral-bounds/scripts/run_family7.sh</span></code></pre></div>
 <p>The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v2.9.0 verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v3.0.0 verification audits, from
 the repository root:</p>
 <pre class="text"><code>python tracks/spectral-bounds/scripts/cospectral_pair.py
 python tracks/spectral-bounds/scripts/phase_seven_lean.py
@@ -3378,7 +3378,7 @@ python scripts/check_citations.py
 python -m unittest tests/test_properties.py tests/test_mutation_and_fuzz.py</code></pre>
 <p>Their exact-verifier last lines read <code>30 of 30</code>, <code>14 of 14</code>, <code>43 of 43</code>, <code>18 of 18</code>, <code>21 of 21</code>,
 <code>81 of 81</code>, <code>36 of 36</code>, <code>115 of 115</code>, <code>46 of 46</code>, <code>97 of 97</code>, <code>39 of 39</code>, <code>15 of 15</code>, <code>10 of 10</code>,
-<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v2.9.0 verification
+<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v3.0.0 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 <code>c3_sdp_dual_check.py</code>).</p>
 <p>The C3 verification programs require Python, NumPy, SymPy and Node.js. From the repository root:</p>
@@ -3434,4 +3434,4 @@ versions. The theorem's assignments are fully defined in Section 8.2 independent
 <code>tracks/spectral-bounds/results/cospectral_family.json</code>, <code>tracks/spectral-bounds/results/cospectral_family_cone_lift.json</code>,
 <code>tracks/spectral-bounds/results/conjecture_e.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_n6.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_lemmas.json</code> and
 <code>tracks/spectral-bounds/results/conjecture_e_lemmas_n6.json</code>.</p>
-<footer>Pauli Contextuality Lab (Track 1), version 2.9.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>
+<footer>Pauli Contextuality Lab (Track 1), version 3.0.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>

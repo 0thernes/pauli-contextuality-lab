@@ -8,13 +8,14 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 [![Lean 4.35.0 Verification](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml/badge.svg)](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/lean-verify.yml)
 [![Pages & Blueprint](https://github.com/0thernes/pauli-contextuality-lab/actions/workflows/pages.yml/badge.svg)](https://0thernes.github.io/pauli-contextuality-lab/)
 [![License: Apache-2.0 / CC-BY-4.0](https://img.shields.io/badge/license-Apache--2.0%20%2F%20CC--BY--4.0-green)](LICENSE)
-[![Version 2.9.0](https://img.shields.io/badge/version-2.9.0-informational)](CHANGELOG.md)
+[![Version 3.0.0](https://img.shields.io/badge/version-3.0.0-informational)](CHANGELOG.md)
 
 ![Pauli Contextuality Lab overview](docs/media/social-preview.svg)
 
-**Status:** Active research preprints (`v2.9.0`, 25 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
+**Status:** Active research preprints (`v3.0.0`, 26 November 2026) — **NOT externally peer reviewed**; AI-assisted under human direction ([LIMITATIONS.md](LIMITATIONS.md)).  
 **Author:** Alexander S. Donahue, independent researcher ([ORCID 0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648) · `0_0@0thernes.art`).  
-**Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Errata & Withdrawal](ERRATA.md) · [Mega-Atlas Audit](docs/mega-atlas-cross-reference.md) · [Replication Protocol](REPLICATION.md)
+**Live Portal & Blueprint:** [Pauli Contextuality Lab](https://0thernes.github.io/pauli-contextuality-lab/) · [Lean 4 Dependency Blueprint](https://0thernes.github.io/pauli-contextuality-lab/blueprint/) · [Papers](papers/README.md) · [Claims Ledger](CLAIMS.md) · [Statement Fidelity](docs/statement-fidelity.md) · [Errata & Withdrawal](ERRATA.md) · [Mega-Atlas Audit](docs/mega-atlas-cross-reference.md) · [Replication Protocol](REPLICATION.md) · [Submission Packet (Draft)](docs/submission-packet.md)  
+**Archival & Timestamp Provenance:** Software Heritage [`swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d`](https://archive.softwareheritage.org/swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d) · DigiCert RFC 3161 TSA (`data/MANIFEST.sha256.tsr`) · Bitcoin OpenTimestamps (`data/MANIFEST.sha256.ots`)
 
 > **Consolidation note:** This repository consolidates four earlier standalone Pauli repositories (`0thernes/hoggar-bound-lab`, `0thernes/hoggar-bound`, `0thernes/contextuality-tensor-lab`, and `0thernes/contextuality-evidence-lab`, all archived read-only with redirects) into one Lean 4.35.0 + Mathlib `v4.35.0` workspace with a single deduplicated `third_party/` stack and open `Apache-2.0` / `CC-BY-4.0` licensing. The zero-Mathlib ray-pool Kochen–Specker repository remains separate at [`0thernes/kochen-specker-extremal-lab`](https://github.com/0thernes/kochen-specker-extremal-lab) to preserve its minimal Mathlib-free trust base.
 
@@ -22,7 +23,7 @@ Machine-checked Lean 4.35.0 proofs, exact integer/rational verifiers, research p
 
 ## Five-Second Formal Proof Check (`#print axioms`)
 
-Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 160-declaration + 2,206-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
+Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `ContextualityTensor`, `Evidence`) and the 12-target isolated `Challenge.lean` / `Solution.lean` comparator bridge compiles with **zero `sorry`, zero `admit`, zero `native_decide`, and zero custom axioms**, verified across **6 independent Lean kernels** (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`) via `lake comparator --paranoid` in CI. Exact verbatim output from `cd lean && lake env lean VerifyAll.lean` ([full 166-declaration + 2,206-theorem exhaustive log](results/lean-axioms-all.log), checked in CI by `scripts/check_readme_axioms.py`):
 
 ```text
 'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -31,6 +32,7 @@ Every theorem across all three Lean 4.35.0 libraries (`HoggarBound`, `Contextual
 'HoggarBound.degree_three_qubit' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.degree_three_qubit_elliptic' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.saturation_tfae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'HoggarBound.exists_near_extremal_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.NormPhaseFamily.infinite_nonclosed_saturated_family' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.C3ExactOptima.corollary16_exact_binary_optima' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -74,15 +76,16 @@ python scripts/verify_all.py
 python -m pytest -v tests/
 node --test tests/test_web_models.mjs
 
-# 3. Audits, Blueprint declaration check & unified Pages build
+# 3. Audits, timestamp check, Blueprint declaration check & unified Pages build
 python scripts/arithmetic_audit.py
 python scripts/check_citations.py
 python scripts/check_readme_axioms.py
+python scripts/stamp_timestamps.py --verify
 python scripts/build_blueprint.py
 python scripts/build_site.py
 ```
 
-Expected headline output: `ALL TRACK VERIFICATIONS PASSED.`, `50 passed` in pytest, `2 pass` in Node, and `PASS: Blueprint validated 27 nodes (162 Lean decls with exact GitHub #L links)`.
+Expected headline output: `ALL TRACK VERIFICATIONS PASSED.`, `52 passed` in pytest, `2 pass` in Node, and `PASS: Blueprint validated 27 nodes (162 Lean decls with exact GitHub #L links)`.
 
 ### Full Lean 4.35.0 Verification & 6-Kernel Comparator
 
@@ -118,7 +121,7 @@ lake comparator --config comparator.json --paranoid
 | `lean/` | Unified Lean 4.35.0 + Mathlib `v4.35.0` package (`HoggarBound`, `ContextualityTensor`, `Evidence`, `Challenge`, `Solution`, `VerifyAll`) |
 | `tracks/` | Self-contained code, C11 engines, exact Python verifiers, interactive web labs, and JSON receipts for Tracks 1–3 |
 | `papers/` | Preprint PDFs, LaTeX sources, BibTeX, and external-reviewer correspondence guide ([papers/README.md](papers/README.md)) |
-| `data/` & `third_party/` | SHA-256-pinned witness/flat datasets (`data/MANIFEST.sha256`) and single deduplicated Tsotchke stack (`third_party/SHA256SUMS.json`) |
+| `data/` & `third_party/` | SHA-256-pinned witness/flat datasets (`data/MANIFEST.sha256`, sealed by `data/MANIFEST.sha256.{tsr,ots}`) and single deduplicated Tsotchke stack (`third_party/SHA256SUMS.json`) |
 | `docs/` | [Architecture](docs/architecture.md), [ADRs](docs/adr/), [Statement Fidelity](docs/statement-fidelity.md), [Threat Model](docs/threat-model.md), [FAQ](docs/faq.md), [Glossary](docs/glossary.md), [10-Pass Audit](docs/reviews/2026-11-24-consolidation-and-ten-pass-audit.md) |
 
 ---
@@ -276,6 +279,7 @@ This ledger records substantive mathematical, formalization, bibliographic, and 
 
 | Release | Date | Affected Artifact(s) | Class | Summary of Correction |
 |---|---|---|---|---|
+| **v3.0.0** | 2026-11-26 | `lean/VerifyAll.lean`, `results/lean-axioms-all.log`, `.github/workflows/{ci,lean-verify}.yml`, `data/MANIFEST.sha256.{tsr,ots}`, `scripts/stamp_timestamps.py`, `CITATION.cff`, `formalization.yaml`, `docs/submission-packet.md`, `REPLICATION.md` | `gap` / `hole` | Added explicit `#print axioms` audit for all 6 `HoggarBound.Stability` theorems (`160` → `166` explicit `#print axioms` + `2,206` exhaustively audited theorems) and expanded CI Batteries linter to `HoggarBound.Bound HoggarBound.Stability ContextualityTensor Evidence` (0 errors); closed Playbook v1.3 #26 by sealing `data/MANIFEST.sha256` with DigiCert RFC 3161 TSA (`.tsr`, OpenSSL X.509 verified in CI) + 3-calendar OpenTimestamps (`.ots`); embedded permanent Software Heritage SWHID (`swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d`), added draft-labeled `docs/submission-packet.md`, logged automated clean-clone replication in `REPLICATION.md` (distinct from external human replication), and recompiled all 4 PDFs with Tectonic (`0` overfull hboxes, `0.00 pt`). |
 | **v2.9.0** | 2026-11-25 | `tracks/disjoint-mermin/scripts/{build_paper,check_release}.py`, `tracks/spectral-bounds/scripts/*.py`, `papers/spectral-bounds/unified-contextuality.{tex,md,html}`, `papers/disjoint-mermin/contextuality-tensor.tex`, `tests/test_repo_integrity.py`, `lean/README.md` | `hole` / `issue` | Pinned MathJax 3.2.2 with `sha384` Subresource Integrity & `crossorigin="anonymous"` in Track 2 `build_paper.py` (replacing floating `@3` jsDelivr script) and added repo-wide CDN SRI regression test in `tests/test_repo_integrity.py`; added explicit `https://`/`http://` URL scheme guard (`S310`) in Track 2 `check_release.py`; eliminated all 14 non-SHA256-pinned `ruff F401/F841/F541` findings across Track 1 scripts (closing the Windows `add_dll_directory` handle cleanly in `stack_audit.py` while keeping SHA-256-pinned Track 2/3 `run_stack.py` byte-identical to provenance receipts); updated Section 9.4 CI run links to verified `v2.8.0` runs (`45722562212` / `45722562213`); eliminated all 5 remaining sub-5pt overfull hboxes so all 4 Pauli PDFs compile with literal `0` overfull hboxes (`0.00 pt` max); documented the complete 60-module `VerifyAll.lean` vs. standalone finite-certificate map in `lean/README.md`. |
 | **v2.8.0** | 2026-11-25 | `repo.yaml`, `docs/threat-model.md`, `papers/spectral-bounds/unified-metadata.json`, `papers/**/*.{tex,md,html}`, `.github/workflows/*` | `error` / `gap` / `hole` | Fixed JSON Schema violation in `repo.yaml` (`stack: [lean, ...]` → `[python, c-cpp, node, other]`); fixed non-existent `VerifyAllExhaustive.lean` reference in `unified-metadata.json` (`VerifyAll.lean`); corrected `docs/threat-model.md` C11 flag description (`-Wall -Wextra`, not `-Werror`); added explicit CRediT author-contribution and COI/funding sections across all 4 active manuscripts; upgraded repo to Build Standard v1.2.0 (10 finding classes) and Playbook v1.3 (adversarial false-variant Lean tests, `leanchecker --fresh`, hardened `noncomputable`/`scoped`/`local` `axiom` lexer, Crossref retraction checks, SHA-256-verified `gitleaks`+`osv-scanner`, `ERRATA.md`, and exhaustive 1,900-problem Mega-Atlas cross-reference). Clarified audit-pass nomenclature on historical v2.7.0–v2.7.2 logs so pass counts reflect literal check categories without overstatement. |
 | **v2.7.3** (folded into **v2.8.0**) | 2026-11-25 | `papers/spectral-bounds/unified-metadata.json`, `unified-contextuality.{tex,md,html}`, `unified-abstract.txt` | `error` | Replaced nonexistent `"ETHICS.md"` and `"results/verification-summary.json"` paths in `unified-metadata.json` with `"LIMITATIONS.md"` and `"results/lean-axioms-all.log"`; removed GitHub backtick-math from TeX abstract; synchronized abstract theorem counts to `110` Track 1 / `160` explicit / `2,206` exhaustively audited declarations. |
@@ -326,6 +330,7 @@ node --test tests/test_web_models.mjs
 python scripts/arithmetic_audit.py
 python scripts/check_citations.py
 python scripts/check_readme_axioms.py
+python scripts/stamp_timestamps.py --verify
 python scripts/build_blueprint.py
 python scripts/build_site.py
 
@@ -348,6 +353,7 @@ External independent replications are welcomed — open an issue or email `0_0@0
 |---|---|---|---|---|
 | 2026-11-24 | Alexander S. Donahue (author / local & CI) | Windows 11 + Ubuntu 24.04 GitHub Actions, Python 3.12/3.13, Node 22, Lean 4.35.0 | Unified 3-track Lean build, `VerifyAll.lean`, `verify_all.py`, `pytest`, Node tests, Blueprint, site, Build Standard v1.1.0 audit | Pass (author-run; independent external replication still open) |
 | 2026-11-25 | Alexander S. Donahue (author / local & CI) | Windows 11 + WSL2 + Ubuntu 24.04/macOS/Windows CI, Python 3.12, Node 22, Lean 4.35.0 | `v2.9.0` Build Standard v1.2.0 (`100.0%`, `68/68`), Playbook v1.3 checks (adversarial false-variant Lean tests, Crossref retraction audit, 14-engine C11 ASan/UBSan, 6-kernel `lake comparator --paranoid`) | Pass (author-run; independent external replication still open) |
+| 2026-11-26 | Alexander S. Donahue (automated clean-clone check, fresh `git clone --depth 1`) | Windows 11 + WSL2, Python 3.12, Node 22 | Fresh clean clone into isolated temp directory: `verify_all.py`, `pytest -q tests/` (`51 passed, 6 subtests` on `v2.9.0` HEAD), `node --test tests/test_web_models.mjs` (`2/2`), `arithmetic_audit.py`, `check_citations.py`, `check_readme_axioms.py --require-exhaustive` (`2,206` theorems), `build_blueprint.py` (`27` nodes / `162` decls), `build_site.py` (`0` broken links) in `17.7s` | Pass (author-automated clean-clone; independent external human replication still open) |
 
 ---
 
@@ -409,3 +415,39 @@ Maps every headline Lean 4.35.0 declaration across all three tracks to its infor
 | 1 | `HoggarBound.ExactDegreesN4N5.w72_ge_1455`, `q9plus_ge_6444`, `exact_degrees_n4_n5_of_q7minus_315` | Unconditional bounds $1455$, $6444$, CSS witnesses $(315,1575,6975)$, reduction to $d(Q^-(7,2)) \ge 315$ | Jonah (Zenodo `23510634`, unreviewed); Li–Gupta–Ganesh (`arXiv:2610.26465`); Muller et al. (`arXiv:2407.02928`) | Symplectic transvection invariance + double-counting proved in Lean; the 42-orbit `W(5,2)` census establishing $d(Q^-(7,2)) \ge 315$ is C11 + integer Python outside Lean. | Open |
 | 2 | `ContextualityTensor.square_minimum_closed_form`, `pentagram_minimum_closed_form`, `global_actual_*` | Exact degrees $(7^k-5^k)/2$ ($k$ disjoint squares) and $(6^k-4^k)/2$ ($k$ pentagrams) | **Muller & Saniga (`arXiv:2609.19862v1`, Sec. 6)** | Full union context family (every nonempty choice of $\le 1$ local context per block) on disjoint observable vertices; exact evenness $2d_k = 7^k - 5^k$ (and $6^k - 4^k$) is proved in $\mathbb{Z}$ (`square_exact_degree`, `pentagram_exact_degree`) before dividing by $2$ (zero `Nat`-division truncation ambiguity); attaining witnesses are built into the theorem statements (non-vacuity) and literal Pauli matrices appear in `PhysicalBridge.lean`. | Open |
 | 3 | `Evidence.sharp_minimum`, `success_upper_bound`, `BetTree.finite_hitting_bound`, `concrete_classical_false_positive` | Sharp Peres-Mermin setting-bias floor $\min_c p(c)$, finite adaptive-tree bound $\le z/T$, 36-round naive attack $>4.3\%$ | Peres (1990); Mermin (1990); Zhang–Glancy–Knill (2011) | Formalized over exact finite binary trees with real probabilities; attaining witness is built into `sharp_minimum` and `concrete_classical_false_positive` constructs a concrete valid `BetTree` witness (non-vacuity); physical conditional-floor assumption is an explicit hypothesis, not verified by transcripts alone. | Open |
+
+---
+
+# FILE: docs/submission-packet.md
+
+# Ready-to-Send Submission & Correspondence Dossier (`docs/submission-packet.md`)
+
+> **Status:** Draft preparation packet awaiting human author review, line-by-line fidelity sign-off, and manual submission. Nothing in this file has been transmitted or submitted by any automated script.
+
+## 1. Palomar Registry Draft Payload (`formalization.yaml`)
+
+- **Repository:** `https://github.com/0thernes/pauli-contextuality-lab`
+- **Lean toolchain:** `leanprover/lean4:v4.35.0` (`Mathlib v4.35.0`, rev `56a005855ea1`)
+- **Challenge / Solution / Config:** `lean/Challenge.lean`, `lean/Solution.lean`, `lean/comparator.json`
+- **6-kernel comparator command:** `cd lean && lake exe cache get && lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll && lake env lean VerifyAll.lean && lake comparator --config comparator.json --paranoid`
+- **12 cross-track targets verified across all 6 independent kernels (`lean-paranoid`, `lean4lean`, `nanoda`, `con-leche`, `con-ron`, `lean-default`):**
+  - Track 1 (`HoggarBound`): spectral floor, Kramers floor, saturation integrality `(2^N - 1)|S| = □`, infinite non-closed pure-CCZ family `|Ψ_{3m}⟩`, exact four-qubit $C_3$ binary optima (`368` vs. `344`), Jonah's Conjecture E across all 9 vertex cases ($N \ge 4$), unconditional $d(W(7,2)) \ge 1455$ & $d(Q^+(9,2)) \ge 6444$.
+  - Track 2 (`ContextualityTensor`): exact disjoint-copy formulas `(7^k - 5^k)/2` (squares) and `(6^k - 4^k)/2` (pentagrams).
+  - Track 3 (`Evidence`): Peres–Mermin sharp setting-bias bound $1 - \beta$ and finite adaptive-tree supermartingale hitting bound.
+- **Permanent Software Heritage snapshot:** `swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d` (`v2.9.0`; updated snapshot recorded in `0thernes-research-archive` after `v3.0.0`).
+
+## 2. Human Line-by-Line Statement Fidelity Sign-Off Checklist (Playbook v1.3)
+
+Before flipping `human_line_by_line_review_recorded: false` → `true` in `formalization.yaml`, the author reviews and initials each row of `docs/statement-fidelity.md`:
+
+- [ ] Track 1 definitions (`HoggarBound/Pauli.lean`, `Bound.lean`, `Quadric.lean`, `ConjectureECore.lean`, `NormPhaseFamily.lean`) match Sections 2–9 of `papers/spectral-bounds/unified-contextuality.pdf`.
+- [ ] Track 2 definitions (`ContextualityTensor/ActualModel.lean`, `PhysicalBridge.lean`) match Muller & Saniga (`arXiv:2609.19862v1` Def. 11–13 & Sec. 6) and `papers/disjoint-mermin/contextuality-tensor.pdf`.
+- [ ] Track 3 definitions (`Evidence/Square.lean`, `Sequential.lean`, `Physical.lean`) match `papers/sequential-evidence/whitepaper.pdf`.
+- [ ] `lean/Challenge.lean` (12 isolated targets) and `lean/HoggarBound/NonVacuity.lean` (10 existential witnesses) contain zero vacuous hypotheses or definition drift.
+- [ ] `ERRATA.md`, `LIMITATIONS.md`, and `CLAIMS.md` accurately delineate Lean-proved vs. C-census vs. simulation results.
+
+## 3. Suggested Specialist Correspondence List (Draft Outreach Notes)
+
+- **Metod Saniga & Axel Muller / Frédéric Holweck / Alain Giorgetti / Colm Kelleher:** Share Track 1 (`unified-contextuality.pdf`, explicit $Sp(2N,2)$ witness isomorphisms matching `[M2]` and Qontextium-ready hyperbolic quasi-quadric `135/1,095/75` exports at `/exports/hyperbolic-quasi-quadric-135/`) and Track 2 (`contextuality-tensor.pdf`, exact arbitrary-$k$ disjoint-copy formulas addressing Muller & Saniga `arXiv:2609.19862v1` Sec. 6).
+- **B. W. Jonah:** Share Lean 4.35.0 formalization of the spectral floor, Kramers floor, saturation theory, exact $C_3$ binary optima (`368` vs. `344`), and all-nine-case proof of Conjecture E (`N ≥ 4`) with explicit credit throughout.
+- **Lean / Mathlib Community:** Candidate small hand-reviewed Mathlib PRs under `Apache-2.0` (only after human author review & handwritten prose): finite-field quadratic forms / symplectic transvections and exact integer third-moment inequalities.

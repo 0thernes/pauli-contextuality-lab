@@ -6,7 +6,15 @@ All notable changes to `pauli-contextuality-lab` are documented in this file fol
 
 - External mathematician review and correspondence feedback (M. Saniga, A. Muller, F. Holweck, C. Kelleher, A. Giorgetti).
 - Independent clean-machine human replication and line-by-line statement-fidelity sign-off.
-- Software Heritage SWHID and Zenodo/HAL DOI registration.
+- Zenodo/HAL DOI and Palomar Registry registration (draft payloads in `docs/submission-packet.md`).
+
+## [3.0.0] — 2026-11-26
+
+### Playbook v1.3 Cryptographic Timestamping, Explicit Stability Axiom Audit, Expanded Batteries Linter, Permanent SWHID & Clean-Clone Replication
+
+- **Expanded Explicit Lean Axiom Audit & Batteries Linter (`lean/VerifyAll.lean`, `.github/workflows/lean-verify.yml`):** Added explicit `#print axioms` declarations for all 6 quantitative third-moment stability theorems in `HoggarBound.Stability` (`moment_entry_le`, `shifted_square_sum`, `cubic_residual_identity`, `cubic_deficit_controls_top`, `spectrum_distance_identity`, `exists_near_extremal_spectrum`), expanding `VerifyAll.lean` from `160` → **`166` explicit `#print axioms`** alongside **`2,206` exhaustively audited theorems** strictly within `[propext, Classical.choice, Quot.sound]`; expanded Batteries `runLinter` in CI and `scripts/dev.sh` to cover `HoggarBound.Bound HoggarBound.Stability ContextualityTensor Evidence` (0 linter errors).
+- **Cryptographic Timestamps — DigiCert RFC 3161 TSA + 3-Calendar OpenTimestamps (Playbook v1.3 #26):** Sealed `data/MANIFEST.sha256` (`09a086b27907bc06fbbf6269a71c036ae3598e4aca4eb9f653e5ed531d6bc599`) with DigiCert RFC 3161 TSA (`data/MANIFEST.sha256.tsr`, 5,996 B) and 3-calendar Bitcoin OpenTimestamps (`data/MANIFEST.sha256.ots`, 721 B); added cross-platform + Linux OpenSSL X.509 DigiCert CA chain verifier `scripts/stamp_timestamps.py --verify` to `.github/workflows/ci.yml`, `scripts/dev.sh reproduce`, and `tests/test_repo_integrity.py`.
+- **Permanent Software Heritage SWHID, Draft Submission Packet & Clean-Clone Replication (`B44`):** Embedded permanent `visit_status: full` Software Heritage SWHID (`swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d`) across `CITATION.cff`, `formalization.yaml`, `README.md`, and `docs/threat-model.md`; added draft-labeled `docs/submission-packet.md` (Palomar Registry payload, human line-by-line fidelity review checklist, specialist correspondence notes); executed and logged a fresh automated clean-clone replication in `REPLICATION.md` (explicitly distinguished from external human replication); recompiled all 4 Pauli PDFs with Tectonic (`0` overfull hboxes, `0.00 pt`); recorded the full audit in `docs/reviews/2026-11-26-v300-tsa-stability-replication-audit.md`.
 
 ## [2.9.0] — 2026-11-25
 
