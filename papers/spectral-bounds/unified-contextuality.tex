@@ -39,7 +39,7 @@
 
 \maketitle
 
-Pauli Contextuality Lab (Track 1), version 3.0.0 (consolidated from Hoggar Bound Lab v1.9.0), 26 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
+Pauli Contextuality Lab (Track 1), version 3.1.0 (consolidated from Hoggar Bound Lab v1.9.0), 26 November 2026. Research preprint. Not peer reviewed. CC-BY-4.0.
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author\textquotesingle s direction; see Section 13.
 
 \textbf{A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case}
@@ -134,18 +134,18 @@ and degree 2016; and the seven-qubit circuit support \(S_7\) has 8128 points, 28
 729344. All four finite degree statements, including their counts and witnesses, are proved in Lean
 (\texttt{Saturated.lean}, \nolinkurl{SaturatedFive.lean}, \nolinkurl{SaturatedPhaseSix.lean}, \nolinkurl{SaturatedPhaseSeven.lean}); the
 seven-qubit counts are double sums with \(2^{28}\) terms evaluated by the kernel on packed sets of codes.
-Moreover, in version 1.8.0, \nolinkurl{NormPhaseFamily.lean} settles the open problem of finding an infinite family
-of non-closed contextual configurations attaining the spectral floor: for every \(m\ge1\) (\(N=3m\) qubits,
+Moreover, in version 1.8.0, \nolinkurl{NormPhaseFamily.lean} answers a question left open in earlier versions of this manuscript by constructing an infinite family
+of non-closed configurations attaining the spectral floor: for every \(m\ge1\) (\(N=3m\) qubits,
 \(q=2^m\)), the pure-CCZ determinant phase state \(|\Psi_{3m}\rangle\) of \(\operatorname{Tr}_{\mathbb F_q/\mathbb F_2}(x_1x_2x_3)\)
 is proved in Lean to be flat on a strictly non-closed support of size \((q^3-1)q^2\) with
 \((q^3-1)q^4(q^2+q-3)/6\) contexts and exact floor-saturating degree \((q^3-1)q^3(q-1)(q-2)/12\)
-(strictly positive for every \(m\ge2\); Theorem 13b), while an exhaustive C census (\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c})
+(degree 0 at \(m=1\), and strictly contextual for every \(m\ge2\); Theorem 13b), while an exhaustive C census (\nolinkurl{tracks/spectral-bounds/src/n9_rank8_search.c})
 rules out constant rank 8 on nine qubits across all 25 cyclic-invariant subspaces of \(GL(9,2)\)
 (540 299 769 forms). On the classical geometries \(Q^-(7,2)\), \(W(7,2)\) and \(Q^+(9,2)\), \nolinkurl{ExactDegreesN4N5.lean}
 proves symplectic transvection invariance for all \(N\), exact CSS witnesses (315, 1575, 6975), the exact
-double-counting ladders \(Q^-(7,2)\to W(7,2)\to Q^+(9,2)\), unconditional Kramers-lifted lower bounds
+double-counting ladders \(Q^-(7,2)\to W(7,2)\to Q^+(9,2)\), kernel-checked Kramers-lifted lower bounds
 \(d(W(7,2))\ge1455\) (beating the complex floor 1451 by \(+4\)) and \(d(Q^+(9,2))\ge6444\) (beating the real
-floor 6200 by \(+244\) and \nolinkurl{five_qubit_hyperbolic_contexts} 6426 by \(+18\)), pigeonhole Lemmas L1 and L4,
+floor 6200 by \(+244\) and \nolinkurl{five_qubit_hyperbolic_contexts} 6426 by \(+18\))---noting that Jonah {[}J1{]} (\nolinkurl{doi:10.5281/zenodo.23510634}, 20 October 2026, unreviewed) earlier claimed the exact computer-assisted values \(1575\) and \(6975\), which imply these lower bounds---pigeonhole Lemmas L1 and L4,
 and the exact master reduction from \(d(Q^-(7,2))\ge315\) to \((315,1575,6975)\), accompanied by our
 independent from-scratch C census (\nolinkurl{tracks/spectral-bounds/src/w52_census_verify.c}: 42 orbits, 17 652 160 classes) and pure-integer
 42-orbit dual certification (\nolinkurl{tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py}, 9 checks, zero floating point) reproducing
@@ -1637,10 +1637,10 @@ For a line \(\ell=\{s,p,q\}\), \(P_sP_pP_q=s_\ell I\) is its sign, as in Section
 completion matrices are defined as
 in Section 8.2.
 
-\textbf{Theorem 19 (Conjecture E).} In each of the nine vertex cases and for every \(N\ge4\) there are sign
+\textbf{Theorem 19 (Conjecture E).} For one explicit representative \((X,d)\) of each of the nine vertex cases and for every \(N\ge4\) there are sign
 carriers \(\sigma\) and \(\tau\) on the section whose carrier operators have the same characteristic polynomial
 and whose completion matrices have different cubic traces, hence different spectra. In C1, C3, C6 and
-C11 this also holds for \(N=3\). Conjecture E is therefore true.
+C11 this also holds for \(N=3\). Combined with Jonah\textquotesingle s Theorem B4 {[}J3{]} (outside Lean), this gives Conjecture E; cases C1 and C6 were already proved by Jonah {[}J3{]}.
 
 \textbf{Table 6. The constructions of Theorem 19.}
 
@@ -2379,7 +2379,7 @@ independent Lean kernels via \texttt{lake\ comparator\ -\/-paranoid}, added Batt
 editable modules, added a declaration-checked Lean Blueprint (\texttt{blueprint/}, mounted at \texttt{/blueprint/}),
 enforced the verbatim \texttt{\#print\ axioms} README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--3.0.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 166 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562212}{6-kernel Lean run}, \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45722562213}{3-OS \& 14-engine C11 ASan/UBSan run}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
+provenance attestations. In the consolidated \href{https://github.com/0thernes/pauli-contextuality-lab}{Pauli Contextuality Lab} (versions 2.0.0--3.1.0; \href{https://github.com/0thernes/pauli-contextuality-lab/actions}{GitHub Actions CI}), all Track~1 Lean modules live under \nolinkurl{lean/HoggarBound/} alongside Track~2 (\nolinkurl{ContextualityTensor}) and Track~3 (\nolinkurl{Evidence}); \nolinkurl{lean/VerifyAll.lean} audits 166 explicit headline declarations plus all 2,206 project theorems strictly within \texttt{[propext, Classical.choice, Quot.sound]}, all 12 cross-track targets in \nolinkurl{Challenge.lean}/\nolinkurl{Solution.lean} pass all six independent Lean 4.35.0 kernels (\texttt{lean-paranoid}, \texttt{lean4lean}, \texttt{nanoda}, \texttt{con-leche}, \texttt{con-ron}, \texttt{lean-default}) in Ubuntu 24.04 CI (\href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45826042676}{6-kernel Lean run}, Sigstore Rekor \texttt{4126960397}; \href{https://github.com/0thernes/pauli-contextuality-lab/actions/runs/45826042756}{3-OS, DigiCert X.509 TSA \& 14-engine C11 ASan/UBSan run}; Software Heritage \texttt{swh:1:snp:54b1005a...}), and the unified \href{https://0thernes.github.io/pauli-contextuality-lab/blueprint/}{GitHub Pages Blueprint} mounts the searchable 27-node / 162-declaration dependency graph with MathJax SRI and direct GitHub line links.
 
 \subsection{10. A running example on the Tsotchke stack}\label{10-a-running-example-on-the-tsotchke-stack}
 
@@ -2994,7 +2994,7 @@ cd .. && bash tracks/spectral-bounds/scripts/run_family7.sh
 
 The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0--v2.8.0 verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0--v3.1.0 verification audits, from
 the repository root:
 
 \begin{verbatim}
@@ -3022,7 +3022,7 @@ python tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py
 
 Their exact-verifier last lines read \texttt{30\ of\ 30}, \texttt{14\ of\ 14}, \texttt{43\ of\ 43}, \texttt{18\ of\ 18}, \texttt{21\ of\ 21},
 \texttt{81\ of\ 81}, \texttt{36\ of\ 36}, \texttt{115\ of\ 115}, \texttt{46\ of\ 46}, \texttt{97\ of\ 97}, \texttt{39\ of\ 39}, \texttt{15\ of\ 15}, \texttt{10\ of\ 10},
-\texttt{32\ of\ 32} and \texttt{9\ of\ 9\ checks\ passed}; the search prints its class counts; and the v1.9.0--v2.8.0 verification
+\texttt{32\ of\ 32} and \texttt{9\ of\ 9\ checks\ passed}; the search prints its class counts; and the v1.9.0--v3.1.0 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 \nolinkurl{c3_sdp_dual_check.py}).
 

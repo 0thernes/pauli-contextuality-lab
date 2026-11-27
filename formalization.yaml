@@ -2,9 +2,10 @@
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
 repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "3.0.0"
+version: "3.1.0"
 date: "2026-11-26"
-swhid: "swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d"
+swhid: "swh:1:snp:54b1005a1e5ebde0c4dd89892c1bff4c3e6845ba"
+palomar_module_headers_status: "partial (5/60 files: Evidence/*; HoggarBound/*, ContextualityTensor/*, Challenge.lean, Solution.lean pending Lean 4.35 module migration prior to Palomar submission)"
 timestamps:
   manifest: "data/MANIFEST.sha256"
   rfc3161_tsr: "data/MANIFEST.sha256.tsr"

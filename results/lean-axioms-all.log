@@ -1,5 +1,3 @@
-warning: batteries: repository has local changes:
-  Z:\[Vibe Coded (AI)]\ANTIGRAVITY\pauli-contextuality-lab\lean\.lake/packages\batteries
 'HoggarBound.hoggar_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.three_qubit_contexts' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.mermin_peres' depends on axioms: [propext, Classical.choice, Quot.sound]

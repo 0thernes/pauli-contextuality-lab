@@ -109,28 +109,28 @@ jobs:
         run: |
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-ci.log --require-exhaustive
           python3 scripts/check_readme_axioms.py --log results/lean-axioms-all.log --require-exhaustive
-      - name: Adversarial false-variant definition test (Playbook v1.3 Checklist #12)
+      - name: Negative Lean sanity checks (closed decidable facts)
         working-directory: lean
         shell: bash
         run: |
           set +e
           out1=$(lake env lean --stdin 2>&1 <<'LEAN'
           import ContextualityTensor
-          theorem adversarial_false_square_degree :
+          theorem sanity_false_square_degree :
               ContextualityTensor.violations (fun _ : Fin 1 => ContextualityTensor.squareResponse (fun _ => false)) = 0 := by
             decide
           LEAN
           ); rc1=$?
           out2=$(lake env lean --stdin 2>&1 <<'LEAN'
           import Evidence.Square
-          theorem adversarial_false_concrete_win :
+          theorem sanity_false_concrete_win :
               Evidence.loses (fun _ => false) 5 = false := by
             decide
           LEAN
           ); rc2=$?
           out3=$(lake env lean --stdin 2>&1 <<'LEAN'
           import HoggarBound.Quadric
-          theorem adversarial_false_qform_zero :
+          theorem sanity_false_qform_zero :
               HoggarBound.qform (0 : HoggarBound.Pt 2) = 1 := by
             decide
           LEAN
@@ -142,19 +142,17 @@ jobs:
             rc="${rest%%:*}"
             msg="${rest#*:}"
             if [ "$rc" -eq 0 ] || ! printf '%s' "$msg" | grep -q "proved that the proposition"; then
-              echo "ERROR: Adversarial test $idx did not cleanly refute false proposition (rc=$rc): $msg" >&2
+              echo "ERROR: Sanity check $idx did not reject false closed fact (rc=$rc): $msg" >&2
               exit 1
             fi
           done
-          echo "PASS: All 3 cross-track adversarial false-variant Lean theorems were cleanly refuted by kernel decide."
-      - name: Run independent leanchecker --fresh (Playbook v1.3 H04, time-bounded report-only)
+          echo "PASS: All 3 negative Lean sanity checks (closed decidable facts) were rejected by kernel decide."
+      - name: Run Batteries linter across 10 clean modules (report-only)
         working-directory: lean
         continue-on-error: true
-        run: timeout 300 lake env leanchecker --fresh Evidence || true
-      - name: Run Batteries linter (report-only)
-        working-directory: lean
-        continue-on-error: true
-        run: lake exe runLinter HoggarBound.Bound HoggarBound.Stability ContextualityTensor Evidence
+        run: |
+          lake exe runLinter HoggarBound.Moment HoggarBound.Pauli HoggarBound.Bound HoggarBound.Counting HoggarBound.Corollaries
+          lake exe runLinter HoggarBound.Quadric HoggarBound.Kramers HoggarBound.Stability ContextualityTensor Evidence
       - name: Run 6-kernel lake comparator --paranoid
         working-directory: lean
         run: |

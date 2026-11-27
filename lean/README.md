@@ -14,7 +14,7 @@ This single unified Lean 4.35.0 + Mathlib `v4.35.0` (pinned rev `56a005855ea1`) 
 ```bash
 cd lean
 lake exe cache get
-lake build HoggarBound ContextualityTensor Evidence Solution
+lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll
 lake env lean VerifyAll.lean
 lake comparator --config comparator.json --paranoid
 ```

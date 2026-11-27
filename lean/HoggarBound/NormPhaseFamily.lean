@@ -1,9 +1,9 @@
 /-
-Infinite Family of Non-Closed, Contextual, Floor-Saturating Flat Phase States |Ψ_{3m}⟩ (v1.8.0)
+Infinite Family of Non-Closed, Floor-Saturating Flat Phase States |Ψ_{3m}⟩ (v1.8.0)
 
-Resolves the Section 12 open problem ("an infinite family of non-closed configurations that
-attain the floor") completely and unconditionally inside Lean 4's kernel for EVERY `m ≥ 1`
-(`N = 3m` qubits, `q = 2^m`, `D = 2^{3m} = q^3`):
+Non-closed and floor-attaining for all `m ≥ 1`; contextual for `m ≥ 2` (the `m = 1` member has
+degree 0). Answers a question left open in earlier versions of this repository's manuscript inside
+Lean 4's kernel (`N = 3m` qubits, `q = 2^m`, `D = 2^{3m} = q^3`):
 
 For `F = GaloisField 2 m` (`|F| = q = 2^m`), define the pure-CCZ real phase state on `N = 3m`
 qubits (identifying `Vec (3m) ≃ₗ[ZMod 2] (Fin 3 → F)`):

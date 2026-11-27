@@ -35,7 +35,7 @@ bash scripts/dev.sh sanitizers
 # 3. Full Lean 4.35.0 build, exhaustive axiom audit & 6-kernel comparator
 cd lean
 lake exe cache get
-lake build HoggarBound ContextualityTensor Evidence Solution
+lake build HoggarBound ContextualityTensor Evidence Solution VerifyAll
 lake env lean VerifyAll.lean
 lake comparator --config comparator.json --paranoid
 ```

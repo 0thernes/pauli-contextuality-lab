@@ -511,11 +511,43 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertEqual(mod.verify_timestamps(), 0, "RFC 3161 TSA or OpenTimestamps proof verification failed")
         self.assertTrue((ROOT / "data" / "MANIFEST.sha256.tsr").is_file())
         self.assertTrue((ROOT / "data" / "MANIFEST.sha256.ots").is_file())
-        self.assertIn("swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d", (ROOT / "CITATION.cff").read_text(encoding="utf-8"))
-        self.assertIn("swh:1:snp:0d84f85d8dc6b9c703784c655998864acee6c98d", (ROOT / "formalization.yaml").read_text(encoding="utf-8"))
+        self.assertIn("swh:1:snp:54b1005a1e5ebde0c4dd89892c1bff4c3e6845ba", (ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+        self.assertIn("swh:1:snp:54b1005a1e5ebde0c4dd89892c1bff4c3e6845ba", (ROOT / "formalization.yaml").read_text(encoding="utf-8"))
         packet = ROOT / "docs" / "submission-packet.md"
         self.assertTrue(packet.is_file(), "Missing docs/submission-packet.md")
         self.assertIn("DRAFT", packet.read_text(encoding="utf-8").upper())
+
+        # Guard against unescaped `|` breaking GitHub Markdown tables across active docs
+        bad_tables: list[str] = []
+        for md_rel in ("README.md", "CLAIMS.md", "LIMITATIONS.md", "ERRATA.md", "REPLICATION.md", "docs/statement-fidelity.md", "docs/mega-atlas-cross-reference.md", "docs/threat-model.md"):
+            lines = (ROOT / md_rel).read_text(encoding="utf-8").splitlines()
+            in_code = False
+            i = 0
+            while i < len(lines):
+                if lines[i].lstrip().startswith("```"):
+                    in_code = not in_code
+                    i += 1
+                    continue
+                if not in_code and i + 1 < len(lines) and "|" in lines[i] and re.match(r"^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)+\|?\s*$", lines[i + 1]):
+                    def _cols(s: str) -> int:
+                        s = re.sub(r"\\\|", "PIPE", s.strip())
+                        if s.startswith("|"):
+                            s = s[1:]
+                        if s.endswith("|"):
+                            s = s[:-1]
+                        return len(s.split("|"))
+                    exp = _cols(lines[i + 1])
+                    if _cols(lines[i]) != exp:
+                        bad_tables.append(f"{md_rel}:{i + 1}")
+                    j = i + 2
+                    while j < len(lines) and "|" in lines[j] and lines[j].strip():
+                        if _cols(lines[j]) != exp:
+                            bad_tables.append(f"{md_rel}:{j + 1}")
+                        j += 1
+                    i = j
+                else:
+                    i += 1
+        self.assertEqual(bad_tables, [], f"Broken Markdown table column counts (unescaped |): {bad_tables}")
 
 
 if __name__ == "__main__":

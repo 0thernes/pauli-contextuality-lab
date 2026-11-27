@@ -30,21 +30,21 @@
 \hypersetup{pdftitle={Exact contextuality degrees for disjoint Mermin configurations},pdfauthor={Alexander S. Donahue}}
 \title{\vspace{-12mm}\sffamily\bfseries Exact contextuality degrees\\for disjoint Mermin configurations}
 \author{Alexander S. Donahue\\\small Independent researcher, Spokane, WA, USA\\\small\href{https://orcid.org/0009-0006-8168-9648}{ORCID 0009-0006-8168-9648}\\\small\href{mailto:0_0@0thernes.art}{0\_0@0thernes.art}}
-\date{26 November 2026\quad\textbullet\quad Version 3.0.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
+\date{26 November 2026\quad\textbullet\quad Version 3.1.0 (consolidated from v0.1.0)\quad\textbullet\quad CC-BY-4.0}
 \begin{document}
 \maketitle
 \begin{center}\small Research preprint; not peer reviewed. Substantive AI assistance disclosed in Section 9.\end{center}
 \section{Abstract}\label{abstract}
 
-We determine exact contextuality degrees for full context families obtained by placing copies of the Peres--Mermin square or Mermin pentagram on disjoint quantum registers. Adjoining an empty context of value one turns the classical score of the combined configuration into a product of augmented local scores. For \(k\) squares, the context count, sharp classical bound and degree are respectively \(7^k-1\), \(5^k-1\) and \((7^k-5^k)/2\). For \(k\) pentagrams they are \(6^k-1\), \(4^k-1\) and \((6^k-4^k)/2\). The normalized gap therefore tends to one in both families, answering the disjoint-copy limit question posed in Section 6 of Muller and Saniga, arXiv:2609.19862v1. A general bound yields the same limit for every finite contextual seed under this construction. The result concerns full families of union contexts; it does not apply to the ordinary union that retains only the original component contexts. We give a Lean 4 formalization of the exact signed-constraint optimization, an explicit four-qubit matrix realization, exhaustive finite certificates, and a running Tsotchke-stack simulation. Under independent elementary outcome flips, the square and pentagram inequality thresholds remain approximately 6.32\% and 5.99\%, independent of copy count. Thus the asymptotic normalized gap does not imply unbounded tolerance of readout errors. Priority is subject to a bounded literature search and external review.
+We determine exact contextuality degrees for full context families obtained by placing copies of the Peres--Mermin square or Mermin pentagram on disjoint quantum registers (only these two families are treated). Adjoining an empty context of value one turns the classical score of the combined configuration into a product of augmented local scores. For \(k\) squares, the context count, sharp classical bound and degree are respectively \(7^k-1\), \(5^k-1\) and \((7^k-5^k)/2\). For \(k\) pentagrams they are \(6^k-1\), \(4^k-1\) and \((6^k-4^k)/2\). The normalized gap therefore tends to one in both families, answering the disjoint-copy stacking-limit question posed in Section 6 of Muller and Saniga, arXiv:2609.19862v1 (an unreviewed arXiv v1 preprint), for squares and pentagrams. A general bound yields the same limit for every finite contextual seed under this construction. The result concerns full families of union contexts; it does not apply to the ordinary union that retains only the original component contexts. We give a Lean 4 formalization of the exact signed-constraint optimization, an explicit four-qubit matrix realization, exhaustive finite certificates, and a running Tsotchke-stack simulation. Under independent elementary outcome flips, the square and pentagram inequality thresholds remain approximately 6.32\% and 5.99\%, independent of copy count. Thus the asymptotic normalized gap does not imply unbounded tolerance of readout errors. Priority is subject to a bounded literature search and external review.
 
 \section{1. Problem, contribution and relation to earlier work}\label{problem-contribution-and-relation-to-earlier-work}
 
 A state-independent observable contextuality test compares quantum context-product identities with values assigned to the same observables consistently across contexts. A context is a set of compatible observables whose product is a scalar identity. Its sign must be reproduced by a noncontextual assignment if that assignment is to satisfy the associated constraint. The contextuality degree is the smallest number of constraints that any such assignment violates.
 
-Muller and Saniga {[}1{]} study full hypergraph supports of anticommutation graphs. Their computations exhibit repeated squares and pentagrams with increasingly large normalized gaps, but leave the asymptotic behavior of the disjoint-copy construction open. We address that specified construction by an exact product identity. The proof is elementary finite algebra; it eliminates the need for a growing SAT search in these families.
+Muller and Saniga {[}1{]} (an unreviewed arXiv v1 preprint) study full hypergraph supports of anticommutation graphs. Their computations exhibit repeated squares and pentagrams with increasingly large normalized gaps, but leave the asymptotic behavior of the disjoint-copy construction open. We address that specified construction for squares and pentagrams by an exact product identity. The proof is elementary finite algebra; it eliminates the need for a growing SAT search in these families.
 
-The contribution is the all-copy degree formula, its relation to the stated question, and its proof and execution record. The square, pentagram, contextuality degree and general product ideas are established. Contextual fraction already obeys a tensor-product composition law {[}2{]}, within the broader theory of contextuality {[}6{]}; that different measure does not supply the degree formulas here. Quantum XOR-game repetition {[}3{]} concerns a different strategy space. No first-ever contextuality amplification principle is claimed.
+The contribution is the all-copy degree formula, its relation to the stated question, and its proof and execution record. The square, pentagram, contextuality degree and general product ideas are established. Contextual fraction already obeys a tensor-product composition law {[}2{]}, within the broader theory of contextuality {[}6{]}; that different measure does not supply the degree formulas here. Cabello {[}12{]} gives a related exponential growth result for state-independent contextuality violations as the number of qubits increases, in a different inequality setting. Quantum XOR-game repetition {[}3{]} concerns a different strategy space. No first-ever contextuality amplification principle is claimed.
 
 This is an original mathematical and computational research report with a critical literature synthesis. It is not a statistical meta-analysis: there are no pooled clinical or experimental effect sizes. It neither constructs a smaller three-dimensional Kochen--Specker ray set nor settles the SIC or dimension-six mutually unbiased bases problems.
 
@@ -68,7 +68,7 @@ Now take pairwise disjoint vertex sets \(V_1,\ldots,V_k\), with signed context f
 h_i\in\widehat H_i\right\}\setminus\{\varnothing\},
 \qquad s_*\!\left(\bigcup_i h_i\right)=\prod_i s_i(h_i). \tag{2}\]
 
-Each union has a unique tuple of components, since \(h_i=h\cap V_i\). Thus
+Each union has a unique tuple of components, since \(h_i=h\cap V_i\). Thus (matching the context-count product formula stated in Muller and Saniga {[}1, Section 4.2{]})
 
 \[L_*+1=\prod_i(|H_i|+1). \tag{3}\]
 
@@ -319,6 +319,8 @@ The stack runner requires Python with NumPy, Node, GCC and a usable Eshkol insta
   Tsotchke, \emph{Eshkol}. Local execution used compiler \texttt{1.3.6-evolve}; the runner records its executable and toolchain. \href{https://github.com/tsotchke/eshkol}{Upstream repository}.
 \item
   The Lean community, \emph{Lean 4} and \emph{Mathlib}. This artifact pins Lean 4.35.0 and Mathlib v4.35.0. \href{https://github.com/leanprover/lean4}{Lean}; \href{https://github.com/leanprover-community/mathlib4}{Mathlib}.
+\item
+  A. Cabello, \emph{Proposed test of macroscopic quantum contextuality}, Physical Review A \textbf{82}, 032110 (2010). \href{https://doi.org/10.1103/PhysRevA.82.032110}{doi:10.1103/PhysRevA.82.032110}; \href{https://arxiv.org/abs/1002.3135}{arXiv:1002.3135}.
 \end{enumerate}
 }
 
