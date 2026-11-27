@@ -50,6 +50,7 @@ case "$cmd" in
     if command -v lake >/dev/null 2>&1; then
       (cd lean && lake exe runLinter HoggarBound.Moment HoggarBound.Pauli HoggarBound.Bound HoggarBound.Counting HoggarBound.Corollaries || true)
       (cd lean && lake exe runLinter HoggarBound.Quadric HoggarBound.Kramers HoggarBound.Stability ContextualityTensor Evidence || true)
+      (cd lean && lake exe runLinter ContextualityTensor.Support ContextualityTensor.UnionModel ContextualityTensor.Asymptotics ContextualityTensor.ActualModel ContextualityTensor.GeneralTheory || true)
     fi
     ;;
 

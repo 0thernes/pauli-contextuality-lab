@@ -1,12 +1,12 @@
 # Publication Status (Track 3 — Sequential Contextuality Evidence)
 
-- **Current release:** `v3.2.0` (26 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) (`papers/sequential-evidence/`, `tracks/sequential-evidence/`, `lean/Evidence/`).
+- **Current release:** `v3.3.0` (27 November 2026), consolidated into [`pauli-contextuality-lab`](https://github.com/0thernes/pauli-contextuality-lab) (`papers/sequential-evidence/`, `tracks/sequential-evidence/`, `lean/Evidence/`).
 - **Author:** Alexander S. Donahue (Independent researcher, Spokane, WA, USA; ORCID [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)).
 - **Licences:** Code `Apache-2.0` (`LICENSE`); manuscripts and documentation `CC-BY-4.0` (`LICENSE-DOCS`).
 
 | Channel | Status | Link |
 |---|---|---|
-| Unified repository | Live (`v3.2.0`) | [pauli-contextuality-lab](https://github.com/0thernes/pauli-contextuality-lab) |
+| Unified repository | Live (`v3.3.0`) | [pauli-contextuality-lab](https://github.com/0thernes/pauli-contextuality-lab) |
 | Unified GitHub Pages (Track 3 lab) | Live | [Sequential Evidence Lab](https://0thernes.github.io/pauli-contextuality-lab/sequential-evidence/) |
 | Paper PDF | Live | [whitepaper.pdf](https://0thernes.github.io/pauli-contextuality-lab/papers/sequential-evidence/whitepaper.pdf) |
 | Archived standalone snapshot | Read-only archive (`v1.0.0`) | [contextuality-evidence-lab](https://github.com/0thernes/contextuality-evidence-lab) |

@@ -2,15 +2,15 @@ cff-version: 1.2.0
 title: "Pauli Contextuality Lab: Lean 4.35.0 Proofs and Exact Verifiers for Spectral Bounds, Conjecture E, Disjoint Mermin Configurations, and Sequential Contextuality Evidence"
 message: "If you use this software, formal proofs, or manuscripts, please cite this repository. Note that all manuscripts are unreviewed research preprints produced with AI assistance under human direction."
 type: software
-version: "3.2.0"
-date-released: "2026-11-26"
+version: "3.3.0"
+date-released: "2026-11-27"
 license: Apache-2.0
 repository-code: "https://github.com/0thernes/pauli-contextuality-lab"
 url: "https://0thernes.github.io/pauli-contextuality-lab/"
 identifiers:
   - type: swh
-    value: "swh:1:snp:bcb2b33b31015225ace11d52fa98b2f93c5b4913"
-    description: "Software Heritage permanent archival snapshot (v3.1.0; refreshed via Save Code Now on each release)"
+    value: "swh:1:snp:cf9ae7bd108e9556e79d4c0c81c8de92632b91c1"
+    description: "Software Heritage permanent archival snapshot (v3.2.0; refreshed via Save Code Now on each release)"
 authors:
   - family-names: Donahue
     given-names: Alexander S.
@@ -39,10 +39,13 @@ abstract: >-
   each of the nine geometric vertex-case predicates for all N >= 4 (whole-case
   transfer via Jonah's Theorem B4, outside Lean); (2) exact contextuality
   degrees (7^k - 5^k)/2 and (6^k - 4^k)/2 for k disjoint Peres-Mermin squares
-  and Mermin pentagrams, literal two- and three-qubit Pauli realizations, and
-  kernel-checked HS(L(K_{3,3})) / HS(Petersen) support identifications for all
-  k, answering the stacking-limit question of Muller and Saniga
-  (arXiv:2609.19862v1, Sec. 6) for these two families; and (3) formalized elementary bounds for sequential contextuality
+  and Mermin pentagrams, heterogeneous endpoint reduction, mixed (s,t) family
+  degrees (7^s 6^t - 5^s 4^t)/2, general finite contextual seed asymptotics
+  (eps_k -> 1), arbitrary-k 2k- and 3k-qubit complex Pauli tensor-product
+  realizations, k-independent readout-noise thresholds, and kernel-checked
+  HS(L(K_{3,3})) / HS(Petersen) support identifications for all k, answering
+  the stacking-limit question of Muller and Saniga (arXiv:2609.19862v1, Sec. 6)
+  for these two families; and (3) formalized elementary bounds for sequential contextuality
   evidence and a setting-bias example on the Peres-Mermin square. Both external
   sources are unreviewed preprints. Not externally peer reviewed; AI-assisted
   under human direction.

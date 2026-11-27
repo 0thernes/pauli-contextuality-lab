@@ -1,7 +1,7 @@
 ---
 title: "Exact contextuality degrees for disjoint Mermin configurations"
 author: "Alexander S. Donahue"
-date: "26 November 2026"
+date: "27 November 2026"
 ---
 
 # Exact contextuality degrees for disjoint Mermin configurations
@@ -9,7 +9,7 @@ date: "26 November 2026"
 **Alexander S. Donahue — Independent researcher, Spokane, WA, USA**  
 ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)  
 Correspondence: [0_0@0thernes.art](mailto:0_0@0thernes.art)  
-Research preprint, version 3.2.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
+Research preprint, version 3.3.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
 
 ## Abstract
 
@@ -85,7 +85,7 @@ $$B_*+1=\max_{z_i\in\{\ell_i,u_i\}}\prod_i z_i. \tag{7}$$
 
 **Proof.** The product is multilinear on the box $\prod_i[\ell_i,u_i]$. Maximizing one coordinate at a time places a maximum at a corner. Every corner is attained by independent choices of component assignments, so passing to the box does not change the maximum. $\square$
 
-The minimum and maximum products can be propagated in linear time in the number of factors, replacing $[l,u]$ at each step by the extrema of $\{l\ell_i,lu_i,u\ell_i,uu_i\}$. No assumption that intermediate scores are attainable is required. Theorem 2 is proved here on paper; the Lean development instead uses the sufficient absolute-value bound needed for the two concrete families.
+The minimum and maximum products can be propagated in linear time in the number of factors, replacing $[l,u]$ at each step by the extrema of $\{l\ell_i,lu_i,u\ell_i,uu_i\}$. No assumption that intermediate scores are attainable is required. As of version 3.3.0, Theorem 2 is also machine-checked in Lean 4 (`ContextualityTensor.heterogeneous_endpoint_reduction`, `GeneralTheory.lean`) alongside the absolute-value proofs for the two concrete families.
 
 ## 4. Exact degrees for squares and pentagrams
 
@@ -205,9 +205,9 @@ Falsification controls change a quantum sign, introduce incompatible observables
 
 ### 7.2. Formal boundary
 
-Lean 4.35.0 with Mathlib v4.35.0 [11] formalizes the finite sum over all nonempty context-choice tuples, its factorization, its relation to the actual number of violated constraints, the local assignment bounds, and the sharp arbitrary-copy square and pentagram bounds with attaining witnesses. It proves that these tuples parameterize distinct actual sets of tagged observable vertices, transports unrestricted vertex assignments to the signed constraints, certifies the genuine minimum `actualMinViolations` over all assignments (`Finset.min'`), and proves that both normalized degree ratios—defined directly from that minimum (`actual_square_min_epsilon_tends_to_one`, `actual_pentagram_min_epsilon_tends_to_one`)—tend to one, with all four theorems accepted across six independent Lean kernels via `lake comparator --paranoid`. A general graph-support module (`Support.lean`) proves the block-diagonal adjacency-kernel and independence decomposition in (4), starting from arbitrary global vertex subsets. The matrix and seed-support companion (`PauliRealization.lean`, `SeedSupport.lean`) checks explicit two-qubit square and three-qubit pentagram integer Pauli matrices and signs, their distinctness and nonidentity, their four- and six-qubit disjoint tensor bridges, proves by kernel decision that their matrix-derived anticommutation graphs yield exactly $HS(L(K_{3,3}))$ and $HS(\mathrm{Petersen})$ (`square_seed_support_eq_hs`, `pentagram_seed_support_eq_hs`), and instantiates `Support.lean` for arbitrary $k$ copies (`square_kblock_support_iff`, `pentagram_kblock_support_iff`). The repository records an exhaustive axiom audit and exact build commands.
+Lean 4.35.0 with Mathlib v4.35.0 [11] formalizes the entire mathematical development of Sections 2–6 with zero `sorry` and standard axioms only. Specifically, `ContextualityTensor.lean`, `UnionModel.lean`, `Asymptotics.lean`, and `ActualModel.lean` prove the augmented-score factorization (6), the violation relation (1), the sharp arbitrary-copy square and pentagram degrees (9) and (11), the transport onto distinct tagged vertex subsets, and the genuine minimum `actualMinViolations` (`Finset.min'`) and minimum-defined limits $\varepsilon_k \to 1$. `Support.lean`, `Pauli.lean`, `PhysicalBridge.lean`, and `SeedSupport.lean` prove the block-diagonal hypergraph-support decomposition (4), explicit 2-qubit square / 3-qubit pentagram integer Pauli matrices and 4-/6-qubit tensor bridges, kernel-decided identifications $HS(L(K_{3,3}))$ and $HS(\mathrm{Petersen})$, and arbitrary-$k$ support instantiations. As of version 3.3.0, `GeneralTheory.lean` closes the remaining Track 2 theorems in Lean 4: heterogeneous endpoint reduction Theorem 2 (`heterogeneous_endpoint_reduction`, Eq. 7), the mixed $s$-square / $t$-pentagram formula (`mixed_square_pentagram_minimum`, Eq. 12), the general finite contextual seed limit Theorem 5 (`general_seed_epsilon_tends_to_one`, Eq. 13), arbitrary-$k$ complex Pauli tensor-product realizations on $2k$ and $3k$ qubits (`arbitrary_k_square_pauli_realization`, `arbitrary_k_pentagram_pauli_realization`, Eq. 5, unifying with `HoggarBound.Pauli`), and the independent-readout noise model (`noisyScore_closed_form`, `square_noise_threshold_iff`, `pentagram_noise_threshold_iff`, `noisy_normalized_score_tends_to_zero`, Eqs. 14–16). All twelve Track 2 headline comparator targets are accepted across six independent Lean 4.35.0 kernels via `lake comparator --paranoid`.
 
-General-seed Theorem 5, heterogeneous endpoint Theorem 2, mixed-family formula (12), physical realization on arbitrary $2k$- or $3k$-qubit tensor registers beyond the explicit $k=1,2$ matrix bridges, and the independent-readout model are separately established by the manuscript and executable checks unless the formal manifest explicitly lists a corresponding theorem. Executable output, comments and prose are not Lean proofs. Kernel verification establishes the stated mathematical propositions; it does not establish historical priority, editorial acceptance or the accuracy of a hardware implementation.
+Executable certificates, simulator outputs, comments and prose are not Lean proofs. Kernel verification establishes the stated mathematical propositions; it does not establish historical priority, external peer review, editorial acceptance or the accuracy of a hardware implementation.
 
 ### 7.3. Tsotchke stack
 

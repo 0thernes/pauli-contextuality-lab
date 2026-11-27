@@ -22,6 +22,7 @@ import HoggarBound.ConjectureECore
 import HoggarBound.ConjectureEExtras
 import ContextualityTensor
 import ContextualityTensor.ActualModel
+import ContextualityTensor.GeneralTheory
 import Evidence.Square
 import Evidence.Sequential
 
@@ -195,6 +196,95 @@ theorem target_refute_w52_bound_64 :
 theorem target_refute_c3_signA_bound_369 :
     ¬ (∀ y : Fin 64 → ℝ, (∀ i, y i = 1 ∨ y i = -1) →
         369 ≤ HoggarBound.ConjectureE.c3ViolatedOutsideContexts HoggarBound.C3.signA y) := by
+  sorry
+
+/-! ### Complete Track 2 General Theory (Theorems 2 & 5, Eqs. 5, 12, 14–16) -/
+
+/-- Target 19 (Track 2, Theorem 2, Eq. 7): Heterogeneous multilinear endpoint reduction. -/
+theorem target_heterogeneous_endpoint_reduction {k : ℕ}
+    {C : Fin k → Type*} [∀ i, Fintype (C i)] [∀ i, DecidableEq (C i)]
+    {A : Fin k → Type*} (R : (i : Fin k) → A i → C i → ℤ)
+    (l u : Fin k → ℤ)
+    (hbounds : ∀ i a, l i ≤ 1 + ∑ c, R i a c ∧ 1 + ∑ c, R i a c ≤ u i)
+    (hattain : ∀ i, (∃ a, 1 + ∑ c, R i a c = l i) ∧ (∃ a, 1 + ∑ c, R i a c = u i)) :
+    (∀ a : (i : Fin k) → A i, ContextualityTensor.hetScore (fun i => R i (a i)) + 1 ≤
+      ContextualityTensor.cornerMax l u) ∧
+    (∃ a : (i : Fin k) → A i, ContextualityTensor.hetScore (fun i => R i (a i)) + 1 =
+      ContextualityTensor.cornerMax l u) := by
+  sorry
+
+/-- Target 20 (Track 2, Eq. 12): Exact contextuality degree `(7^s 6^t - 5^s 4^t) / 2` for
+`s` disjoint Peres–Mermin squares and `t` disjoint Mermin pentagrams. -/
+theorem target_mixed_square_pentagram_minimum (s t : ℕ) :
+    (ContextualityTensor.hetContexts (ContextualityTensor.mixedContextType s t)).card + 1 =
+      7 ^ s * 6 ^ t ∧
+    (∃ a : (i : Fin s ⊕ Fin t) → ContextualityTensor.mixedAssignType s t i,
+      ContextualityTensor.hetViolations (fun i => ContextualityTensor.mixedResponse s t i (a i)) =
+        (7 ^ s * 6 ^ t - 5 ^ s * 4 ^ t) / 2) ∧
+    (∀ a : (i : Fin s ⊕ Fin t) → ContextualityTensor.mixedAssignType s t i,
+      (7 ^ s * 6 ^ t - 5 ^ s * 4 ^ t) / 2 ≤
+        ContextualityTensor.hetViolations (fun i => ContextualityTensor.mixedResponse s t i (a i))) := by
+  sorry
+
+/-- Target 21 (Track 2, Theorem 5, Eq. 13): For EVERY finite contextual signed seed with distinct
+nonempty contexts, the genuine minimum-defined contextuality fraction `ε_k → 1`. -/
+theorem target_general_seed_epsilon_tends_to_one {C V : Type*} [Fintype C] [DecidableEq C]
+    [Fintype V] [DecidableEq V] (seed : C → Finset V) (negative : C → Bool)
+    (hi : Function.Injective seed) (hne : ∀ c, (seed c).Nonempty)
+    (hctx : ∀ a : V → Bool, ∃ c : C, ContextualityTensor.response a (negative c) (seed c) = -1) :
+    Tendsto (ContextualityTensor.actualMinEpsilon seed negative) atTop (𝓝 1) := by
+  sorry
+
+/-- Target 22 (Track 2, Eq. 5): Arbitrary-`k` `2k`-qubit Pauli operator realization for `k` squares. -/
+theorem target_arbitrary_k_square_pauli_realization (k : ℕ) :
+    (∀ x, (ContextualityTensor.kSquarePauli k x).IsHermitian ∧
+      ContextualityTensor.kSquarePauli k x * ContextualityTensor.kSquarePauli k x = 1 ∧
+      ContextualityTensor.kSquarePauli k x ≠ 1) ∧
+    Function.Injective (ContextualityTensor.kSquarePauli k) ∧
+    (∀ x y, x.1 ≠ y.1 →
+      ContextualityTensor.kSquarePauli k x * ContextualityTensor.kSquarePauli k y =
+      ContextualityTensor.kSquarePauli k y * ContextualityTensor.kSquarePauli k x) ∧
+    (∀ q ∈ ContextualityTensor.contexts k (Fin 6),
+      (ContextualityTensor.unionVertexList ContextualityTensor.squareCtxList q).toFinset =
+        ContextualityTensor.unionContext ContextualityTensor.squareContext q ∧
+      (∀ x ∈ ContextualityTensor.unionContext ContextualityTensor.squareContext q,
+        ∀ y ∈ ContextualityTensor.unionContext ContextualityTensor.squareContext q,
+        ContextualityTensor.kSquarePauli k x * ContextualityTensor.kSquarePauli k y =
+        ContextualityTensor.kSquarePauli k y * ContextualityTensor.kSquarePauli k x) ∧
+      ((ContextualityTensor.unionVertexList ContextualityTensor.squareCtxList q).map
+          (ContextualityTensor.kSquarePauli k)).prod =
+        ((ContextualityTensor.actualSign ContextualityTensor.squareContext (fun c => c == 5)
+          (ContextualityTensor.unionContext ContextualityTensor.squareContext q) : ℤ) : ℂ) • 1) := by
+  sorry
+
+/-- Target 23 (Track 2, Eq. 5): Arbitrary-`k` `3k`-qubit Pauli operator realization for `k` pentagrams. -/
+theorem target_arbitrary_k_pentagram_pauli_realization (k : ℕ) :
+    (∀ x, (ContextualityTensor.kPentagramPauli k x).IsHermitian ∧
+      ContextualityTensor.kPentagramPauli k x * ContextualityTensor.kPentagramPauli k x = 1 ∧
+      ContextualityTensor.kPentagramPauli k x ≠ 1) ∧
+    Function.Injective (ContextualityTensor.kPentagramPauli k) ∧
+    (∀ x y, x.1 ≠ y.1 →
+      ContextualityTensor.kPentagramPauli k x * ContextualityTensor.kPentagramPauli k y =
+      ContextualityTensor.kPentagramPauli k y * ContextualityTensor.kPentagramPauli k x) ∧
+    (∀ q ∈ ContextualityTensor.contexts k (Fin 5),
+      (ContextualityTensor.unionVertexList ContextualityTensor.pentagramCtxList q).toFinset =
+        ContextualityTensor.unionContext ContextualityTensor.pentagramContext q ∧
+      (∀ x ∈ ContextualityTensor.unionContext ContextualityTensor.pentagramContext q,
+        ∀ y ∈ ContextualityTensor.unionContext ContextualityTensor.pentagramContext q,
+        ContextualityTensor.kPentagramPauli k x * ContextualityTensor.kPentagramPauli k y =
+        ContextualityTensor.kPentagramPauli k y * ContextualityTensor.kPentagramPauli k x) ∧
+      ((ContextualityTensor.unionVertexList ContextualityTensor.pentagramCtxList q).map
+          (ContextualityTensor.kPentagramPauli k)).prod =
+        ((ContextualityTensor.actualSign ContextualityTensor.pentagramContext (fun c => c == 4)
+          (ContextualityTensor.unionContext ContextualityTensor.pentagramContext q) : ℤ) : ℂ) • 1) := by
+  sorry
+
+/-- Target 24 (Track 2, Eqs. 15–16): `k`-independent readout-noise violation thresholds for
+disjoint Peres–Mermin squares and Mermin pentagrams. -/
+theorem target_noise_thresholds_k_independent (k : ℕ) (hk : 1 ≤ k) (p : ℝ)
+    (hp0 : 0 ≤ p) (hp1 : p ≤ 1 / 2) :
+    ((5 : ℝ) ^ k - 1 < ContextualityTensor.noisyScore 6 3 k p ↔ (2 : ℝ) / 3 < (1 - 2 * p) ^ 3) ∧
+    ((4 : ℝ) ^ k - 1 < ContextualityTensor.noisyScore 5 4 k p ↔ (3 : ℝ) / 5 < (1 - 2 * p) ^ 4) := by
   sorry
 
 end PauliContextualityLab.ComparatorTarget

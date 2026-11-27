@@ -45,6 +45,7 @@ import ContextualityTensor.Pauli
 import ContextualityTensor.Support
 import ContextualityTensor.PhysicalBridge
 import ContextualityTensor.SeedSupport
+import ContextualityTensor.GeneralTheory
 import Evidence
 import Solution
 
@@ -238,6 +239,19 @@ import Solution
 #print axioms ContextualityTensor.pentagram_seed_support_eq_hs
 #print axioms ContextualityTensor.square_kblock_support_iff
 #print axioms ContextualityTensor.pentagram_kblock_support_iff
+#print axioms ContextualityTensor.hetScore_factorization
+#print axioms ContextualityTensor.multilinear_box_extrema
+#print axioms ContextualityTensor.heterogeneous_endpoint_reduction
+#print axioms ContextualityTensor.mixed_square_pentagram_minimum
+#print axioms ContextualityTensor.sum_local_score_eq_zero
+#print axioms ContextualityTensor.contextual_card_ge_two
+#print axioms ContextualityTensor.general_seed_epsilon_tends_to_one
+#print axioms ContextualityTensor.arbitrary_k_square_pauli_realization
+#print axioms ContextualityTensor.arbitrary_k_pentagram_pauli_realization
+#print axioms ContextualityTensor.noisyScore_closed_form
+#print axioms ContextualityTensor.square_noise_threshold_iff
+#print axioms ContextualityTensor.pentagram_noise_threshold_iff
+#print axioms ContextualityTensor.noisy_normalized_score_tends_to_zero
 
 -- ============================================================================
 -- Track 3: Sequential Contextuality Evidence & Setting-Bias Bounds (14 decls)
@@ -278,6 +292,12 @@ import Solution
 #print axioms PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one
 #print axioms PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64
 #print axioms PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369
+#print axioms PauliContextualityLab.ComparatorTarget.target_heterogeneous_endpoint_reduction
+#print axioms PauliContextualityLab.ComparatorTarget.target_mixed_square_pentagram_minimum
+#print axioms PauliContextualityLab.ComparatorTarget.target_general_seed_epsilon_tends_to_one
+#print axioms PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization
+#print axioms PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization
+#print axioms PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent
 
 -- All-qubit C3 explicit carrier-family construction (Theorem 17, CarrierFamily.lean)
 #print axioms HoggarBound.C3AllQubits.c3_strict_law_fails_general

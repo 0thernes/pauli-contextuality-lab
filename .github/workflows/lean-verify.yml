@@ -150,12 +150,58 @@ jobs:
             fi
           done
           echo "PASS: All 3 negative Lean sanity checks (closed decidable facts) were rejected by kernel decide."
-      - name: Run Batteries linter across 10 clean modules (report-only)
+      - name: Live tamper-injection negative gate (evil axiom / sorry / ofReduceBool rejection)
+        working-directory: lean
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import re, subprocess, sys, tempfile
+          from pathlib import Path
+
+          # 1. Plant an evil custom axiom into a temporary Lean file and verify live Lean
+          #    #print axioms exposes it, our H46 lexer catches it, and check_readme_axioms.py rejects it.
+          with tempfile.NamedTemporaryFile("w", suffix=".lean", dir=".", delete=False, encoding="utf-8") as tf:
+              tf.write("axiom evil_tamper_axiom : False\ntheorem tampered_thm : False := evil_tamper_axiom\n#print axioms tampered_thm\n")
+              tpath = Path(tf.name)
+          with tempfile.NamedTemporaryFile("w", suffix=".log", dir=".", delete=False, encoding="utf-8") as lf:
+              lpath = Path(lf.name)
+          try:
+              res = subprocess.run(["lake", "env", "lean", str(tpath)], capture_output=True, text=True, check=False)
+              out = res.stdout + res.stderr
+              if "evil_tamper_axiom" not in out:
+                  print(f"ERROR: Lean did not report planted custom axiom! out={out}", file=sys.stderr)
+                  sys.exit(1)
+              forb = re.compile(
+                  r"\b(sorry|admit|native_decide|unsafe)\b|"
+                  r"^\s*(?:(?:private|protected|noncomputable|scoped|local)\s+)*axiom\b|"
+                  r"implemented_by|@\[extern"
+              )
+              if not any(forb.search(line) for line in tpath.read_text(encoding="utf-8").splitlines()):
+                  print("ERROR: H46 forbidden-token lexer failed to catch planted custom axiom!", file=sys.stderr)
+                  sys.exit(1)
+              # 2. Inject the poisoned #print axioms line into a copy of lean-axioms-ci.log
+              #    and assert scripts/check_readme_axioms.py actively REJECTS it non-zero.
+              base_log = Path("../results/lean-axioms-ci.log").read_text(encoding="utf-8")
+              lpath.write_text(base_log + "\n'tampered_thm' depends on axioms: [evil_tamper_axiom]\n", encoding="utf-8")
+              chk = subprocess.run(
+                  ["python3", "../scripts/check_readme_axioms.py", "--log", str(lpath), "--require-exhaustive"],
+                  capture_output=True, text=True, check=False,
+              )
+              if chk.returncode == 0:
+                  print("ERROR: check_readme_axioms.py accepted a poisoned axiom log!", file=sys.stderr)
+                  sys.exit(1)
+              print("PASS: Live tamper-injection gate caught planted custom axiom via Lean kernel, H46 lexer, and check_readme_axioms.py.")
+          finally:
+              tpath.unlink(missing_ok=True)
+              lpath.unlink(missing_ok=True)
+          PY
+      - name: Run Batteries linter across 15 clean modules (report-only)
         working-directory: lean
         continue-on-error: true
         run: |
           lake exe runLinter HoggarBound.Moment HoggarBound.Pauli HoggarBound.Bound HoggarBound.Counting HoggarBound.Corollaries
           lake exe runLinter HoggarBound.Quadric HoggarBound.Kramers HoggarBound.Stability ContextualityTensor Evidence
+          lake exe runLinter ContextualityTensor.Support ContextualityTensor.UnionModel ContextualityTensor.Asymptotics ContextualityTensor.ActualModel ContextualityTensor.GeneralTheory
       - name: Run 6-kernel lake comparator --paranoid
         working-directory: lean
         run: |

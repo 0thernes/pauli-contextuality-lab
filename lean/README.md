@@ -5,9 +5,9 @@ This single unified Lean 4.35.0 + Mathlib `v4.35.0` (pinned rev `56a005855ea1`) 
 | Library | Track | Key Modules |
 |---|---|---|
 | `HoggarBound` | Track 1 (`tracks/spectral-bounds/`) | `Moment`, `Pauli`, `Bound`, `Counting`, `Corollaries`, `Quadric`, `Kramers`, `Witness`, `TwoQubit`, `Stability`, `SaturationTheory`, `ConjectureECore`, `ConjectureECones`, `ConjectureE`, `ConjectureEExtras`, `ConjectureECases`, `AuditUpgrades`, `C3ExactOptima`, `SaturatedPhaseSix`, `NormPhaseFamily`, `ExactDegreesN4N5`, `NonVacuity`, `CarrierFamily`, `Saturated*`, `C3{Certificate,Theorem,Spectra}` |
-| `ContextualityTensor` | Track 2 (`tracks/disjoint-mermin/`) | `ContextualityTensor`, `ActualModel`, `Asymptotics`, `Pauli`, `Support`, `PhysicalBridge`, `SeedSupport`, `UnionModel` |
+| `ContextualityTensor` | Track 2 (`tracks/disjoint-mermin/`) | `ContextualityTensor`, `ActualModel`, `Asymptotics`, `Pauli`, `Support`, `PhysicalBridge`, `SeedSupport`, `UnionModel`, `GeneralTheory` |
 | `Evidence` | Track 3 (`tracks/sequential-evidence/`) | `Evidence`, `Square`, `Sequential`, `Physical`, `Bridge` |
-| `Challenge` / `Solution` | All 3 tracks | 18-target isolated specification & sorry-free proof bridge verified by `lake comparator --config comparator.json --paranoid` |
+| `Challenge` / `Solution` | All 3 tracks | 24-target isolated specification & sorry-free proof bridge verified by `lake comparator --config comparator.json --paranoid` |
 
 ## Reproduce from a Clean Clone
 
@@ -22,12 +22,12 @@ lake build VerifyStandalone && lake env lean VerifyStandalone.lean
 lake build VerifyPhaseSeven && lake env lean VerifyPhaseSeven.lean
 ```
 
-## Module Audit Coverage (64 `.lean` Files; 1,221 Authored Declarations / 1,203 Non-Challenge)
+## Module Audit Coverage (65 `.lean` Files; 1,299 Authored Declarations / 1,275 Non-Challenge)
 
-- **Unified exhaustive audit (`VerifyAll.lean`, 45 transitive modules + `VerifyAll.lean`):** Imports all active headline libraries across `HoggarBound` (including `HoggarBound.Stability`, `HoggarBound.ConjectureECases`, and 8 perturbed-bound refutations in `NonVacuity.lean`), `ContextualityTensor` (including `ContextualityTensor.SeedSupport` and `ActualModel` minimum-defined asymptotics), `Evidence`, and `Solution.lean`. Audits `198` explicit `#print axioms` lines plus all `2,306` kernel theorem constants via `Lean.collectAxioms` (corresponding to `1,203` non-Challenge authored `theorem`/`lemma` declarations across all 64 `.lean` files).
+- **Unified exhaustive audit (`VerifyAll.lean`, 45 transitive modules + `VerifyAll.lean`):** Imports all active headline libraries across `HoggarBound` (including `HoggarBound.Stability`, `HoggarBound.ConjectureECases`, and 8 perturbed-bound refutations in `NonVacuity.lean`), `ContextualityTensor` (including `SeedSupport`, `ActualModel` minimum-defined asymptotics, and `GeneralTheory` covering 100% of Track 2 Eqs. 1–16), `Evidence`, and `Solution.lean`. Audits `217` explicit `#print axioms` lines plus all `2,452` kernel theorem constants via `Lean.collectAxioms` (corresponding to `1,275` non-Challenge authored `theorem`/`lemma` declarations across all 65 `.lean` files).
 - **Standalone finite-certificate CI audits (`VerifyStandalone.lean`, `VerifyPhaseSeven.lean`):** Compile and axiom-audit all nine heavy finite-certificate Track 1 modules (`FlatData`, `PhaseData`, `Saturated`, `SaturatedFive`, `SaturatedPhaseFive`, `C3Certificate`, `C3Theorem`, `C3Spectra`, `SaturatedPhaseSeven`) live in parallel CI jobs (`lean-verify-standalone`, `lean-verify-phase7`).
-- **Isolated specification (`Challenge.lean`, 1 file):** Contains the 18 intentional `sorry` target declarations checked against sorry-free `Solution.lean` by six independent Lean kernels (`lake comparator --config comparator.json --paranoid`).
-- **All 63 non-`Challenge` `.lean` files** are scanned for zero forbidden tokens (`sorry`, `admit`, `native_decide`, `unsafe`, `axiom`, `implemented_by`, `@[extern`) in CI and `tests/test_repo_integrity.py`.
+- **Isolated specification (`Challenge.lean`, 1 file):** Contains the 24 intentional `sorry` target declarations checked against sorry-free `Solution.lean` by six independent Lean kernels (`lake comparator --config comparator.json --paranoid`).
+- **All 64 non-`Challenge` `.lean` files** are scanned for zero forbidden tokens (`sorry`, `admit`, `native_decide`, `unsafe`, `axiom`, `implemented_by`, `@[extern`) in CI and `tests/test_repo_integrity.py`, plus a live CI tamper-injection negative gate.
 
 ## Verification Boundary
 

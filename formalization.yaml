@@ -2,10 +2,10 @@
 # Honest AI/human provenance record (NOT a claim of Palomar registration or peer review)
 title: "Pauli Contextuality Lab: Spectral Bounds, Conjecture E, Disjoint Mermin Degrees, and Sequential Contextuality Evidence"
 repository: "https://github.com/0thernes/pauli-contextuality-lab"
-version: "3.2.0"
-date: "2026-11-26"
-swhid: "swh:1:snp:bcb2b33b31015225ace11d52fa98b2f93c5b4913"
-palomar_module_headers_status: "partial (5/64 files: Evidence/*; HoggarBound/*, ContextualityTensor/*, Challenge.lean, Solution.lean pending Lean 4.35 module migration prior to Palomar submission)"
+version: "3.3.0"
+date: "2026-11-27"
+swhid: "swh:1:snp:cf9ae7bd108e9556e79d4c0c81c8de92632b91c1"
+palomar_module_headers_status: "partial (5/65 files: Evidence/*; HoggarBound/*, ContextualityTensor/*, Challenge.lean, Solution.lean pending Lean 4.35 module migration prior to Palomar submission)"
 timestamps:
   manifest: "data/MANIFEST.sha256"
   rfc3161_tsr: "data/MANIFEST.sha256.tsr"
@@ -35,7 +35,7 @@ libraries:
     summary: "Formalization of Jonah's spectral floor (real/complex/quaternionic; prior work) for arbitrary supports, two-sided asymptotic half-violation limits (W, Q-, Q+, plus universal d(S)/L(S) <= 1/2 averaging upper bound), saturation equivalences, quantitative third-moment stability (`HoggarBound.Stability`), infinite non-closed CCZ family |Psi_{3m}> attaining the floor (contextual for m >= 2), exact binary optima 368 and 344 for one four-qubit C3 sign pair, N=4..5 ladders and lower bounds 1455 and 6444, known small degrees (TwoQubit & Hoggar witnesses), formal vertex-case membership + strict-law failure for one representative of each of the 9 vertex cases of Jonah's Conjecture E (N >= 4, `ConjectureECases.lean`; whole-case transfer via Jonah's Theorem B4, outside Lean), and NonVacuity + 8 kernel-proved false-variant refutations. The nine standalone finite-certificate modules (`Saturated*`, `C3Certificate`, `C3Spectra`, `C3Theorem`, `FlatData`, `PhaseData`) are compiled and axiom-audited in dedicated parallel CI jobs (`VerifyStandalone.lean`, `VerifyPhaseSeven.lean`)."
   - name: "ContextualityTensor"
     track: "tracks/disjoint-mermin"
-    summary: "Exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares) and (6^k - 4^k)/2 (k Mermin pentagrams) for the explicit union-context family, genuine minimum-defined asymptotics (`actual_*_min_epsilon_tends_to_one`), literal 2-qubit square and 3-qubit pentagram Pauli realizations (plus 4-qubit and 6-qubit disjoint bridges), and kernel-checked `HS(L(K_{3,3}))` / `HS(Petersen)` support identifications for all k (`SeedSupport.lean`), answering the stacking-limit question of Muller & Saniga (arXiv:2609.19862v1, Sec. 6; unreviewed preprint) for these two families."
+    summary: "Complete formalization of Track 2 Eqs. 1-16 (`GeneralTheory.lean`, `ActualModel.lean`, `SeedSupport.lean`, `PhysicalBridge.lean`): exact contextuality degrees d_k = (7^k - 5^k)/2 (k disjoint Peres-Mermin squares), (6^k - 4^k)/2 (k Mermin pentagrams), mixed (7^s * 6^t - 5^s * 4^t)/2 (s squares + t pentagrams), heterogeneous endpoint reduction (Theorem 2), universal general-seed limit eps_k(G) -> 1 for every finite contextual signed seed (Theorem 5), literal 2k- and 3k-qubit Pauli realizations for all k, kernel-checked HS(L(K_{3,3})) / HS(Petersen) support identifications, and k-independent readout-noise thresholds with noisy score decay to 0."
   - name: "Evidence"
     track: "tracks/sequential-evidence"
     summary: "Formalization of two elementary bounds (Peres-Mermin setting-bias floor; finite betting-tree hitting bound, a finite form of Ville's inequality) and an exact counterexample to naive calibration."
@@ -63,4 +63,4 @@ automation:
   human_line_by_line_review_recorded: false
   statement_fidelity_table: "docs/statement-fidelity.md"
 review_status: "Research preprints; NOT externally peer reviewed; NOT yet registered on Palomar Registry, arXiv, or Zenodo."
-limitations: "See LIMITATIONS.md and CLAIMS.md. In particular: the 42-orbit W(5,2) C census reproducing Jonah [J1]'s (315, 1575, 6975), the 540.3M-form N=9 cyclic-symmetry rank-8 census, Jonah [J3, Theorem B4]'s single-orbit group transitivity classification (transferring Conjecture E from one formally certified representative per vertex case to all pairs in that case), and external simulator/browser code lie outside the checked Lean boundary. The 18 comparator targets in lean/comparator.json (including actual-context Track 2 degrees/limits and kernel-proved false-variant refutations) are accepted by the 6 independent kernels."
+limitations: "See LIMITATIONS.md and CLAIMS.md. In particular: the 42-orbit W(5,2) C census reproducing Jonah [J1]'s (315, 1575, 6975), the 540.3M-form N=9 cyclic-symmetry rank-8 census, Jonah [J3, Theorem B4]'s single-orbit group transitivity classification (transferring Conjecture E from one formally certified representative per vertex case to all pairs in that case), and external simulator/browser code lie outside the checked Lean boundary. The 24 comparator targets in lean/comparator.json (including all Track 2 GeneralTheory theorems, actual-context degrees/limits, and kernel-proved false-variant refutations) are accepted by the 6 independent kernels."

@@ -1,4 +1,4 @@
-% Pauli Contextuality Lab — Unified Lean 4.35.0 Blueprint (27 Formal Nodes, Tracks 1–3 + 6-Kernel Bridge)
+% Pauli Contextuality Lab — Unified Lean 4.35.0 Blueprint (29 Formal Nodes, Tracks 1–3 + 6-Kernel Bridge)
 % Every \lean{...} declaration is statically verified against lean/ by scripts/build_blueprint.py.
 
 \section{Track 1: Spectral Floor, Saturating States, Ladders \& Conjecture E}
@@ -181,6 +181,22 @@ Certifies literal 2-qubit square and 3-qubit pentagram Pauli matrices (and 4-/6-
 The normalized contextuality degree ratio $2d_k/L_k$---defined directly from the genuine assignment minimum \texttt{actualMinViolations}---tends to $1$ as $k \to \infty$ for both disjoint Peres--Mermin squares and disjoint Mermin pentagrams.
 \end{corollary}
 
+\begin{theorem}[Thms 2 \& 5, Eq.~12: Heterogeneous Endpoint Reduction, Mixed $(s,t)$ Degrees \& General Contextual Seed Limit]
+\label{thm:general-seed-theory}
+\lean{ContextualityTensor.hetScore_factorization, ContextualityTensor.multilinear_box_extrema, ContextualityTensor.heterogeneous_endpoint_reduction, ContextualityTensor.mixed_square_pentagram_minimum, ContextualityTensor.sum_local_score_eq_zero, ContextualityTensor.contextual_card_ge_two, ContextualityTensor.general_seed_epsilon_tends_to_one}
+\uses{thm:disjoint-asymptotics}
+\leanok
+Closes the general combinatorial theory of Track~2: multilinear corner optimization for arbitrary heterogeneous signed families (Theorem~2, Eq.~7), exact mixed-family degrees $(7^s 6^t - 5^s 4^t)/2$ for $s$ squares and $t$ pentagrams (Eq.~12), and convergence $\varepsilon_k \to 1$ for every finite contextual signed seed with distinct nonempty contexts (Theorem~5, Eq.~13).
+\end{theorem}
+
+\begin{theorem}[Eqs.~5, 14--16: Arbitrary-$k$ Pauli Tensor Realizations ($2k$/$3k$ Qubits) \& $k$-Independent Readout-Noise Thresholds]
+\label{thm:arbitrary-k-pauli-noise}
+\lean{ContextualityTensor.arbitrary_k_square_pauli_realization, ContextualityTensor.arbitrary_k_pentagram_pauli_realization, ContextualityTensor.noisyScore_closed_form, ContextualityTensor.square_noise_threshold_iff, ContextualityTensor.pentagram_noise_threshold_iff, ContextualityTensor.noisy_normalized_score_tends_to_zero}
+\uses{thm:track2-physical-bridge, thm:general-seed-theory}
+\leanok
+Unifying with \texttt{HoggarBound.Pauli}, constructs exact Hermitian involutive complex Pauli operators on $2k$ qubits ($9k$ observables) and $3k$ qubits ($10k$ observables) satisfying every union-context operator identity $\prod P_v = \mathrm{actualSign} \cdot I$ for arbitrary $k$, and proves the closed-form independent-readout score $Q_k(p)=(1+m(1-2p)^r)^k-1$, $k$-independent thresholds, and vanishing normalized noisy margin for fixed $p > 0$.
+\end{theorem}
+
 \section{Track 3: Exact Sequential Contextuality Certificates}
 
 \begin{theorem}[Peres–Mermin Sharp Setting-Bias Failure Floor]
@@ -216,10 +232,10 @@ Under explicit setting bias $(11/60,\dots,1/12)$, a miscalibrated naive $1\%$ un
 
 \section{Unified 6-Kernel Isolated Comparator Bridge}
 
-\begin{theorem}[18 Cross-Track Challenge/Solution Targets (6 Independent Kernels)]
+\begin{theorem}[24 Cross-Track Challenge/Solution Targets (6 Independent Kernels)]
 \label{thm:comparator-bridge}
-\lean{PauliContextualityLab.ComparatorTarget.target_spectral_floor, PauliContextualityLab.ComparatorTarget.target_kramers_floor, PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare, PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family, PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima, PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases, PauliContextualityLab.ComparatorTarget.target_w72_ge_1455, PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444, PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree, PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree, PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum, PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound, PauliContextualityLab.ComparatorTarget.target_global_actual_square_minimum, PauliContextualityLab.ComparatorTarget.target_global_actual_pentagram_minimum, PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64, PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369}
-\uses{thm:spectral-floor, thm:kramers-floor, thm:saturation-tfae, thm:infinite-ccz, thm:c3-exact-optima, thm:conjecture-e, thm:n4n5-ladders, thm:t1-nonvacuity, thm:disjoint-mermin, thm:actual-union-model, thm:disjoint-asymptotics, thm:pm-setting-bias, thm:sequential-hitting}
+\lean{PauliContextualityLab.ComparatorTarget.target_spectral_floor, PauliContextualityLab.ComparatorTarget.target_kramers_floor, PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare, PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family, PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima, PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases, PauliContextualityLab.ComparatorTarget.target_w72_ge_1455, PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444, PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree, PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree, PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum, PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound, PauliContextualityLab.ComparatorTarget.target_global_actual_square_minimum, PauliContextualityLab.ComparatorTarget.target_global_actual_pentagram_minimum, PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64, PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369, PauliContextualityLab.ComparatorTarget.target_heterogeneous_endpoint_reduction, PauliContextualityLab.ComparatorTarget.target_mixed_square_pentagram_minimum, PauliContextualityLab.ComparatorTarget.target_general_seed_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization, PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization, PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent}
+\uses{thm:spectral-floor, thm:kramers-floor, thm:saturation-tfae, thm:infinite-ccz, thm:c3-exact-optima, thm:conjecture-e, thm:n4n5-ladders, thm:t1-nonvacuity, thm:disjoint-mermin, thm:actual-union-model, thm:disjoint-asymptotics, thm:general-seed-theory, thm:arbitrary-k-pauli-noise, thm:pm-setting-bias, thm:sequential-hitting}
 \leanok
-All 18 isolated specification theorems in Challenge.lean (including Track 2 actual-context degrees, genuine minimum-defined limits, and kernel-proved perturbed-bound refutations) are matched definitionally by sorry-free Solution.lean and accepted in CI by six independent Lean 4.35.0 kernels (lean-paranoid, lean4lean, nanoda, con-leche, con-ron, lean-default).
+All 24 isolated specification theorems in Challenge.lean (including full Track 2 general theory, arbitrary-$k$ Pauli tensor realizations, $k$-independent readout-noise thresholds, and kernel-proved perturbed-bound refutations) are matched definitionally by sorry-free Solution.lean and accepted in CI by six independent Lean 4.35.0 kernels (lean-paranoid, lean4lean, nanoda, con-leche, con-ron, lean-default).
 \end{theorem}

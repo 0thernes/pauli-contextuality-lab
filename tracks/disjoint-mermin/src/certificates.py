@@ -31,9 +31,12 @@ def multiply(a, b):
     assert len(a) == len(b)
     phase, letters = 0, []
     for x, y in zip(a, b):
-        if x == "I": letters.append(y)
-        elif y == "I": letters.append(x)
-        elif x == y: letters.append("I")
+        if x == "I":
+            letters.append(y)
+        elif y == "I":
+            letters.append(x)
+        elif x == y:
+            letters.append("I")
         elif (x, y) in CYCLIC:
             phase += 1
             letters.append(CYCLIC[x, y])

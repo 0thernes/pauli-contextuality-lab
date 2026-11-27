@@ -4,6 +4,7 @@ open Finset
 
 namespace ContextualityTensor
 
+/-- Vertex subset selected in one block (`∅` for `none`, `seed c` for `some c`). -/
 def selectedContext {C V : Type*} (seed : C → Finset V) : Option C → Finset V
   | none => ∅
   | some c => seed c

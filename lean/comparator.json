@@ -19,7 +19,13 @@
     "PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one",
     "PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one",
     "PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64",
-    "PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369"
+    "PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369",
+    "PauliContextualityLab.ComparatorTarget.target_heterogeneous_endpoint_reduction",
+    "PauliContextualityLab.ComparatorTarget.target_mixed_square_pentagram_minimum",
+    "PauliContextualityLab.ComparatorTarget.target_general_seed_epsilon_tends_to_one",
+    "PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization",
+    "PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization",
+    "PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent"
   ],
   "permitted_axioms": [
     "propext",

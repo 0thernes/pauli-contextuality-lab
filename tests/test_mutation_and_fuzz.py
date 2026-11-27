@@ -135,6 +135,128 @@ class TestMutationAndFuzz(unittest.TestCase):
             payload = bytes(rng.getrandbits(8) for _ in range(length))
             fuzz_parse_target(payload)
 
+    def test_ast_source_code_mutation_killing(self) -> None:
+        """Isolated AST source-code mutation testing (Build Standard B13):
+        mutate real operators in in-memory AST copies of core verification modules
+        (`certificates.py`, `evidence.py`, `check_readme_axioms.py`) and assert 100% kill rate."""
+        import ast
+        import types
+        from fractions import Fraction
+
+        def load_mutated(
+            path: Path,
+            fn_name: str,
+            target_op: type,
+            replacement_op: type,
+            class_name: str | None = None,
+        ) -> types.ModuleType:
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+            mutated = False
+
+            class OpMutator(ast.NodeTransformer):
+                def visit_Compare(self, node: ast.Compare) -> ast.AST:
+                    nonlocal mutated
+                    if not mutated:
+                        new_ops = []
+                        for op in node.ops:
+                            if not mutated and isinstance(op, target_op):
+                                new_ops.append(replacement_op())
+                                mutated = True
+                            else:
+                                new_ops.append(op)
+                        node.ops = new_ops
+                    return self.generic_visit(node)
+
+                def visit_BinOp(self, node: ast.BinOp) -> ast.AST:
+                    nonlocal mutated
+                    if not mutated and isinstance(node.op, target_op):
+                        node.op = replacement_op()
+                        mutated = True
+                    return self.generic_visit(node)
+
+            target_node = None
+            if class_name is None:
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.FunctionDef) and node.name == fn_name:
+                        target_node = node
+                        break
+            else:
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.ClassDef) and node.name == class_name:
+                        for child in node.body:
+                            if isinstance(child, ast.FunctionDef) and child.name == fn_name:
+                                target_node = child
+                                break
+            self.assertIsNotNone(target_node, f"Missing {class_name}.{fn_name} in {path.name}")
+            OpMutator().visit(target_node)
+            self.assertTrue(mutated, f"AST mutant not applied to {path.name}:{fn_name}")
+            ast.fix_missing_locations(tree)
+            mod = types.ModuleType(f"_mut_{path.stem}_{fn_name}")
+            mod.__file__ = str(path)
+            exec(compile(tree, str(path), "exec"), mod.__dict__)
+            return mod
+
+        cert_py = ROOT / "tracks" / "disjoint-mermin" / "src" / "certificates.py"
+        ev_py = ROOT / "tracks" / "sequential-evidence" / "src" / "evidence.py"
+        ax_py = ROOT / "scripts" / "check_readme_axioms.py"
+
+        mutants = [
+            # Mutant 1: invert Pauli commutation check == -> != in certificates.commute
+            ("certificates.commute: == -> !=", cert_py, "commute", None, ast.Eq, ast.NotEq,
+             lambda m: m.commute("XI", "IX") is True and m.commute("XI", "ZI") is False),
+            # Mutant 2: corrupt exact degree subtraction (contexts - bound) -> + in certificates.exact_family
+            ("certificates.exact_family: - -> +", cert_py, "exact_family", None, ast.Sub, ast.Add,
+             lambda m: m.exact_family("square", 2)["contexts"] == 48 and m.exact_family("square", 2)["degree"] == 12),
+            # Mutant 3: corrupt independent-readout noise formula (1 - 2*p) -> (1 + 2*p) in certificates.noisy_quantum_score
+            ("certificates.noisy_quantum_score: - -> +", cert_py, "noisy_quantum_score", None, ast.Sub, ast.Add,
+             lambda m: m.noisy_quantum_score("square", 1, Fraction(1, 20)) == Fraction(1000 + 6 * 729, 1000) - 1),
+            # Mutant 4: invert Bet null-mean safety check > -> < in evidence.Bet.__init__
+            ("evidence.Bet.__init__: > -> <", ev_py, "__init__", "Bet", ast.Gt, ast.Lt,
+             lambda m: self._unsafe_bet_rejected(m)),
+            # Mutant 5: corrupt sharp classical bound 1 - min(p) -> 1 + min(p) in evidence.sharp_classical_bound
+            ("evidence.sharp_classical_bound: - -> +", ev_py, "sharp_classical_bound", None, ast.Sub, ast.Add,
+             lambda m: m.sharp_classical_bound([Fraction(1, 6)] * 6) == Fraction(5, 6)),
+            # Mutant 6: corrupt Bet.null_mean weighted sum + -> - in evidence.Bet.null_mean
+            ("evidence.Bet.null_mean: + -> -", ev_py, "null_mean", "Bet", ast.Add, ast.Sub,
+             lambda m: m.Bet(beta=Fraction(1, 6), q=Fraction(19, 20)).null_mean() == 1),
+            # Mutant 7: invert allowed-axiom subset check <= -> > in check_readme_axioms.main
+            ("check_readme_axioms.main: <= -> >", ax_py, "main", None, ast.LtE, ast.Gt,
+             lambda m: (lambda bad_ax: bad_ax <= m.ALLOWED)({"propext"}) and
+             not ({"propext", "sorryAx"} <= m.ALLOWED) and
+             m.parse_log("'Foo' depends on axioms: [propext]")["Foo"] == {"propext"} and
+             # Actually run mutated main() with clean args via sys.argv patch
+             self._run_mutated_axiom_main(m) == 0),
+        ]
+        killed = 0
+        for label, path, fn_name, cls_name, old_op, new_op, invariant in mutants:
+            with self.subTest(ast_mutant=label):
+                mod = load_mutated(path, fn_name, old_op, new_op, class_name=cls_name)
+                try:
+                    ok = bool(invariant(mod))
+                except Exception:
+                    ok = False
+                self.assertFalse(ok, f"AST source mutant survived: {label}")
+                killed += 1
+        self.assertEqual(killed, len(mutants))
+
+    @staticmethod
+    def _unsafe_bet_rejected(mod: object) -> bool:
+        from fractions import Fraction
+        try:
+            mod.Bet(beta=Fraction(1, 6), q=Fraction(19, 20), success_factor=2, failure_factor=1)  # type: ignore[attr-defined]
+            return False
+        except ValueError:
+            return True
+
+    @staticmethod
+    def _run_mutated_axiom_main(mod: object) -> int:
+        old_argv = sys.argv
+        try:
+            sys.argv = ["check_readme_axioms.py", "--require-exhaustive"]
+            return int(mod.main())  # type: ignore[attr-defined]
+        finally:
+            sys.argv = old_argv
+
 
 if __name__ == "__main__":
     if "--atheris" in sys.argv:  # pragma: no cover

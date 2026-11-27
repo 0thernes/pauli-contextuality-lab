@@ -48,7 +48,7 @@ def render_portal() -> str:
   <title>Pauli Contextuality Lab · v{version}</title>
   <meta name="description" content="Machine-checked Lean 4.35.0 &amp; 6-kernel verified research laboratory for Pauli contextuality: spectral floor, |Psi_{{3m}}&gt;, Jonah Conjecture E, disjoint Mermin degrees, and sequential contextuality evidence."/>
   <meta property="og:title" content="Pauli Contextuality Lab"/>
-  <meta property="og:description" content="2,206 exhaustively audited Lean 4.35.0 theorems, 6-kernel comparator, 27-node interactive SVG Blueprint, and 4 browser labs."/>
+  <meta property="og:description" content="2,452 exhaustively audited Lean 4.35.0 theorems, 24-target 6-kernel comparator, 29-node interactive SVG Blueprint, and 4 browser labs."/>
   <meta property="og:type" content="website"/>
   <style>
     :root {{ color-scheme: dark; }}

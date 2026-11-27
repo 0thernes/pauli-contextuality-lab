@@ -11,7 +11,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 REPO_ROOT=Path(__file__).resolve().parents[3]
 PAPER_DIR=REPO_ROOT/'papers'/'disjoint-mermin' if (REPO_ROOT/'papers'/'disjoint-mermin').is_dir() else ROOT/'paper'
-RELEASE_TAG='v3.1.0'
+RELEASE_TAG = 'v3.3.0'
 REPO_URL='https://github.com/0thernes/pauli-contextuality-lab'
 
 def main():
@@ -39,14 +39,17 @@ def main():
         result=subprocess.run([args.tectonic,'--untrusted','contextuality-tensor.tex'],cwd=tmp,
                                text=True,encoding='utf-8',errors='replace',capture_output=True)
         (ROOT/'results/arxiv-bundle-build.log').write_text(result.stdout+result.stderr,encoding='utf-8')
-        if result.returncode:raise RuntimeError('Isolated source-bundle build failed')
+        if result.returncode:
+            raise RuntimeError('Isolated source-bundle build failed')
         import fitz
         with fitz.open(stream=local,filetype='pdf') as original, fitz.open(str(Path(tmp)/'contextuality-tensor.pdf')) as rebuilt:
             same_text=[p.get_text() for p in original]==[p.get_text() for p in rebuilt]
-            if not same_text:raise RuntimeError('Source bundle changed PDF text')
+            if not same_text:
+                raise RuntimeError('Source bundle changed PDF text')
             report.update(arxiv_source_isolated_build='passed',source_pdf_pages=len(rebuilt),
                           extracted_text_identical=same_text,arxiv_submission='not submitted')
     (ROOT/'results/release-verification.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,indent=2))
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    main()

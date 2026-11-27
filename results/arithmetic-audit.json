@@ -633,7 +633,9 @@
       "path": "tests/test_mutation_and_fuzz.py",
       "classification": "exact_integer_or_symbolic",
       "float_imports": [],
-      "exact_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
       "has_float_call": false,
       "has_float_literal": false
     },

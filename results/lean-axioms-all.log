@@ -186,6 +186,19 @@
 'ContextualityTensor.pentagram_seed_support_eq_hs' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ContextualityTensor.square_kblock_support_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 'ContextualityTensor.pentagram_kblock_support_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.hetScore_factorization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.multilinear_box_extrema' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.heterogeneous_endpoint_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.mixed_square_pentagram_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.sum_local_score_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.contextual_card_ge_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.general_seed_epsilon_tends_to_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.arbitrary_k_square_pauli_realization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.arbitrary_k_pentagram_pauli_realization' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.noisyScore_closed_form' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.square_noise_threshold_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.pentagram_noise_threshold_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ContextualityTensor.noisy_normalized_score_tends_to_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Evidence.square_no_all_win' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Evidence.square_singleton_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Evidence.sharp_minimum' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -250,6 +263,24 @@
 'PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_heterogeneous_endpoint_reduction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_mixed_square_pentagram_minimum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_general_seed_epsilon_tends_to_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
 'HoggarBound.C3AllQubits.c3_strict_law_fails_general' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.C3AllQubits.c3_all_qubits_completion' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.moment_entry_le' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -258,4 +289,4 @@
 'HoggarBound.cubic_deficit_controls_top' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.spectrum_distance_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
 'HoggarBound.exists_near_extremal_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound]
-ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2306 theorems (kernel theorem constants across HoggarBound, ContextualityTensor, Evidence, PauliContextualityLab; authored source declarations counted separately in lean/README.md) — 0 disallowed axioms.
+ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2452 theorems (kernel theorem constants across HoggarBound, ContextualityTensor, Evidence, PauliContextualityLab; authored source declarations counted separately in lean/README.md) — 0 disallowed axioms.

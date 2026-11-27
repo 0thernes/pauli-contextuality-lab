@@ -5,6 +5,7 @@ open Finset Filter Topology
 
 namespace ContextualityTensor
 
+/-- Set of all nonempty union-context vertex subsets over `k` disjoint blocks. -/
 def actualContexts {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C]
     [DecidableEq V] (seed : C → Finset V) : Finset (Finset (Σ _i : Fin k, V)) :=
   (contexts k C).image (unionContext seed)
@@ -16,15 +17,18 @@ def actualSign {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C] [DecidableEq 
   ∑ q ∈ contexts k C, if unionContext seed q = s then
     ∏ i, extend (fun c => sign (negative c)) (q i) else 0
 
+/-- Signed residual of deterministic assignment `a` on an actual vertex subset `s`. -/
 def actualValue {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C] [DecidableEq V]
     (seed : C → Finset V) (negative : C → Bool) (a : (Σ _i : Fin k, V) → Bool)
     (s : Finset (Σ _i : Fin k, V)) : ℤ :=
   actualSign seed negative s * ∏ v ∈ s, sign (a v)
 
+/-- Total correlation score of `a` over all actual union contexts. -/
 def actualScore {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C] [DecidableEq V]
     (seed : C → Finset V) (negative : C → Bool) (a : (Σ _i : Fin k, V) → Bool) : ℤ :=
   ∑ s ∈ actualContexts seed, actualValue seed negative a s
 
+/-- Number of actual union contexts violated (`actualValue = -1`) by assignment `a`. -/
 def actualViolations {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C]
     [DecidableEq V] (seed : C → Finset V) (negative : C → Bool)
     (a : (Σ _i : Fin k, V) → Bool) : ℕ :=
@@ -115,10 +119,12 @@ theorem global_actual_pentagram_minimum (k : ℕ) :
       pentagram_context_nonempty]
     exact (pentagram_minimum_closed_form k).2 (fun i v => a ⟨i,v⟩)
 
+/-- Normalized ideal gap `2 d_k / |C_k|` evaluated at the attaining all-`false` square witness. -/
 noncomputable def actualSquareEpsilon (k : ℕ) : ℝ :=
   2 * (actualViolations (k := k) squareContext (fun c => c == 5) (fun _ => false) : ℝ) /
     (actualContexts (k := k) squareContext).card
 
+/-- Normalized ideal gap `2 d_k / |C_k|` evaluated at the attaining all-`false` pentagram witness. -/
 noncomputable def actualPentagramEpsilon (k : ℕ) : ℝ :=
   2 * (actualViolations (k := k) pentagramContext (fun c => c == 4) (fun _ => false) : ℝ) /
     (actualContexts (k := k) pentagramContext).card
@@ -196,6 +202,8 @@ noncomputable def actualSquareMinEpsilon (k : ℕ) : ℝ :=
   2 * (actualMinViolations (k := k) squareContext (fun c => c == 5) : ℝ) /
     (actualContexts (k := k) squareContext).card
 
+/-- Contextuality fraction `ε_k = 2 d_k / |C_k|` for `k` disjoint pentagrams defined directly
+from the genuine minimum `actualMinViolations` over all deterministic assignments. -/
 noncomputable def actualPentagramMinEpsilon (k : ℕ) : ℝ :=
   2 * (actualMinViolations (k := k) pentagramContext (fun c => c == 4) : ℝ) /
     (actualContexts (k := k) pentagramContext).card
