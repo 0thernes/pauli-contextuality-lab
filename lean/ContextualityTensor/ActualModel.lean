@@ -147,4 +147,85 @@ theorem actual_pentagram_epsilon_tends_to_one : Tendsto actualPentagramEpsilon a
   rw [h]
   exact pentagram_epsilon_tends_to_one
 
+/-- Genuine combinatorial minimum of `actualViolations` over all unrestricted
+deterministic assignments `a : (Σ _i : Fin k, V) → Bool`. -/
+noncomputable def actualMinViolations {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C]
+    [Fintype V] [DecidableEq V] (seed : C → Finset V) (negative : C → Bool) : ℕ :=
+  ((Finset.univ : Finset ((Σ _i : Fin k, V) → Bool)).image (actualViolations seed negative)).min'
+    (Finset.image_nonempty.mpr ⟨fun _ => false, Finset.mem_univ _⟩)
+
+theorem actualMinViolations_le {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C]
+    [Fintype V] [DecidableEq V] (seed : C → Finset V) (negative : C → Bool)
+    (a : (Σ _i : Fin k, V) → Bool) :
+    actualMinViolations (k := k) seed negative ≤ actualViolations seed negative a :=
+  Finset.min'_le _ _ (Finset.mem_image_of_mem _ (Finset.mem_univ a))
+
+theorem exists_actualMinViolations {k : ℕ} {C V : Type*} [Fintype C] [DecidableEq C]
+    [Fintype V] [DecidableEq V] (seed : C → Finset V) (negative : C → Bool) :
+    ∃ a : (Σ _i : Fin k, V) → Bool,
+      actualViolations seed negative a = actualMinViolations (k := k) seed negative := by
+  have hmem := Finset.min'_mem
+    ((Finset.univ : Finset ((Σ _i : Fin k, V) → Bool)).image (actualViolations seed negative))
+    (Finset.image_nonempty.mpr ⟨fun _ => false, Finset.mem_univ _⟩)
+  obtain ⟨a, _, ha⟩ := Finset.mem_image.mp hmem
+  exact ⟨a, ha⟩
+
+theorem actualMinViolations_square (k : ℕ) :
+    actualMinViolations (k := k) squareContext (fun c => c == 5) = (7 ^ k - 5 ^ k) / 2 := by
+  obtain ⟨⟨a0, ha0⟩, hlb⟩ := global_actual_square_minimum k
+  obtain ⟨amin, hamin⟩ := exists_actualMinViolations (k := k) squareContext (fun c => c == 5)
+  have h1 : actualMinViolations (k := k) squareContext (fun c => c == 5) ≤ (7 ^ k - 5 ^ k) / 2 := by
+    rw [← ha0]; exact actualMinViolations_le _ _ a0
+  have h2 : (7 ^ k - 5 ^ k) / 2 ≤ actualMinViolations (k := k) squareContext (fun c => c == 5) := by
+    rw [← hamin]; exact hlb amin
+  omega
+
+theorem actualMinViolations_pentagram (k : ℕ) :
+    actualMinViolations (k := k) pentagramContext (fun c => c == 4) = (6 ^ k - 4 ^ k) / 2 := by
+  obtain ⟨⟨a0, ha0⟩, hlb⟩ := global_actual_pentagram_minimum k
+  obtain ⟨amin, hamin⟩ := exists_actualMinViolations (k := k) pentagramContext (fun c => c == 4)
+  have h1 : actualMinViolations (k := k) pentagramContext (fun c => c == 4) ≤ (6 ^ k - 4 ^ k) / 2 := by
+    rw [← ha0]; exact actualMinViolations_le _ _ a0
+  have h2 : (6 ^ k - 4 ^ k) / 2 ≤ actualMinViolations (k := k) pentagramContext (fun c => c == 4) := by
+    rw [← hamin]; exact hlb amin
+  omega
+
+/-- Contextuality fraction `ε_k = 2 d_k / |C_k|` defined directly from the genuine minimum
+`actualMinViolations` over all deterministic assignments (not a fixed witness). -/
+noncomputable def actualSquareMinEpsilon (k : ℕ) : ℝ :=
+  2 * (actualMinViolations (k := k) squareContext (fun c => c == 5) : ℝ) /
+    (actualContexts (k := k) squareContext).card
+
+noncomputable def actualPentagramMinEpsilon (k : ℕ) : ℝ :=
+  2 * (actualMinViolations (k := k) pentagramContext (fun c => c == 4) : ℝ) /
+    (actualContexts (k := k) pentagramContext).card
+
+theorem actualSquareMinEpsilon_eq (k : ℕ) : actualSquareMinEpsilon k = actualSquareEpsilon k := by
+  unfold actualSquareMinEpsilon actualSquareEpsilon
+  rw [actualMinViolations_square k, actualViolations_eq_violations squareContext _
+    square_context_injective square_context_nonempty]
+  have h : violations (fun (_ : Fin k) (c : Fin 6) =>
+      response (fun _ => false) (c == 5) (squareContext c)) = (7 ^ k - 5 ^ k) / 2 :=
+    square_degree_nat k
+  rw [h]
+
+theorem actualPentagramMinEpsilon_eq (k : ℕ) : actualPentagramMinEpsilon k = actualPentagramEpsilon k := by
+  unfold actualPentagramMinEpsilon actualPentagramEpsilon
+  rw [actualMinViolations_pentagram k, actualViolations_eq_violations pentagramContext _
+    pentagram_context_injective pentagram_context_nonempty]
+  have h : violations (fun (_ : Fin k) (c : Fin 5) =>
+      response (fun _ => false) (c == 4) (pentagramContext c)) = (6 ^ k - 4 ^ k) / 2 :=
+    pentagram_degree_nat k
+  rw [h]
+
+theorem actual_square_min_epsilon_tends_to_one : Tendsto actualSquareMinEpsilon atTop (𝓝 1) := by
+  have h : actualSquareMinEpsilon = actualSquareEpsilon := funext actualSquareMinEpsilon_eq
+  rw [h]
+  exact actual_square_epsilon_tends_to_one
+
+theorem actual_pentagram_min_epsilon_tends_to_one : Tendsto actualPentagramMinEpsilon atTop (𝓝 1) := by
+  have h : actualPentagramMinEpsilon = actualPentagramEpsilon := funext actualPentagramMinEpsilon_eq
+  rw [h]
+  exact actual_pentagram_epsilon_tends_to_one
+
 end ContextualityTensor

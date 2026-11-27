@@ -22,6 +22,7 @@ Zero `sorry`, zero `admit`, zero `native_decide`, zero `set_option`, strictly wi
 `[propext, Classical.choice, Quot.sound]`.
 -/
 import HoggarBound.Kramers
+import HoggarBound.Witness
 import HoggarBound.SaturationTheory
 import HoggarBound.ConjectureE
 import HoggarBound.ConjectureEExtras
@@ -30,6 +31,7 @@ import HoggarBound.C3ExactOptima
 import HoggarBound.SaturatedPhaseSix
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import ContextualityTensor.ActualModel
 
 open Finset Matrix
 
@@ -216,5 +218,84 @@ theorem propositions_qgt_twochar_nonvacuous :
   rw [hScard] at h10
   norm_num at h10 ⊢
   exact h10
+
+/-! ### Kernel-Proved Refutations of Perturbed Headline Bounds (Closing `ERRATA.md` CI #2)
+
+Each theorem below proves the negation of a genuine tightened (false) perturbation of a
+quantified headline theorem using the exact attaining witnesses already formalized in the kernel. -/
+
+/-- Perturbed headline refutation 1: `d(W(5,2)) ≥ 64` is false (Hoggar witness attains `63`). -/
+theorem refute_w52_bound_64 :
+    ¬ (∀ f : Pt 3 → ℝ, (∀ u ∈ allPoints 3, f u = 1 ∨ f u = -1) →
+        64 ≤ (violatedLines (allPoints 3) f).card) := by
+  intro h
+  obtain ⟨_, f, hf, h63⟩ := degree_three_qubit
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 2: `d(Q⁻(5,2)) ≥ 10` is false (Hoggar witness attains `9`). -/
+theorem refute_q5minus_bound_10 :
+    ¬ (∀ f : Pt 3 → ℝ, (∀ u ∈ ellipticPoints 3 eY3, f u = 1 ∨ f u = -1) →
+        10 ≤ (violatedLines (ellipticPoints 3 eY3) f).card) := by
+  intro h
+  obtain ⟨_, f, hf, h9⟩ := degree_three_qubit_elliptic
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 3: `d(W(7,2)) ≥ 1576` is false (CSS witness attains `1575`). -/
+theorem refute_w72_bound_1576 :
+    ¬ (∀ f : Pt 4 → ℝ, (∀ u ∈ allPoints 4, f u = 1 ∨ f u = -1) →
+        1576 ≤ (violatedLines (allPoints 4) f).card) := by
+  intro h
+  obtain ⟨f, hf, h1575⟩ := HoggarBound.ExactDegreesN4N5.w72_css_witness
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 4: `d(Q⁺(9,2)) ≥ 6976` is false (CSS witness attains `6975`). -/
+theorem refute_q9plus_bound_6976 :
+    ¬ (∀ f : Pt 5 → ℝ, (∀ u ∈ realPoints 5, f u = 1 ∨ f u = -1) →
+        6976 ≤ (violatedLines (realPoints 5) f).card) := by
+  intro h
+  obtain ⟨f, hf, h6975⟩ := HoggarBound.ExactDegreesN4N5.q9plus_css_witness
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 5: `C3` signA minimum `≥ 369` is false (witness attains `368`). -/
+theorem refute_c3_signA_bound_369 :
+    ¬ (∀ y : Fin 64 → ℝ, (∀ i, y i = 1 ∨ y i = -1) →
+        369 ≤ HoggarBound.ConjectureE.c3ViolatedOutsideContexts HoggarBound.C3.signA y) := by
+  intro h
+  obtain ⟨_, ⟨y₀, hy₀, h368⟩, _, _⟩ := HoggarBound.C3ExactOptima.corollary16_exact_binary_optima
+  have hge := h y₀ hy₀
+  omega
+
+/-- Perturbed headline refutation 6: `C3` signB minimum `≥ 345` is false (witness attains `344`). -/
+theorem refute_c3_signB_bound_345 :
+    ¬ (∀ y : Fin 64 → ℝ, (∀ i, y i = 1 ∨ y i = -1) →
+        345 ≤ HoggarBound.ConjectureE.c3ViolatedOutsideContexts HoggarBound.C3.signB y) := by
+  intro h
+  obtain ⟨_, _, _, ⟨y₁, hy₁, h344⟩⟩ := HoggarBound.C3ExactOptima.corollary16_exact_binary_optima
+  have hge := h y₁ hy₁
+  omega
+
+/-- Perturbed headline refutation 7: two disjoint Peres–Mermin squares do not force `13` violations (`d₂ = 12`). -/
+theorem refute_square_k2_bound_13 :
+    ¬ (∀ a : (Σ _i : Fin 2, Fin 9) → Bool,
+        13 ≤ ContextualityTensor.actualViolations ContextualityTensor.squareContext (fun c => c == 5) a) := by
+  intro h
+  obtain ⟨⟨a0, h12⟩, _⟩ := ContextualityTensor.global_actual_square_minimum 2
+  have hge := h a0
+  norm_num at h12
+  omega
+
+/-- Perturbed headline refutation 8: two disjoint Mermin pentagrams do not force `11` violations (`d₂ = 10`). -/
+theorem refute_pentagram_k2_bound_11 :
+    ¬ (∀ a : (Σ _i : Fin 2, Fin 10) → Bool,
+        11 ≤ ContextualityTensor.actualViolations ContextualityTensor.pentagramContext (fun c => c == 4) a) := by
+  intro h
+  obtain ⟨⟨a0, h10⟩, _⟩ := ContextualityTensor.global_actual_pentagram_minimum 2
+  have hge := h a0
+  norm_num at h10
+  omega
 
 end HoggarBound.NonVacuity

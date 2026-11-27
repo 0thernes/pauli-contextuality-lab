@@ -30,6 +30,7 @@ import HoggarBound.ConjectureECones
 import HoggarBound.ConjectureE
 import HoggarBound.ConjectureEExtras
 import HoggarBound.AuditUpgrades
+import HoggarBound.ConjectureECases
 import HoggarBound.C3ExactOptima
 import HoggarBound.CarrierFamily
 import HoggarBound.SaturatedPhaseSix
@@ -43,6 +44,7 @@ import ContextualityTensor.Asymptotics
 import ContextualityTensor.Pauli
 import ContextualityTensor.Support
 import ContextualityTensor.PhysicalBridge
+import ContextualityTensor.SeedSupport
 import Evidence
 import Solution
 
@@ -126,6 +128,10 @@ import Solution
 #print axioms HoggarBound.AuditUpgrades.hyperbolic_fraction_tendsto_half
 #print axioms HoggarBound.AuditUpgrades.full_space_violated_fraction_eventually_gt
 #print axioms HoggarBound.AuditUpgrades.elliptic_violated_fraction_eventually_gt
+#print axioms HoggarBound.AuditUpgrades.exists_assignment_violated_le_half
+#print axioms HoggarBound.AuditUpgrades.hyperbolic_fraction
+#print axioms HoggarBound.AuditUpgrades.hyperbolic_violated_fraction_eventually_gt
+#print axioms HoggarBound.ConjectureE.jonah_conjecture_e_formal_cases
 #print axioms HoggarBound.AuditUpgrades.proposition3_commuting_qgt
 #print axioms HoggarBound.AuditUpgrades.anticommuting_qgt
 #print axioms HoggarBound.AuditUpgrades.proposition3_violated_iff
@@ -190,6 +196,14 @@ import Solution
 #print axioms HoggarBound.NonVacuity.c3_exact_optima_nonvacuous
 #print axioms HoggarBound.NonVacuity.exact_degrees_ladders_nonvacuous
 #print axioms HoggarBound.NonVacuity.propositions_qgt_twochar_nonvacuous
+#print axioms HoggarBound.NonVacuity.refute_w52_bound_64
+#print axioms HoggarBound.NonVacuity.refute_q5minus_bound_10
+#print axioms HoggarBound.NonVacuity.refute_w72_bound_1576
+#print axioms HoggarBound.NonVacuity.refute_q9plus_bound_6976
+#print axioms HoggarBound.NonVacuity.refute_c3_signA_bound_369
+#print axioms HoggarBound.NonVacuity.refute_c3_signB_bound_345
+#print axioms HoggarBound.NonVacuity.refute_square_k2_bound_13
+#print axioms HoggarBound.NonVacuity.refute_pentagram_k2_bound_11
 
 -- ============================================================================
 -- Track 2: Exact Contextuality Degrees for Disjoint Mermin Configurations (16 decls)
@@ -210,6 +224,20 @@ import Solution
 #print axioms ContextualityTensor.pentagram_epsilon_tends_to_one
 #print axioms ContextualityTensor.actual_square_epsilon_tends_to_one
 #print axioms ContextualityTensor.actual_pentagram_epsilon_tends_to_one
+#print axioms ContextualityTensor.actualMinViolations_square
+#print axioms ContextualityTensor.actualMinViolations_pentagram
+#print axioms ContextualityTensor.actual_square_min_epsilon_tends_to_one
+#print axioms ContextualityTensor.actual_pentagram_min_epsilon_tends_to_one
+#print axioms ContextualityTensor.pentagram_observables
+#print axioms ContextualityTensor.pentagram_context_commute
+#print axioms ContextualityTensor.pentagram_context_products
+#print axioms ContextualityTensor.pentagram_complex_context
+#print axioms ContextualityTensor.actual_six_qubit_pentagram_operator_sign
+#print axioms ContextualityTensor.six_qubit_pentagram_complex_context
+#print axioms ContextualityTensor.square_seed_support_eq_hs
+#print axioms ContextualityTensor.pentagram_seed_support_eq_hs
+#print axioms ContextualityTensor.square_kblock_support_iff
+#print axioms ContextualityTensor.pentagram_kblock_support_iff
 
 -- ============================================================================
 -- Track 3: Sequential Contextuality Evidence & Setting-Bias Bounds (14 decls)
@@ -244,6 +272,12 @@ import Solution
 #print axioms PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree
 #print axioms PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum
 #print axioms PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound
+#print axioms PauliContextualityLab.ComparatorTarget.target_global_actual_square_minimum
+#print axioms PauliContextualityLab.ComparatorTarget.target_global_actual_pentagram_minimum
+#print axioms PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one
+#print axioms PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one
+#print axioms PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64
+#print axioms PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369
 
 -- All-qubit C3 explicit carrier-family construction (Theorem 17, CarrierFamily.lean)
 #print axioms HoggarBound.C3AllQubits.c3_strict_law_fails_general
@@ -277,4 +311,4 @@ run_cmd do
       bad := bad.push s!"{name}: {forbidden}"
   if !bad.isEmpty then
     throwError s!"Disallowed axioms detected across project theorems:\n{String.intercalate "\n" bad.toList}"
-  logInfo m!"ALL_THEOREMS_AXIOM_AUDIT_PASS: checked {all.length} theorems across HoggarBound, ContextualityTensor, Evidence, PauliContextualityLab — 0 disallowed axioms."
+  logInfo m!"ALL_THEOREMS_AXIOM_AUDIT_PASS: checked {all.length} theorems (kernel theorem constants across HoggarBound, ContextualityTensor, Evidence, PauliContextualityLab; authored source declarations counted separately in lean/README.md) — 0 disallowed axioms."

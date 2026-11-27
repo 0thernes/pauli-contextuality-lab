@@ -18,11 +18,13 @@ import HoggarBound.ConjectureEExtras
 import HoggarBound.C3ExactOptima
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import HoggarBound.NonVacuity
 import ContextualityTensor
+import ContextualityTensor.ActualModel
 import Evidence.Square
 import Evidence.Sequential
 
-open Finset Matrix
+open Finset Matrix Filter Topology
 
 namespace PauliContextualityLab.ComparatorTarget
 
@@ -129,5 +131,41 @@ theorem target_sequential_hitting_bound (tree : Evidence.BetTree) (h : tree.Vali
     (z T : ℝ) (hz : 0 ≤ z) (hT : 0 < T) :
     tree.hitProbability z T ≤ z / T :=
   Evidence.BetTree.finite_hitting_bound tree h z T hz hT
+
+theorem target_global_actual_square_minimum (k : ℕ) :
+    (∃ a : (Σ _i : Fin k, Fin 9) → Bool,
+      ContextualityTensor.actualViolations ContextualityTensor.squareContext (fun c => c == 5) a =
+        (7 ^ k - 5 ^ k) / 2) ∧
+    (∀ a : (Σ _i : Fin k, Fin 9) → Bool,
+      (7 ^ k - 5 ^ k) / 2 ≤
+        ContextualityTensor.actualViolations ContextualityTensor.squareContext (fun c => c == 5) a) :=
+  ContextualityTensor.global_actual_square_minimum k
+
+theorem target_global_actual_pentagram_minimum (k : ℕ) :
+    (∃ a : (Σ _i : Fin k, Fin 10) → Bool,
+      ContextualityTensor.actualViolations ContextualityTensor.pentagramContext (fun c => c == 4) a =
+        (6 ^ k - 4 ^ k) / 2) ∧
+    (∀ a : (Σ _i : Fin k, Fin 10) → Bool,
+      (6 ^ k - 4 ^ k) / 2 ≤
+        ContextualityTensor.actualViolations ContextualityTensor.pentagramContext (fun c => c == 4) a) :=
+  ContextualityTensor.global_actual_pentagram_minimum k
+
+theorem target_actual_square_min_epsilon_tends_to_one :
+    Tendsto ContextualityTensor.actualSquareMinEpsilon atTop (𝓝 1) :=
+  ContextualityTensor.actual_square_min_epsilon_tends_to_one
+
+theorem target_actual_pentagram_min_epsilon_tends_to_one :
+    Tendsto ContextualityTensor.actualPentagramMinEpsilon atTop (𝓝 1) :=
+  ContextualityTensor.actual_pentagram_min_epsilon_tends_to_one
+
+theorem target_refute_w52_bound_64 :
+    ¬ (∀ f : HoggarBound.Pt 3 → ℝ, (∀ u ∈ HoggarBound.allPoints 3, f u = 1 ∨ f u = -1) →
+        64 ≤ (HoggarBound.violatedLines (HoggarBound.allPoints 3) f).card) :=
+  HoggarBound.NonVacuity.refute_w52_bound_64
+
+theorem target_refute_c3_signA_bound_369 :
+    ¬ (∀ y : Fin 64 → ℝ, (∀ i, y i = 1 ∨ y i = -1) →
+        369 ≤ HoggarBound.ConjectureE.c3ViolatedOutsideContexts HoggarBound.C3.signA y) :=
+  HoggarBound.NonVacuity.refute_c3_signA_bound_369
 
 end PauliContextualityLab.ComparatorTarget

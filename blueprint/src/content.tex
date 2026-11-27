@@ -26,12 +26,12 @@ For every $N \ge 2$ and every antiunitary-commuting subset $S \subseteq Q^-(2N-1
 Explicit kernel-checked witnesses establish $d(Q^+(3,2)) = 1$, $2 \le d(W(3,2)) \le 3$, $d(W(5,2)) = 63$, and $d(Q^-(5,2)) = 9$ (ported from legacy hoggar-bound with zero native\_decide).
 \end{theorem}
 
-\begin{corollary}[Cor A: Asymptotic Half-Violation Limits]
+\begin{corollary}[Cor A: Two-Sided Asymptotic Half-Violation Limits]
 \label{thm:asymptotic-half}
-\lean{HoggarBound.AuditUpgrades.floor_deficit_tendsto_zero, HoggarBound.AuditUpgrades.full_space_fraction_tendsto_half, HoggarBound.AuditUpgrades.hyperbolic_fraction_tendsto_half, HoggarBound.AuditUpgrades.full_space_violated_fraction_eventually_gt, HoggarBound.AuditUpgrades.elliptic_violated_fraction_eventually_gt}
+\lean{HoggarBound.AuditUpgrades.floor_deficit_tendsto_zero, HoggarBound.AuditUpgrades.exists_assignment_violated_le_half, HoggarBound.AuditUpgrades.full_space_fraction_tendsto_half, HoggarBound.AuditUpgrades.hyperbolic_fraction, HoggarBound.AuditUpgrades.hyperbolic_fraction_tendsto_half, HoggarBound.AuditUpgrades.full_space_violated_fraction_eventually_gt, HoggarBound.AuditUpgrades.elliptic_violated_fraction_eventually_gt, HoggarBound.AuditUpgrades.hyperbolic_violated_fraction_eventually_gt}
 \uses{thm:spectral-floor, thm:kramers-floor}
 \leanok
-As $N \to \infty$, the guaranteed violated-context fraction $d/L$ tends to $1/2$ (Filter.Tendsto) for $W(2N-1,2)$, $Q^+(2N-1,2)$, and $Q^-(2N-1,2)$.
+As $N \to \infty$, the universal random-assignment averaging upper bound ($2d \le L$) and spectral-floor lower bounds sandwich the violated-context fraction $d/L \to 1/2$ (\texttt{Filter.Tendsto}) across $W(2N-1,2)$, $Q^+(2N-1,2)$, and $Q^-(2N-1,2)$.
 \end{corollary}
 
 \begin{theorem}[Thms 3–4: Five-Way Saturation Equivalence \& Squareness]
@@ -102,10 +102,10 @@ Exact closed-form evaluation of outside character sums $S_O(u)$ across all nine 
 \label{thm:conjecture-e}
 \lean{HoggarBound.ConjectureE.c1_strict_law_fails, HoggarBound.ConjectureE.c3_strict_law_fails,
   HoggarBound.C3AllQubits.c3_strict_law_fails_general,
-  HoggarBound.C3AllQubits.c3_all_qubits_completion, HoggarBound.ConjectureE.c5_strict_law_fails, HoggarBound.ConjectureE.c6_strict_law_fails, HoggarBound.ConjectureE.c8_strict_law_fails, HoggarBound.ConjectureE.c11_strict_law_fails, HoggarBound.ConjectureE.c12_strict_law_fails, HoggarBound.ConjectureE.c14_strict_law_fails, HoggarBound.ConjectureE.c15_strict_law_fails, HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases, HoggarBound.AuditUpgrades.completionMat_isHermitian, HoggarBound.AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra}
+  HoggarBound.C3AllQubits.c3_all_qubits_completion, HoggarBound.ConjectureE.c5_strict_law_fails, HoggarBound.ConjectureE.c6_strict_law_fails, HoggarBound.ConjectureE.c8_strict_law_fails, HoggarBound.ConjectureE.c11_strict_law_fails, HoggarBound.ConjectureE.c12_strict_law_fails, HoggarBound.ConjectureE.c14_strict_law_fails, HoggarBound.ConjectureE.c15_strict_law_fails, HoggarBound.ConjectureE.jonah_conjecture_e_all_nine_cases, HoggarBound.ConjectureECases.jonah_conjecture_e_formal_cases, HoggarBound.AuditUpgrades.completionMat_isHermitian, HoggarBound.AuditUpgrades.jonah_conjecture_e_all_nine_cases_spectra}
 \uses{lem:char-sums}
 \leanok
-In all nine vertex cases and for every $N \ge 4$, explicit sign carriers share identical carrier characteristic polynomials while their Hermitian completions have unequal canonical eigenvalue multisets.
+In all nine vertex cases (with formal geometric ambient-set and polar-point membership predicates \texttt{IsCaseC1}--\texttt{IsCaseC15} in \texttt{ConjectureECases.lean}) and for every $N \ge 4$, explicit sign carriers share identical carrier characteristic polynomials while their Hermitian completions have unequal canonical eigenvalue multisets.
 \end{theorem}
 
 \begin{corollary}[Cor 18: General Cone Lift \& Signed-Clifford Orbit Transport]
@@ -132,12 +132,12 @@ On the 71-point four-qubit case C3 hyperplane section, two cospectral $16\times 
 Pure-integer MET-SDP dual certificates inside Lean 4 establish exact global binary completion minima $\min_y F(\sigma_0, y) = 368$ and $\min_y F(\sigma_1, y) = 344$ (exact separation gap $24$).
 \end{theorem}
 
-\begin{proposition}[Track 1 Existential Non-Vacuity Suite (10 Witnesses)]
+\begin{proposition}[Track 1 Existential Non-Vacuity \& False-Variant Refutation Suite]
 \label{thm:t1-nonvacuity}
-\lean{HoggarBound.NonVacuity.spectral_floor_nonvacuous, HoggarBound.NonVacuity.kramers_nonvacuous, HoggarBound.NonVacuity.saturation_tfae_nonvacuous, HoggarBound.NonVacuity.conjecture_e_nonvacuous, HoggarBound.NonVacuity.clifford_transport_nonvacuous, HoggarBound.NonVacuity.cone_lift_nonvacuous, HoggarBound.NonVacuity.norm_phase_family_nonvacuous, HoggarBound.NonVacuity.c3_exact_optima_nonvacuous, HoggarBound.NonVacuity.exact_degrees_ladders_nonvacuous, HoggarBound.NonVacuity.propositions_qgt_twochar_nonvacuous}
+\lean{HoggarBound.NonVacuity.spectral_floor_nonvacuous, HoggarBound.NonVacuity.kramers_nonvacuous, HoggarBound.NonVacuity.saturation_tfae_nonvacuous, HoggarBound.NonVacuity.conjecture_e_nonvacuous, HoggarBound.NonVacuity.clifford_transport_nonvacuous, HoggarBound.NonVacuity.cone_lift_nonvacuous, HoggarBound.NonVacuity.norm_phase_family_nonvacuous, HoggarBound.NonVacuity.c3_exact_optima_nonvacuous, HoggarBound.NonVacuity.exact_degrees_ladders_nonvacuous, HoggarBound.NonVacuity.propositions_qgt_twochar_nonvacuous, HoggarBound.NonVacuity.refute_w52_bound_64, HoggarBound.NonVacuity.refute_q5minus_bound_10, HoggarBound.NonVacuity.refute_w72_bound_1576, HoggarBound.NonVacuity.refute_q9plus_bound_6976, HoggarBound.NonVacuity.refute_c3_signA_bound_369, HoggarBound.NonVacuity.refute_c3_signB_bound_345, HoggarBound.NonVacuity.refute_square_k2_bound_13, HoggarBound.NonVacuity.refute_pentagram_k2_bound_11}
 \uses{thm:spectral-floor, thm:kramers-floor, thm:saturation-tfae, prop:qgt-twochar, thm:infinite-ccz, thm:n4n5-ladders, thm:conjecture-e, cor:cone-clifford, thm:c3-exact-optima}
 \leanok
-Ten explicit existential witness lemmas certify that every Track 1 theorem family has inhabited, non-vacuous hypotheses.
+Ten explicit existential witness lemmas certify non-vacuous hypotheses across every Track 1 theorem family, paired with eight kernel-proved refutations of perturbed universal lower bounds (e.g.\ $\neg(\forall f,\ 64 \le \mathrm{violated}(W(5,2), f))$).
 \end{proposition}
 
 \section{Track 2: Exact Contextuality Degrees for Disjoint Mermin Configurations}
@@ -157,28 +157,28 @@ For the full union context family over $k$ disjoint blocks, $1 + \operatorname{s
 Answering Section 6 of Muller \& Saniga (arXiv:2609.19862v1), the exact contextuality degree of $k$ disjoint Peres–Mermin squares is $(7^k - 5^k)/2$ and of $k$ disjoint Mermin pentagrams is $(6^k - 4^k)/2$, with integer parity proved prior to division by $2$ and attaining witnesses included.
 \end{theorem}
 
-\begin{theorem}[Actual Vertex-Union Model, Hypergraph Support \& Pauli Bridge]
+\begin{theorem}[Actual Vertex-Union Model, Genuine Minimum \& Hypergraph Support]
 \label{thm:actual-union-model}
-\lean{ContextualityTensor.unionContext_injective, ContextualityTensor.union_response, ContextualityTensor.square_actual_context_count, ContextualityTensor.pentagram_actual_context_count, ContextualityTensor.global_actual_square_minimum, ContextualityTensor.global_actual_pentagram_minimum}
+\lean{ContextualityTensor.unionContext_injective, ContextualityTensor.union_response, ContextualityTensor.square_actual_context_count, ContextualityTensor.pentagram_actual_context_count, ContextualityTensor.global_actual_square_minimum, ContextualityTensor.global_actual_pentagram_minimum, ContextualityTensor.actualMinViolations, ContextualityTensor.actualMinViolations_square, ContextualityTensor.actualMinViolations_pentagram}
 \uses{thm:disjoint-mermin}
 \leanok
-Transports the exact closed-form minima onto actual distinct sets of tagged observable vertices under unrestricted global assignments, linked to block-diagonal hypergraph supports and four-qubit Pauli matrices.
+Transports the exact closed-form minima onto actual distinct sets of tagged observable vertices under unrestricted global assignments, certifying the genuine minimum \texttt{actualMinViolations} over all assignments via \texttt{Finset.min'}.
 \end{theorem}
 
-\begin{proposition}[Block-Diagonal Hypergraph Support \& 4-Qubit Pauli Matrix Bridge]
+\begin{proposition}[Literal Pauli Seed Supports ($HS(L(K_{3,3}))$, $HS(\mathrm{Petersen})$), Arbitrary-$k$ Instantiation \& 4-/6-Qubit Bridges]
 \label{thm:track2-physical-bridge}
-\lean{ContextualityTensor.block_kernel_sum, ContextualityTensor.graph_support_nonempty_disjoint_iff, ContextualityTensor.four_qubit_vertex_list_matches, ContextualityTensor.four_qubit_matrix_list_matches, ContextualityTensor.actual_four_qubit_operator_sign}
+\lean{ContextualityTensor.block_kernel_sum, ContextualityTensor.graph_support_nonempty_disjoint_iff, ContextualityTensor.four_qubit_vertex_list_matches, ContextualityTensor.four_qubit_matrix_list_matches, ContextualityTensor.actual_four_qubit_operator_sign, ContextualityTensor.pentagram_observables, ContextualityTensor.pentagram_context_commute, ContextualityTensor.pentagram_context_products, ContextualityTensor.six_qubit_pentagram_context_product, ContextualityTensor.actual_six_qubit_pentagram_operator_sign, ContextualityTensor.square_seed_support_eq_hs, ContextualityTensor.pentagram_seed_support_eq_hs, ContextualityTensor.square_kblock_support_iff, ContextualityTensor.pentagram_kblock_support_iff}
 \uses{thm:actual-union-model}
 \leanok
-Certifies block-diagonal support disjointness and binds the abstract two-square tagged union directly to explicit four-qubit tensor-product Pauli matrices and operator-product signs.
+Certifies literal 2-qubit square and 3-qubit pentagram Pauli matrices (and 4-/6-qubit disjoint tensor bridges), proves by kernel decision that their anticommutation graphs yield exactly $HS(L(K_{3,3}))$ and $HS(\mathrm{Petersen})$, and instantiates \texttt{Support.lean} for arbitrary $k$ copies.
 \end{proposition}
 
-\begin{corollary}[Asymptotic Normalized Gap Limit]
+\begin{corollary}[Asymptotic Normalized Gap Limit (Genuine Minimum)]
 \label{thm:disjoint-asymptotics}
-\lean{ContextualityTensor.square_epsilon_is_count_ratio, ContextualityTensor.pentagram_epsilon_is_count_ratio, ContextualityTensor.square_epsilon_tends_to_one, ContextualityTensor.pentagram_epsilon_tends_to_one, ContextualityTensor.actual_square_epsilon_tends_to_one, ContextualityTensor.actual_pentagram_epsilon_tends_to_one}
+\lean{ContextualityTensor.square_epsilon_is_count_ratio, ContextualityTensor.pentagram_epsilon_is_count_ratio, ContextualityTensor.square_epsilon_tends_to_one, ContextualityTensor.pentagram_epsilon_tends_to_one, ContextualityTensor.actual_square_epsilon_tends_to_one, ContextualityTensor.actual_pentagram_epsilon_tends_to_one, ContextualityTensor.actual_square_min_epsilon_tends_to_one, ContextualityTensor.actual_pentagram_min_epsilon_tends_to_one}
 \uses{thm:actual-union-model}
 \leanok
-The normalized contextuality degree ratio $2d_k/L_k$ tends to $1$ as $k \to \infty$ for both disjoint Peres–Mermin squares and disjoint Mermin pentagrams.
+The normalized contextuality degree ratio $2d_k/L_k$---defined directly from the genuine assignment minimum \texttt{actualMinViolations}---tends to $1$ as $k \to \infty$ for both disjoint Peres--Mermin squares and disjoint Mermin pentagrams.
 \end{corollary}
 
 \section{Track 3: Exact Sequential Contextuality Certificates}
@@ -216,10 +216,10 @@ Under explicit setting bias $(11/60,\dots,1/12)$, a miscalibrated naive $1\%$ un
 
 \section{Unified 6-Kernel Isolated Comparator Bridge}
 
-\begin{theorem}[12 Cross-Track Challenge/Solution Targets (6 Independent Kernels)]
+\begin{theorem}[18 Cross-Track Challenge/Solution Targets (6 Independent Kernels)]
 \label{thm:comparator-bridge}
-\lean{PauliContextualityLab.ComparatorTarget.target_spectral_floor, PauliContextualityLab.ComparatorTarget.target_kramers_floor, PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare, PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family, PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima, PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases, PauliContextualityLab.ComparatorTarget.target_w72_ge_1455, PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444, PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree, PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree, PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum, PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound}
-\uses{thm:spectral-floor, thm:kramers-floor, thm:saturation-tfae, thm:infinite-ccz, thm:c3-exact-optima, thm:conjecture-e, thm:n4n5-ladders, thm:disjoint-mermin, thm:pm-setting-bias, thm:sequential-hitting}
+\lean{PauliContextualityLab.ComparatorTarget.target_spectral_floor, PauliContextualityLab.ComparatorTarget.target_kramers_floor, PauliContextualityLab.ComparatorTarget.target_saturation_mul_isSquare, PauliContextualityLab.ComparatorTarget.target_infinite_nonclosed_saturated_family, PauliContextualityLab.ComparatorTarget.target_c3_exact_binary_optima, PauliContextualityLab.ComparatorTarget.target_jonah_conjecture_e_all_nine_cases, PauliContextualityLab.ComparatorTarget.target_w72_ge_1455, PauliContextualityLab.ComparatorTarget.target_q9plus_ge_6444, PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree, PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree, PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum, PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound, PauliContextualityLab.ComparatorTarget.target_global_actual_square_minimum, PauliContextualityLab.ComparatorTarget.target_global_actual_pentagram_minimum, PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one, PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64, PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369}
+\uses{thm:spectral-floor, thm:kramers-floor, thm:saturation-tfae, thm:infinite-ccz, thm:c3-exact-optima, thm:conjecture-e, thm:n4n5-ladders, thm:t1-nonvacuity, thm:disjoint-mermin, thm:actual-union-model, thm:disjoint-asymptotics, thm:pm-setting-bias, thm:sequential-hitting}
 \leanok
-All 12 isolated specification theorems in Challenge.lean are matched definitionally by sorry-free Solution.lean and accepted in CI by six independent Lean 4.35.0 kernels (lean-paranoid, lean4lean, nanoda, con-leche, con-ron, lean-default).
+All 18 isolated specification theorems in Challenge.lean (including Track 2 actual-context degrees, genuine minimum-defined limits, and kernel-proved perturbed-bound refutations) are matched definitionally by sorry-free Solution.lean and accepted in CI by six independent Lean 4.35.0 kernels (lean-paranoid, lean4lean, nanoda, con-leche, con-ron, lean-default).
 \end{theorem}

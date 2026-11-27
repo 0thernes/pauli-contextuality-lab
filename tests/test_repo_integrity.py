@@ -386,9 +386,9 @@ class RepoIntegrityTests(unittest.TestCase):
                 f"Stale 110-declaration abstract phrasing found in {rel}",
             )
             self.assertIn(
-                "2,206 exhaustively audited",
+                "2,306 exhaustively audited",
                 txt,
-                f"Missing synchronized 2,206-theorem count in {rel}",
+                f"Missing synchronized 2,306-theorem count in {rel}",
             )
 
     def test_track_scripts_resolve_shared_monorepo_roots(self) -> None:
@@ -443,7 +443,7 @@ class RepoIntegrityTests(unittest.TestCase):
             text=True,
             check=True,
         )
-        self.assertIn("PASS: Blueprint validated 27 nodes (162 Lean decls", res.stdout)
+        self.assertIn("PASS: Blueprint validated 27 nodes (194 Lean decls", res.stdout)
         bp = json.loads((ROOT / "build" / "site" / "blueprint" / "blueprint.json").read_text(encoding="utf-8"))
         self.assertEqual(len(bp), 27)
         bp_html = (ROOT / "build" / "site" / "blueprint" / "index.html").read_text(encoding="utf-8")
@@ -456,7 +456,7 @@ class RepoIntegrityTests(unittest.TestCase):
                 self.assertRegex(link["url"], r"^https://github\.com/0thernes/pauli-contextuality-lab/blob/main/lean/.+\.lean#L\d+$")
                 self.assertTrue((ROOT / link["file"]).is_file(), f"Missing file {link['file']}")
                 total += 1
-        self.assertEqual(total, 162)
+        self.assertEqual(total, 194)
 
     def test_phase_seven_and_c3_audit_paths_live(self) -> None:
         import subprocess
@@ -511,8 +511,8 @@ class RepoIntegrityTests(unittest.TestCase):
         self.assertEqual(mod.verify_timestamps(), 0, "RFC 3161 TSA or OpenTimestamps proof verification failed")
         self.assertTrue((ROOT / "data" / "MANIFEST.sha256.tsr").is_file())
         self.assertTrue((ROOT / "data" / "MANIFEST.sha256.ots").is_file())
-        self.assertIn("swh:1:snp:54b1005a1e5ebde0c4dd89892c1bff4c3e6845ba", (ROOT / "CITATION.cff").read_text(encoding="utf-8"))
-        self.assertIn("swh:1:snp:54b1005a1e5ebde0c4dd89892c1bff4c3e6845ba", (ROOT / "formalization.yaml").read_text(encoding="utf-8"))
+        self.assertIn("swh:1:snp:bcb2b33b31015225ace11d52fa98b2f93c5b4913", (ROOT / "CITATION.cff").read_text(encoding="utf-8"))
+        self.assertIn("swh:1:snp:bcb2b33b31015225ace11d52fa98b2f93c5b4913", (ROOT / "formalization.yaml").read_text(encoding="utf-8"))
         packet = ROOT / "docs" / "submission-packet.md"
         self.assertTrue(packet.is_file(), "Missing docs/submission-packet.md")
         self.assertIn("DRAFT", packet.read_text(encoding="utf-8").upper())

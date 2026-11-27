@@ -21,10 +21,11 @@ import HoggarBound.C3Geometry
 import HoggarBound.ConjectureECore
 import HoggarBound.ConjectureEExtras
 import ContextualityTensor
+import ContextualityTensor.ActualModel
 import Evidence.Square
 import Evidence.Sequential
 
-open Finset Matrix
+open Finset Matrix Filter Topology
 
 namespace PauliContextualityLab.ComparatorTarget
 
@@ -148,6 +149,52 @@ theorem target_peres_mermin_sharp_minimum (p : Fin 6 → ℝ) (c : Fin 6)
 theorem target_sequential_hitting_bound (tree : Evidence.BetTree) (h : tree.Valid)
     (z T : ℝ) (hz : 0 ≤ z) (hT : 0 < T) :
     tree.hitProbability z T ≤ z / T := by
+  sorry
+
+/-! ### Track 2 Actual-Context Model & Minimum-Defined Asymptotics (Closing `ERRATA.md` #4) -/
+
+/-- Target 13 (Track 2): Exact contextuality degree `(7^k - 5^k)/2` on the actual vertex-subset model. -/
+theorem target_global_actual_square_minimum (k : ℕ) :
+    (∃ a : (Σ _i : Fin k, Fin 9) → Bool,
+      ContextualityTensor.actualViolations ContextualityTensor.squareContext (fun c => c == 5) a =
+        (7 ^ k - 5 ^ k) / 2) ∧
+    (∀ a : (Σ _i : Fin k, Fin 9) → Bool,
+      (7 ^ k - 5 ^ k) / 2 ≤
+        ContextualityTensor.actualViolations ContextualityTensor.squareContext (fun c => c == 5) a) := by
+  sorry
+
+/-- Target 14 (Track 2): Exact contextuality degree `(6^k - 4^k)/2` on the actual vertex-subset model. -/
+theorem target_global_actual_pentagram_minimum (k : ℕ) :
+    (∃ a : (Σ _i : Fin k, Fin 10) → Bool,
+      ContextualityTensor.actualViolations ContextualityTensor.pentagramContext (fun c => c == 4) a =
+        (6 ^ k - 4 ^ k) / 2) ∧
+    (∀ a : (Σ _i : Fin k, Fin 10) → Bool,
+      (6 ^ k - 4 ^ k) / 2 ≤
+        ContextualityTensor.actualViolations ContextualityTensor.pentagramContext (fun c => c == 4) a) := by
+  sorry
+
+/-- Target 15 (Track 2): Minimum-defined contextuality fraction for `k` disjoint squares tends to `1`. -/
+theorem target_actual_square_min_epsilon_tends_to_one :
+    Tendsto ContextualityTensor.actualSquareMinEpsilon atTop (𝓝 1) := by
+  sorry
+
+/-- Target 16 (Track 2): Minimum-defined contextuality fraction for `k` disjoint pentagrams tends to `1`. -/
+theorem target_actual_pentagram_min_epsilon_tends_to_one :
+    Tendsto ContextualityTensor.actualPentagramMinEpsilon atTop (𝓝 1) := by
+  sorry
+
+/-! ### Kernel-Proved Refutations of Perturbed Headline Bounds (Closing `ERRATA.md` CI #2) -/
+
+/-- Target 17 (Refutation): The tightened bound `d(W(5,2)) ≥ 64` is false. -/
+theorem target_refute_w52_bound_64 :
+    ¬ (∀ f : HoggarBound.Pt 3 → ℝ, (∀ u ∈ HoggarBound.allPoints 3, f u = 1 ∨ f u = -1) →
+        64 ≤ (HoggarBound.violatedLines (HoggarBound.allPoints 3) f).card) := by
+  sorry
+
+/-- Target 18 (Refutation): The tightened C3 binary bound `≥ 369` on `signA` is false. -/
+theorem target_refute_c3_signA_bound_369 :
+    ¬ (∀ y : Fin 64 → ℝ, (∀ i, y i = 1 ∨ y i = -1) →
+        369 ≤ HoggarBound.ConjectureE.c3ViolatedOutsideContexts HoggarBound.C3.signA y) := by
   sorry
 
 end PauliContextualityLab.ComparatorTarget

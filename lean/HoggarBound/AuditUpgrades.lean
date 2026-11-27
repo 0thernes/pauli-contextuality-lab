@@ -151,6 +151,183 @@ theorem elliptic_violated_fraction_eventually_gt (ε : ℝ) (hε : 0 < ε) :
     (le_div_iff₀ hFpos).mpr hfrac
   linarith
 
+/-! #### Upper direction (`d(S)/L(S) ≤ 1/2` by random-assignment averaging) and `Q⁺` assignment limit -/
+
+private def boolSign {N : ℕ} (g : Pt N → Bool) (u : Pt N) : ℝ :=
+  if g u then -1 else 1
+
+private lemma boolSign_pm {N : ℕ} (g : Pt N → Bool) (u : Pt N) :
+    boolSign g u = 1 ∨ boolSign g u = -1 := by
+  unfold boolSign; cases g u <;> simp
+
+private lemma sum_boolSign_triple {N : ℕ} {u v : Pt N}
+    (huv : u ≠ v) (hu : u ≠ u + v) :
+    ∑ g : Pt N → Bool, boolSign g u * boolSign g v * boolSign g (u + v) = 0 := by
+  classical
+  let flip : (Pt N → Bool) → (Pt N → Bool) := fun g => Function.update g u (!g u)
+  have hinv : Function.Involutive flip := by
+    intro g; funext x
+    by_cases hx : x = u
+    · subst hx; simp [flip]
+    · simp [flip, hx]
+  have hneg : ∀ g : Pt N → Bool,
+      boolSign (flip g) u * boolSign (flip g) v * boolSign (flip g) (u + v) =
+      -(boolSign g u * boolSign g v * boolSign g (u + v)) := by
+    intro g
+    have h1 : boolSign (flip g) u = -boolSign g u := by
+      simp only [flip, boolSign, Function.update_self]; cases g u <;> norm_num
+    have h2 : boolSign (flip g) v = boolSign g v := by
+      simp [flip, boolSign, huv.symm]
+    have h3 : boolSign (flip g) (u + v) = boolSign g (u + v) := by
+      simp [flip, boolSign, hu.symm]
+    rw [h1, h2, h3]; ring
+  have hsum : ∑ g : Pt N → Bool, boolSign (flip g) u * boolSign (flip g) v * boolSign (flip g) (u + v) =
+      ∑ g : Pt N → Bool, boolSign g u * boolSign g v * boolSign g (u + v) :=
+    Fintype.sum_equiv hinv.toPerm _ _ (fun _ => rfl)
+  have hsum2 : ∑ g : Pt N → Bool, boolSign (flip g) u * boolSign (flip g) v * boolSign (flip g) (u + v) =
+      -(∑ g : Pt N → Bool, boolSign g u * boolSign g v * boolSign g (u + v)) := by
+    rw [Finset.sum_congr rfl (fun g _ => hneg g), Finset.sum_neg_distrib]
+  linarith
+
+/-- **Universal random-assignment upper bound (`d(S)/L(S) ≤ 1/2`):**
+For EVERY configuration `S ⊆ Pt N` with `0 ∉ S`, averaging `beta6 S f` over all `±1`
+assignments gives `0`, so there exists a `±1` assignment violating at most half of the flags. -/
+theorem exists_assignment_violated_le_half {N : ℕ} (S : Finset (Pt N)) (h0 : (0 : Pt N) ∉ S) :
+    ∃ f : Pt N → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧ 2 * (violated S f).card ≤ (flags S).card := by
+  classical
+  have hsum_zero : ∑ g : Pt N → Bool, beta6 S (boolSign g) = 0 := by
+    simp only [beta6]
+    rw [Finset.sum_comm]
+    refine Finset.sum_eq_zero fun p hp => ?_
+    obtain ⟨h1, h2, h3, _⟩ := mem_flags.mp hp
+    have hv0 : p.2 ≠ 0 := fun h => h0 (h ▸ h2)
+    have hsum0 : p.1 + p.2 ≠ 0 := fun h => h0 (h ▸ h3)
+    have huv : p.1 ≠ p.2 := fun h => hsum0 (by rw [h, pt_add_self])
+    have hu : p.1 ≠ p.1 + p.2 := fun h => hv0 (by
+      have := congrArg (fun x => p.1 + x) h
+      simpa [← add_assoc, pt_add_self] using this.symm)
+    have hfac : ∑ g : Pt N → Bool,
+        boolSign g p.1 * boolSign g p.2 * boolSign g (p.1 + p.2) * lineSign p.1 p.2 =
+        (∑ g : Pt N → Bool, boolSign g p.1 * boolSign g p.2 * boolSign g (p.1 + p.2)) *
+          lineSign p.1 p.2 := (Finset.sum_mul _ _ _).symm
+    rw [hfac, sum_boolSign_triple huv hu, zero_mul]
+  have hex : ∃ g : Pt N → Bool, 0 ≤ beta6 S (boolSign g) := by
+    by_contra hall
+    simp only [not_exists, not_le] at hall
+    have hlt : ∑ g : Pt N → Bool, beta6 S (boolSign g) < 0 :=
+      Finset.sum_neg (fun g _ => hall g) ⟨fun _ => false, Finset.mem_univ _⟩
+    linarith
+  obtain ⟨g, hg⟩ := hex
+  refine ⟨boolSign g, boolSign_pm g, ?_⟩
+  rw [beta6_eq_card S (boolSign g) (fun u _ => boolSign_pm g u)] at hg
+  have hR : ((2 * (violated S (boolSign g)).card : ℕ) : ℝ) ≤ ((flags S).card : ℝ) := by
+    push_cast; linarith
+  exact_mod_cast hR
+
+lemma card_realPoints_cast {N : ℕ} :
+    (((realPoints N).card : ℕ) : ℝ) = ((2 : ℝ) ^ N + 2) * ((2 : ℝ) ^ N - 1) / 2 := by
+  have h := card_realPoints (N := N)
+  have hR : (2 : ℝ) * ((realPoints N).card : ℝ) + 2 = (4 : ℝ) ^ N + (2 : ℝ) ^ N := by
+    exact_mod_cast h
+  have h42 : (4 : ℝ) ^ N = ((2 : ℝ) ^ N) ^ 2 := by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, ← pow_mul, mul_comm 2 N, pow_mul]
+  rw [h42] at hR
+  linarith
+
+lemma card_flags_real_cast {N : ℕ} (hN : 2 ≤ N) :
+    (((flags (realPoints N)).card : ℕ) : ℝ) =
+      ((realPoints N).card : ℝ) * ((2 : ℝ) ^ N - 2) * ((2 : ℝ) ^ (N - 1) + 2) / 2 := by
+  have h := card_flags_real (N := N)
+  have hR : (4 : ℝ) * ((flags (realPoints N)).card : ℝ) + 8 * ((realPoints N).card : ℝ) =
+      ((realPoints N).card : ℝ) * ((4 : ℝ) ^ N + 2 * (2 : ℝ) ^ N) := by
+    exact_mod_cast h
+  have h42 : (4 : ℝ) ^ N = ((2 : ℝ) ^ N) ^ 2 := by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, ← pow_mul, mul_comm 2 N, pow_mul]
+  have hhalf : (2 : ℝ) ^ N = 2 * (2 : ℝ) ^ (N - 1) := by
+    obtain ⟨m, rfl⟩ : ∃ m, N = m + 1 := ⟨N - 1, by omega⟩
+    simp [pow_succ, mul_comm]
+  rw [h42] at hR
+  rw [hhalf] at hR ⊢
+  linarith
+
+/-- **Hyperbolic quadric `Q⁺(2N−1, 2)` assignment lower bound:**
+For every `N ≥ 2` and every `±1` assignment `f` on `realPoints N`, the violated flag count
+satisfies `(1/2 - √(2^(N-1) + 1) / (2^(N-1) + 2)) · #flags ≤ #violated`. -/
+theorem hyperbolic_fraction {N : ℕ} (hN : 2 ≤ N) (f : Pt N → ℝ)
+    (hf : ∀ u ∈ realPoints N, f u = 1 ∨ f u = -1) :
+    (1 / 2 - Real.sqrt ((2 : ℝ) ^ (N - 1) + 1) / ((2 : ℝ) ^ (N - 1) + 2)) *
+        ((flags (realPoints N)).card : ℝ) ≤ ((violated (realPoints N) f).card : ℝ) := by
+  have h0 : (0 : Pt N) ∉ realPoints N := by simp [realPoints]
+  have hb := hoggar_bound_violated (by omega : 1 ≤ N) (realPoints N) h0 f hf
+  have hSc := card_realPoints_cast (N := N)
+  have hFc := card_flags_real_cast hN
+  have hhalf : (2 : ℝ) ^ N = 2 * (2 : ℝ) ^ (N - 1) := by
+    obtain ⟨m, rfl⟩ : ∃ m, N = m + 1 := ⟨N - 1, by omega⟩
+    simp [pow_succ, mul_comm]
+  set H : ℝ := (2 : ℝ) ^ (N - 1) with hH
+  have hH2 : (2 : ℝ) ≤ H := by
+    have : 1 ≤ N - 1 := by omega
+    calc (2 : ℝ) = 2 ^ 1 := by norm_num
+      _ ≤ 2 ^ (N - 1) := pow_le_pow_right₀ (by norm_num) this
+  have hD : (2 : ℝ) ^ N = 2 * H := hhalf
+  have hsq : Real.sqrt (((2 : ℝ) ^ N - 1) * ((realPoints N).card : ℝ)) =
+      ((2 : ℝ) ^ N - 1) * Real.sqrt (H + 1) := by
+    have h1 : ((2 : ℝ) ^ N - 1) * ((realPoints N).card : ℝ) =
+        ((2 : ℝ) ^ N - 1) ^ 2 * (H + 1) := by
+      rw [hSc, hD]; ring
+    rw [h1, Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by linarith)]
+  rw [hsq] at hb
+  have hDpos : (0 : ℝ) < (2 : ℝ) ^ N - 1 := by linarith
+  have hb' : ((flags (realPoints N)).card : ℝ) - 2 * ((violated (realPoints N) f).card : ℝ) ≤
+      ((2 : ℝ) ^ N - 2) * ((realPoints N).card : ℝ) * Real.sqrt (H + 1) := by
+    have hmul : ((2 : ℝ) ^ N - 1) *
+        (((flags (realPoints N)).card : ℝ) - 2 * ((violated (realPoints N) f).card : ℝ)) ≤
+        ((2 : ℝ) ^ N - 1) *
+          (((2 : ℝ) ^ N - 2) * ((realPoints N).card : ℝ) * Real.sqrt (H + 1)) := by
+      linear_combination hb
+    exact le_of_mul_le_mul_left hmul hDpos
+  have hHpos : (0 : ℝ) < H + 2 := by linarith
+  have hkey : ((2 : ℝ) ^ N - 2) * ((realPoints N).card : ℝ) * Real.sqrt (H + 1) =
+      ((flags (realPoints N)).card : ℝ) * (2 * Real.sqrt (H + 1) / (H + 2)) := by
+    rw [hFc]
+    field_simp
+  rw [hkey] at hb'
+  have hrew : (1 / 2 - Real.sqrt (H + 1) / (H + 2)) * ((flags (realPoints N)).card : ℝ) =
+      (((flags (realPoints N)).card : ℝ) -
+        ((flags (realPoints N)).card : ℝ) * (2 * Real.sqrt (H + 1) / (H + 2))) / 2 := by
+    field_simp
+  rw [hrew]
+  linarith
+
+/-- **Macroscopic contextuality limit (hyperbolic quadrics `Q⁺(2N−1, 2)`):**
+For every `ε > 0`, eventually for all `N` and every noncontextual sign assignment `f` on
+`realPoints N`, the violated flag fraction exceeds `1/2 - ε` (paired with the `≤ 1/2` upper
+bound from `exists_assignment_violated_le_half`). -/
+theorem hyperbolic_violated_fraction_eventually_gt (ε : ℝ) (hε : 0 < ε) :
+    ∀ᶠ N : ℕ in atTop, ∀ (f : Pt N → ℝ), (∀ u ∈ realPoints N, f u = 1 ∨ f u = -1) →
+      (1 / 2 - ε) < ((violated (realPoints N) f).card : ℝ) / ((flags (realPoints N)).card : ℝ) := by
+  have hev1 : ∀ᶠ N : ℕ in atTop,
+      (1 / 2 - ε) < (1 / 2 : ℝ) - Real.sqrt ((2 : ℝ) ^ (N - 1) + 1) / ((2 : ℝ) ^ (N - 1) + 2) :=
+    (tendsto_order.mp hyperbolic_fraction_tendsto_half).1 (1 / 2 - ε) (by linarith)
+  have hev2 : ∀ᶠ N : ℕ in atTop, 2 ≤ N := Filter.eventually_atTop.mpr ⟨2, fun _ h => h⟩
+  filter_upwards [hev1, hev2] with N hlt hN f hf
+  have hfrac := hyperbolic_fraction hN f hf
+  have hFc := card_flags_real_cast hN
+  have hSc := card_realPoints_cast (N := N)
+  have hD4 : (4 : ℝ) ≤ (2 : ℝ) ^ N := by
+    calc (4 : ℝ) = 2 ^ 2 := by norm_num
+      _ ≤ 2 ^ N := pow_le_pow_right₀ (by norm_num) hN
+  have hSpos : (0 : ℝ) < ((realPoints N).card : ℝ) := by rw [hSc]; nlinarith
+  have hFpos : (0 : ℝ) < ((flags (realPoints N)).card : ℝ) := by
+    rw [hFc]
+    have h1 : (0 : ℝ) < (2 : ℝ) ^ N - 2 := by linarith
+    have h2 : (0 : ℝ) < (2 : ℝ) ^ (N - 1) + 2 := by positivity
+    positivity
+  have hdiv : (1 / 2 : ℝ) - Real.sqrt ((2 : ℝ) ^ (N - 1) + 1) / ((2 : ℝ) ^ (N - 1) + 2)
+      ≤ ((violated (realPoints N) f).card : ℝ) / ((flags (realPoints N)).card : ℝ) :=
+    (le_div_iff₀ hFpos).mpr hfrac
+  linarith
+
 end Asymptotics
 
 /-! ### Part 2. Quantum Metric & Berry Curvature (Propositions 3 & 8) -/

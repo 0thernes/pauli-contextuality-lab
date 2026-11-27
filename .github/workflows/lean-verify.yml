@@ -81,6 +81,9 @@ jobs:
               Path("lean/HoggarBound.lean"),
               Path("lean/ContextualityTensor.lean"),
               Path("lean/Evidence.lean"),
+              Path("lean/VerifyAll.lean"),
+              Path("lean/VerifyStandalone.lean"),
+              Path("lean/VerifyPhaseSeven.lean"),
           ]
           hits = []
           for item in roots:
@@ -163,3 +166,103 @@ jobs:
         continue-on-error: true
         with:
           subject-path: results/lean-axioms-ci.log
+
+  lean-verify-standalone:
+    name: Standalone Track 1 Certificates (Saturated 4/5-Qubit & 4-Qubit C3 Spectra)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install elan & Lean 4.35.0
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache & build VerifyStandalone (8 standalone Track 1 modules)
+        working-directory: lean
+        run: |
+          lake exe cache get
+          lake build VerifyStandalone
+      - name: Run standalone finite-certificate & C3 spectral axiom audit
+        working-directory: lean
+        shell: bash
+        run: |
+          set -o pipefail
+          lake env lean VerifyStandalone.lean 2>&1 | tee ../results/lean-axioms-standalone-ci.log
+          python3 - <<'PY'
+          import re, sys
+          from pathlib import Path
+          allowed = {"propext", "Classical.choice", "Quot.sound"}
+          txt = Path("../results/lean-axioms-standalone-ci.log").read_text(encoding="utf-8")
+          if "STANDALONE_AXIOM_AUDIT_PASS:" not in txt:
+              print("ERROR: missing STANDALONE_AXIOM_AUDIT_PASS sentinel", file=sys.stderr)
+              sys.exit(1)
+          unwrapped = re.sub(r",\n\s+", ", ", txt)
+          checked = 0
+          for line in unwrapped.splitlines():
+              m = re.match(r"^'([^']+)' depends on axioms: \[(.*)\]$", line.strip())
+              if m:
+                  checked += 1
+                  bad = {a.strip() for a in m.group(2).split(",") if a.strip()} - allowed
+                  if bad:
+                      print(f"Disallowed axiom in {m.group(1)}: {sorted(bad)}", file=sys.stderr)
+                      sys.exit(1)
+          if checked < 16:
+              print(f"Expected >= 16 standalone declarations, got {checked}", file=sys.stderr)
+              sys.exit(1)
+          print(f"PASS: {checked} standalone Track 1 finite-certificate & C3 spectral theorems strictly within {sorted(allowed)}.")
+          PY
+      - name: Attest standalone Lean axiom audit (SLSA / Sigstore)
+        uses: actions/attest-build-provenance@v4
+        continue-on-error: true
+        with:
+          subject-path: results/lean-axioms-standalone-ci.log
+
+  lean-verify-phase7:
+    name: Seven-Qubit Phase-State Certificate (SaturatedPhaseSeven, degree 729344)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install elan & Lean 4.35.0
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Fetch Mathlib cache & build VerifyPhaseSeven (SaturatedPhaseSeven)
+        working-directory: lean
+        run: |
+          lake exe cache get
+          lake build VerifyPhaseSeven
+      - name: Run seven-qubit phase-state axiom audit
+        working-directory: lean
+        shell: bash
+        run: |
+          set -o pipefail
+          lake env lean VerifyPhaseSeven.lean 2>&1 | tee ../results/lean-axioms-phase7-ci.log
+          python3 - <<'PY'
+          import re, sys
+          from pathlib import Path
+          allowed = {"propext", "Classical.choice", "Quot.sound"}
+          txt = Path("../results/lean-axioms-phase7-ci.log").read_text(encoding="utf-8")
+          if "PHASE7_AXIOM_AUDIT_PASS:" not in txt:
+              print("ERROR: missing PHASE7_AXIOM_AUDIT_PASS sentinel", file=sys.stderr)
+              sys.exit(1)
+          unwrapped = re.sub(r",\n\s+", ", ", txt)
+          checked = 0
+          for line in unwrapped.splitlines():
+              m = re.match(r"^'([^']+)' depends on axioms: \[(.*)\]$", line.strip())
+              if m:
+                  checked += 1
+                  bad = {a.strip() for a in m.group(2).split(",") if a.strip()} - allowed
+                  if bad:
+                      print(f"Disallowed axiom in {m.group(1)}: {sorted(bad)}", file=sys.stderr)
+                      sys.exit(1)
+          if checked < 5:
+              print(f"Expected >= 5 phase7 declarations, got {checked}", file=sys.stderr)
+              sys.exit(1)
+          print(f"PASS: {checked} seven-qubit phase-state theorems strictly within {sorted(allowed)}.")
+          PY
+      - name: Attest seven-qubit phase-state axiom audit (SLSA / Sigstore)
+        uses: actions/attest-build-provenance@v4
+        continue-on-error: true
+        with:
+          subject-path: results/lean-axioms-phase7-ci.log

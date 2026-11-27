@@ -13,7 +13,13 @@
     "PauliContextualityLab.ComparatorTarget.target_disjoint_square_degree",
     "PauliContextualityLab.ComparatorTarget.target_disjoint_pentagram_degree",
     "PauliContextualityLab.ComparatorTarget.target_peres_mermin_sharp_minimum",
-    "PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound"
+    "PauliContextualityLab.ComparatorTarget.target_sequential_hitting_bound",
+    "PauliContextualityLab.ComparatorTarget.target_global_actual_square_minimum",
+    "PauliContextualityLab.ComparatorTarget.target_global_actual_pentagram_minimum",
+    "PauliContextualityLab.ComparatorTarget.target_actual_square_min_epsilon_tends_to_one",
+    "PauliContextualityLab.ComparatorTarget.target_actual_pentagram_min_epsilon_tends_to_one",
+    "PauliContextualityLab.ComparatorTarget.target_refute_w52_bound_64",
+    "PauliContextualityLab.ComparatorTarget.target_refute_c3_signA_bound_369"
   ],
   "permitted_axioms": [
     "propext",

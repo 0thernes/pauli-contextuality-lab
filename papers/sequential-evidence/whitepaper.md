@@ -2,7 +2,7 @@
 
 Alexander S. Donahue · Independent researcher, Spokane, WA, USA · ORCID 0009-0006-8168-9648 · CC-BY-4.0  
 AI-assisted research software and methods preprint · 26 November 2026 · https://github.com/0thernes/pauli-contextuality-lab  
-Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 3.1.0 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
+Manuscript status: Pauli Contextuality Lab (Track 3) research preprint, version 3.2.0 (consolidated from v1.0.0). Not externally peer reviewed. Licensed under CC-BY-4.0.
 
 ## Abstract
 
@@ -303,7 +303,7 @@ The source, manifest, proof statements, generated records, and checks are all pa
 
 ## 7. Formal verification boundary
 
-The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. In the unified repository, these declarations are audited inside `lean/VerifyAll.lean` alongside Tracks 1 and 2 (`results/lean-axioms-all.log` sentinel `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2206 theorems ... — 0 disallowed axioms`); the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
+The Lean project successfully checked 39 authored theorems. Its exhaustive audit covered 61 proposition-valued declarations in the `Evidence` namespace, including generated equation lemmas. In the unified repository, these declarations are audited inside `lean/VerifyAll.lean` alongside Tracks 1 and 2 (`results/lean-axioms-all.log` sentinel `ALL_THEOREMS_AXIOM_AUDIT_PASS: checked 2306 theorems ... — 0 disallowed axioms`); the only transitive axiom dependencies are the standard foundations `propext`, `Classical.choice`, and `Quot.sound`. The proof source contains no admitted proofs, added project axioms, or `native_decide` proofs. Finite assignment and integer-matrix computations use kernel-checked evaluation.
 
 | Mathematical claim | Selected accepted declarations |
 |---|---|
