@@ -195,13 +195,14 @@ jobs:
               tpath.unlink(missing_ok=True)
               lpath.unlink(missing_ok=True)
           PY
-      - name: Run Batteries linter across 15 clean modules (report-only)
+      - name: Run Batteries linter across 18 clean modules (report-only)
         working-directory: lean
         continue-on-error: true
         run: |
           lake exe runLinter HoggarBound.Moment HoggarBound.Pauli HoggarBound.Bound HoggarBound.Counting HoggarBound.Corollaries
           lake exe runLinter HoggarBound.Quadric HoggarBound.Kramers HoggarBound.Stability ContextualityTensor Evidence
           lake exe runLinter ContextualityTensor.Support ContextualityTensor.UnionModel ContextualityTensor.Asymptotics ContextualityTensor.ActualModel ContextualityTensor.GeneralTheory
+          lake exe runLinter HoggarBound.PGRigidity HoggarBound.TrialityResiduals HoggarBound.DesarguesQuasiQuadric
       - name: Run 6-kernel lake comparator --paranoid
         working-directory: lean
         run: |

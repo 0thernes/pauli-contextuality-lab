@@ -1,9 +1,9 @@
 {
   "status": "pass",
-  "total_python_files": 71,
+  "total_python_files": 75,
   "counts": {
-    "exact_integer_or_symbolic": 33,
-    "exact_integer_with_math_helpers": 2,
+    "exact_integer_or_symbolic": 35,
+    "exact_integer_with_math_helpers": 4,
     "hybrid_exact_core_with_numerical_approximation": 8,
     "numerical_approximation": 28
   },
@@ -370,6 +370,14 @@
       "has_float_literal": false
     },
     {
+      "path": "tracks/spectral-bounds/scripts/desargues_augmented_sb.py",
+      "classification": "exact_integer_with_math_helpers",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
       "path": "tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py",
       "classification": "numerical_approximation",
       "float_imports": [
@@ -578,6 +586,16 @@
       "has_float_literal": false
     },
     {
+      "path": "tracks/spectral-bounds/scripts/pg_rigidity_and_w15.py",
+      "classification": "exact_integer_with_math_helpers",
+      "float_imports": [],
+      "exact_imports": [
+        "sympy"
+      ],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
       "path": "tracks/spectral-bounds/scripts/phase_seven_lean.py",
       "classification": "exact_integer_or_symbolic",
       "float_imports": [],
@@ -590,6 +608,16 @@
       "classification": "exact_integer_or_symbolic",
       "float_imports": [],
       "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tracks/spectral-bounds/scripts/q7plus_triality_residuals.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [
+        "fractions"
+      ],
       "has_float_call": false,
       "has_float_literal": false
     },
@@ -657,6 +685,14 @@
     },
     {
       "path": "tests/test_repo_integrity.py",
+      "classification": "exact_integer_or_symbolic",
+      "float_imports": [],
+      "exact_imports": [],
+      "has_float_call": false,
+      "has_float_literal": false
+    },
+    {
+      "path": "tests/test_saniga_theorems_23_25.py",
       "classification": "exact_integer_or_symbolic",
       "float_imports": [],
       "exact_imports": [],

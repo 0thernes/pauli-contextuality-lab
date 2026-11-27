@@ -11,7 +11,7 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 REPO_ROOT=Path(__file__).resolve().parents[3]
 PAPER_DIR=REPO_ROOT/'papers'/'disjoint-mermin' if (REPO_ROOT/'papers'/'disjoint-mermin').is_dir() else ROOT/'paper'
-RELEASE_TAG = 'v3.3.0'
+RELEASE_TAG = 'v3.4.0'
 REPO_URL='https://github.com/0thernes/pauli-contextuality-lab'
 
 def main():

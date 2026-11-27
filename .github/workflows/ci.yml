@@ -61,7 +61,7 @@ jobs:
           python-version: "3.12"
       - name: Install pinned Python dependencies
         run: python -m pip install -r requirements.txt
-      - name: Compile & run all 14 C11 engines with -Wall -Wextra and ASan/UBSan
+      - name: Compile & run all 15 C11 engines with -Wall -Wextra and ASan/UBSan
         run: |
           mkdir -p build/san
           QR=third_party/quantum_rng/src/quantum_rng
@@ -115,6 +115,9 @@ jobs:
           cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
             tracks/spectral-bounds/src/qrng_stream.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/qrng_stream_san
           ./build/san/qrng_stream_san 42 64 >/dev/null
+          cc -std=gnu11 -O1 -g -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+            tracks/spectral-bounds/src/w15_verify.c -o build/san/w15_san
+          ./build/san/w15_san data/witness/n8_f_l4_opt.txt data/witness/n8_h_l4_opt.txt | grep -q "161360335"
       - name: Report-only linters (ruff & mypy)
         continue-on-error: true
         run: |

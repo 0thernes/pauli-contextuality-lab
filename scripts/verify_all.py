@@ -71,6 +71,9 @@ def main() -> int:
         "c3_exact_optima_check.py",
         "norm_phase_family.py",
         "exact_degrees_n4_n5.py",
+        "q7plus_triality_residuals.py",
+        "desargues_augmented_sb.py",
+        "pg_rigidity_and_w15.py",
     ):
         p = t1_scripts / name
         if p.is_file():

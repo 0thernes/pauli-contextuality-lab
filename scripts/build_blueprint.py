@@ -270,6 +270,7 @@ def render_svg_dag(nodes: list[dict[str, Any]]) -> str:
 
 def render_html(nodes: list[dict[str, Any]]) -> str:
     total_decls = sum(len(n["lean"]) for n in nodes)
+    bridge_targets = sum(len(n["lean"]) for n in nodes if n["track"] == "bridge")
     counts = {
         "all": len(nodes),
         "track1": sum(1 for n in nodes if n["track"] == "track1"),
@@ -358,7 +359,7 @@ a{{color:#38bdf8;text-decoration:none}}
 </style></head><body><main>
 <p><a href="../">&larr; Back to Pauli Contextuality Lab</a></p>
 <h1>Lean 4.35.0 Dependency Blueprint</h1>
-<p class="sub">{len(nodes)} formal nodes &middot; {total_decls} statically verified Lean declarations linked to exact GitHub source lines across Tracks 1&ndash;3 (<code>HoggarBound</code>, <code>ContextualityTensor</code>, <code>Evidence</code>) and the 12-target 6-kernel Comparator Bridge. Hover or click any graph node to inspect its dependency cone, or click any Lean declaration chip to open its source line on GitHub.</p>
+<p class="sub">{len(nodes)} formal nodes &middot; {total_decls} statically verified Lean declarations linked to exact GitHub source lines across Tracks 1&ndash;3 (<code>HoggarBound</code>, <code>ContextualityTensor</code>, <code>Evidence</code>) and the {bridge_targets}-target 6-kernel Comparator Bridge. Hover or click any graph node to inspect its dependency cone, or click any Lean declaration chip to open its source line on GitHub.</p>
 <div class="legend">
   <span><i class="dot" style="background:#38bdf8"></i>Track 1: Spectral Bounds &amp; Conjecture E</span>
   <span><i class="dot" style="background:#4ade80"></i>Track 2: Disjoint Mermin (Muller &amp; Saniga Sec. 6)</span>

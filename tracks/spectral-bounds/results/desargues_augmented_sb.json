@@ -1,0 +1,140 @@
+{
+  "status": "pass",
+  "arithmetic": "exact_integer",
+  "desargues_10_3": {
+    "outliers_5_frame": [
+      "IXII",
+      "XXII",
+      "XIXI",
+      "XIIX",
+      "XIXX"
+    ],
+    "desargues_10_points": [
+      "XIII",
+      "IIXI",
+      "IXXI",
+      "XXXI",
+      "IIIX",
+      "IXIX",
+      "XXIX",
+      "IIXX",
+      "IXXX",
+      "XXXX"
+    ],
+    "desargues_lines": 10,
+    "regular_degree": 3
+  },
+  "universal_dhop_fiber_flip": {
+    "total_family_size": 32768,
+    "hyperplane_in_S": 71,
+    "hyperplane_out_S": 63,
+    "regular_ambient_degree": 70
+  },
+  "ovoid_context_parabola": {
+    "formula": "1575 - 256*k + 32*k^2",
+    "values_by_k": {
+      "0": 1575,
+      "1": 1351,
+      "2": 1191,
+      "3": 1095,
+      "4": 1063,
+      "5": 1095
+    },
+    "unique_minimum_k": 4,
+    "unique_minimum_contexts": 1063,
+    "negative_control_collinear_k3_contexts": 967
+  },
+  "augmented_sb_variants": {
+    "pole": "IZZZ",
+    "red_8_XIXX": [
+      "XIXX",
+      "XZXX",
+      "YIYX",
+      "YZYX",
+      "YIXY",
+      "YZXY",
+      "XIYY",
+      "XZYY"
+    ],
+    "fano_IZZZ": [
+      "IZII",
+      "ZIZI",
+      "ZZZI",
+      "ZIIZ",
+      "ZZIZ",
+      "IIZZ",
+      "IZZZ"
+    ],
+    "new_contexts_total": 124,
+    "new_contexts_solid": 28,
+    "new_contexts_cross": 96,
+    "contexts_linking_red8_to_SB_minus_Q7p": 0,
+    "tangent_hyperplane_IZZZ_in_K103": "71/71",
+    "extension_256_histogram": {
+      "52": 2,
+      "57": 16,
+      "60": 64,
+      "61": 64,
+      "64": 56,
+      "65": 48,
+      "68": 6
+    },
+    "K95": {
+      "pts": 95,
+      "lines": 635,
+      "floor": 39,
+      "grids": 4480,
+      "grid_max_mult": 112,
+      "avg_grid_lb": 40,
+      "disjoint_grid_lb": 53,
+      "witness_ub": 55,
+      "mask": "0x94411cc35881d0034491cc13885100d34941c1c385810d03999111135551ddd2"
+    },
+    "K103": {
+      "pts": 103,
+      "lines": 759,
+      "floor": 65,
+      "grids": 7744,
+      "grid_max_mult": 144,
+      "avg_grid_lb": 54,
+      "disjoint_grid_lb": 87,
+      "witness_ub": 107,
+      "mask": "0x94413cc35881f0036491cc13a85100d36941c1c3a5810d03999131135551fdd2"
+    },
+    "SB_4flip": {
+      "pts": 135,
+      "lines": 1063,
+      "floor": 59,
+      "grids": 11008,
+      "grid_max_mult": 160,
+      "avg_grid_lb": 69,
+      "disjoint_grid_lb": 112,
+      "witness_ub_ext": 123,
+      "breaks_floor_saturation": true,
+      "mask": "0x94453eef5889f22364b5ce1fa87902d36b45c1efa7890d239bb5311f5779fdd2"
+    },
+    "SB_aug_143": {
+      "pts": 143,
+      "lines": 1219,
+      "floor": 95,
+      "grids": 14336,
+      "grid_max_mult": 192,
+      "avg_grid_lb": 75,
+      "disjoint_grid_lb": 121,
+      "witness_ub": 127,
+      "hyperplane_profile": {
+        "in_S": {
+          "71": 24,
+          "75": 112,
+          "79": 7
+        },
+        "out_S": {
+          "67": 112
+        }
+      },
+      "fifteen_times_card": 2145,
+      "is_square": false,
+      "mask": "0xb4453eef7889f22364b5ee1fa87922d36b45e1efa7892d23bbb5311f7779fdd2"
+    }
+  }
+}

@@ -1,12 +1,17 @@
 /-
 Pauli Contextuality Lab — Unified Isolated Challenge Specification (`lake comparator`).
 
-Contains ONLY the target statements of 12 headline theorems spanning ALL THREE research tracks:
+Contains ONLY the target statements of 30 headline theorems spanning ALL THREE research tracks:
   - Track 1 (`HoggarBound`): spectral floor, Kramers floor, saturation squareness, infinite
     pure-CCZ family `|Psi_{3m}>`, exact C3 binary optima (368 vs 344), Jonah's Conjecture E
-    (all 9 vertex cases, all N ≥ 4), and unconditional N=4..5 bounds (1455, 6444).
+    (all 9 vertex cases, all N ≥ 4), unconditional N=4..5 bounds (1455, 6444), Theorems 23–25
+    (triality residuals of `Q⁺(7,2)`, `W(15,2)` `PG(7,2)`-rigidity no-go `166,115,415`, universal
+    `[DHOP]` fiber-flip two-character law, and augmented quasi-quadric `S_B^+` bracket `[121, 127]`),
+    and perturbed-bound refutations.
   - Track 2 (`ContextualityTensor`): exact degrees `(7^k - 5^k)/2` and `(6^k - 4^k)/2`
-    for k disjoint Peres-Mermin squares and Mermin pentagrams (Muller & Saniga Sec. 6).
+    for k disjoint Peres-Mermin squares and Mermin pentagrams (Muller & Saniga Sec. 6),
+    actual vertex-union model, general heterogeneous/seed theory, arbitrary-k Pauli realizations,
+    and k-independent readout-noise thresholds.
   - Track 3 (`Evidence`): sharp setting-bias bound on the Peres-Mermin square and finite
     adaptive-tree wealth supermartingale hitting bound.
 
@@ -20,6 +25,9 @@ import HoggarBound.Quadric
 import HoggarBound.C3Geometry
 import HoggarBound.ConjectureECore
 import HoggarBound.ConjectureEExtras
+import HoggarBound.TrialityResiduals
+import HoggarBound.PGRigidity
+import HoggarBound.DesarguesQuasiQuadric
 import ContextualityTensor
 import ContextualityTensor.ActualModel
 import ContextualityTensor.GeneralTheory
@@ -285,6 +293,61 @@ theorem target_noise_thresholds_k_independent (k : ℕ) (hk : 1 ≤ k) (p : ℝ)
     (hp0 : 0 ≤ p) (hp1 : p ≤ 1 / 2) :
     ((5 : ℝ) ^ k - 1 < ContextualityTensor.noisyScore 6 3 k p ↔ (2 : ℝ) / 3 < (1 - 2 * p) ^ 3) ∧
     ((4 : ℝ) ^ k - 1 < ContextualityTensor.noisyScore 5 4 k p ↔ (3 : ℝ) / 5 < (1 - 2 * p) ^ 4) := by
+  sorry
+
+/-! ### Track 1 Theorems 23–25: Triality Residuals, `PG(N-1,2)` Rigidity & Desargues Quasi-Quadric -/
+
+/-- Target 25 (Track 1, Thm 23(a)): Universal spread-residual lower bound `d(Q⁺(7,2) \ S) ≥ 210`
+for EVERY 9-solid spread `S` of `Q⁺(7,2)`. -/
+theorem target_spread_residual_ge_210 (S : HoggarBound.TrialityResiduals.SolidSpread)
+    (f : HoggarBound.Pt 4 → ℝ)
+    (hf : ∀ u ∈ HoggarBound.realPoints 4, f u = 1 ∨ f u = -1) :
+    210 ≤ (S.resViolatedLines f).card := by
+  sorry
+
+/-- Target 26 (Track 1, Thm 23(b)): Universal `Q(6,2)`-residual lower bound
+`d(Q⁺(7,2) \ Q(6,2)) ≥ 252` for EVERY off-quadric pole `w` (`qform w = 1`). -/
+theorem target_q62_residual_ge_252 (w : HoggarBound.Pt 4) (hw : HoggarBound.qform w = 1)
+    (f : HoggarBound.Pt 4 → ℝ)
+    (hf : ∀ u ∈ HoggarBound.realPoints 4, f u = 1 ∨ f u = -1) :
+    252 ≤ (HoggarBound.TrialityResiduals.q62ResViolatedLines w f).card := by
+  sorry
+
+/-- Target 27 (Track 1, Thm 23(a*)): Exact contextuality degree `252` on the triality-dual
+9-point ovoid deletion `Q⁺(7,2) \ O` (`126` observables, `1,260` contexts). -/
+theorem target_ovoid_residual_exact_252 :
+    (∀ f : HoggarBound.Pt 4 → ℝ,
+      (∀ u ∈ HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask, f u = 1 ∨ f u = -1) →
+      252 ≤ (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f).card) ∧
+    (∃ f : HoggarBound.Pt 4 → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧
+      (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f).card = 252) := by
+  sorry
+
+/-- Target 28 (Track 1, Thm 24): Eight-qubit `PG(7,2)`-rigidity no-go bound on `W(15,2)`:
+every `PG(7,2)`-centered extension violates at least `166,115,415` contexts. -/
+theorem target_pg_rigidity_n8 (f : HoggarBound.Pt 8 → ℝ)
+    (hreal : ∀ u ∈ HoggarBound.realPoints 8, f u = HoggarBound.PGRigidity.pgCssSign 8 u)
+    (hf : ∀ u ∈ HoggarBound.allPoints 8, f u = 1 ∨ f u = -1) :
+    166115415 ≤ (HoggarBound.violatedLines (HoggarBound.allPoints 8) f).card := by
+  sorry
+
+/-- Target 29 (Track 1, Thm 25): Universal all-`N` (`N ≥ 2`) `[DHOP]` fiber-flip two-character
+hyperplane intersection law across all `2^(2^N - 1)` fiber-flip sets `S_ε`. -/
+theorem target_fiberFlip_hyperplane_card {N : ℕ} (hN : 2 ≤ N)
+    (ε : HoggarBound.Vec N → ZMod 2) {u : HoggarBound.Pt N}
+    (hu : u ∈ HoggarBound.allPoints N) :
+    4 * ((HoggarBound.DesarguesQuasiQuadric.fiberFlipSet N ε).filter fun v => HoggarBound.symp u v = 0).card + 4 =
+      4 ^ N + if u ∈ HoggarBound.DesarguesQuasiQuadric.fiberFlipSet N ε then 2 * 2 ^ N else 0 := by
+  sorry
+
+/-- Target 30 (Track 1, Thm 25): Sharp contextuality bracket `121 ≤ d(S_B^+) ≤ 127`
+on Metod Saniga's augmented 143-point quasi-quadric `S_B^+ = S_B ∪ red_8(XIXX)`. -/
+theorem target_sb_aug_bounds_121_127 :
+    (∀ f : HoggarBound.Pt 4 → ℝ,
+      (∀ u ∈ HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask, f u = 1 ∨ f u = -1) →
+      121 ≤ (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask) f).card) ∧
+    (∃ f : HoggarBound.Pt 4 → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧
+      (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask) f).card = 127) := by
   sorry
 
 end PauliContextualityLab.ComparatorTarget

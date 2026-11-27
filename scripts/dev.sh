@@ -51,6 +51,7 @@ case "$cmd" in
       (cd lean && lake exe runLinter HoggarBound.Moment HoggarBound.Pauli HoggarBound.Bound HoggarBound.Counting HoggarBound.Corollaries || true)
       (cd lean && lake exe runLinter HoggarBound.Quadric HoggarBound.Kramers HoggarBound.Stability ContextualityTensor Evidence || true)
       (cd lean && lake exe runLinter ContextualityTensor.Support ContextualityTensor.UnionModel ContextualityTensor.Asymptotics ContextualityTensor.ActualModel ContextualityTensor.GeneralTheory || true)
+      (cd lean && lake exe runLinter HoggarBound.PGRigidity HoggarBound.TrialityResiduals HoggarBound.DesarguesQuasiQuadric || true)
     fi
     ;;
 
@@ -103,7 +104,10 @@ case "$cmd" in
     cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
       tracks/spectral-bounds/src/qrng_stream.c "$QR/quantum_rng.c" -I"$QR" -lm -o build/san/qrng_stream_san
     ./build/san/qrng_stream_san 42 64 >/dev/null
-    echo "All 14 C11 ASan/UBSan checks passed."
+    cc -O1 -g -std=gnu11 -Wall -Wextra -fsanitize=address,undefined -fno-omit-frame-pointer \
+      tracks/spectral-bounds/src/w15_verify.c -o build/san/w15_san
+    ./build/san/w15_san data/witness/n8_f_l4_opt.txt data/witness/n8_h_l4_opt.txt >/dev/null
+    echo "All 15 C11 ASan/UBSan checks passed."
     ;;
 
   verify-lean)

@@ -18,6 +18,9 @@ import HoggarBound.ConjectureEExtras
 import HoggarBound.C3ExactOptima
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import HoggarBound.TrialityResiduals
+import HoggarBound.PGRigidity
+import HoggarBound.DesarguesQuasiQuadric
 import HoggarBound.NonVacuity
 import ContextualityTensor
 import ContextualityTensor.ActualModel
@@ -247,5 +250,46 @@ theorem target_noise_thresholds_k_independent (k : ℕ) (hk : 1 ≤ k) (p : ℝ)
     ((4 : ℝ) ^ k - 1 < ContextualityTensor.noisyScore 5 4 k p ↔ (3 : ℝ) / 5 < (1 - 2 * p) ^ 4) :=
   ⟨ContextualityTensor.square_noise_threshold_iff k hk p hp0 hp1,
    ContextualityTensor.pentagram_noise_threshold_iff k hk p hp0 hp1⟩
+
+theorem target_spread_residual_ge_210 (S : HoggarBound.TrialityResiduals.SolidSpread)
+    (f : HoggarBound.Pt 4 → ℝ)
+    (hf : ∀ u ∈ HoggarBound.realPoints 4, f u = 1 ∨ f u = -1) :
+    210 ≤ (S.resViolatedLines f).card :=
+  S.spread_residual_ge_210 f hf
+
+theorem target_q62_residual_ge_252 (w : HoggarBound.Pt 4) (hw : HoggarBound.qform w = 1)
+    (f : HoggarBound.Pt 4 → ℝ)
+    (hf : ∀ u ∈ HoggarBound.realPoints 4, f u = 1 ∨ f u = -1) :
+    252 ≤ (HoggarBound.TrialityResiduals.q62ResViolatedLines w f).card :=
+  HoggarBound.TrialityResiduals.q62_residual_ge_252 w hw f hf
+
+theorem target_ovoid_residual_exact_252 :
+    (∀ f : HoggarBound.Pt 4 → ℝ,
+      (∀ u ∈ HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask, f u = 1 ∨ f u = -1) →
+      252 ≤ (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f).card) ∧
+    (∃ f : HoggarBound.Pt 4 → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧
+      (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f).card = 252) :=
+  HoggarBound.TrialityResiduals.ovoid_residual_exact_252
+
+theorem target_pg_rigidity_n8 (f : HoggarBound.Pt 8 → ℝ)
+    (hreal : ∀ u ∈ HoggarBound.realPoints 8, f u = HoggarBound.PGRigidity.pgCssSign 8 u)
+    (hf : ∀ u ∈ HoggarBound.allPoints 8, f u = 1 ∨ f u = -1) :
+    166115415 ≤ (HoggarBound.violatedLines (HoggarBound.allPoints 8) f).card :=
+  HoggarBound.PGRigidity.pg_rigidity_n8 f hreal hf
+
+theorem target_fiberFlip_hyperplane_card {N : ℕ} (hN : 2 ≤ N)
+    (ε : HoggarBound.Vec N → ZMod 2) {u : HoggarBound.Pt N}
+    (hu : u ∈ HoggarBound.allPoints N) :
+    4 * ((HoggarBound.DesarguesQuasiQuadric.fiberFlipSet N ε).filter fun v => HoggarBound.symp u v = 0).card + 4 =
+      4 ^ N + if u ∈ HoggarBound.DesarguesQuasiQuadric.fiberFlipSet N ε then 2 * 2 ^ N else 0 :=
+  HoggarBound.DesarguesQuasiQuadric.fiberFlip_hyperplane_card hN ε hu
+
+theorem target_sb_aug_bounds_121_127 :
+    (∀ f : HoggarBound.Pt 4 → ℝ,
+      (∀ u ∈ HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask, f u = 1 ∨ f u = -1) →
+      121 ≤ (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask) f).card) ∧
+    (∃ f : HoggarBound.Pt 4 → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧
+      (HoggarBound.violatedLines (HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask) f).card = 127) :=
+  HoggarBound.DesarguesQuasiQuadric.sb_aug_bounds_121_127
 
 end PauliContextualityLab.ComparatorTarget

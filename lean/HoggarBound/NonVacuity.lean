@@ -4,7 +4,7 @@ Hoggar Bound Lab — Explicit Non-Vacuity Witnesses for Every Headline Theorem.
 In formal verification of mathematical physics, a universally quantified theorem can be
 accidentally vacuous if its hypothesis bundle is unsatisfiable or defines an unintended
 degenerate object. This module proves explicit existential non-vacuity witnesses for every
-headline theorem family in the `v1.5.0–v1.9.0` formalization stack:
+headline theorem family in the `v1.5.0–v3.3.0` formalization stack:
 
 1. `spectral_floor_nonvacuous`          : Theorem 1 (`hoggar_bound`) on 3-qubit `W(5,2)`.
 2. `kramers_nonvacuous`                 : Theorem 2 (`hoggar_bound_quaternionic` & `Q⁻(5,2)`).
@@ -17,6 +17,9 @@ headline theorem family in the `v1.5.0–v1.9.0` formalization stack:
 8. `c3_exact_optima_nonvacuous`         : Theorem 16'' (`corollary16_exact_binary_optima`: 368 vs 344, gap 24).
 9. `exact_degrees_ladders_nonvacuous`   : Exact CSS witnesses (315, 1575, 6975) & unconditional bounds (1455, 6444).
 10. `propositions_qgt_twochar_nonvacuous`: Propositions 3, 8, and 10 (`AuditUpgrades`).
+11. `triality_residuals_nonvacuous`     : Theorem 23 (`TrialityResiduals`: exact degrees 0, 210, 252, 252).
+12. `pg_rigidity_nonvacuous`            : Theorem 24 (`PGRigidity`: `W(15,2)` bound `166,115,415`).
+13. `desargues_quasi_quadric_nonvacuous`: Theorem 25 (`DesarguesQuasiQuadric`: `S_ε` & `S_B^+` bracket).
 
 Zero `sorry`, zero `admit`, zero `native_decide`, zero `set_option`, strictly within
 `[propext, Classical.choice, Quot.sound]`.
@@ -31,6 +34,9 @@ import HoggarBound.C3ExactOptima
 import HoggarBound.SaturatedPhaseSix
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import HoggarBound.TrialityResiduals
+import HoggarBound.PGRigidity
+import HoggarBound.DesarguesQuasiQuadric
 import ContextualityTensor.ActualModel
 
 open Finset Matrix
@@ -296,6 +302,81 @@ theorem refute_pentagram_k2_bound_11 :
   obtain ⟨⟨a0, h10⟩, _⟩ := ContextualityTensor.global_actual_pentagram_minimum 2
   have hge := h a0
   norm_num at h10
+  omega
+
+/-- 11. Non-vacuity witness for Theorem 23 (`TrialityResiduals`):
+exhibits all four 315-line deletion residuals of `Q⁺(7,2)` (`1,260` residual contexts each)
+attaining exact degrees `0`, `210` (canonical spread `m1Spread`), `252` (`Q(6,2)`), and `252`
+(triality-dual 9-point ovoid deletion). -/
+theorem triality_residuals_nonvacuous :
+    (∃ f0 : Pt 4 → ℝ, (∀ u, f0 u = 1 ∨ f0 u = -1) ∧
+      (violatedLines (realPoints 4) f0).card = 315 ∧
+      ((contexts (realPoints 4)) \ (violatedLines (realPoints 4) f0)).card = 1260) ∧
+    (∃ (S : HoggarBound.TrialityResiduals.SolidSpread) (f1 : Pt 4 → ℝ),
+      (∀ u, f1 u = 1 ∨ f1 u = -1) ∧ (S.resViolatedLines f1).card = 210) ∧
+    (∃ (w : Pt 4) (f2 : Pt 4 → ℝ),
+      qform w = 1 ∧ (∀ u, f2 u = 1 ∨ f2 u = -1) ∧
+      (HoggarBound.TrialityResiduals.q62ResViolatedLines w f2).card = 252) ∧
+    (∃ f3 : Pt 4 → ℝ, (∀ u, f3 u = 1 ∨ f3 u = -1) ∧
+      (violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f3).card = 252) := by
+  obtain ⟨_, f1, hf1, h210⟩ := HoggarBound.TrialityResiduals.m1_spread_residual_exact_210
+  obtain ⟨_, f2, hf2, h252q⟩ := HoggarBound.TrialityResiduals.q62_residual_exact_252
+  obtain ⟨_, f3, hf3, h252o⟩ := HoggarBound.TrialityResiduals.ovoid_residual_exact_252
+  exact ⟨HoggarBound.TrialityResiduals.dw52_residual_exact_zero,
+    ⟨HoggarBound.TrialityResiduals.m1Spread, f1, hf1, h210⟩,
+    ⟨HoggarBound.ExactDegreesN4N5.Y0 4 (by norm_num), f2,
+      HoggarBound.ExactDegreesN4N5.qform_Y0 4 (by norm_num), hf2, h252q⟩,
+    ⟨f3, hf3, h252o⟩⟩
+
+/-- 12. Non-vacuity witness for Theorem 24 (`PGRigidity`) at `N = 8` (`W(15,2)`):
+the canonical `pgCssSign 8` assignment inhabits the hypothesis bundle of `pg_rigidity_n8`,
+forcing at least `166,115,415` violated contexts. -/
+theorem pg_rigidity_nonvacuous :
+    ∃ f : Pt 8 → ℝ,
+      (∀ u ∈ realPoints 8, f u = HoggarBound.PGRigidity.pgCssSign 8 u) ∧
+      (∀ u ∈ allPoints 8, f u = 1 ∨ f u = -1) ∧
+      166115415 ≤ (violatedLines (allPoints 8) f).card :=
+  ⟨HoggarBound.PGRigidity.pgCssSign 8, fun _ _ => rfl,
+    fun u _ => HoggarBound.PGRigidity.pgCssSign_values 8 u,
+    HoggarBound.PGRigidity.pg_rigidity_n8 (HoggarBound.PGRigidity.pgCssSign 8)
+      (fun _ _ => rfl) (fun u _ => HoggarBound.PGRigidity.pgCssSign_values 8 u)⟩
+
+/-- 13. Non-vacuity witness for Theorem 25 (`DesarguesQuasiQuadric`):
+the constant-zero fiber-flip set `S_0` exhibits exact `71/63` hyperplane intersections at `N = 4`,
+paired with the attaining `127`-violation witness on Metod Saniga's augmented quasi-quadric `S_B^+`. -/
+theorem desargues_quasi_quadric_nonvacuous :
+    (HoggarBound.DesarguesQuasiQuadric.fiberFlipSet 4 (fun _ => 0)).card = 135 ∧
+    (∃ f : Pt 4 → ℝ, (∀ u, f u = 1 ∨ f u = -1) ∧
+      (violatedLines (HoggarBound.cfg 4 HoggarBound.DesarguesQuasiQuadric.sbAugMask) f).card = 127) :=
+  ⟨(HoggarBound.DesarguesQuasiQuadric.fiberFlip_n4_71_63 (fun _ => 0)).1,
+   HoggarBound.DesarguesQuasiQuadric.sb_aug_bounds_121_127.2⟩
+
+/-- Perturbed headline refutation 9: `d(Q⁺(7,2) \ M1) ≥ 211` is false (`m1OptNeg` attains `210`). -/
+theorem refute_m1_spread_bound_211 :
+    ¬ (∀ f : Pt 4 → ℝ, (∀ u ∈ realPoints 4, f u = 1 ∨ f u = -1) →
+        211 ≤ (HoggarBound.TrialityResiduals.m1Spread.resViolatedLines f).card) := by
+  intro h
+  obtain ⟨_, f, hf, h210⟩ := HoggarBound.TrialityResiduals.m1_spread_residual_exact_210
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 10: `d(Q⁺(7,2) \ Q(6,2)) ≥ 253` is false (`ovoidOptNeg` attains `252`). -/
+theorem refute_q62_residual_bound_253 :
+    ¬ (∀ f : Pt 4 → ℝ, (∀ u ∈ realPoints 4, f u = 1 ∨ f u = -1) →
+        253 ≤ (HoggarBound.TrialityResiduals.q62ResViolatedLines
+          (HoggarBound.ExactDegreesN4N5.Y0 4 (by norm_num)) f).card) := by
+  intro h
+  obtain ⟨_, f, hf, h252⟩ := HoggarBound.TrialityResiduals.q62_residual_exact_252
+  have hge := h f (fun u _ => hf u)
+  omega
+
+/-- Perturbed headline refutation 11: `d(Q⁺(7,2) \ O) ≥ 253` is false (`ovoidOptNeg` attains `252`). -/
+theorem refute_ovoid_residual_bound_253 :
+    ¬ (∀ f : Pt 4 → ℝ, (∀ u ∈ HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask, f u = 1 ∨ f u = -1) →
+        253 ≤ (violatedLines (HoggarBound.cfg 4 HoggarBound.TrialityResiduals.ovoidRemovedMask) f).card) := by
+  intro h
+  obtain ⟨_, f, hf, h252⟩ := HoggarBound.TrialityResiduals.ovoid_residual_exact_252
+  have hge := h f (fun u _ => hf u)
   omega
 
 end HoggarBound.NonVacuity

@@ -25,7 +25,13 @@
     "PauliContextualityLab.ComparatorTarget.target_general_seed_epsilon_tends_to_one",
     "PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization",
     "PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization",
-    "PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent"
+    "PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent",
+    "PauliContextualityLab.ComparatorTarget.target_spread_residual_ge_210",
+    "PauliContextualityLab.ComparatorTarget.target_q62_residual_ge_252",
+    "PauliContextualityLab.ComparatorTarget.target_ovoid_residual_exact_252",
+    "PauliContextualityLab.ComparatorTarget.target_pg_rigidity_n8",
+    "PauliContextualityLab.ComparatorTarget.target_fiberFlip_hyperplane_card",
+    "PauliContextualityLab.ComparatorTarget.target_sb_aug_bounds_121_127"
   ],
   "permitted_axioms": [
     "propext",

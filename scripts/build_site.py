@@ -48,7 +48,7 @@ def render_portal() -> str:
   <title>Pauli Contextuality Lab · v{version}</title>
   <meta name="description" content="Machine-checked Lean 4.35.0 &amp; 6-kernel verified research laboratory for Pauli contextuality: spectral floor, |Psi_{{3m}}&gt;, Jonah Conjecture E, disjoint Mermin degrees, and sequential contextuality evidence."/>
   <meta property="og:title" content="Pauli Contextuality Lab"/>
-  <meta property="og:description" content="2,452 exhaustively audited Lean 4.35.0 theorems, 24-target 6-kernel comparator, 29-node interactive SVG Blueprint, and 4 browser labs."/>
+  <meta property="og:description" content="2,798 exhaustively audited Lean 4.35.0 theorems, 30-target 6-kernel comparator, 32-node interactive SVG Blueprint, and 4 browser labs."/>
   <meta property="og:type" content="website"/>
   <style>
     :root {{ color-scheme: dark; }}
@@ -95,7 +95,7 @@ def render_portal() -> str:
         <div>
           <div class="tag">Track 1 · lean/HoggarBound/</div>
           <h2>Spectral Bounds, Saturating States &amp; Conjecture E</h2>
-          <p>Hoggar/Kramers spectral floor, infinite pure-CCZ determinant family |&Psi;<sub>3m</sub>&rang;, classical N=4,5 exact ladders, exact four-qubit C3 binary optima (368 vs 344, gap 24), and Jonah&rsquo;s Conjecture E across all nine vertex cases for all N &ge; 4.</p>
+          <p>Hoggar/Kramers spectral floor, infinite pure-CCZ determinant family |&Psi;<sub>3m</sub>&rang;, classical N=4,5 exact ladders, exact four-qubit C3 binary optima (368 vs 344, gap 24), Jonah&rsquo;s Conjecture E across all nine vertex cases for all N &ge; 4, and Theorems 23&ndash;25 (Q<sup>+</sup>(7,2) triality residuals, W(15,2) PG(7,2)-rigidity no-go, Desargues (10<sub>3</sub>) &amp; augmented S<sub>B</sub><sup>+</sup>).</p>
         </div>
         <div class="links">
           <a href="papers/spectral-bounds/unified-contextuality.pdf">Unified PDF</a>

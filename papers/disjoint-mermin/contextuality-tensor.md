@@ -9,7 +9,7 @@ date: "27 November 2026"
 **Alexander S. Donahue — Independent researcher, Spokane, WA, USA**  
 ORCID: [0009-0006-8168-9648](https://orcid.org/0009-0006-8168-9648)  
 Correspondence: [0_0@0thernes.art](mailto:0_0@0thernes.art)  
-Research preprint, version 3.3.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
+Research preprint, version 3.4.0 (consolidated from v0.1.0). Not peer reviewed. Substantive AI assistance disclosed below.
 
 ## Abstract
 
@@ -224,7 +224,7 @@ The QGTL metric and curvature comparison had maximum analytic error below $1.2\t
 
 ## 8. Literature search, limitations and reproducibility
 
-The literature audit searched the source question and combinations of contextuality degree, disjoint union, product, augmented score, square and pentagram on 9 November 2026. It located nearby contextual-fraction and XOR-repetition results [2,3] and no duplicate primary source for these exact all-copy degree formulas. This bounded search is not proof of priority. The specific inspected version of [1] states the matching limit question as open; unpublished work or subsequent corrections may change that assessment.
+The literature audit searched the source question and combinations of contextuality degree, disjoint union, product, augmented score, square and pentagram on 9 November 2026. It located nearby contextual-fraction and XOR-repetition results [2,3] and no duplicate primary source for these exact all-copy degree formulas. This bounded search is not proof of priority. The specific inspected version of [1] states the matching limit question as open; in subsequent private correspondence (November 2026), M. Saniga noted that A. Muller and he independently obtained a general formula for the contextuality degree of disjoint unions of contextual configurations, planned for version 2 of [1] (*J. Phys. A* review). Unpublished work or subsequent revisions may therefore overlap with or refine the results reported here.
 
 The decisive mathematical assumptions are distinct nonempty seed contexts, disjoint vertex alphabets, inclusion of every nonempty tuple in (2), and a single context-independent value for each observable. Violating those assumptions changes the problem. Large normalized gaps do not establish a quantum computational speedup, a hardware fault-tolerance threshold, or an optimum in a different contextuality measure.
 

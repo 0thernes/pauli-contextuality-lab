@@ -90,6 +90,12 @@ class RepoIntegrityTests(unittest.TestCase):
         meta = json.loads((ROOT / "papers" / "spectral-bounds" / "unified-metadata.json").read_text(encoding="utf-8"))
         self.assertEqual(meta["version"], version)
         self.assertTrue(meta["source_release"].endswith(f"/v{version}"))
+        bib = (ROOT / "papers" / "spectral-bounds" / "unified-citation.bib").read_text(encoding="utf-8")
+        self.assertIn(f"version      = {{{version}}}", bib)
+        for rel in ("README.md", "CLAIMS.md"):
+            doc_txt = (ROOT / rel).read_text(encoding="utf-8")
+            for bad_tok in ("22.48%", "16.56%", "6^{-1/3}", "5^{-1/4}"):
+                self.assertNotIn(bad_tok, doc_txt, f"Erroneous Track 2 noise threshold {bad_tok!r} in {rel}")
 
     def test_all_root_doc_repo_paths_exist(self) -> None:
         path_pat = re.compile(r"`((?:lean|tracks|papers|scripts|tests|docs|data|third_party|results|blueprint)/[A-Za-z0-9_./-]+)`")
@@ -386,9 +392,9 @@ class RepoIntegrityTests(unittest.TestCase):
                 f"Stale 110-declaration abstract phrasing found in {rel}",
             )
             self.assertIn(
-                "2,452 exhaustively audited",
+                "2,798 exhaustively audited",
                 txt,
-                f"Missing synchronized 2,452-theorem count in {rel}",
+                f"Missing synchronized 2,798-theorem count in {rel}",
             )
 
     def test_track_scripts_resolve_shared_monorepo_roots(self) -> None:
@@ -443,12 +449,13 @@ class RepoIntegrityTests(unittest.TestCase):
             text=True,
             check=True,
         )
-        self.assertIn("PASS: Blueprint validated 29 nodes (213 Lean decls", res.stdout)
+        self.assertIn("PASS: Blueprint validated 32 nodes (251 Lean decls", res.stdout)
         bp = json.loads((ROOT / "build" / "site" / "blueprint" / "blueprint.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(bp), 29)
+        self.assertEqual(len(bp), 32)
         bp_html = (ROOT / "build" / "site" / "blueprint" / "index.html").read_text(encoding="utf-8")
         self.assertIn('integrity="sha384-', bp_html)
         self.assertIn('crossorigin="anonymous"', bp_html)
+        self.assertIn("30-target 6-kernel Comparator Bridge", bp_html)
         total = 0
         for node in bp:
             self.assertEqual(len(node["lean"]), len(node["lean_links"]))
@@ -456,7 +463,7 @@ class RepoIntegrityTests(unittest.TestCase):
                 self.assertRegex(link["url"], r"^https://github\.com/0thernes/pauli-contextuality-lab/blob/main/lean/.+\.lean#L\d+$")
                 self.assertTrue((ROOT / link["file"]).is_file(), f"Missing file {link['file']}")
                 total += 1
-        self.assertEqual(total, 213)
+        self.assertEqual(total, 251)
 
     def test_phase_seven_and_c3_audit_paths_live(self) -> None:
         import subprocess

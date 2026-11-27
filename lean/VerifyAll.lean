@@ -3,13 +3,14 @@ Pauli Contextuality Lab — Unified Exhaustive Axiom Audit across ALL THREE Trac
   Track 1 (`HoggarBound`): spectral floor, Kramers floor, saturation theory, infinite CCZ family,
     exact C3 optima (368/344), Jonah's Conjecture E (all 9 cases + spectra), N=4..5 ladders,
     TwoQubit & Hoggar witnesses (`d(W(5,2))=63`, `d(Q⁻(5,2))=9`), quantitative third-moment stability,
-    and all 10 NonVacuity witnesses (122 explicit Track 1 declarations covering 100% of historical
-    `VerifyNewFormalizations.lean`, `HoggarBound.Stability`, and legacy witnesses).
+    Theorems 23–25 (`TrialityResiduals`, `PGRigidity`, `DesarguesQuasiQuadric`), and all 13
+    NonVacuity witnesses + 11 perturbed-bound refutations.
   Track 2 (`ContextualityTensor`): exact degrees `(7^k-5^k)/2` and `(6^k-4^k)/2`, Pauli bridge,
-    actual union model, asymptotics (16 explicit declarations covering 100% of historical `Verification.lean`).
+    actual union model, asymptotics, heterogeneous/general-seed theory, arbitrary-k Pauli
+    realizations, and k-independent readout-noise thresholds (43 explicit declarations).
   Track 3 (`Evidence`): Peres-Mermin sharp setting-bias bound, finite adaptive-tree supermartingale
     hitting bound, concrete classical miscalibration counterexample (14 explicit declarations).
-  Comparator Bridge (`Solution.lean`): all 12 cross-track `ComparatorTarget` theorems.
+  Comparator Bridge (`Solution.lean`): all 30 cross-track `ComparatorTarget` theorems.
   PLUS an exhaustive `Lean.collectAxioms` metaprogram auditing EVERY single `theorem` in
   `HoggarBound`, `ContextualityTensor`, `Evidence`, and `PauliContextualityLab`.
 
@@ -36,6 +37,9 @@ import HoggarBound.CarrierFamily
 import HoggarBound.SaturatedPhaseSix
 import HoggarBound.NormPhaseFamily
 import HoggarBound.ExactDegreesN4N5
+import HoggarBound.TrialityResiduals
+import HoggarBound.PGRigidity
+import HoggarBound.DesarguesQuasiQuadric
 import HoggarBound.Stability
 import HoggarBound.NonVacuity
 import ContextualityTensor
@@ -186,7 +190,35 @@ import Solution
 #print axioms HoggarBound.ExactDegreesN4N5.lemma_L4_w52_hyperplane_le_21
 #print axioms HoggarBound.ExactDegreesN4N5.exact_degrees_n4_n5_of_q7minus_315
 
--- NonVacuity: Explicit existential non-vacuity witnesses for every headline family
+-- Theorems 23–25: Triality Residuals, PG(N-1,2) Rigidity & Desargues Quasi-Quadric (25 decls)
+#print axioms HoggarBound.TrialityResiduals.SolidSpread.spread_residual_ge_210
+#print axioms HoggarBound.TrialityResiduals.q62_residual_ge_252
+#print axioms HoggarBound.TrialityResiduals.aniso_plane_q5minus_ge_9
+#print axioms HoggarBound.TrialityResiduals.dw52_residual_exact_zero
+#print axioms HoggarBound.TrialityResiduals.m1_spread_residual_exact_210
+#print axioms HoggarBound.TrialityResiduals.q62_residual_exact_252
+#print axioms HoggarBound.TrialityResiduals.ovoid_residual_exact_252
+#print axioms HoggarBound.PGRigidity.opA_realPoints_pgCssSign_decomp
+#print axioms HoggarBound.PGRigidity.trace_opA_realPoints_pgCssSign_cube
+#print axioms HoggarBound.PGRigidity.pgCssSign_violatedLines_real
+#print axioms HoggarBound.PGRigidity.pg_rigidity_lower_bound_all_N
+#print axioms HoggarBound.PGRigidity.pg_rigidity_n4
+#print axioms HoggarBound.PGRigidity.pg_rigidity_n5
+#print axioms HoggarBound.PGRigidity.pg_rigidity_n6
+#print axioms HoggarBound.PGRigidity.pg_rigidity_n7
+#print axioms HoggarBound.PGRigidity.pg_rigidity_n8
+#print axioms HoggarBound.DesarguesQuasiQuadric.fiberFlip_card
+#print axioms HoggarBound.DesarguesQuasiQuadric.fiberFlip_hyperplane_card
+#print axioms HoggarBound.DesarguesQuasiQuadric.fiberFlip_n4_71_63
+#print axioms HoggarBound.DesarguesQuasiQuadric.desargues_five_frame_and_10_3
+#print axioms HoggarBound.DesarguesQuasiQuadric.ovoid_context_parabola
+#print axioms HoggarBound.DesarguesQuasiQuadric.sb_aug_structural_properties
+#print axioms HoggarBound.DesarguesQuasiQuadric.k95_bounds_53_55
+#print axioms HoggarBound.DesarguesQuasiQuadric.k103_bounds_87_107
+#print axioms HoggarBound.DesarguesQuasiQuadric.sb4flip_bounds_112_123
+#print axioms HoggarBound.DesarguesQuasiQuadric.sb_aug_bounds_121_127
+
+-- NonVacuity: Explicit existential non-vacuity witnesses & perturbed-bound refutations (24 decls)
 #print axioms HoggarBound.NonVacuity.spectral_floor_nonvacuous
 #print axioms HoggarBound.NonVacuity.kramers_nonvacuous
 #print axioms HoggarBound.NonVacuity.saturation_tfae_nonvacuous
@@ -197,6 +229,9 @@ import Solution
 #print axioms HoggarBound.NonVacuity.c3_exact_optima_nonvacuous
 #print axioms HoggarBound.NonVacuity.exact_degrees_ladders_nonvacuous
 #print axioms HoggarBound.NonVacuity.propositions_qgt_twochar_nonvacuous
+#print axioms HoggarBound.NonVacuity.triality_residuals_nonvacuous
+#print axioms HoggarBound.NonVacuity.pg_rigidity_nonvacuous
+#print axioms HoggarBound.NonVacuity.desargues_quasi_quadric_nonvacuous
 #print axioms HoggarBound.NonVacuity.refute_w52_bound_64
 #print axioms HoggarBound.NonVacuity.refute_q5minus_bound_10
 #print axioms HoggarBound.NonVacuity.refute_w72_bound_1576
@@ -205,6 +240,9 @@ import Solution
 #print axioms HoggarBound.NonVacuity.refute_c3_signB_bound_345
 #print axioms HoggarBound.NonVacuity.refute_square_k2_bound_13
 #print axioms HoggarBound.NonVacuity.refute_pentagram_k2_bound_11
+#print axioms HoggarBound.NonVacuity.refute_m1_spread_bound_211
+#print axioms HoggarBound.NonVacuity.refute_q62_residual_bound_253
+#print axioms HoggarBound.NonVacuity.refute_ovoid_residual_bound_253
 
 -- ============================================================================
 -- Track 2: Exact Contextuality Degrees for Disjoint Mermin Configurations (16 decls)
@@ -272,7 +310,7 @@ import Solution
 #print axioms Evidence.classical_square_node_valid
 
 -- ============================================================================
--- Unified 12-Target Comparator Solution Bridge (12 decls)
+-- Unified 30-Target Comparator Solution Bridge (30 decls)
 -- ============================================================================
 #print axioms PauliContextualityLab.ComparatorTarget.target_spectral_floor
 #print axioms PauliContextualityLab.ComparatorTarget.target_kramers_floor
@@ -298,6 +336,12 @@ import Solution
 #print axioms PauliContextualityLab.ComparatorTarget.target_arbitrary_k_square_pauli_realization
 #print axioms PauliContextualityLab.ComparatorTarget.target_arbitrary_k_pentagram_pauli_realization
 #print axioms PauliContextualityLab.ComparatorTarget.target_noise_thresholds_k_independent
+#print axioms PauliContextualityLab.ComparatorTarget.target_spread_residual_ge_210
+#print axioms PauliContextualityLab.ComparatorTarget.target_q62_residual_ge_252
+#print axioms PauliContextualityLab.ComparatorTarget.target_ovoid_residual_exact_252
+#print axioms PauliContextualityLab.ComparatorTarget.target_pg_rigidity_n8
+#print axioms PauliContextualityLab.ComparatorTarget.target_fiberFlip_hyperplane_card
+#print axioms PauliContextualityLab.ComparatorTarget.target_sb_aug_bounds_121_127
 
 -- All-qubit C3 explicit carrier-family construction (Theorem 17, CarrierFamily.lean)
 #print axioms HoggarBound.C3AllQubits.c3_strict_law_fails_general

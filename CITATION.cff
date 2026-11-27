@@ -2,7 +2,7 @@ cff-version: 1.2.0
 title: "Pauli Contextuality Lab: Lean 4.35.0 Proofs and Exact Verifiers for Spectral Bounds, Conjecture E, Disjoint Mermin Configurations, and Sequential Contextuality Evidence"
 message: "If you use this software, formal proofs, or manuscripts, please cite this repository. Note that all manuscripts are unreviewed research preprints produced with AI assistance under human direction."
 type: software
-version: "3.3.0"
+version: "3.4.0"
 date-released: "2026-11-27"
 license: Apache-2.0
 repository-code: "https://github.com/0thernes/pauli-contextuality-lab"
@@ -37,7 +37,12 @@ abstract: >-
   (1/2 - eps < d/L <= 1/2 for W, Q-, Q+), and, for Jonah's Conjecture E,
   strict-law failure for one explicit representative formally certified inside
   each of the nine geometric vertex-case predicates for all N >= 4 (whole-case
-  transfer via Jonah's Theorem B4, outside Lean); (2) exact contextuality
+  transfer via Jonah's Theorem B4, outside Lean), and Theorems 23-25 (exact
+  triality-residual degrees 0, 210, 252, 252 on 315-line deletions of Q+(7,2);
+  all-N PG(N-1,2) rigidity forcing >= 166,115,415 on W(15,2) vs verified
+  witness 161,360,335; universal all-N [DHOP] fiber-flip two-character law,
+  Desargues (10_3), ovoid context parabola, and sharp brackets on K_95, K_103,
+  S_B^(4), and augmented S_B^+); (2) exact contextuality
   degrees (7^k - 5^k)/2 and (6^k - 4^k)/2 for k disjoint Peres-Mermin squares
   and Mermin pentagrams, heterogeneous endpoint reduction, mixed (s,t) family
   degrees (7^s 6^t - 5^s 4^t)/2, general finite contextual seed asymptotics

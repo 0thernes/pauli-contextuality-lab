@@ -7,7 +7,7 @@
 <meta name="citation_publication_date" content="2026/11/27">
 <meta name="citation_online_date" content="2026/11/27">
 <meta name="citation_technical_report_institution" content="Independent researcher, Spokane, WA, USA">
-<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 3.3.0">
+<meta name="citation_technical_report_number" content="Pauli Contextuality Lab (Track 1), version 3.4.0">
 <meta name="citation_pdf_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.pdf">
 <meta name="citation_abstract_html_url" content="https://0thernes.github.io/pauli-contextuality-lab/papers/spectral-bounds/unified-contextuality.html">
 <meta name="citation_language" content="en">
@@ -38,7 +38,7 @@ footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule);font:14
 </style><script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']},startup:{pageReady:()=>MathJax.startup.defaultPageReady().then(()=>{document.documentElement.setAttribute('data-math','ready')})}};</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml-full.min.js" integrity="sha384-dCtf/9Xgzj8edI30iIEsxNfjUQ0zj2AXa3eUdgjsx8odUmpURZx5Z7aDZmV781et" crossorigin="anonymous"></script></head><body><main><nav aria-label="Research links"><a href="../../">Research index</a><a href="unified-contextuality.pdf">Full paper PDF</a><a href="../../c3-lab/">C3 demonstration</a><a href="../../blueprint/">Lean 4 Blueprint</a><a href="https://github.com/0thernes/pauli-contextuality-lab/tree/main/lean">Lean proofs</a></nav><h1 id="spectral-bounds-and-their-limits-in-pauli-contextuality-exact-configurations-and-a-proof-of-jonahs-conjecture-e">Spectral bounds and their limits in Pauli contextuality: exact configurations and a proof of Jonah's Conjecture E</h1>
 <p><strong>A general Lean 4 bound, configurations that attain it, and cospectral sign carriers with different completion spectra in every vertex case</strong></p>
 <p>Alexander S. Donahue, Independent researcher, Spokane, WA, USA. ORCID: <a href="https://orcid.org/0009-0006-8168-9648">0009-0006-8168-9648</a>. Correspondence: <a href="mailto:0_0@0thernes.art">0_0@0thernes.art</a><br>
-Pauli Contextuality Lab (Track 1), version 3.3.0 (consolidated from Hoggar Bound Lab v1.9.0), 27 November 2026. Research preprint. Not peer reviewed.<br>
+Pauli Contextuality Lab (Track 1), version 3.4.0 (consolidated from Hoggar Bound Lab v1.9.0), 27 November 2026. Research preprint. Not peer reviewed.<br>
 Research and manuscript preparation used Claude (Anthropic), OpenAI Codex, and Google Gemini / Antigravity agents under the author's direction; see Section 13.</p>
 <blockquote>
 <p><strong>Prior work and scope.</strong> The spectral floor, its quaternionic (Kramers) refinement and its saturation in
@@ -47,7 +47,7 @@ question, the strict law, the classification into sixteen hyperplane cases, the 
 carrier, the Jordan representation of the completion, the cone lift and Conjecture E are due to Jonah [J3].
 The computer-assisted exact degrees <span class="math inline">\(d(Q^-(7,2))=315\)</span>, <span class="math inline">\(d(W(7,2))=1575\)</span> and <span class="math inline">\(d(Q^+(9,2))=6975\)</span> are due to
 Jonah [J1]. This paper combines a formalization and exact configurations attaining the floor with explicit
-sign carriers that prove Conjecture E in all nine vertex cases. As of version 3.3.0, Lean 4.35.0 formalizes
+sign carriers that prove Conjecture E in all nine vertex cases. As of version 3.4.0, Lean 4.35.0 formalizes
 the spectral floor and its two-sided asymptotic <span class="math inline">\(1/2\)</span> limit (Theorem 1, Corollary A, including the
 universal averaging upper bound <code>exists_assignment_violated_le_half</code> and <span class="math inline">\(Q^+\)</span> assignment limit
 <code>hyperbolic_violated_fraction_eventually_gt</code>), its quaternionic refinement
@@ -64,12 +64,16 @@ optima 368 and 344</strong> (exact gap 24; Theorem 14, Corollary 16, Proposition
 all-qubit C3 and cone-lift C11 constructions (Theorem 17, Corollary 18), Lemmas 20–21, Theorem 22,
 signed-Clifford orbit transport, formal geometric vertex-case membership predicates <code>IsCaseC1</code>&ndash;<code>IsCaseC15</code>
 (<code>ConjectureECases.lean</code>) paired with Theorem 19 at the eigenvalue-multiset level across all nine vertex
-cases for every <span class="math inline">\(N\ge4\)</span>, ten existential non-vacuity witnesses, and eight kernel-proved perturbed-bound
-refutations (<code>NonVacuity.lean</code>), all strictly within the standard axioms&mdash;folded into the unified
-<code>lean/VerifyAll.lean</code> audit (217 explicit <code>#print axioms</code> lines plus an exhaustive 2,452-theorem
-<code>Lean.collectAxioms</code> check across all three tracks: 1,275 non-Challenge authored declarations across 65
-<code>.lean</code> files), replayed across six independent Lean kernels via a 24-target <code>lake comparator --paranoid</code>,
-Batteries linted across 15 modules with zero errors, and mapped in a 29-node (213-declaration) interactive
+cases for every <span class="math inline">\(N\ge4\)</span>, Theorems 23&ndash;25 (<code>TrialityResiduals.lean</code>, <code>PGRigidity.lean</code>, <code>DesarguesQuasiQuadric.lean</code>:
+exact degrees 0, 210, 252, and 252 across all four triality-induced 315-line deletions of <span class="math inline">\(Q^+(7,2)\)</span>;
+all-<span class="math inline">\(N\)</span> <span class="math inline">\(PG(N-1,2)\)</span> rigidity forcing <span class="math inline">\(\ge 166{,}115{,}415\)</span> violations on <span class="math inline">\(W(15,2)\)</span>; and the universal
+[DHOP] fiber-flip two-character law, Desargues <span class="math inline">\((10_3)\)</span>, ovoid parabola, and sharp brackets on
+<span class="math inline">\(K_{95}, K_{103}, S_B^{(4)}, S_B^+\)</span>), thirteen existential non-vacuity witnesses, and eleven kernel-proved
+perturbed-bound refutations (<code>NonVacuity.lean</code>), all strictly within the standard axioms&mdash;folded into the unified
+<code>lean/VerifyAll.lean</code> audit (255 explicit <code>#print axioms</code> lines plus an exhaustive 2,798-theorem
+<code>Lean.collectAxioms</code> check across all three tracks: 1,434 non-Challenge authored declarations across 68
+<code>.lean</code> files), replayed across six independent Lean kernels via a 30-target <code>lake comparator --paranoid</code>,
+Batteries linted across 18 modules with zero errors, and mapped in a 32-node (251-declaration) interactive
 Lean Blueprint at <code>/blueprint/</code>. None of this invalidates the spectral floor.</p>
 </blockquote>
 <h2 id="abstract">Abstract</h2>
@@ -84,16 +88,20 @@ non-closed contextual floor-saturating pure-CCZ determinant family <span class="
 ruling out rank-8 nine-qubit forms across 540.3 million cyclic-invariant cases. On classical geometries,
 Lean 4 proves exact CSS witnesses, ladders and unconditional bounds <span class="math inline">\(d(W(7,2))\ge1455\)</span> and
 <span class="math inline">\(d(Q^+(9,2))\ge6444\)</span>, paired with an independent 42-orbit C census and pure-integer dual check
-reproducing Jonah's exact triple <span class="math inline">\((315,1575,6975)\)</span>.</p>
+reproducing Jonah's exact triple <span class="math inline">\((315,1575,6975)\)</span>, together with Theorems 23&ndash;25: exact degrees
+<span class="math inline">\((0,210,252,252)\)</span> across all four triality-induced 315-line deletions of <span class="math inline">\(Q^+(7,2)\)</span>, an all-<span class="math inline">\(N\)</span>
+<span class="math inline">\(PG(N-1,2)\)</span> rigidity bound forcing <span class="math inline">\(\ge 166{,}115{,}415\)</span> violations on <span class="math inline">\(W(15,2)\)</span> (vs verified witness
+<span class="math inline">\(161{,}360{,}335\)</span>), and the universal [DHOP] fiber-flip two-character law, Desargues <span class="math inline">\((10_3)\)</span>,
+ovoid parabola, and sharp brackets on <span class="math inline">\(K_{95}, K_{103}, S_B^{(4)}\)</span>, and augmented <span class="math inline">\(S_B^+\)</span>.</p>
 <p>We then test Jonah's strict law: on a 71-point section of the real four-qubit quadric, two cospectral
 <span class="math inline">\(16\times16\)</span> carriers have <span class="math inline">\(64\times64\)</span> completions with cubic traces 14976 and 15360 and exact global
 binary completion minima 368 and 344 (exact gap 24, kernel-certified via pure-integer MET-SDP duals).
 Graph constructions over <span class="math inline">\(\mathbb R\)</span>, <span class="math inline">\(\mathbb C\)</span> and <span class="math inline">\(\mathbb H\)</span>, a cone pair swap and a universal
 cubic-trace identity give cospectral carriers with distinct completion eigenvalue multisets in all nine
-vertex cases for every <span class="math inline">\(N\ge4\)</span>, proving Jonah's Conjecture E. All main theorems (217 explicit cross-track
-declarations and 2,452 exhaustively audited declarations, plus parallel CI audits of all nine standalone
+vertex cases for every <span class="math inline">\(N\ge4\)</span>, proving Jonah's Conjecture E. All main theorems (255 explicit cross-track
+declarations and 2,798 exhaustively audited declarations, plus parallel CI audits of all nine standalone
 Track 1 finite-certificate modules) are proved in Lean 4 with standard axioms only, with exact checks
-through six qubits and Tsotchke demonstrations. The work is AI-assisted and is neither externally peer
+through eight qubits and Tsotchke demonstrations. The work is AI-assisted and is neither externally peer
 reviewed nor a quantum-hardware experiment.</p>
 <details class="contents"><summary>Contents</summary><ul><li><a href="#1-scope-and-common-question">1. Scope and common question</a></li><li><a href="#2-setting">2. Setting</a></li><li><a href="#3-the-spectral-floor">3. The spectral floor</a></li><li><a href="#4-saturation-in-the-classical-families">4. Saturation in the classical families</a></li><li><a href="#5-saturation-outside-the-classical-families">5. Saturation outside the classical families</a></li><li><a href="#6-consequences-for-all-n">6. Consequences for all N</a></li><li><a href="#7-the-data-against-the-floor">7. The data against the floor</a></li><li><a href="#8-what-a-carrier-spectrum-does-not-determine">8. What a carrier spectrum does not determine</a></li><li><a href="#9-formal-verification-and-its-boundary">9. Formal verification and its boundary</a></li><li><a href="#10-a-running-example-on-the-tsotchke-stack">10. A running example on the Tsotchke stack</a></li><li><a href="#11-falsifiability-and-replication">11. Falsifiability and replication</a></li><li><a href="#12-limitations-and-open-problems">12. Limitations and open problems</a></li><li><a href="#13-research-provenance-disclosure-and-availability">13. Research provenance, disclosure and availability</a></li><li><a href="#references">References</a></li><li><a href="#appendix-a-reproduction">Appendix A. Reproduction</a></li><li><a href="#appendix-b-witness-assignments">Appendix B. Witness assignments</a></li></ul></details><h2 id="1-scope-and-common-question">1. Scope and common question</h2>
 <p>A noncontextual assignment gives each Pauli observable a fixed value <span class="math inline">\(\pm1\)</span>. Compatible triples
@@ -224,9 +232,12 @@ hyperplane intersection numbers of a quadric (quasi-quadrics): De Clerck, Hamilt
 Penttila [DHOP].</li>
 </ul>
 <p>The spectral-floor derivation in Sections 3, 4 and 6 was developed before the project identified
-[J1]–[J4]; the overlap is attributed here. The exhaustive computations behind the exact values of [J1]
-were not rerun. The assignments found in this project are consistent with those values, which remain
-external computer-assisted claims.</p>
+[J1]&ndash;[J4]; the overlap is attributed here. Starting in version 1.8.0, we independently reproduced the
+42-orbit <span class="math inline">\(W(5,2)\)</span> census and pure-integer dual certification behind [J1] from scratch
+(<code>w52_census_verify.c</code> and <code>exact_degrees_n4_n5.py</code>, Section 6); the exact triple <span class="math inline">\((315, 1575, 6975)\)</span>
+remains credited to [J1] as prior unreviewed computer-assisted work, and the 42-orbit census itself
+remains outside the Lean kernel (while <span class="math inline">\(d(Q^+(7,2)) = 315\)</span> and the unconditional ladders
+<span class="math inline">\(d(W(7,2)) \ge 1455\)</span>, <span class="math inline">\(d(Q^+(9,2)) \ge 6444\)</span> are fully proved in Lean).</p>
 <p>For completion spectra, [J3] gives the strict-law question, its Jordan representation, the case table
 and Conjecture E. Its inspected v0.5 proves the conjecture for C1 and C6 by a computer-assisted base
 case and a lifting lemma, reports exact pairs for several other cases at four and five qubits, finds
@@ -1254,6 +1265,26 @@ distinguished <span class="math inline">\(DW(5,2)\)</span> core plus 1260 extern
 <td>2294580 [M2]</td>
 <td>open</td>
 </tr>
+<tr>
+<td><span class="math inline">\(W(15,2)\)</span></td>
+<td>8</td>
+<td>65535</td>
+<td>357886635</td>
+<td>71577327</td>
+<td>156705492</td>
+<td>161360335&Dagger;</td>
+<td>open</td>
+</tr>
+<tr>
+<td><span class="math inline">\(Q^+(15,2)\)</span></td>
+<td>8</td>
+<td>32895</td>
+<td>90516075</td>
+<td>18103215</td>
+<td>37349846</td>
+<td>38088999&Dagger;</td>
+<td>open</td>
+</tr>
 </tbody>
 </table>
 <p>* computer-assisted in [J4], not formally verified, not peer reviewed; we did not re-run these computations.
@@ -1261,13 +1292,15 @@ distinguished <span class="math inline">\(DW(5,2)\)</span> core plus 1260 extern
 exact ladders (<span class="math inline">\(Q^-(7,2)\to W(7,2)\to Q^+(9,2)\)</span>), unconditional Kramers-lifted bounds (<span class="math inline">\(\ge 1455\)</span>, <span class="math inline">\(\ge 6444\)</span>),
 and Lemmas L1/L4 are proved in Lean 4 (<code>ExactDegreesN4N5.lean</code>), while the 42-orbit <span class="math inline">\(W(5,2)\)</span> census and all
 42 pure-integer dual certificates are independently reproduced in <code>tracks/spectral-bounds/src/w52_census_verify.c</code> and
-<code>tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py</code>.</p>
-<p>Reading of the table. (1) All 17 rows are consistent with the floor; it is attained in the three rows
-in bold and, after rounding, in <span class="math inline">\(Q^+(3,2)\)</span>, the Mermin–Peres square. (2) From four qubits on (five for
+<code>tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py</code>.
+&Dagger; verified in exact 64-bit integer arithmetic by <code>tracks/spectral-bounds/src/w15_verify.c</code> (compiled under ASan/UBSan) and <code>tracks/spectral-bounds/scripts/pg_rigidity_and_w15.py</code> from the explicit witnesses in <code>data/witness/n8_f_l4_opt.txt</code> and <code>data/witness/n8_h_l4_opt.txt</code>; by Theorem 24 below, every <span class="math inline">\(PG(7,2)\)</span>-centered extension to <span class="math inline">\(W(15,2)\)</span> violates at least <span class="math inline">\(166{,}115{,}415\)</span> contexts.</p>
+<p>Reading of the table. (1) All 19 rows are consistent with the floor; it is attained in the three rows
+in bold and, after rounding, in <span class="math inline">\(Q^+(3,2)\)</span>, the Mermin&ndash;Peres square. (2) From four qubits on (five for
 hyperbolic quadrics) the floor exceeds the averaging bound <span class="math inline">\(L/5\)</span>, and the gap to the best assignment
-shrinks: the floor closes 75, 81, 91 and 96 per cent of the interval between <span class="math inline">\(L/5\)</span> and the best
-assignment for the full space at <span class="math inline">\(N = 4, 5, 6, 7\)</span>. (3) For seven qubits the best known assignments of
-the full space and of the elliptic quadric are within two per cent of the floor. (4) Outside these
+shrinks: the floor closes 75, 81, 91, 96 and 95 per cent of the interval between <span class="math inline">\(L/5\)</span> and the best
+assignment for the full space at <span class="math inline">\(N = 4, 5, 6, 7, 8\)</span>. (3) For seven qubits the best known assignments of
+the full space and of the elliptic quadric are within two per cent of the floor, and for eight qubits
+the hyperbolic witness is likewise within two per cent (1.98 per cent) of its floor. (4) Outside these
 families the floor is exact for the configurations of Table 1.</p>
 <p>An empirical regularity, also recorded for four qubits in [J1]: in every best assignment we computed,
 <span class="math inline">\(A + 3I\)</span> has low rank. The spectra of <span class="math inline">\(A\)</span> are <span class="math inline">\(\{21 \pm 16\sqrt6, (-3)^{14}\}\)</span> for <span class="math inline">\(W(7,2)\)</span>,
@@ -1277,6 +1310,50 @@ families the floor is exact for the configurations of Table 1.</p>
 <p><em>Figure 1. Lower bound on the fraction of violated contexts for the full N-qubit Pauli configuration, the earlier bound 1/5, and the best assignments known.</em></p>
 <p><img src="figures/fig3_spectra.png" alt="Figure 2" /></p>
 <p><em>Figure 2. Spectra of <span class="math inline">\(A = \sum f(v)P_v\)</span> for the best assignments at three and four qubits.</em></p>
+<h3 id="72-six-qubit-hexagons-and-theorems-23-25">7.2 Six-qubit polar-disjoint hexagons and Theorems 23&ndash;25</h3>
+<p>Correspondence with M. Saniga in November 2026 motivated three new Lean-formalized theorems (Theorems 23&ndash;25 below) and contributed the following geometric observation on the six-qubit space <span class="math inline">\(W(11,2)\)</span> [San26].</p>
+<p><strong>7.2.1 Polar-disjoint <span class="math inline">\(PG(5,2)\)</span> hexagons in <span class="math inline">\(W(11,2)\)</span> (M. Saniga et al., private communication [San26]).</strong>
+We reproduce, with permission, the private-communication observation of M. Saniga and coauthors concerning the two split Cayley hexagons of order two in six-qubit <span class="math inline">\(W(11,2)\)</span>:</p>
+<blockquote>
+<p>We have further found that the two PG<span class="math inline">\((5,2)\)</span>&rsquo;s spanned by the hexagons are not only disjoint, but also polar to each other with respect to the symplectic polarity defining our six-qubit <span class="math inline">\(\mathcal{W}(11,2)\)</span>.
+This, among other things, means that each observable of one hexagon commutes with each observable of the other hexagon. Hence, any such pair of observables defines a line
+of <span class="math inline">\(\mathcal{W}(11,2)\)</span>, with the third point on this line being necessarily of a dot-type as the two PG<span class="math inline">\((5,2)\)</span>&rsquo;s are disjoint; and as there are <span class="math inline">\(63 \times 63 = 3\,969\)</span> such pairs, we indeed get by this construction all 3,969 dotted points. Next, let us take an observable of the first hexagon, <span class="math inline">\(\mathcal{O}_1\)</span>, and an observable of the second hexagon, <span class="math inline">\(\mathcal{O}_2\)</span>, and denote by <span class="math inline">\(\mathcal{O}\)</span> the observable (of a dot type) defined by the two. There are six additional points (observables) on the three lines passing through <span class="math inline">\(\mathcal{O}_1\)</span>/<span class="math inline">\(\mathcal{O}_2\)</span> in the first/second hexagon and we found out that each of the 12 lines of a solid-dot-dot type passing through <span class="math inline">\(\mathcal{O}\)</span> is, in fact, a line joining <span class="math inline">\(\mathcal{O}\)</span> with each of these (<span class="math inline">\(6+6=\)</span>) 12 additional observables &mdash; a sketchy graphical visualization of this property is provided by Figure 2b.</p>
+</blockquote>
+<p><img src="figures/two-hexagons.png" alt="Figure 2b" /></p>
+<p><em>Figure 2b. An illustration of the origin of lines of the solid-dot-dot type in six-qubit <span class="math inline">\(\mathcal{W}(11,2)\)</span> (reproduced with permission from M. Saniga et al., private communication [San26]). Out of 12 such lines passing through the point <span class="math inline">\(\mathcal{O}\)</span> there are only two depicted; one that ends in the first hexagon (dotted) and the other ending in the second hexagon (dashed).</em></p>
+<p><strong>7.2.2 Theorem 23 (triality-induced 315-line deletions of <span class="math inline">\(Q^+(7,2)\)</span>).</strong>
+Deleting a distinguished 315-line subgeometry from the symmetric four-qubit hyperbolic quadric <span class="math inline">\(Q^+(7,2)\)</span> (135 observables, 1575 contexts, degree 315) leaves a residual configuration of 1260 contexts. Across all four canonical 315-line deletions related by <span class="math inline">\(D_4\)</span> triality, Lean 4 (<code>lean/HoggarBound/TrialityResiduals.lean</code>) proves the exact contextuality degrees:</p>
+<ol>
+<li><em>Deleted <span class="math inline">\(DW(5,2)\)</span> (violated core):</em> <span class="math inline">\(d(Q^+(7,2) \setminus DW(5,2)) = 0\)</span> (<code>dw52_residual_exact_zero</code>), witnessed by <code>m1OptNeg</code>.</li>
+<li><em>Deleted spread of nine pairwise-disjoint solids <span class="math inline">\(PG(3,2)\)</span>:</em> For <strong>every</strong> spread <span class="math inline">\(S\)</span> of nine totally isotropic solids partitioning <span class="math inline">\(Q^+(7,2)\)</span> (<span class="math inline">\(9 \times 35 = 315\)</span> deleted lines), every residual flag lies in exactly 48 residual Mermin&ndash;Peres 4-tuples, yielding the universal lower bound <span class="math inline">\(d(Q^+(7,2) \setminus S) \ge 210\)</span> (<code>SolidSpread.spread_residual_ge_210</code>), attained with exact equality <span class="math inline">\(210\)</span> on the canonical spread <span class="math inline">\(M_1\)</span> (<code>m1_spread_residual_exact_210</code>).</li>
+<li><em>Deleted parabolic quadric <span class="math inline">\(Q(6,2) = Q^+(7,2) \cap w^\perp\)</span>:</em> For <strong>every</strong> off-quadric pole <span class="math inline">\(w\)</span> with <span class="math inline">\(q(w)=1\)</span> (all 120 copies of <span class="math inline">\(Q(6,2)\)</span> in <span class="math inline">\(Q^+(7,2)\)</span>), Kramers doubling caps the largest eigenvalue of <span class="math inline">\(A_H\)</span> at <span class="math inline">\(21\)</span>, and the positive-semidefinite trace inequality <span class="math inline">\(\operatorname{Re}\operatorname{tr}(A_H T_O^2) \le 21\,\operatorname{Re}\operatorname{tr}(T_O^2)\)</span> yields the universal lower bound <span class="math inline">\(d(Q^+(7,2) \setminus Q(6,2)) \ge 252\)</span> (<code>q62_residual_ge_252</code>), attained with exact equality <span class="math inline">\(252\)</span> (<code>q62_residual_exact_252</code>).</li>
+<li><em>Triality-dual nine-point ovoid deletion <span class="math inline">\(Q^+(7,2) \setminus O\)</span>:</em> Under <span class="math inline">\(D_4\)</span> triality, a spread of nine solids dualizes to a nine-point ovoid <span class="math inline">\(O \subset Q^+(7,2)\)</span> removing <span class="math inline">\(9 \times 35 = 315\)</span> lines and leaving 126 observables and 1260 contexts. Covering <span class="math inline">\(Q^+(7,2) \setminus O\)</span> 10-uniformly by 280 intact anisotropic <span class="math inline">\(Q^-(5,2)\)</span> sections (each forcing <span class="math inline">\(\ge 9\)</span> violations by multiplicity-4 Kramers doubling, <code>aniso_plane_q5minus_ge_9</code>) gives <span class="math inline">\(d(Q^+(7,2) \setminus O) \ge 280 \times 9 / 10 = 252\)</span>, strictly beating the Theorem 1 spectral floor 204 by <span class="math inline">\(+48\)</span> and attained with exact equality <span class="math inline">\(252\)</span> by <code>ovoidOptNeg</code> (<code>ovoid_residual_exact_252</code>).</li>
+</ol>
+<p><strong>7.2.3 Theorem 24 (all-<span class="math inline">\(N\)</span> <span class="math inline">\(PG(N-1,2)\)</span> rigidity and <span class="math inline">\(W(15,2)\)</span> imaginary-completion no-go bound).</strong>
+For every <span class="math inline">\(N \ge 1\)</span> (<span class="math inline">\(D = 2^N\)</span>), let <code>pgCssSign</code> be the canonical <span class="math inline">\(PG(N-1,2)\)</span>-centered CSS assignment on <span class="math inline">\(Q^+(2N-1,2)\)</span> (<span class="math inline">\(+1\)</span> on the pure-<span class="math inline">\(Z\)</span> and pure-<span class="math inline">\(X\)</span> generators, <span class="math inline">\(-(-1)^{k_v/2}\)</span> on mixed real observables). In <code>lean/HoggarBound/PGRigidity.lean</code> (pure algebra, zero <code>decide +kernel</code>), we prove:</p>
+<ol>
+<li><em>Exact rank-two plus scalar decomposition:</em> <span class="math inline">\(A_{\mathrm{real}} = \mu_+ P_+ + \mu_- P_- - 3I\)</span> with <span class="math inline">\(\mu_\pm = \frac{1}{2}(3D \pm \sqrt{D}(D-4))\)</span> and explicit orthogonal real rank-one projectors <span class="math inline">\(P_\pm\)</span> (<code>opA_realPoints_pgCssSign_decomp</code>), forcing exact real-quadric violations <span class="math inline">\(96\,V_{\mathrm{real}} = (D-1)(D-2)(D^2-12D+80)\)</span> (<code>pgCssSign_violatedLines_real</code>).</li>
+<li><em>All-<span class="math inline">\(N\)</span> imaginary-completion no-go bound (<span class="math inline">\(N \ge 4\)</span>):</em> Since <span class="math inline">\(T = A_{\mathrm{imag}}\)</span> is Hermitian and skew-symmetric (<span class="math inline">\(T^{\mathsf T} = -T\)</span>), <span class="math inline">\(P_+ T P_+ = 0\)</span>, whence <span class="math inline">\(2\operatorname{Re}\operatorname{tr}(P_+ T^2) \le \operatorname{Re}\operatorname{tr}(T^2)\)</span> (<code>two_trace_proj_mul_sq_le_of_skew</code>) and every <span class="math inline">\(\pm 1\)</span> extension <span class="math inline">\(f\)</span> of <code>pgCssSign</code> to <span class="math inline">\(W(2N-1,2)\)</span> satisfies
+<span class="math display">\[\#F_{\mathrm{out}} - 2\,\#V_{\mathrm{out}} \;\le\; \frac{3}{4}(D-4)(\sqrt{D}+3)\,|\mathrm{imagPoints}(N)|\]</span>
+(<code>pg_rigidity_lower_bound_all_N</code>).</li>
+<li><em>Concrete bounds (<span class="math inline">\(N = 4\text{--}8\)</span>) and <span class="math inline">\(W(15,2)\)</span> separation:</em> Specializing yields <span class="math inline">\(\ge 1{,}575\)</span> (<span class="math inline">\(N=4\)</span>), <span class="math inline">\(\ge 31{,}081\)</span> (<span class="math inline">\(N=5\)</span>), <span class="math inline">\(\ge 571{,}095\)</span> (<span class="math inline">\(N=6\)</span>), <span class="math inline">\(\ge 9{,}907{,}702\)</span> (<span class="math inline">\(N=7\)</span>), and on eight-qubit <span class="math inline">\(W(15,2)\)</span> (<code>pg_rigidity_n8</code>):
+<span class="math display">\[d_{\text{ext}}(W(15,2) \mid PG(7,2)) \;\ge\; 166{,}115{,}415 \;>\; 161{,}360{,}335,\]</span>
+exceeding our verified <span class="math inline">\(W(15,2)\)</span> witness <code>data/witness/n8_f_l4_opt.txt</code> (<span class="math inline">\(161{,}360{,}335\)</span> violations; checked in exact 64-bit integer arithmetic by C11 ASan/UBSan engine <code>w15_verify.c</code> and <code>pg_rigidity_and_w15.py</code>, alongside <span class="math inline">\(38{,}088{,}999\)</span> on <span class="math inline">\(Q^+(15,2)\)</span>) by <span class="math inline">\(4{,}755{,}080\)</span> contexts across all <span class="math inline">\(2^{32640}\)</span> imaginary completions.</li>
+</ol>
+<p><strong>7.2.4 Theorem 25 (Desargues <span class="math inline">\((10_3)\)</span>, universal [DHOP] fiber-flip family, ovoid parabola, and augmented <span class="math inline">\(S_B^+\)</span>).</strong>
+Analyzing our four-qubit hyperbolic quasi-quadric <span class="math inline">\(S_B\)</span> (Section 5.1), M. Saniga observed (private correspondence, 27 November 2026) that its intersection <span class="math inline">\(K_{95} = S_B \cap Q^+(7,2)\)</span> uses exactly 10 points of the <span class="math inline">\(X\)</span>-solid forming a Desargues <span class="math inline">\((10_3)\)</span> configuration (whose five outliers <span class="math inline">\(E = \{\mathrm{IXII}, \mathrm{XXII}, \mathrm{XIXI}, \mathrm{XIIX}, \mathrm{XIXX}\}\)</span> form a 5-frame) and asked whether augmenting <span class="math inline">\(S_B\)</span> by the eight real points <span class="math inline">\(\mathrm{red}_8(\mathrm{XIXX})\)</span> in the <span class="math inline">\(\mathrm{XIXX}\)</span> fiber gives a distinguished 143-point configuration <span class="math inline">\(S_B^+ = S_B \cup \mathrm{red}_8(\mathrm{XIXX})\)</span>. Lean 4 (<code>lean/HoggarBound/DesarguesQuasiQuadric.lean</code>) proves five structural theorems answering this question:</p>
+<ol>
+<li><em>Universal all-<span class="math inline">\(N\)</span> [DHOP] fiber-flip two-character theorem:</em> For every <span class="math inline">\(N \ge 2\)</span>, every parity function <span class="math inline">\(\varepsilon : \mathbb{F}_2^N \to \mathbb{F}_2\)</span> (all <span class="math inline">\(2^{2^N-1}\)</span> fiber-flip sets <span class="math inline">\(S_\varepsilon\)</span>; <span class="math inline">\(32{,}768\)</span> at <span class="math inline">\(N=4\)</span>), and every <span class="math inline">\(u \in W(2N-1,2)\)</span>,
+<span class="math display">\[4\,|S_\varepsilon \cap u^\perp| + 4 \;=\; 4^N + \begin{cases} 2\cdot 2^N & u \in S_\varepsilon, \\ 0 & u \notin S_\varepsilon \end{cases}\]</span>
+(<code>fiberFlip_hyperplane_card</code>; giving exact <span class="math inline">\(71/63\)</span> hyperplane intersections across all <span class="math inline">\(32{,}768\)</span> four-qubit sets, <code>fiberFlip_n4_71_63</code>).</li>
+<li><em>Desargues 5-frame and <span class="math inline">\((10_3)\)</span>:</em> <span class="math inline">\(E\)</span> sums to <span class="math inline">\(0\)</span> over <span class="math inline">\(\mathbb{F}_2\)</span>, every 4-subset of <span class="math inline">\(E\)</span> is a basis of <span class="math inline">\(\mathbb{F}_2^4\)</span>, and the 10 pairwise XORs of <span class="math inline">\(E\)</span> are the exact 10 <span class="math inline">\(X\)</span>-solid points of <span class="math inline">\(K_{95}\)</span>, forming a 3-regular <span class="math inline">\((10_3)\)</span> configuration (<code>desargues_five_frame_and_10_3</code>).</li>
+<li><em>Exact ovoid context parabola:</em> For all 32 subsets <span class="math inline">\(T \subseteq E\)</span> of size <span class="math inline">\(k = |T|\)</span>, the fiber-flip configuration <span class="math inline">\(S_T\)</span> has exact context count <span class="math inline">\(L(S_T) = 1575 - 256k + 32k^2\)</span> (<code>ovoid_context_parabola</code>), attaining its unique minimum <span class="math inline">\(1{,}063\)</span> at <span class="math inline">\(k = 4\)</span> (<span class="math inline">\(S_B^{(4)}\)</span>), whereas flipping a collinear triple <span class="math inline">\(\{1, 4, 5\}\)</span> gives <span class="math inline">\(967 \ne 1{,}095\)</span>.</li>
+<li><em>Exact decoupling and non-saturation of <span class="math inline">\(S_B^+\)</span>:</em> Adding <span class="math inline">\(\mathrm{red}_8(\mathrm{XIXX})\)</span> adds exactly <span class="math inline">\(124 = 28 + 96\)</span> new contexts to <span class="math inline">\(K_{95}\)</span> and identically <span class="math inline">\(124\)</span> to <span class="math inline">\(S_B\)</span> (zero cross-contexts to <span class="math inline">\(S_B \setminus Q^+(7,2)\)</span>), bringing all <span class="math inline">\(71/71\)</span> points of the tangent hyperplane <span class="math inline">\(Q^+(7,2) \cap \mathrm{IZZZ}^\perp\)</span> into <span class="math inline">\(K_{103}\)</span>; all <span class="math inline">\(2^8 = 256\)</span> sign extensions on <span class="math inline">\(\mathrm{red}_8(\mathrm{XIXX})\)</span> add at least <span class="math inline">\(+52\)</span> violations (attained uniquely up to global flip on <span class="math inline">\(\mathrm{red}_8\)</span>); every one of the 112 external points of <span class="math inline">\(S_B^+\)</span> commutes with exactly 67 points of <span class="math inline">\(S_B^+\)</span>; and <span class="math inline">\(15 \cdot 143 = 2{,}145\)</span> is non-square, obstructing Theorem 4 floor saturation (<code>sb_aug_structural_properties</code>).</li>
+<li><em>Sharp pairwise-line-disjoint Mermin&ndash;Peres brackets:</em> Combining kernel-verified pairwise-line-disjoint Mermin&ndash;Peres grid packings with exact attaining sign witnesses proves:
+<span class="math display">\[53 \le d(K_{95}) \le 55\ (\text{floor }39), \quad 87 \le d(K_{103}) \le 107\ (\text{floor }65),\]</span>
+<span class="math display">\[112 \le d(S_B^{(4)}) \le 123\ (\text{floor }59,\; +53\text{ above floor}), \quad 121 \le d(S_B^+) \le 127\ (\text{floor }95,\; \text{gap }6)\]</span>
+(<code>k95_bounds_53_55</code>, <code>k103_bounds_87_107</code>, <code>sb4flip_bounds_112_123</code>, <code>sb_aug_bounds_121_127</code>). In particular, <span class="math inline">\(S_B^{(4)}\)</span> has identical <span class="math inline">\((135, 71/63)\)</span> two-character hyperplane intersections to <span class="math inline">\(S_B\)</span> yet strictly breaks spectral-floor saturation by at least <span class="math inline">\(+53\)</span> contexts.</li>
+</ol>
 <h2 id="8-what-a-carrier-spectrum-does-not-determine">8. What a carrier spectrum does not determine</h2>
 <h3 id="81-the-completion-question">8.1 The completion question</h3>
 <p>For a fixed assignment on a hyperplane section, the remaining contextuality constraints define a
@@ -2626,12 +2703,12 @@ floor-saturating family, together with the concrete six-qubit kernel mask certif
 <code>q9plus_ge_6444</code>), pigeonhole Lemmas L1 and L4 (<code>lemma_L1_q7minus_section_le_92</code>,
 <code>lemma_L4_w52_hyperplane_le_21</code>), and the exact master reduction (<code>exact_degrees_n4_n5_of_q7minus_315</code>).</li>
 </ul>
-<p>All audited declarations in <code>lean/VerifyAll.lean</code> (217 explicit <code>#print axioms</code> declarations plus the exhaustive 2,452-theorem metaprogram across all four namespaces: 1,275 non-Challenge authored declarations across 65 <code>.lean</code> files) plus the nine standalone finite-certificate modules audited in <code>lean/VerifyStandalone.lean</code> and <code>lean/VerifyPhaseSeven.lean</code> depend strictly on
+<p>All audited declarations in <code>lean/VerifyAll.lean</code> (255 explicit <code>#print axioms</code> declarations plus the exhaustive 2,798-theorem metaprogram across all four namespaces: 1,434 non-Challenge authored declarations across 68 <code>.lean</code> files) plus the nine standalone finite-certificate modules audited in <code>lean/VerifyStandalone.lean</code> and <code>lean/VerifyPhaseSeven.lean</code> depend strictly on
 <code>[propext, Classical.choice, Quot.sound]</code>, with zero <code>sorry</code>, <code>admit</code>, <code>native_decide</code>, <code>unsafe</code>, or
 custom <code>axiom</code> declarations (<code>results/lean-axioms-all.log</code>;
 <code>set_option maxRecDepth</code> / <code>maxHeartbeats</code> appears only on kernel <code>decide +kernel</code> evaluation lemmas in
-<code>C3ExactOptima.lean</code>, <code>SaturatedPhaseSix.lean</code>, and <code>ExactDegreesN4N5.lean</code>, mirroring <code>SaturatedSeven.lean</code>,
-while all conceptual proof modules contain zero <code>set_option</code> directives). For each of the nine vertex cases,
+<code>C3ExactOptima.lean</code>, <code>SaturatedPhaseSix.lean</code>, <code>ExactDegreesN4N5.lean</code>, <code>TrialityResiduals.lean</code>, and <code>DesarguesQuasiQuadric.lean</code>, mirroring <code>SaturatedSeven.lean</code>,
+while all conceptual proof modules&mdash;including <code>PGRigidity.lean</code>&mdash;contain zero <code>set_option</code> directives). For each of the nine vertex cases,
 <code>ConjectureECases.jonah_conjecture_e_formal_cases</code> binds the canonical hyperplane representative <span class="math inline">\((X,d)\)</span>
 directly to its formal geometric vertex-case membership predicate (<code>IsCaseC1</code>&ndash;<code>IsCaseC15</code>) and to
 eigenvalue-multiset strict-law failure (<code>StrictLawFailsSpectra X d</code>), and <code>clifford_transport_strict_law_fails</code>
@@ -2684,7 +2761,11 @@ classification of [J3, Theorem B4] and the 42-orbit <span class="math inline">\(
 </tr>
 <tr>
 <td>General cone lift and case C11 (Corollary 18), Lemmas 20–21, Theorem 22, Table 8, Clifford transport, formal vertex-case membership (<code>ConjectureECases.lean</code>), and eigenvalue-multiset Conjecture E across all nine vertex cases for every <span class="math inline">\(N\ge4\)</span> (Theorem 19)</td>
-<td>Lean theorems in <code>ConjectureECore.lean</code>, <code>ConjectureECones.lean</code>, <code>ConjectureE.lean</code>, <code>ConjectureEExtras.lean</code>, <code>ConjectureECases.lean</code>, <code>AuditUpgrades.lean</code> (part of the 217 explicit declarations and 2,452 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites [J3, Theorem B4]</td>
+<td>Lean theorems in <code>ConjectureECore.lean</code>, <code>ConjectureECones.lean</code>, <code>ConjectureE.lean</code>, <code>ConjectureEExtras.lean</code>, <code>ConjectureECases.lean</code>, <code>AuditUpgrades.lean</code> (part of the 255 explicit declarations and 2,798 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, strictly standard axioms) plus 136 exact integer checks up to six qubits; single-orbit transitivity across hyperplane classes cites [J3, Theorem B4]</td>
+</tr>
+<tr>
+<td>Theorems 23&ndash;25: <span class="math inline">\(Q^+(7,2)\)</span> triality residuals <span class="math inline">\((0,210,252,252)\)</span>, all-<span class="math inline">\(N\)</span> <span class="math inline">\(PG(N-1,2)\)</span> rigidity (<span class="math inline">\(\ge 166{,}115{,}415\)</span> on <span class="math inline">\(W(15,2)\)</span>), universal [DHOP] fiber-flip law, Desargues <span class="math inline">\((10_3)\)</span>, ovoid parabola, and sharp brackets on <span class="math inline">\(K_{95}, K_{103}, S_B^{(4)}, S_B^+\)</span></td>
+<td>Lean theorems in <code>TrialityResiduals.lean</code>, <code>PGRigidity.lean</code>, <code>DesarguesQuasiQuadric.lean</code> (6-kernel Targets 25&ndash;30; 0 Batteries linter errors); concrete <span class="math inline">\(N=8\)</span> witness counts (<span class="math inline">\(161{,}360{,}335\)</span> on <span class="math inline">\(W(15,2)\)</span>, <span class="math inline">\(38{,}088{,}999\)</span> on <span class="math inline">\(Q^+(15,2)\)</span>) verified in exact 64-bit integer C11 (<code>w15_verify.c</code>) and Python (<code>pg_rigidity_and_w15.py</code>)</td>
 </tr>
 <tr>
 <td>Physical hardware, compiler correctness, historical priority or external peer review</td>
@@ -2745,19 +2826,19 @@ independent Lean kernels via <code>lake comparator --paranoid</code>, added Batt
 editable modules, added a declaration-checked Lean Blueprint (<code>blueprint/</code>, mounted at <code>/blueprint/</code>),
 enforced the verbatim <code>#print axioms</code> README block and arithmetic/citation audits in CI, and added
 cross-platform property/mutation/fuzz tests, C sanitizers (ASan/UBSan), and Sigstore SLSA build
-provenance attestations. In the consolidated <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (versions 2.0.0&ndash;3.3.0; <a href="https://github.com/0thernes/pauli-contextuality-lab/actions">GitHub Actions CI</a>), all Track 1 Lean modules live under <code>lean/HoggarBound/</code> alongside Track 2 (<code>ContextualityTensor</code>) and Track 3 (<code>Evidence</code>); <code>lean/VerifyAll.lean</code> audits 217 explicit headline declarations plus all 2,452 project kernel theorem constants (1,275 non-Challenge authored declarations across 65 <code>.lean</code> files) strictly within <code>[propext, Classical.choice, Quot.sound]</code>, dedicated parallel CI jobs <code>lean-verify-standalone</code> (<code>VerifyStandalone.lean</code>) and <code>lean-verify-phase7</code> (<code>VerifyPhaseSeven.lean</code>) compile and axiom-audit all nine standalone Track 1 finite-certificate modules live, all 24 cross-track targets in <code>Challenge.lean</code>/<code>Solution.lean</code> pass all six independent Lean 4.35.0 kernels (<code>lean-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>, <code>lean-default</code>) in Ubuntu 24.04 CI (verified <code>v3.2.0</code> baseline: <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/46007131056">6-kernel Lean run</a>, <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/46007131046">3-OS, DigiCert X.509 TSA &amp; 14-engine C11 ASan/UBSan run</a>; Software Heritage <code>swh:1:snp:cf9ae7bd...</code>), and the unified <a href="https://0thernes.github.io/pauli-contextuality-lab/blueprint/">GitHub Pages Blueprint</a> mounts the searchable 29-node / 213-declaration dependency graph with MathJax SRI and direct GitHub line links.</p>
+provenance attestations. In the consolidated <a href="https://github.com/0thernes/pauli-contextuality-lab">Pauli Contextuality Lab</a> (versions 2.0.0&ndash;3.4.0; <a href="https://github.com/0thernes/pauli-contextuality-lab/actions">GitHub Actions CI</a>), all Track 1 Lean modules live under <code>lean/HoggarBound/</code> alongside Track 2 (<code>ContextualityTensor</code>) and Track 3 (<code>Evidence</code>); <code>lean/VerifyAll.lean</code> audits 255 explicit headline declarations plus all 2,798 project kernel theorem constants (1,434 non-Challenge authored declarations across 68 <code>.lean</code> files) strictly within <code>[propext, Classical.choice, Quot.sound]</code>, dedicated parallel CI jobs <code>lean-verify-standalone</code> (<code>VerifyStandalone.lean</code>) and <code>lean-verify-phase7</code> (<code>VerifyPhaseSeven.lean</code>) compile and axiom-audit all nine standalone Track 1 finite-certificate modules live, all 30 cross-track targets in <code>Challenge.lean</code>/<code>Solution.lean</code> pass all six independent Lean 4.35.0 kernels (<code>lean-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>, <code>lean-default</code>) in Ubuntu 24.04 CI (verified <code>v3.2.0</code> baseline: <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/46007131056">6-kernel Lean run</a>, <a href="https://github.com/0thernes/pauli-contextuality-lab/actions/runs/46007131046">3-OS, DigiCert X.509 TSA &amp; C11 ASan/UBSan run</a>; Software Heritage <code>swh:1:snp:cf9ae7bd...</code>), 18 clean modules pass Batteries <code>runLinter</code> with zero errors, 15 C11 engines run under ASan/UBSan, and the unified <a href="https://0thernes.github.io/pauli-contextuality-lab/blueprint/">GitHub Pages Blueprint</a> mounts the searchable 32-node / 251-declaration dependency graph with MathJax SRI and direct GitHub line links.</p>
 <h2 id="10-a-running-example-on-the-tsotchke-stack">10. A running example on the Tsotchke stack</h2>
 <h3 id="101-state-preparation-simulated-contexts-and-quantum-geometry">10.1 State preparation, simulated contexts and quantum geometry</h3>
 <p>All four components are used for what they are.</p>
 <ul>
-<li><strong>Moonlab</strong> (v1.2.1, prebuilt WebAssembly engine) is a classical state-vector simulator. It plays
+<li><strong>Moonlab</strong> (v1.2.1, prebuilt WebAssembly engine; [Ts1], <a href="https://github.com/tsotchke/moonlab">github.com/tsotchke/moonlab</a>) is a classical state-vector simulator. It plays
 the quantum device.</li>
-<li><strong>quantum_rng</strong> is a classical, "quantum-inspired" integer and trigonometric mixer, not a hardware
+<li><strong>quantum_rng</strong> ([Ts2], <a href="https://github.com/tsotchke/quantum_rng">github.com/tsotchke/quantum_rng</a>) is a classical, "quantum-inspired" integer and trigonometric mixer, not a hardware
 quantum source. It supplies seeded pseudo-random numbers. Its stream depends on the C library it is
 built against, so no result depends on its exact values: every count is recomputed independently.</li>
-<li><strong>QGTL</strong> (quantum_geometric_tensor): only the <code>diffgeo_*</code> kernels (Fubini–Study metric, Berry
+<li><strong>QGTL</strong> (<code>quantum_geometric_tensor</code>; [Ts3], <a href="https://github.com/tsotchke/quantum_geometric_tensor">github.com/tsotchke/quantum_geometric_tensor</a>): only the <code>diffgeo_*</code> kernels (Fubini&ndash;Study metric, Berry
 curvature), which we had verified earlier against closed forms, are used.</li>
-<li><strong>Eshkol</strong> (v1.3.6) is a Scheme dialect with automatic differentiation. It carries an independent
+<li><strong>Eshkol</strong> (v1.3.6; [Ts4], <a href="https://github.com/tsotchke/eshkol">github.com/tsotchke/eshkol</a>) is a Scheme dialect with automatic differentiation. It carries an independent
 implementation of the geometry and the differentiation checks.</li>
 </ul>
 <p><strong>Experiment on Moonlab, classical families</strong> (<code>tracks/spectral-bounds/src/moonlab_experiment.mjs</code>, seed 20261109). A Pauli
@@ -3187,13 +3268,16 @@ integer certificates themselves into the Lean kernel remains an open formalizati
 Corollary 16 / Theorem 16'' (exact global binary optima 368 and 344), Corollary 18, Lemmas 20 and 21,
 Theorem 22, signed-Clifford orbit transport, eigenvalue-multiset Theorem 19 across all nine vertex
 cases for every <span class="math inline">\(N\ge4\)</span>, the <span class="math inline">\(Q^-(7,2)\)</span>, <span class="math inline">\(W(7,2)\)</span> and <span class="math inline">\(Q^+(9,2)\)</span> witnesses, ladders and unconditional
-Kramers-lifted bounds, and ten existential non-vacuity witnesses (<code>NonVacuity.lean</code>) are all formalized
-in Lean 4 (217 explicit declarations and 2,452 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, plus parallel CI audits of all nine standalone finite-certificate modules, Section 9.4, independently
-replayed via 24-target <code>lake comparator --paranoid</code>). Remaining formalization boundaries include the
+Kramers-lifted bounds, Theorems 23&ndash;25 (<code>TrialityResiduals.lean</code>, <code>PGRigidity.lean</code>, <code>DesarguesQuasiQuadric.lean</code>),
+and thirteen existential non-vacuity witnesses plus eleven perturbed-bound refutations (<code>NonVacuity.lean</code>) are all formalized
+in Lean 4 (255 explicit declarations and 2,798 exhaustively audited theorems in <code>lean/VerifyAll.lean</code>, plus parallel CI audits of all nine standalone finite-certificate modules, Section 9.4, independently
+replayed via 30-target <code>lake comparator --paranoid</code>). Remaining formalization boundaries include the
 state-to-mask identifications of the finite Table 1 rows (other than <span class="math inline">\(|\Psi_{3m}\rangle\)</span>, which is
 proved directly from the state vector), Propositions 4, 6, 9 and 11, the enumerations of Theorems 12
-and 13, the 42-orbit <span class="math inline">\(W(5,2)\)</span> census step of [J1], and the single-orbit group-transitivity
-classification of [J3, Theorem B4].</li>
+and 13, the 42-orbit <span class="math inline">\(W(5,2)\)</span> census step of [J1], concrete C11/Python <span class="math inline">\(N=8\)</span> witness recounts
+(<span class="math inline">\(161{,}360{,}335\)</span> on <span class="math inline">\(W(15,2)\)</span> and <span class="math inline">\(38{,}088{,}999\)</span> on <span class="math inline">\(Q^+(15,2)\)</span>), closing the small residual integer
+gaps inside the Theorem 25 brackets on <span class="math inline">\(K_{95}, K_{103}, S_B^{(4)}, S_B^+\)</span>, and the single-orbit
+group-transitivity classification of [J3, Theorem B4].</li>
 <li>Conjecture E is settled and machine-checked for explicit sign-carrier families in all nine vertex
 cases, and for the four-qubit C3 pair <strong>both exact global binary completion minima are now completely
 determined and kernel-certified in Lean 4</strong> (<span class="math inline">\(\min_y F(\sigma_0,y) = 368\)</span>, <span class="math inline">\(\min_y F(\sigma_1,y) = 344\)</span>,
@@ -3302,6 +3386,7 @@ records identify the checked snapshots; Software Heritage and Internet Archive c
 records of particular snapshots, not evidence of review.
 Appendix A gives reproduction commands. No new arXiv identifier, DOI or journal decision is implied
 by this manuscript or its local submission packages.</p>
+<p><strong>Acknowledgments.</strong> The author thanks <strong>Metod Saniga</strong> (Astronomical Institute, Slovak Academy of Sciences) for pointing out the geometric distinction between a maximal totally isotropic <span class="math inline">\(PG(3,2)\)</span> subspace and an abstract doily <span class="math inline">\(GQ(2,2)\)</span> in the four-qubit hyperbolic quasi-quadric <span class="math inline">\(S_B\)</span>, for sharing his private note and figure on polar-disjoint <span class="math inline">\(PG(5,2)\)</span> hexagons in six-qubit <span class="math inline">\(W(11,2)\)</span> (Section 7.2.1), for proposing the <span class="math inline">\(Q^+(7,2)\)</span> triality-residual and <span class="math inline">\(W(15,2)\)</span> <span class="math inline">\(PG(7,2)\)</span>-centered problems (Theorems 23 and 24), and for discovering the Desargues <span class="math inline">\((10_3)\)</span> configuration in <span class="math inline">\(S_B \cap Q^+(7,2)\)</span> and suggesting the augmented quasi-quadric <span class="math inline">\(S_B^+\)</span> (Theorem 25).</p>
 <p><strong>Licence.</strong> The repository's <code>LICENSE</code> (Apache-2.0 for code) and <code>LICENSE-DOCS</code> (CC-BY-4.0 for manuscripts and documentation) are authoritative. Vendored Moonlab, quantum_rng and
 quantum_geometric_tensor retain their authors' MIT licences and provenance records.</p>
 <h2 id="references">References</h2>
@@ -3331,7 +3416,12 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <li>[O] M. Okumura, <em>Hypersurfaces and a pinching problem on the second fundamental tensor</em>, Amer. J. Math. 96, 207 (1974).</li>
 <li>[R] O. S. Rothaus, <em>On "bent" functions</em>, J. Combin. Theory Ser. A 20, 300 (1976).</li>
 <li>[S] M. Saniga, F. Holweck, C. Kelleher, A. Muller, A. Giorgetti, H. de Boutray, <em>Hexagons govern three-qubit contextuality</em>, Quantum 9, 1601 (2025), arXiv:2312.07738.</li>
+<li>[San26] M. Saniga et al., <em>Polar-disjoint <span class="math inline">\(PG(5,2)\)</span> hexagons and solid-dot-dot lines in six-qubit <span class="math inline">\(W(11,2)\)</span></em>, private communication, November 2026 (Section 7.2.1 and Figure 2b).</li>
 <li>[St] B. C. Stacey, <em>Geometric and information-theoretic properties of the Hoggar lines</em>, arXiv:1609.03075 (2016).</li>
+<li>[Ts1] Tsotchke, <em>Moonlab</em> (v1.2.1, pinned revision <code>cd3b2347e3739327548708073d7e4ac710cc6a6c</code>), <a href="https://github.com/tsotchke/moonlab">https://github.com/tsotchke/moonlab</a>.</li>
+<li>[Ts2] Tsotchke, <em>quantum_rng</em> (pinned revision <code>1a77e77f803c63883349b658361c06401cd8ceb7</code>), <a href="https://github.com/tsotchke/quantum_rng">https://github.com/tsotchke/quantum_rng</a>.</li>
+<li>[Ts3] Tsotchke, <em>quantum_geometric_tensor</em> (pinned revision <code>770994aa8ddd858e6bb16eebb25250a7b9f67c96</code>), <a href="https://github.com/tsotchke/quantum_geometric_tensor">https://github.com/tsotchke/quantum_geometric_tensor</a>.</li>
+<li>[Ts4] Tsotchke, <em>Eshkol</em> (v1.3.6), <a href="https://github.com/tsotchke/eshkol">https://github.com/tsotchke/eshkol</a>.</li>
 <li>[W] J. E. Wilkins, <em>A note on skewness and kurtosis</em>, Ann. Math. Statist. 15, 333 (1944).</li>
 </ul>
 <h2 id="appendix-a-reproduction">Appendix A. Reproduction</h2>
@@ -3339,26 +3429,34 @@ quantum_geometric_tensor retain their authors' MIT licences and provenance recor
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> tracks/spectral-bounds/scripts/build.sh</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># every test: exhaustive N=2, falsification suite, flat states, analysis, ladder, Moonlab, QGTL, Eshkol</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> tracks/spectral-bounds/scripts/run_all.sh</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Lean (needs elan; fetches Lean 4.35.0 and the Mathlib cache)</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lean <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> exe cache get <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> build</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># the exact degrees of Section 5 and four-qubit C3 certificate (standalone CI audits)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build VerifyStandalone <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean VerifyStandalone.lean</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># the seven-qubit degree (standalone CI audit; in CI about 1.5 minutes and 6.4 GB of memory)</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build VerifyPhaseSeven <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean VerifyPhaseSeven.lean</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># case C3 for every number of qubits from four on (Theorem 17)</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound.Bound HoggarBound.Quadric</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean HoggarBound/CarrierFamily.lean</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># All v1.5.0-v3.3.0 Lean formalizations (217 explicit #print axioms + exhaustive 2,452-theorem audit), Batteries linter (15 modules), and 24-target 6-kernel comparator</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound ContextualityTensor Evidence Solution VerifyAll</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean VerifyAll.lean</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> comparator <span class="at">--config</span> comparator.json <span class="at">--paranoid</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># the seven-qubit enumeration of Theorem 13 (about eight core-hours)</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> tracks/spectral-bounds/scripts/run_family7.sh</span></code></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Lean 4.35.0 (needs elan; fetches Lean 4.35.0 and the pinned Mathlib v4.35.0 cache)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lean <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> exe cache get</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Build all three libraries plus the isolated 30-target comparator bridge</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build HoggarBound ContextualityTensor Evidence Solution VerifyAll</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Exhaustive axiom audit (255 explicit #print axioms + all 2,798 project theorems)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> env lean VerifyAll.lean</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Batteries linter (18 modules, 0 errors) and 30-target 6-kernel independent replay</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> exe runLinter ContextualityTensor Evidence HoggarBound.PGRigidity HoggarBound.TrialityResiduals HoggarBound.DesarguesQuasiQuadric</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> comparator <span class="at">--config</span> comparator.json <span class="at">--paranoid</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Additional Section 5 &amp; 8 finite-certificate modules (parallel standalone CI audits)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build VerifyStandalone <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean VerifyStandalone.lean</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="ex">lake</span> build VerifyPhaseSeven <span class="kw">&amp;&amp;</span> <span class="ex">lake</span> env lean VerifyPhaseSeven.lean</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Seven-qubit enumeration of Theorem 13 (about eight core-hours)</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> .. <span class="kw">&amp;&amp;</span> <span class="fu">bash</span> tracks/spectral-bounds/scripts/run_family7.sh</span></code></pre></div>
 <p>The completion minima, the seven-qubit evaluation, the carrier families, the nine vertex cases, the
 universal cubic-trace identity, the C3 QUBO SDP dual and exact binary optima, the infinite pure-CCZ
-determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0–v3.3.0 verification audits, from
+determinant family, the N=4-5 42-orbit integer dual check, and the v1.9.0&ndash;v3.4.0 verification audits, from
 the repository root:</p>
-<pre class="text"><code>python tracks/spectral-bounds/scripts/cospectral_pair.py
+<pre class="text"><code>python scripts/verify_all.py
+python -m pytest -v tests/
+node --test tests/test_web_models.mjs
+python scripts/check_readme_axioms.py
+python scripts/arithmetic_audit.py
+python scripts/build_blueprint.py
+python scripts/check_citations.py
+python scripts/build_site.py
+bash scripts/dev.sh sanitizers
+python tracks/spectral-bounds/scripts/cospectral_pair.py
 python tracks/spectral-bounds/scripts/phase_seven_lean.py
 python tracks/spectral-bounds/scripts/cospectral_family.py --six
 python tracks/spectral-bounds/scripts/cospectral_family_tensor_check.py
@@ -3373,15 +3471,14 @@ python tracks/spectral-bounds/scripts/c3_sdp_dual_check.py
 python tracks/spectral-bounds/scripts/c3_exact_optima_check.py
 python tracks/spectral-bounds/scripts/norm_phase_family.py
 python tracks/spectral-bounds/scripts/exact_degrees_n4_n5.py
-python tracks/spectral-bounds/scripts/c3_sparse_search.py 3 3
-python scripts/check_readme_axioms.py
-python scripts/arithmetic_audit.py
-python scripts/build_blueprint.py
-python scripts/check_citations.py
-python -m unittest tests/test_properties.py tests/test_mutation_and_fuzz.py</code></pre>
+python tracks/spectral-bounds/scripts/q7plus_triality_residuals.py
+python tracks/spectral-bounds/scripts/pg_rigidity_and_w15.py
+python tracks/spectral-bounds/scripts/desargues_augmented_sb.py
+python tracks/spectral-bounds/scripts/quasi_quadric_and_witness_anatomy.py
+python tracks/spectral-bounds/scripts/c3_sparse_search.py 3 3</code></pre>
 <p>Their exact-verifier last lines read <code>30 of 30</code>, <code>14 of 14</code>, <code>43 of 43</code>, <code>18 of 18</code>, <code>21 of 21</code>,
 <code>81 of 81</code>, <code>36 of 36</code>, <code>115 of 115</code>, <code>46 of 46</code>, <code>97 of 97</code>, <code>39 of 39</code>, <code>15 of 15</code>, <code>10 of 10</code>,
-<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v3.3.0 verification
+<code>32 of 32</code> and <code>9 of 9 checks passed</code>; the search prints its class counts; and the v1.9.0–v3.4.0 verification
 audits and property/mutation/fuzz tests exit with status 0. NumPy is required (and SymPy for
 <code>c3_sdp_dual_check.py</code>).</p>
 <p>The C3 verification programs require Python, NumPy, SymPy and Node.js. From the repository root:</p>
@@ -3433,4 +3530,4 @@ versions. The theorem's assignments are fully defined in Section 8.2 independent
 <code>tracks/spectral-bounds/results/cospectral_family.json</code>, <code>tracks/spectral-bounds/results/cospectral_family_cone_lift.json</code>,
 <code>tracks/spectral-bounds/results/conjecture_e.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_n6.json</code>, <code>tracks/spectral-bounds/results/conjecture_e_lemmas.json</code> and
 <code>tracks/spectral-bounds/results/conjecture_e_lemmas_n6.json</code>.</p>
-<footer>Pauli Contextuality Lab (Track 1), version 3.3.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>
+<footer>Pauli Contextuality Lab (Track 1), version 3.4.0 (consolidated from Hoggar Bound Lab v1.9.0). Research preprint; not peer reviewed. <a href="https://github.com/0thernes/pauli-contextuality-lab/blob/main/papers/README.md">Manuscript index</a></footer></main></body></html>

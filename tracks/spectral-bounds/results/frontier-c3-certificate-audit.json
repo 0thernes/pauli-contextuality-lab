@@ -73,7 +73,7 @@
     "lean/HoggarBound/C3Data.lean": "cd7fd590e1b5e7ba747fbdc966c77e3879db3251a204ff9eb4b2b946601d4476",
     "lean/HoggarBound/C3Geometry.lean": "692df9385ee625a2edee35d6cb7d4dc6a57b4547c4b30e7bdf9d32494d19f7ea",
     "lean/HoggarBound/C3Certificate.lean": "5c52678a7450bf8acfbff90abef85ee62727a15f9a3a758efd476ef34f685842",
-    "papers/spectral-bounds/c3-spectral-counterexample.tex": "548d93cbaa2511c171c9d382f0c9602a55441a19c98a4f29bcadbfe9515958f9",
+    "papers/spectral-bounds/c3-spectral-counterexample.tex": "b3f58e5cd68220e86f818a43260bcf3d85859296888ca522d4a313bf00550d61",
     "lean/HoggarBound/C3Theorem.lean": "77201cec43172d4cb46ad8507a33738afb24625cb65b67ed9a2cead47919138b",
     "lean/HoggarBound/C3Spectra.lean": "42e302aa4b3eca2ca61d11ff73703e49ba5e0ae27d3136c1d19f07a8ec270b1c"
   },
