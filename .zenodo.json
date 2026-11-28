@@ -1,0 +1,39 @@
+{
+  "title": "Pauli Contextuality Lab: Unified Lean 4.35.0 Formalization of Spectral Bounds, Disjoint Mermin Configurations, and Sequential Contextuality Evidence",
+  "description": "Consolidates the four archived Pauli/Mermin contextuality repositories into one unified Apache-2.0 / CC-BY-4.0 monorepo meeting Build Standard v1.2.0 (100.0%, 68/68 checks, Core 30/30) and Playbook v1.3. Ships a pinned Lean 4.35.0 + Mathlib v4.35.0 workspace (68 .lean files; all 9 standalone Track 1 finite-certificate modules live-audited in parallel CI via VerifyStandalone.lean and VerifyPhaseSeven.lean), searchable 32-node / 251-declaration Lean Blueprint with MathJax SRI, explicit Sp(2N,2) witness isomorphism verifier & hyperbolic quasi-quadric (135/1,095/75) Qontextium exports, 4 zero-overflow Tectonic PDFs (0.00pt max overfull), and 3-OS + 15-engine C11 ASan/UBSan CI (run 46070500824, adding w15_verify.c). Track 1 formalizes Jonah's universal and Kramers spectral floors, two-sided asymptotic 1/2 limits, five-way saturation equivalences, finite flat degrees 75, 480, 2016 and 729344, infinite non-closed pure-CCZ family |Psi_{3m}> (m>=1, contextual m>=2), lower bounds d(W(7,2))>=1455 and d(Q+(9,2))>=6444, exact four-qubit C3 binary completion optima (368 vs 344), formal geometric vertex-case membership IsCaseC1-IsCaseC15 + strict-law failure for one representative per case for all N>=4, 13 non-vacuity witnesses + 11 kernel-proved perturbed-bound refutations, and Theorems 23-25 answering M. Saniga's Nov 2026 correspondence (TrialityResiduals.lean: exact Q+(7,2) 315-line deletion degrees 0, universal spread 210, universal Q(6,2) 252, triality-dual ovoid 252 beating floor 204 by +48; PGRigidity.lean: pure-algebra all-N PG(N-1,2) rigidity forcing >= 166,115,415 on W(15,2) vs C11 verified witness 161,360,335 and Q+(15,2) witness 38,088,999; DesarguesQuasiQuadric.lean: universal all-N [DHOP] fiber-flip 71/63 law, Desargues (10_3), ovoid context parabola 1575 - 256k + 32k^2, decoupling/non-saturation of S_B^+, and sharp Mermin-Peres brackets on K_95, K_103, S_B^(4), S_B^+) plus M. Saniga et al.'s private-communication section & Figure 2b. Track 2 formalizes 100% of Eq...",
+  "upload_type": "software",
+  "license": "apache-2.0",
+  "creators": [
+    {
+      "name": "Donahue, Alexander Stephen",
+      "affiliation": "Independent Researcher, Spokane, WA, USA",
+      "orcid": "0009-0006-8168-9648"
+    }
+  ],
+  "keywords": [
+    "Quantum Foundations",
+    "Quantum Contextuality",
+    "Lean 4",
+    "formal verification",
+    "Palomar Registry",
+    "open research"
+  ],
+  "notes": "Code and Lean 4.35.0 proofs are licensed under Apache-2.0; manuscripts and figures are licensed under CC-BY-4.0. Independent research preprint (v3.4.0); not externally peer-reviewed. AI tools (Antigravity / Google DeepMind) assisted under human direction and audit. Software Heritage snapshot: swh:1:snp:cf9ae7bd108e9556e79d4c0c81c8de92632b91c1.",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/0thernes/pauli-contextuality-lab",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://0thernes.github.io/pauli-contextuality-lab/",
+      "relation": "isDocumentedBy",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://archive.softwareheritage.org/swh:1:snp:cf9ae7bd108e9556e79d4c0c81c8de92632b91c1",
+      "relation": "isIdenticalTo",
+      "scheme": "url"
+    }
+  ]
+}
